@@ -196,6 +196,72 @@
         .unhighlight-hotel:hover {
             background-color: rgba(158, 158, 158, 0.1);
         }
+        .input-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+        .input-modal-overlay.show {
+            display: flex;
+        }
+        .input-modal {
+            width: min(520px, 100%);
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+            padding: 20px;
+        }
+        .input-modal h3 {
+            margin: 0 0 10px;
+            font-size: 22px;
+        }
+        .input-modal p {
+            margin: 0 0 10px;
+            color: var(--text-medium);
+        }
+        .input-modal-field-group + .input-modal-field-group {
+            margin-top: 12px;
+        }
+        .input-modal-field-group.is-hidden {
+            display: none;
+        }
+        .input-modal input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+        .input-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 14px;
+        }
+        .input-modal-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .input-modal-btn.cancel {
+            background: #ececec;
+            color: #333;
+        }
+        .input-modal-btn.confirm {
+            background: var(--primary-color);
+            color: white;
+        }
+        .input-modal-btn.confirm:hover {
+            background: var(--primary-dark);
+        }
     </style>
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -253,15 +319,12 @@
                                         {% endfor %}
                                     </ul>
                                 </div>
-                                <button type="button" class="add-btn" onclick="addCountry('{{ region.id }}')">
-                                    <i class="fas fa-plus"></i> Add Country
-                                </button>
                             </div>
                         </div>
                         {% endfor %}
                     </div>
-                    <button type="button" class="add-btn" onclick="addRegion()">
-                        <i class="fas fa-plus"></i> Add Region
+                    <button type="button" class="add-btn" onclick="addRegionAndCountry()">
+                        <i class="fas fa-plus"></i> Add Region and Country
                     </button>
                 </div>
                 
@@ -305,6 +368,27 @@
         </div>
     </div>
 
+    <div id="input-modal-overlay" class="input-modal-overlay" aria-hidden="true">
+        <div class="input-modal" role="dialog" aria-modal="true" aria-labelledby="input-modal-title">
+            <h3 id="input-modal-title">Add Item</h3>
+            <div id="input-modal-primary-group" class="input-modal-field-group">
+                <p id="input-modal-label">Enter value:</p>
+                <input id="input-modal-field" type="text" />
+            </div>
+            <div id="input-modal-secondary-group" class="input-modal-field-group is-hidden">
+                <p id="input-modal-label-secondary">Enter second value:</p>
+                <input id="input-modal-field-secondary" type="text" />
+            </div>
+            <div class="input-modal-actions">
+                <button type="button" class="input-modal-btn cancel" id="input-modal-cancel">Cancel</button>
+                <button type="button" class="input-modal-btn confirm" id="input-modal-confirm">Save</button>
+            </div>
+        </div>
+    </div>
+    <form id="csrf-token-form" style="display:none;">
+        {% csrf_token %}
+    </form>
+
     <script>
         // CSRF setup: Read csrftoken from cookie and attach it to all AJAX requests.
         function getCookie(name) {
@@ -321,54 +405,185 @@
             }
             return cookieValue;
         }
+        function getCsrfToken() {
+            var csrfInput = document.querySelector("#csrf-token-form input[name='csrfmiddlewaretoken']");
+            if (csrfInput && csrfInput.value) {
+                return csrfInput.value;
+            }
+            return getCookie("csrftoken");
+        }
         $.ajaxSetup({
             beforeSend: function(xhr, settings) {
                 if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-                    xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken"));
+                    var csrfToken = getCsrfToken();
+                    if (csrfToken) {
+                        xhr.setRequestHeader("X-CSRFToken", csrfToken);
+                    }
                 }
             }
+        });
+
+        var inputModalState = { onConfirm: null, hasSecondary: false, secondaryRequired: false };
+
+        function openInputModal(config) {
+            var overlay = document.getElementById("input-modal-overlay");
+            var title = document.getElementById("input-modal-title");
+            var label = document.getElementById("input-modal-label");
+            var field = document.getElementById("input-modal-field");
+            var secondaryGroup = document.getElementById("input-modal-secondary-group");
+            var secondaryLabel = document.getElementById("input-modal-label-secondary");
+            var secondaryField = document.getElementById("input-modal-field-secondary");
+
+            title.textContent = config.title || "Add Item";
+            label.textContent = config.label || "Enter value:";
+            field.value = (config.value || "");
+            field.placeholder = config.placeholder || "";
+            inputModalState.hasSecondary = !!config.secondary;
+            inputModalState.secondaryRequired = !!(config.secondary && config.secondary.required);
+
+            if (config.secondary) {
+                secondaryLabel.textContent = config.secondary.label || "Enter second value:";
+                secondaryField.value = (config.secondary.value || "");
+                secondaryField.placeholder = config.secondary.placeholder || "";
+                secondaryGroup.classList.remove("is-hidden");
+            } else {
+                secondaryField.value = "";
+                secondaryField.placeholder = "";
+                secondaryGroup.classList.add("is-hidden");
+            }
+
+            inputModalState.onConfirm = config.onConfirm || null;
+            overlay.classList.add("show");
+            overlay.setAttribute("aria-hidden", "false");
+            setTimeout(function() { field.focus(); field.select(); }, 0);
+        }
+
+        function closeInputModal() {
+            var overlay = document.getElementById("input-modal-overlay");
+            overlay.classList.remove("show");
+            overlay.setAttribute("aria-hidden", "true");
+            inputModalState.onConfirm = null;
+            inputModalState.hasSecondary = false;
+            inputModalState.secondaryRequired = false;
+        }
+
+        function submitInputModal() {
+            var field = document.getElementById("input-modal-field");
+            var secondaryField = document.getElementById("input-modal-field-secondary");
+            var value = (field.value || "").trim();
+            if (!value) return;
+            if (typeof inputModalState.onConfirm === "function") {
+                if (inputModalState.hasSecondary) {
+                    var secondaryValue = (secondaryField.value || "").trim();
+                    if (inputModalState.secondaryRequired && !secondaryValue) return;
+                    inputModalState.onConfirm({
+                        primaryValue: value,
+                        secondaryValue: secondaryValue
+                    });
+                } else {
+                    inputModalState.onConfirm(value);
+                }
+            }
+            closeInputModal();
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var overlay = document.getElementById("input-modal-overlay");
+            var field = document.getElementById("input-modal-field");
+            var secondaryField = document.getElementById("input-modal-field-secondary");
+            document.getElementById("input-modal-cancel").addEventListener("click", closeInputModal);
+            document.getElementById("input-modal-confirm").addEventListener("click", submitInputModal);
+            overlay.addEventListener("click", function(e) {
+                if (e.target === overlay) closeInputModal();
+            });
+            function handleModalKeydown(e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    submitInputModal();
+                } else if (e.key === "Escape") {
+                    closeInputModal();
+                }
+            }
+            field.addEventListener("keydown", handleModalKeydown);
+            secondaryField.addEventListener("keydown", handleModalKeydown);
         });
         
         // ---------------------------
         // REGION Functions (AJAX)
         // ---------------------------
-        function addRegion() {
-            var regionName = prompt("Enter region name:");
-            if (!regionName) return;
-            $.ajax({
-                url: "{% url 'admin_app:ajax_add_region' %}",
-                type: "POST",
-                data: { name: regionName },
-                success: function(data) {
-                    if (data.status === "success") {
-                        var newId = data.region_id;
-                        var regionHtml = '<div class="box" id="region-' + newId + '">';
-                        regionHtml += '<strong>' + data.region_name + '</strong>';
-                        regionHtml += '<div class="action-area">';
-                        regionHtml += '<button type="button" class="icon-btn edit-icon" onclick="editRegion(\'' + newId + '\')">';
-                        regionHtml += '<i class="fas fa-edit"></i>';
-                        regionHtml += '</button>';
-                        regionHtml += '<button type="button" class="icon-btn delete-icon" onclick="deleteRegion(\'' + newId + '\')">';
-                        regionHtml += '<i class="fas fa-trash-alt"></i>';
-                        regionHtml += '</button>';
-                        regionHtml += '</div></div>';
-                        
-                        var countriesHtml = '<div class="box">';
-                        countriesHtml += '<div class="countries-container">';
-                        countriesHtml += '<div class="countries-list">';
-                        countriesHtml += '<span>Countries:</span>';
-                        countriesHtml += '<ul id="countries-' + newId + '"></ul>';
-                        countriesHtml += '</div>';
-                        countriesHtml += '<button type="button" class="add-btn" onclick="addCountry(\'' + newId + '\')">';
-                        countriesHtml += '<i class="fas fa-plus"></i> Add Country';
-                        countriesHtml += '</button>';
-                        countriesHtml += '</div></div>';
-                        
-                        $("#regions").append(regionHtml + countriesHtml);
-                    }
+        function addRegionAndCountry() {
+            openInputModal({
+                title: "Add Region and Country",
+                label: "Enter region name:",
+                placeholder: "e.g., Region VII",
+                secondary: {
+                    label: "Enter country/city name (optional):",
+                    placeholder: "e.g., Bayawan City",
+                    required: false
                 },
-                error: function(xhr, status, error) {
-                    alert("Error adding region: " + error);
+                onConfirm: function(values) {
+                    var regionName = values.primaryValue;
+                    var countryName = values.secondaryValue;
+                    $.ajax({
+                        url: "{% url 'admin_app:ajax_add_region' %}",
+                        type: "POST",
+                        data: { name: regionName },
+                        success: function(data) {
+                            if (data.status === "success") {
+                                var newId = data.region_id;
+                                var regionHtml = '<div class="box" id="region-' + newId + '">';
+                                regionHtml += '<strong>' + data.region_name + '</strong>';
+                                regionHtml += '<div class="action-area">';
+                                regionHtml += '<button type="button" class="icon-btn edit-icon" onclick="editRegion(\'' + newId + '\')">';
+                                regionHtml += '<i class="fas fa-edit"></i>';
+                                regionHtml += '</button>';
+                                regionHtml += '<button type="button" class="icon-btn delete-icon" onclick="deleteRegion(\'' + newId + '\')">';
+                                regionHtml += '<i class="fas fa-trash-alt"></i>';
+                                regionHtml += '</button>';
+                                regionHtml += '</div></div>';
+                                
+                                var countriesHtml = '<div class="box">';
+                                countriesHtml += '<div class="countries-container">';
+                                countriesHtml += '<div class="countries-list">';
+                                countriesHtml += '<span>Countries:</span>';
+                                countriesHtml += '<ul id="countries-' + newId + '"></ul>';
+                                countriesHtml += '</div>';
+                                countriesHtml += '</div></div>';
+                                
+                                $("#regions").append(regionHtml + countriesHtml);
+
+                                if (countryName) {
+                                    $.ajax({
+                                        url: "{% url 'admin_app:ajax_add_country' %}",
+                                        type: "POST",
+                                        data: { region_id: newId, name: countryName },
+                                        success: function(countryData) {
+                                            if (countryData.status === "success") {
+                                                var countryId = countryData.country_id;
+                                                var liHtml = '<li id="country-' + countryId + '">';
+                                                liHtml += '<span>' + countryData.country_name + '</span>';
+                                                liHtml += '<div class="action-area">';
+                                                liHtml += '<button type="button" class="icon-btn edit-icon" onclick="editCountry(\'' + countryId + '\')">';
+                                                liHtml += '<i class="fas fa-edit"></i>';
+                                                liHtml += '</button>';
+                                                liHtml += '<button type="button" class="icon-btn delete-icon" onclick="deleteCountry(\'' + countryId + '\')">';
+                                                liHtml += '<i class="fas fa-trash-alt"></i>';
+                                                liHtml += '</button>';
+                                                liHtml += '</div></li>';
+                                                $("#countries-" + newId).append(liHtml);
+                                            }
+                                        },
+                                        error: function(xhr, status, error) {
+                                            alert("Region added, but failed to add country: " + error);
+                                        }
+                                    });
+                                }
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            alert("Error adding region: " + error);
+                        }
+                    });
                 }
             });
         }
@@ -415,30 +630,35 @@
         // COUNTRY Functions (AJAX)
         // ---------------------------
         function addCountry(regionId) {
-            var countryName = prompt("Enter country name:");
-            if (!countryName) return;
-            $.ajax({
-                url: "{% url 'admin_app:ajax_add_country' %}",
-                type: "POST",
-                data: { region_id: regionId, name: countryName },
-                success: function(data) {
-                    if (data.status === "success") {
-                        var newId = data.country_id;
-                        var liHtml = '<li id="country-' + newId + '">';
-                        liHtml += '<span>' + data.country_name + '</span>';
-                        liHtml += '<div class="action-area">';
-                        liHtml += '<button type="button" class="icon-btn edit-icon" onclick="editCountry(\'' + newId + '\')">';
-                        liHtml += '<i class="fas fa-edit"></i>';
-                        liHtml += '</button>';
-                        liHtml += '<button type="button" class="icon-btn delete-icon" onclick="deleteCountry(\'' + newId + '\')">';
-                        liHtml += '<i class="fas fa-trash-alt"></i>';
-                        liHtml += '</button>';
-                        liHtml += '</div></li>';
-                        $("#countries-" + regionId).append(liHtml);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert("Error adding country: " + error);
+            openInputModal({
+                title: "Add Country",
+                label: "Enter country/city name:",
+                placeholder: "e.g., Bayawan City",
+                onConfirm: function(countryName) {
+                    $.ajax({
+                        url: "{% url 'admin_app:ajax_add_country' %}",
+                        type: "POST",
+                        data: { region_id: regionId, name: countryName },
+                        success: function(data) {
+                            if (data.status === "success") {
+                                var newId = data.country_id;
+                                var liHtml = '<li id="country-' + newId + '">';
+                                liHtml += '<span>' + data.country_name + '</span>';
+                                liHtml += '<div class="action-area">';
+                                liHtml += '<button type="button" class="icon-btn edit-icon" onclick="editCountry(\'' + newId + '\')">';
+                                liHtml += '<i class="fas fa-edit"></i>';
+                                liHtml += '</button>';
+                                liHtml += '<button type="button" class="icon-btn delete-icon" onclick="deleteCountry(\'' + newId + '\')">';
+                                liHtml += '<i class="fas fa-trash-alt"></i>';
+                                liHtml += '</button>';
+                                liHtml += '</div></li>';
+                                $("#countries-" + regionId).append(liHtml);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            alert("Error adding country: " + error);
+                        }
+                    });
                 }
             });
         }
@@ -484,33 +704,38 @@
         // ENTRY Functions (AJAX)
         // ---------------------------
         function addEntry() {
-            var entryTitle = prompt("Enter entry title:");
-            if (!entryTitle) return;
-            $.ajax({
-                url: "{% url 'admin_app:ajax_add_entry' %}",
-                type: "POST",
-                data: { title: entryTitle },
-                success: function(data) {
-                    if (data.status === "success") {
-                        var newId = data.entry_id;
-                        var entryHtml = '<div class="box" id="entry-' + newId + '">';
-                        entryHtml += '<div><p>' + data.entry_title + '</p></div>';
-                        entryHtml += '<div class="action-area">';
-                        entryHtml += '<button type="button" class="icon-btn edit-icon" onclick="editEntry(\'' + newId + '\')">';
-                        entryHtml += '<i class="fas fa-edit"></i>';
-                        entryHtml += '</button>';
-                        entryHtml += '<button type="button" class="icon-btn delete-icon" onclick="deleteEntry(\'' + newId + '\')">';
-                        entryHtml += '<i class="fas fa-trash-alt"></i>';
-                        entryHtml += '</button>';
-                        entryHtml += '<button type="button" class="hotel-toggle unhighlight-hotel" onclick="markAsHotel(\'' + newId + '\')">';
-                        entryHtml += '<i class="far fa-building"></i> Mark as Hotel';
-                        entryHtml += '</button>';
-                        entryHtml += '</div></div>';
-                        $("#entry-section").append(entryHtml);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert("Error adding entry: " + error);
+            openInputModal({
+                title: "Add Entry",
+                label: "Enter entry title:",
+                placeholder: "e.g., Beach Resort",
+                onConfirm: function(entryTitle) {
+                    $.ajax({
+                        url: "{% url 'admin_app:ajax_add_entry' %}",
+                        type: "POST",
+                        data: { title: entryTitle },
+                        success: function(data) {
+                            if (data.status === "success") {
+                                var newId = data.entry_id;
+                                var entryHtml = '<div class="box" id="entry-' + newId + '">';
+                                entryHtml += '<div><p>' + data.entry_title + '</p></div>';
+                                entryHtml += '<div class="action-area">';
+                                entryHtml += '<button type="button" class="icon-btn edit-icon" onclick="editEntry(\'' + newId + '\')">';
+                                entryHtml += '<i class="fas fa-edit"></i>';
+                                entryHtml += '</button>';
+                                entryHtml += '<button type="button" class="icon-btn delete-icon" onclick="deleteEntry(\'' + newId + '\')">';
+                                entryHtml += '<i class="fas fa-trash-alt"></i>';
+                                entryHtml += '</button>';
+                                entryHtml += '<button type="button" class="hotel-toggle unhighlight-hotel" onclick="markAsHotel(\'' + newId + '\')">';
+                                entryHtml += '<i class="far fa-building"></i> Mark as Hotel';
+                                entryHtml += '</button>';
+                                entryHtml += '</div></div>';
+                                $("#entry-section").append(entryHtml);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            alert("Error adding entry: " + error);
+                        }
+                    });
                 }
             });
         }

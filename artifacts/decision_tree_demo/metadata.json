@@ -1,0 +1,37 @@
+{
+  "feature_columns": [
+    "requested_guests",
+    "requested_budget",
+    "requested_location",
+    "requested_accommodation_type",
+    "room_price_per_night",
+    "room_capacity",
+    "room_available",
+    "accom_location",
+    "company_type",
+    "nights_requested",
+    "cnn_confidence",
+    "shown_rank"
+  ],
+  "numeric_columns": [
+    "requested_guests",
+    "requested_budget",
+    "room_price_per_night",
+    "room_capacity",
+    "room_available",
+    "nights_requested",
+    "cnn_confidence",
+    "shown_rank"
+  ],
+  "categorical_columns": [
+    "requested_location",
+    "requested_accommodation_type",
+    "accom_location",
+    "company_type"
+  ],
+  "target": "relevance_label",
+  "rows": 8,
+  "test_size": 0.25,
+  "max_depth": 4,
+  "note": "Pilot/demo training only. Retrain with real system data for final thesis results."
+}

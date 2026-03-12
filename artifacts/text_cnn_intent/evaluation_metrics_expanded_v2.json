@@ -1,0 +1,21 @@
+{
+  "dataset": "thesis_data_templates\\text_cnn_messages_final_expanded_v3_clean.csv",
+  "epochs_ran": 12,
+  "train_accuracy_final": 1.0,
+  "val_accuracy_final": 0.9816513657569885,
+  "test_accuracy": 0.9696969985961914,
+  "test_loss": 0.061456989496946335,
+  "class_count": 6,
+  "classes": [
+    "book_accommodation",
+    "calculate_accommodation_billing",
+    "calculate_billing",
+    "get_accommodation_recommendation",
+    "get_recommendation",
+    "get_tourism_information"
+  ],
+  "rows": 1920,
+  "rows_train": 1712,
+  "rows_val": 109,
+  "rows_test": 99
+}

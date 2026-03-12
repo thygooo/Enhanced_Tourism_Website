@@ -307,6 +307,73 @@ class AccommodationBooking(models.Model):
     def get_balance_due(self):
         return self.total_amount - self.amount_paid
 
+
+class Billing(models.Model):
+    """
+    Dedicated billing record for accommodation bookings.
+    Prepared immediately at booking creation, then updated during payment flow.
+    """
+    PAYMENT_STATUS_CHOICES = [
+        ("unpaid", "Unpaid"),
+        ("partial", "Partially Paid"),
+        ("paid", "Paid"),
+    ]
+    PAYMENT_METHOD_CHOICES = [
+        ("", "Not Set"),
+        ("cash", "Cash"),
+        ("gcash", "GCash"),
+        ("bank_transfer", "Bank Transfer"),
+        ("card", "Card"),
+        ("other", "Other"),
+    ]
+
+    billing_id = models.AutoField(primary_key=True)
+    booking = models.OneToOneField(
+        AccommodationBooking,
+        on_delete=models.CASCADE,
+        related_name="billing",
+    )
+    booking_reference = models.CharField(max_length=30, unique=True)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    payment_status = models.CharField(
+        max_length=20,
+        choices=PAYMENT_STATUS_CHOICES,
+        default="unpaid",
+    )
+    payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_METHOD_CHOICES,
+        default="",
+        blank=True,
+    )
+    amount_paid = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    billing_date = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Billing #{self.billing_id} for Booking #{self.booking.booking_id}"
+
+
+class AccommodationBookingCompanion(models.Model):
+    """
+    Companion details attached to an accommodation booking.
+    Separate from tour companion linkage (BookingCompanion -> Pending).
+    """
+    companion_id = models.AutoField(primary_key=True)
+    booking = models.ForeignKey(
+        AccommodationBooking,
+        on_delete=models.CASCADE,
+        related_name="companions",
+    )
+    companion_name = models.CharField(max_length=120)
+    companion_contact = models.CharField(max_length=150)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["companion_id"]
+
+    def __str__(self):
+        return f"{self.companion_name} (Booking #{self.booking.booking_id})"
 class MapBookmark(TranslatableModel):
     CATEGORY_CHOICES = [
         ('restaurant', _('Food & Restaurant')),

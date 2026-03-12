@@ -1,0 +1,75 @@
+{
+  "input_csv": "thesis_data_templates\\text_cnn_messages_final_expanded_v3.csv",
+  "output_csv": "thesis_data_templates\\text_cnn_messages_final_expanded_v3_clean.csv",
+  "threshold": 0.9,
+  "stats": {
+    "pairs_initial": 232,
+    "pairs_final": 0,
+    "rows_moved": 185,
+    "iterations": 3
+  },
+  "before_split_counts": {
+    "book_accommodation": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    },
+    "calculate_accommodation_billing": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    },
+    "calculate_billing": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    },
+    "get_accommodation_recommendation": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    },
+    "get_recommendation": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    },
+    "get_tourism_information": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    }
+  },
+  "after_split_counts": {
+    "book_accommodation": {
+      "test": 20,
+      "train": 279,
+      "val": 21
+    },
+    "calculate_accommodation_billing": {
+      "test": 20,
+      "train": 284,
+      "val": 16
+    },
+    "calculate_billing": {
+      "test": 12,
+      "train": 291,
+      "val": 17
+    },
+    "get_accommodation_recommendation": {
+      "test": 20,
+      "train": 281,
+      "val": 19
+    },
+    "get_recommendation": {
+      "test": 12,
+      "train": 294,
+      "val": 14
+    },
+    "get_tourism_information": {
+      "test": 15,
+      "train": 283,
+      "val": 22
+    }
+  }
+}

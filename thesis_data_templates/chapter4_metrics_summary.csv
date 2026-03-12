@@ -1,0 +1,21 @@
+metric_group,metric_name,metric_value,window,notes
+recommendation,accommodation_queries,114,last_30_days,all data sources
+recommendation,queries_with_results,114,last_30_days,
+recommendation,hit_rate_pct,100.0,last_30_days,with_results / accommodation_queries
+recommendation,avg_top1_score,0.7102,last_30_days,top-ranked item score
+recommendation,avg_decision_tree_score,0.69,last_30_days,from recommendation trace
+recommendation,hybrid_dt_mode_count,26,last_30_days,"scoring_mode in (hybrid_textcnn_decisiontree, hybrid_textcnn_surrogate_tree)"
+recommendation,hybrid_surrogate_tree_mode_count,10,last_30_days,scoring_mode=hybrid_textcnn_surrogate_tree
+recommendation,fallback_mode_count,6,last_30_days,scoring_mode=hybrid_fallback_heuristic
+recommendation,no_match_count,0,last_30_days,recommendation list empty
+recommendation,no_match_pct,0.0,last_30_days,no_match_count / accommodation_queries
+funnel,views,144,last_30_days,RecommendationEvent view
+funnel,clicks,15,last_30_days,RecommendationEvent click
+funnel,books,37,last_30_days,RecommendationEvent book
+funnel,ctr_pct,10.42,last_30_days,clicks / views
+funnel,book_rate_pct,25.69,last_30_days,books / views
+performance,chat_requests,388,last_30_days,SystemMetricLog module=chat
+performance,chat_success_rate_pct,99.74,last_30_days,success_flag=true / total
+performance,chat_avg_response_ms,175.21,last_30_days,
+performance,chat_p95_response_ms,1305,last_30_days,
+errors,top_error_messages,1x:chat_requires_login,last_30_days,up to top 5

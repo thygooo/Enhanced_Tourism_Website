@@ -1,0 +1,87 @@
+message_text,label_intent,split
+Book room 3,book_accommodation,test
+YES,book_accommodation,test
+book room 60 for 2 guests from 2026-03-20 to 2026-03-22,book_accommodation,test
+book room 7 for 2 guests from 2026-03-20 to 2026-03-22,book_accommodation,test
+Yes,book_accommodation,train
+book room 22 for 2 guests from 2026-03-20 to 2026-03-22,book_accommodation,train
+book room 3 for 2 guests from 2026-03-25 to 2026-03-27,book_accommodation,train
+book room 3 for 2 nights from 2026-03-13 to 2026-03-15,book_accommodation,train
+book room 3 from 2026-03-29 to 2026-03-31,book_accommodation,train
+book room 5 for 1 guest from 2026-03-10 to 2026-03-12,book_accommodation,train
+book room 5 for 2 nights,book_accommodation,train
+book room 5 for 2 nights from 2026-03-13 to 2026-03-15,book_accommodation,train
+book room 5 from 2026-03-10 to 2026-03-12 for 3 guests,book_accommodation,train
+book room 59 for 2 guests from 2026-04-05 to 2026-04-07,book_accommodation,train
+book room 6 for 2 guests,book_accommodation,train
+book room 6 for 2 guests from 2026-03-25 to 2026-03-27,book_accommodation,train
+book room 6 from 2026-03-29 to 2026-03-31,book_accommodation,train
+book room 68 for 2 from 2026-04-17 to 2026-04-19,book_accommodation,train
+book room 68 for 2 guests from 2026-03-31 to 2026-04-02,book_accommodation,train
+book room 7 for 2 guests from 2026-03-25 to 2026-03-27,book_accommodation,train
+can you reserve an inn near the terminal tomorrow,book_accommodation,train
+yes,book_accommodation,train
+book room 12 for 2 guests from 2026-03-25 to 2026-03-27,book_accommodation,val
+book room 64 for 6 guests from 2026-03-13 to 2026-03-15,book_accommodation,val
+book room 73 for 3 guests from 2026-03-20 to 2026-03-22,book_accommodation,val
+show accommodation bookings,book_accommodation,val
+calculate hotel bill for room 12 for 2 nights,calculate_accommodation_billing,test
+how much is the room at bayawan pension house,calculate_accommodation_billing,train
+1500,get_accommodation_recommendation,test
+"Recommend a hotel in Poblacion for 2 guests, budget 2000 per night, from 2026-03-20 to 2026-03-22",get_accommodation_recommendation,test
+Recommend accommodation in Bayawan City for 1 guest budget 1200 with parking,get_accommodation_recommendation,test
+include both hotel and inn,get_accommodation_recommendation,test
+recommend an inn in bayawan for 2 guests under 1500,get_accommodation_recommendation,test
+wifi,get_accommodation_recommendation,test
+with wifi,get_accommodation_recommendation,test
+2,get_accommodation_recommendation,train
+2026-03-13 to 2026-03-15,get_accommodation_recommendation,train
+2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+2026-03-25 to 2026-03-27,get_accommodation_recommendation,train
+2026-03-29 to 2026-03-31,get_accommodation_recommendation,train
+2026-03-29 to 2026-04-01,get_accommodation_recommendation,train
+2026-04-17 to 2026-04-19,get_accommodation_recommendation,train
+2026-06-17 to 2026-06-20,get_accommodation_recommendation,train
+3000,get_accommodation_recommendation,train
+Find me an inn in Suba for 4 guests under 2500 with wifi and aircon for 2 nights,get_accommodation_recommendation,train
+Recommend a hotel in Poblacion for 2 guests under 2500 from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+Recommend a hotel in Poblacion for 4 guests under 2500 with aircon from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+Recommend an inn in Kalumboyan for 3 guests under 2500 with wifi and aircon from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+Recommend an inn in Poblacion for 3 guests under 2500 with wifi and aircon from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+Recommend an inn in Suba for 4 guests under 2500 with wifi and aircon from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+Recommend an inn in Ubos for 4 guests under 2500 with wifi and aircon from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+another room please,get_accommodation_recommendation,train
+broaden location,get_accommodation_recommendation,train
+need an inn near terminal for 2 guests,get_accommodation_recommendation,train
+need an inn near the terminal for 1 budget is under 1000,get_accommodation_recommendation,train
+recommend a cheap inn in bayawan for 2 guests,get_accommodation_recommendation,train
+recommend a hotel in bayawan,get_accommodation_recommendation,train
+recommend a hotel in bayawan for 2 guests under 2000,get_accommodation_recommendation,train
+show me an inn near poblacion under 1500,get_accommodation_recommendation,train
+show me hotel recommendations near poblacion under 2500,get_accommodation_recommendation,train
+show me options with wifi and aircon,get_accommodation_recommendation,train
+with aircon,get_accommodation_recommendation,train
+with aircon and wifi,get_accommodation_recommendation,train
+with pool,get_accommodation_recommendation,train
+2026-03-15 to 2026-03-17,get_accommodation_recommendation,val
+2026-04-05 to 2026-04-07,get_accommodation_recommendation,val
+2026-3-29 to 2026-03-31,get_accommodation_recommendation,val
+in villareal,get_accommodation_recommendation,val
+recommend an inn near terminal for 1 guest under 1000,get_accommodation_recommendation,val
+show me options with beach view under 3000 for 3 guests in Banga,get_accommodation_recommendation,val
+3,get_recommendation,test
+rest,get_recommendation,test
+under 1000 only,get_recommendation,test
+4 nights,get_recommendation,train
+Kalumboyan,get_recommendation,train
+book,get_recommendation,train
+book now,get_recommendation,train
+for 6 guests,get_recommendation,train
+for family,get_recommendation,train
+rreset,get_recommendation,train
+show me cheaper options,get_recommendation,train
+under 2000 only,get_recommendation,train
+under 3000 only,get_recommendation,train
+under 4000 only,get_recommendation,train
+1600,get_recommendation,val
+I choose 1,get_recommendation,val

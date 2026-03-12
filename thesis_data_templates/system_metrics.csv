@@ -1,0 +1,21 @@
+metric_id,module,endpoint,response_time_ms,success_flag,status_code,error_message,logged_at
+M0001,recommender,/api/recommend,182,TRUE,200,,2026-02-12 13:00:00
+M0002,cnn,/api/cnn/predict,241,TRUE,200,,2026-02-12 13:01:00
+M0003,chat,/api/chat,520,TRUE,200,,2026-02-12 13:02:00
+M0004,recommender,/api/recommend,205,TRUE,200,,2026-02-12 13:03:00
+M0005,cnn,/api/cnn/predict,260,TRUE,200,,2026-02-12 13:04:00
+M0006,chat,/api/chat,610,FALSE,500,timeout,2026-02-12 13:05:00
+M0007,recommender,/api/recommend,198,TRUE,200,,2026-02-12 13:06:00
+M0008,cnn,/api/cnn/predict,248,TRUE,200,,2026-02-12 13:07:00
+M0009,chat,/api/chat,490,TRUE,200,,2026-02-12 13:08:00
+M0010,recommender,/api/recommend,176,TRUE,200,,2026-02-12 13:09:00
+M0011,cnn,/api/cnn/predict,272,TRUE,200,,2026-02-12 13:10:00
+M0012,chat,/api/chat,540,TRUE,200,,2026-02-12 13:11:00
+M0013,recommender,/api/recommend,188,TRUE,200,,2026-02-12 13:12:00
+M0014,cnn,/api/cnn/predict,255,TRUE,200,,2026-02-12 13:13:00
+M0015,chat,/api/chat,505,TRUE,200,,2026-02-12 13:14:00
+M0016,recommender,/api/recommend,214,TRUE,200,,2026-02-12 13:15:00
+M0017,cnn,/api/cnn/predict,266,TRUE,200,,2026-02-12 13:16:00
+M0018,chat,/api/chat,575,TRUE,200,,2026-02-12 13:17:00
+M0019,recommender,/api/recommend,199,TRUE,200,,2026-02-12 13:18:00
+M0020,chat,/api/chat,630,FALSE,500,provider_unavailable,2026-02-12 13:19:00

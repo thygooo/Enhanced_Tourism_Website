@@ -262,12 +262,12 @@ def pending_view(request):
             num_children = int(request.POST.get('num_children', 0))
             total_guests = num_adults + num_children
 
-            # Get the logged-in guest (Ensure user is authenticated)
-            if not request.user.is_authenticated:
-                messages.error(request, "You must be logged in to book a tour.")
-                return redirect('login')  # Redirect to login if not authenticated
-
-            guest = get_object_or_404(Guest, user=request.user)
+            # This panel is used by employee/admin accounts; guest is selected explicitly.
+            guest_id = (request.POST.get('guest_id') or '').strip()
+            if not guest_id:
+                messages.error(request, "Guest ID is required.")
+                return redirect('tour_app:pending_view')
+            guest = get_object_or_404(Guest, guest_id=guest_id)
 
             # Get the selected schedule and tour from session or request
             sched_id = request.session.get('selected_schedule_id')

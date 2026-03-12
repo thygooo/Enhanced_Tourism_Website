@@ -1,0 +1,23 @@
+Tour Card Fallback Image Mapping Backup
+Date saved: 2026-03-08
+Template: guest_app/templates/mainpage.html
+Section: "{% empty %}" fallback tour cards
+
+Original mapping (before recent update):
+- FOREST   -> /static/images/2 VERANO.jpg
+- RIVER    -> /static/images/3 LANDSCAPE_ARTAJO.jpg
+- SEA      -> /static/images/4 LANDSCAPE_DAYTO.jpg
+- MOUNTAIN -> /static/images/5_CityLandscape_Estremos_Entry2.jpg
+- SUNSET   -> /static/images/1 Landscape_Espartero_Entry2.jpg
+
+Current mapping (after recent update):
+- FOREST   -> /static/images/4 LANDSCAPE_DAYTO.jpg
+- RIVER    -> /static/images/2 VERANO.jpg
+- SEA      -> /static/images/5_CityLandscape_Estremos_Entry2.jpg
+- MOUNTAIN -> /static/images/Landscape_Carampatana_Entry2.jpg
+- SUNSET   -> /static/images/1 Landscape_Espartero_Entry2.jpg
+
+Restore guide:
+1. Open guest_app/templates/mainpage.html.
+2. Go to the fallback section under "{% empty %}" in the tour cards.
+3. Replace the image src values using the "Original mapping" above.

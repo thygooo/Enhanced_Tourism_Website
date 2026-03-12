@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,10 +21,7 @@
         body {
             background-color: #f8f9fa;
             color: #333;
-            transform: scale(0.8);
-            transform-origin: top left;
-            width: 125%;
-            height: 125%;
+            zoom: 0.8;
             overflow-x: hidden;
         }
         
@@ -531,6 +528,10 @@
         
         /* Mobile responsiveness */
         @media (max-width: 768px) {
+            body {
+                zoom: 1;
+            }
+
             .navbar {
                 padding: 15px 20px;
             }
@@ -594,7 +595,8 @@
         
         /* Add specific styling for the images to show their lower portions */
         .package-card img[src*="2 VERANO.jpg"],
-        .package-card img[src*="5_CityLandscape_Estremos_Entry2.jpg"] {
+        .package-card img[src*="5_CityLandscape_Estremos_Entry2.jpg"],
+        .package-card img[src*="Landscape_Carampatana_Entry2.jpg"] {
             object-position: center 90%;
         }
         
@@ -1266,7 +1268,11 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background:
+                radial-gradient(circle at 20% 20%, rgba(16, 76, 186, 0.15), transparent 45%),
+                radial-gradient(circle at 80% 15%, rgba(34, 197, 94, 0.10), transparent 40%),
+                rgba(8, 15, 28, 0.55);
+            backdrop-filter: blur(4px);
         }
 
         .chat-modal-content {
@@ -1275,103 +1281,184 @@
             right: 95px;
             bottom: auto;
             transform: none;
-            width: 350px;
-            height: 500px;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 380px;
+            height: 560px;
+            background: linear-gradient(180deg, #ffffff 0%, #f6faff 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 24px 60px rgba(7, 17, 34, 0.35);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            animation: chatPanelIn 180ms ease-out;
         }
 
         .chat-header {
-            background: linear-gradient(45deg, #104CBA, #1A67D2);
+            background:
+                radial-gradient(circle at 12% 10%, rgba(255,255,255,0.25), transparent 42%),
+                linear-gradient(135deg, #0f4ea8, #1b6fd8 55%, #0ea5a2);
             color: white;
-            padding: 15px 20px;
+            padding: 14px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            position: relative;
+        }
+
+        .chat-header::after {
+            content: "Hotel ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Booking ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Billing";
+            content: attr(data-chat-subtitle);
+            position: absolute;
+            left: 16px;
+            bottom: 6px;
+            font-size: 0.68rem;
+            letter-spacing: 0.04em;
+            opacity: 0.9;
+            font-weight: 500;
         }
 
         .chat-header h3 {
             margin: 0;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            padding-bottom: 10px;
         }
 
         .chat-close {
-            background: none;
-            border: none;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             color: white;
-            font-size: 1.2rem;
+            font-size: 1rem;
             cursor: pointer;
-            padding: 0;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .chat-close:hover {
+            background: rgba(255, 255, 255, 0.24);
+            transform: translateY(-1px);
         }
 
         .chat-messages {
             flex: 1;
-            padding: 15px;
+            padding: 14px 14px 10px;
             overflow-y: auto;
-            background-color: #f8f9fa;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(16, 76, 186, 0.05), transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(14, 165, 162, 0.04), transparent 35%),
+                #f4f8fd;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: #b7c9e8 transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #bfd0eb;
+            border-radius: 999px;
         }
 
         .message {
-            margin-bottom: 15px;
-            padding: 10px 15px;
-            border-radius: 18px;
-            max-width: 80%;
+            margin-bottom: 0;
+            padding: 11px 13px;
+            border-radius: 16px;
+            max-width: 86%;
             word-wrap: break-word;
+            line-height: 1.45;
+            font-size: 0.92rem;
+            box-shadow: 0 8px 18px rgba(20, 36, 62, 0.06);
+            animation: chatBubbleIn 120ms ease-out;
         }
 
         .message.user {
-            background-color: #104CBA;
+            background: linear-gradient(135deg, #1157c4, #1f76e2);
             color: white;
             margin-left: auto;
-            text-align: right;
+            text-align: left;
+            border-bottom-right-radius: 6px;
         }
 
         .message.bot {
-            background-color: white;
-            color: #333;
-            border: 1px solid #e9ecef;
+            background: #ffffff;
+            color: #1e293b;
+            border: 1px solid #e5edf8;
+            border-bottom-left-radius: 6px;
+        }
+
+        .message.bot a {
+            color: #0f4ea8;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .message.bot a:hover {
+            text-decoration: underline;
         }
 
         .chat-input-area {
-            padding: 15px;
-            background-color: white;
-            border-top: 1px solid #e9ecef;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.92);
+            border-top: 1px solid #e8eef8;
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            align-items: center;
         }
 
         .chat-input {
             flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
+            padding: 11px 14px;
+            border: 1px solid #d7e2f3;
+            border-radius: 14px;
             outline: none;
             font-size: 0.9rem;
+            background: #f8fbff;
+            color: #0f172a;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
 
         .chat-input:focus {
-            border-color: #104CBA;
+            border-color: #1a67d2;
+            box-shadow: 0 0 0 3px rgba(26, 103, 210, 0.14);
+            background: #fff;
         }
 
         .chat-send {
-            background: linear-gradient(45deg, #104CBA, #1A67D2);
+            background: linear-gradient(135deg, #0f4ea8, #1a67d2 60%, #0ea5a2);
             color: white;
             border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            border-radius: 14px;
+            width: 44px;
+            height: 44px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 10px 18px rgba(26, 103, 210, 0.28);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
         }
 
         .chat-send:hover {
-            transform: scale(1.1);
+            transform: translateY(-1px);
+            box-shadow: 0 14px 22px rgba(26, 103, 210, 0.34);
+        }
+
+        .chat-send:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 6px 14px rgba(26, 103, 210, 0.18);
         }
 
         .typing-indicator {
@@ -1381,6 +1468,59 @@
             font-style: italic;
         }
 
+        .chat-button {
+            position: fixed;
+            top: 96px;
+            right: 20px;
+            bottom: auto;
+            width: 62px;
+            height: 62px;
+            border-radius: 20px;
+            background:
+                radial-gradient(circle at 25% 20%, rgba(255,255,255,0.28), transparent 42%),
+                linear-gradient(135deg, #0f4ea8, #1a67d2 55%, #0ea5a2);
+            box-shadow: 0 18px 30px rgba(15, 78, 168, 0.30);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2105;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .chat-button i {
+            font-size: 1.35rem;
+            color: #fff;
+        }
+
+        .chat-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 22px 34px rgba(15, 78, 168, 0.34);
+        }
+
+        @keyframes chatPanelIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes chatBubbleIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @media (max-width: 768px) {
             .chat-modal-content {
                 top: calc(84px + env(safe-area-inset-top, 0px));
@@ -1388,9 +1528,25 @@
                 bottom: auto;
                 transform: none;
                 width: calc(100vw - 24px);
-                max-width: 360px;
-                height: 70vh;
-                max-height: 500px;
+                max-width: 390px;
+                height: min(72vh, 560px);
+                border-radius: 18px;
+            }
+
+            .chat-button {
+                top: calc(84px + env(safe-area-inset-top, 0px));
+                right: 16px;
+                width: 58px;
+                height: 58px;
+                border-radius: 18px;
+            }
+
+            .chat-header h3 {
+                font-size: 0.95rem;
+            }
+
+            .chat-header::after {
+                font-size: 0.63rem;
             }
         }
     </style>
@@ -1447,6 +1603,8 @@
                     <div class="settings-item">
                         <a href="#" id="update-profile-link"><i class="fas fa-user-edit"></i> Update Profile</a>
                     </div>
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'my_accommodation_bookings' %}"><i class="fas fa-hotel"></i> My Hotel/Inn Bookings</a>
                     <div class="dropdown-divider"></div>
                     <a href="{% url 'companion' %}"><i class="fas fa-users"></i> Add Companion</a>
                     <div class="dropdown-divider"></div>
@@ -1541,7 +1699,7 @@
                                 <div class="package-price">
                                     <i class="fas fa-money-bill-wave"></i>
                                     <span>
-                                        ₱ 
+                                        &#8369;
                                         {% with min_schedule=tour.schedules.all|dictsort:"price"|first max_schedule=tour.schedules.all|dictsortreversed:"price"|first %}
                                             {% if tour.schedules.count == 1 %}
                                                 {{ min_schedule.price }}
@@ -1592,13 +1750,23 @@
             </div>
             {% empty %}
             <!-- If no tours are available -->
+            <!--
+                Backup note: Original fallback image mapping before 2026-03-08 update
+                FOREST   -> /static/images/2 VERANO.jpg
+                RIVER    -> /static/images/3 LANDSCAPE_ARTAJO.jpg
+                SEA      -> /static/images/4 LANDSCAPE_DAYTO.jpg
+                MOUNTAIN -> /static/images/5_CityLandscape_Estremos_Entry2.jpg
+                SUNSET   -> /static/images/1 Landscape_Espartero_Entry2.jpg
+                Full backup record: artifacts/tour_card_image_mapping_backup_2026-03-08.txt
+            -->
+            {% with use_legacy_fallback_images=True %}
             <div class="package-card">
                         <div class="package-title">FOREST</div>
-                        <img src="/static/images/2 VERANO.jpg" alt="Forest Tour" style="object-position: center 90%;">
+                        <img src="{% if use_legacy_fallback_images %}/static/images/2 VERANO.jpg{% else %}/static/images/4 LANDSCAPE_DAYTO.jpg{% endif %}" alt="Forest Tour">
                 <div class="package-details">
                             <div class="package-price">
                                 <i class="fas fa-money-bill-wave"></i>
-                                <span>₱ 500 - 600</span>
+                                <span>&#8369; 500 - 600</span>
                             </div>
                             <div class="package-time">
                                 <i class="fas fa-calendar-day"></i>
@@ -1611,11 +1779,11 @@
             </div>
             <div class="package-card">
                         <div class="package-title">RIVER</div>
-                <img src="/static/images/3 LANDSCAPE_ARTAJO.jpg" alt="River Tour">
+                <img src="{% if use_legacy_fallback_images %}/static/images/3 LANDSCAPE_ARTAJO.jpg{% else %}/static/images/2 VERANO.jpg{% endif %}" alt="River Tour">
                 <div class="package-details">
                             <div class="package-price">
                                 <i class="fas fa-money-bill-wave"></i>
-                                <span>₱ 450 - 550</span>
+                                <span>&#8369; 450 - 550</span>
                             </div>
                             <div class="package-time">
                                 <i class="fas fa-calendar-day"></i>
@@ -1628,11 +1796,11 @@
             </div>
             <div class="package-card">
                         <div class="package-title">SEA</div>
-                <img src="/static/images/4 LANDSCAPE_DAYTO.jpg" alt="Sea Tour">
+                <img src="{% if use_legacy_fallback_images %}/static/images/4 LANDSCAPE_DAYTO.jpg{% else %}/static/images/5_CityLandscape_Estremos_Entry2.jpg{% endif %}" alt="Sea Tour">
                 <div class="package-details">
                             <div class="package-price">
                                 <i class="fas fa-money-bill-wave"></i>
-                                <span>₱ 600 - 750</span>
+                                <span>&#8369; 600 - 750</span>
                             </div>
                             <div class="package-time">
                                 <i class="fas fa-calendar-day"></i>
@@ -1645,11 +1813,11 @@
             </div>
             <div class="package-card">
                         <div class="package-title">MOUNTAIN</div>
-                        <img src="/static/images/5_CityLandscape_Estremos_Entry2.jpg" alt="Mountain Tour" style="object-position: center 90%;">
+                        <img src="{% if use_legacy_fallback_images %}/static/images/5_CityLandscape_Estremos_Entry2.jpg{% else %}/static/images/Landscape_Carampatana_Entry2.jpg{% endif %}" alt="Mountain Tour">
                 <div class="package-details">
                             <div class="package-price">
                                 <i class="fas fa-money-bill-wave"></i>
-                                <span>₱ 550 - 700</span>
+                                <span>&#8369; 550 - 700</span>
                             </div>
                             <div class="package-time">
                                 <i class="fas fa-calendar-day"></i>
@@ -1666,7 +1834,7 @@
                 <div class="package-details">
                             <div class="package-price">
                                 <i class="fas fa-money-bill-wave"></i>
-                                <span>₱ 400 - 500</span>
+                                <span>&#8369; 400 - 500</span>
                             </div>
                             <div class="package-time">
                                 <i class="fas fa-calendar-day"></i>
@@ -1677,6 +1845,7 @@
                             </div>
                 </div>
             </div>
+            {% endwith %}
             {% endfor %}
         </div>
             </div>
@@ -1765,11 +1934,11 @@
                             <p><strong>Guests:</strong> {{ booking.num_adults }} Adults, {{ booking.num_children }} Children</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.schedule %}
-                                ₱{{ booking.schedule.price|floatformat:2 }} × {{ booking.num_adults|add:booking.num_children }} = ₱{% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.schedule.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
                               {% elif booking.sched_id %}
-                                ₱{{ booking.sched_id.price|floatformat:2 }} × {{ booking.num_adults|add:booking.num_children }} = ₱{% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
                               {% else %}
-                                ₱{{ booking.total_amount|default:"0.00" }}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.total_amount|default:"0.00" }}
                               {% endif %}
                             </p>
                             {% else %}
@@ -1777,9 +1946,9 @@
                             <p><strong>Total Guests:</strong> {{ booking.total_guests }}</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.sched_id %}
-                                ₱{{ booking.sched_id.price|floatformat:2 }} × {{ booking.total_guests }} = ₱{% widthratio booking.sched_id.price 1 booking.total_guests %}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.total_guests }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.total_guests %}
                               {% else %}
-                                ₱0.00
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±0.00
                               {% endif %}
                             </p>
                             {% endif %}
@@ -1865,11 +2034,11 @@
                             <p><strong>Guests:</strong> {{ booking.num_adults }} Adults, {{ booking.num_children }} Children</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.schedule %}
-                                ₱{{ booking.schedule.price|floatformat:2 }} × {{ booking.num_adults|add:booking.num_children }} = ₱{% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.schedule.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
                               {% elif booking.sched_id %}
-                                ₱{{ booking.sched_id.price|floatformat:2 }} × {{ booking.num_adults|add:booking.num_children }} = ₱{% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
                               {% else %}
-                                ₱{{ booking.total_amount|default:"0.00" }}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.total_amount|default:"0.00" }}
                               {% endif %}
                             </p>
                             {% else %}
@@ -1877,9 +2046,9 @@
                             <p><strong>Total Guests:</strong> {{ booking.total_guests }}</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.sched_id %}
-                                ₱{{ booking.sched_id.price|floatformat:2 }} × {{ booking.total_guests }} = ₱{% widthratio booking.sched_id.price 1 booking.total_guests %}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.total_guests }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.total_guests %}
                               {% else %}
-                                ₱0.00
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±0.00
                               {% endif %}
                             </p>
                             {% endif %}
@@ -1964,11 +2133,11 @@
                             <p><strong>Guests:</strong> {{ booking.num_adults }} Adults, {{ booking.num_children }} Children</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.schedule %}
-                                ₱{{ booking.schedule.price|floatformat:2 }} × {{ booking.num_adults|add:booking.num_children }} = ₱{% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.schedule.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
                               {% elif booking.sched_id %}
-                                ₱{{ booking.sched_id.price|floatformat:2 }} × {{ booking.num_adults|add:booking.num_children }} = ₱{% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
                               {% else %}
-                                ₱{{ booking.total_amount|default:"0.00" }}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.total_amount|default:"0.00" }}
                               {% endif %}
                             </p>
                             {% else %}
@@ -1976,9 +2145,9 @@
                             <p><strong>Total Guests:</strong> {{ booking.total_guests }}</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.sched_id %}
-                                ₱{{ booking.sched_id.price|floatformat:2 }} × {{ booking.total_guests }} = ₱{% widthratio booking.sched_id.price 1 booking.total_guests %}
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.total_guests }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.total_guests %}
                               {% else %}
-                                ₱0.00
+                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±0.00
                               {% endif %}
                             </p>
                             {% endif %}
@@ -2086,16 +2255,17 @@
         </div>
     </section>
 
+    {% if user.is_authenticated %}
     <!-- Chat Modal -->
     <div id="chatModal" class="chat-modal">
         <div class="chat-modal-content">
-            <div class="chat-header">
+            <div class="chat-header" data-chat-subtitle="Hotel | Booking | Billing">
                 <h3>Ibayaw Tour Assistant</h3>
                 <button class="chat-close">&times;</button>
             </div>
             <div class="chat-messages" id="chatMessages">
                 <div class="message bot">
-                    Hello! I'm your Ibayaw Tour assistant. How can I help you today?
+                    Hello! I'm your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City.
                 </div>
             </div>
             <div class="chat-input-area">
@@ -2104,6 +2274,33 @@
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
+            <div style="padding: 8px 12px; border-top: 1px solid #e7eef8; text-align: right;">
+                <button
+                    id="chatSurveyOpenBtn"
+                    type="button"
+                    style="border: 1px solid #c3d4ea; background: #f3f8ff; color: #1f4f85; border-radius: 999px; padding: 6px 10px; font-size: 0.74rem; font-weight: 700; cursor: pointer;"
+                >
+                    Answer SUS/TAM Survey
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="chatSurveyModal" class="chat-modal" style="display:none;">
+        <div class="chat-modal-content" style="max-width: 640px;">
+            <div class="chat-header">
+                <h3>Usability & Acceptance Survey</h3>
+                <button id="chatSurveyCloseBtn" class="chat-close">&times;</button>
+            </div>
+            <div style="padding: 12px 14px; max-height: 68vh; overflow-y: auto;">
+                <div style="padding: 8px 10px; border: 1px solid #d6e2f1; border-radius: 8px; background: #f8fbff; color: #355775; font-size: 0.74rem; font-weight: 700; margin-bottom: 10px;">
+                    Likert Scale: 1 = Strongly Disagree, 2 = Disagree, 3 = Neutral, 4 = Agree, 5 = Strongly Agree
+                </div>
+                <div id="chatSurveyQuestions" style="display:grid; gap: 10px;"></div>
+                <textarea id="chatSurveyComment" rows="3" placeholder="Optional comments" style="width:100%; margin-top:10px; border:1px solid #d4dfed; border-radius:8px; padding:8px;"></textarea>
+                <div style="margin-top: 10px; text-align: right;">
+                    <button id="chatSurveySubmitBtn" type="button" style="border: none; background: linear-gradient(135deg, #1f64d6, #179fc4); color: #fff; border-radius: 8px; padding: 8px 12px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">Submit Survey</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -2111,6 +2308,7 @@
     <div class="chat-button" id="chatButton">
         <i class="fas fa-comment"></i>
     </div>
+    {% endif %}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -2121,14 +2319,249 @@
             const chatInput = document.getElementById('chatInput');
             const chatSend = document.getElementById('chatSend');
             const chatMessages = document.getElementById('chatMessages');
+            const chatSurveyOpenBtn = document.getElementById('chatSurveyOpenBtn');
+            const chatSurveyModal = document.getElementById('chatSurveyModal');
+            const chatSurveyCloseBtn = document.getElementById('chatSurveyCloseBtn');
+            const chatSurveySubmitBtn = document.getElementById('chatSurveySubmitBtn');
+            const chatSurveyQuestions = document.getElementById('chatSurveyQuestions');
+            const chatSurveyComment = document.getElementById('chatSurveyComment');
+            const myAccommodationBookingsUrl = "{% url 'my_accommodation_bookings' %}";
+            let hasLoadedInitialHotelSuggestions = false;
+            const surveyQuestionBank = [
+                { code: 'SUS_Q1', label: 'I think that I would like to use this system frequently.' },
+                { code: 'SUS_Q2', label: 'I found the system unnecessarily complex.' },
+                { code: 'SUS_Q3', label: 'I thought the system was easy to use.' },
+                { code: 'SUS_Q4', label: 'I think that I would need the support of a technical person to be able to use this system.' },
+                { code: 'SUS_Q5', label: 'I found the various functions in this system were well integrated.' },
+                { code: 'SUS_Q6', label: 'I thought there was too much inconsistency in this system.' },
+                { code: 'SUS_Q7', label: 'I would imagine that most people would learn to use this system very quickly.' },
+                { code: 'SUS_Q8', label: 'I found the system very cumbersome to use.' },
+                { code: 'SUS_Q9', label: 'I felt very confident using the system.' },
+                { code: 'SUS_Q10', label: 'I needed to learn a lot of things before I could get going with this system.' },
+                { code: 'PU_Q1', label: 'Using the AI-enhanced tourism system improves my task performance when planning or booking.' },
+                { code: 'PU_Q2', label: 'Using the AI-enhanced tourism system increases my productivity in finding suitable options.' },
+                { code: 'PU_Q3', label: 'Using the AI-enhanced tourism system enhances my effectiveness in completing booking-related tasks.' },
+                { code: 'PU_Q4', label: 'Overall, I find the AI-enhanced tourism system useful for my tourism-related needs.' },
+                { code: 'PEU_Q1', label: 'Learning to operate the AI-enhanced tourism system is easy for me.' },
+                { code: 'PEU_Q2', label: 'I find it easy to get the AI-enhanced tourism system to do what I want it to do.' },
+                { code: 'PEU_Q3', label: 'My interaction with the AI-enhanced tourism system is clear and understandable.' },
+                { code: 'PEU_Q4', label: 'Overall, I find the AI-enhanced tourism system easy to use.' },
+                { code: 'DIFF_DISCOVER', label: 'I had difficulty discovering suitable hotels/inns in the system.' },
+                { code: 'DIFF_MATCH', label: 'I had difficulty finding accommodation options that match my preferences.' },
+                { code: 'DIFF_PLAN', label: 'I had difficulty planning my stay-related itinerary using the system.' },
+                { code: 'DIFF_BOOKPAY', label: 'I had difficulty completing the booking and billing/payment flow.' },
+            ];
+            const getUiText = (key, fallback) => {
+                const translations = window.mainPageTranslations || {};
+                return translations[key] || fallback;
+            };
+            const getCsrfToken = () => {
+                const fromCookie = (document.cookie || '')
+                    .split('; ')
+                    .find(row => row.startsWith('csrftoken='));
+                if (fromCookie) {
+                    return decodeURIComponent(fromCookie.split('=')[1] || '');
+                }
+                const hidden = document.querySelector('[name=csrfmiddlewaretoken]');
+                return hidden ? String(hidden.value || '').trim() : '';
+            };
+
+            async function logRecommendationClick(payload = {}) {
+                try {
+                    const csrfToken = getCsrfToken();
+                    await fetch('/api/chat/recommendation-click/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            ...(csrfToken ? { 'X-CSRFToken': csrfToken } : {}),
+                        },
+                        body: JSON.stringify(payload || {}),
+                    });
+                } catch (error) {
+                    console.warn('Recommendation click log failed:', error);
+                }
+            }
+
+            async function sendUsabilityFeedback(payload = {}) {
+                try {
+                    const csrfToken = getCsrfToken();
+                    await fetch('/api/chat/usability-feedback/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            ...(csrfToken ? { 'X-CSRFToken': csrfToken } : {}),
+                        },
+                        body: JSON.stringify(payload || {}),
+                    });
+                } catch (error) {
+                    console.warn('Usability feedback log failed:', error);
+                }
+            }
+
+            function showBookingStatusToast(message, status) {
+                const toast = document.createElement('div');
+                toast.style.position = 'fixed';
+                toast.style.right = '18px';
+                toast.style.bottom = '18px';
+                toast.style.zIndex = '99999';
+                toast.style.maxWidth = '340px';
+                toast.style.padding = '10px 12px';
+                toast.style.borderRadius = '10px';
+                toast.style.boxShadow = '0 10px 26px rgba(0,0,0,0.18)';
+                toast.style.fontSize = '0.79rem';
+                toast.style.fontWeight = '700';
+                toast.style.lineHeight = '1.35';
+                if (String(status).toLowerCase() === 'confirmed') {
+                    toast.style.background = '#dff4e7';
+                    toast.style.color = '#145f3a';
+                    toast.style.border = '1px solid #a9dfbf';
+                } else {
+                    toast.style.background = '#fbe5e7';
+                    toast.style.color = '#8a2438';
+                    toast.style.border = '1px solid #e7b9c1';
+                }
+                const msg = document.createElement('div');
+                msg.textContent = message;
+                msg.style.marginBottom = '8px';
+                toast.appendChild(msg);
+
+                const actions = document.createElement('div');
+                actions.style.display = 'flex';
+                actions.style.justifyContent = 'flex-end';
+                actions.style.gap = '8px';
+
+                const viewBtn = document.createElement('button');
+                viewBtn.type = 'button';
+                viewBtn.textContent = 'View now';
+                viewBtn.style.border = 'none';
+                viewBtn.style.borderRadius = '7px';
+                viewBtn.style.padding = '6px 10px';
+                viewBtn.style.cursor = 'pointer';
+                viewBtn.style.fontSize = '0.73rem';
+                viewBtn.style.fontWeight = '700';
+                viewBtn.style.color = '#ffffff';
+                viewBtn.style.background = '#1f64d6';
+                viewBtn.addEventListener('click', () => {
+                    window.location.href = myAccommodationBookingsUrl;
+                });
+
+                const closeBtn = document.createElement('button');
+                closeBtn.type = 'button';
+                closeBtn.textContent = 'Dismiss';
+                closeBtn.style.border = '1px solid rgba(0,0,0,0.16)';
+                closeBtn.style.borderRadius = '7px';
+                closeBtn.style.padding = '6px 10px';
+                closeBtn.style.cursor = 'pointer';
+                closeBtn.style.fontSize = '0.73rem';
+                closeBtn.style.fontWeight = '700';
+                closeBtn.style.background = '#ffffff';
+                closeBtn.style.color = '#2a3f54';
+                closeBtn.addEventListener('click', () => {
+                    if (toast && toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                });
+
+                actions.appendChild(closeBtn);
+                actions.appendChild(viewBtn);
+                toast.appendChild(actions);
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    if (toast && toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 5200);
+            }
+
+            async function pollBookingStatusNotifications() {
+                try {
+                    const res = await fetch('/api/chat/accommodation-booking-notifications/', { method: 'GET' });
+                    if (!res.ok) return;
+                    const payload = await res.json();
+                    const rows = Array.isArray(payload?.bookings) ? payload.bookings : [];
+                    const key = 'accom_booking_status_snapshot_v1';
+                    const previousRaw = localStorage.getItem(key);
+                    const previous = previousRaw ? JSON.parse(previousRaw) : {};
+                    const nextMap = {};
+                    rows.forEach((row) => {
+                        const id = String(row?.booking_id || '');
+                        const status = String(row?.status || '').toLowerCase();
+                        if (!id || !status) return;
+                        nextMap[id] = status;
+                        if (previousRaw && previous[id] && previous[id] !== status && (status === 'confirmed' || status === 'declined')) {
+                            const hotelName = String(row?.hotel_name || 'Your accommodation booking');
+                            const statusLabel = status === 'confirmed' ? 'approved' : 'declined';
+                            showBookingStatusToast(`${hotelName}: booking #${id} was ${statusLabel}.`, status);
+                        }
+                    });
+                    localStorage.setItem(key, JSON.stringify(nextMap));
+                } catch (e) {
+                    // Notification polling is optional.
+                }
+            }
 
             if (!chatButton || !chatModal || !chatClose || !chatInput || !chatSend || !chatMessages) {
                 return;
             }
+            if (chatSurveyQuestions && chatSurveyQuestions.childNodes.length === 0) {
+                surveyQuestionBank.forEach((item) => {
+                    const wrap = document.createElement('label');
+                    wrap.style.display = 'grid';
+                    wrap.style.gap = '4px';
+                    wrap.style.fontSize = '0.78rem';
+                    wrap.style.fontWeight = '700';
+                    wrap.style.color = '#2a445f';
+                    wrap.textContent = item.label;
+
+                    const select = document.createElement('select');
+                    select.setAttribute('data-survey-code', item.code);
+                    select.style.border = '1px solid #cad8ea';
+                    select.style.borderRadius = '8px';
+                    select.style.padding = '6px';
+                    select.style.fontSize = '0.77rem';
+                    select.innerHTML = [
+                        '<option value=\"\">Select rating (1-5)</option>',
+                        '<option value=\"1\">1 - Strongly Disagree</option>',
+                        '<option value=\"2\">2 - Disagree</option>',
+                        '<option value=\"3\">3 - Neutral</option>',
+                        '<option value=\"4\">4 - Agree</option>',
+                        '<option value=\"5\">5 - Strongly Agree</option>',
+                    ].join('');
+                    wrap.appendChild(select);
+                    chatSurveyQuestions.appendChild(wrap);
+                });
+            }
+
+            chatMessages.addEventListener('click', async function(event) {
+                const target = event.target;
+                if (!(target instanceof HTMLElement)) return;
+                const chip = target.closest('button[data-quick-reply="1"]');
+                if (!chip) return;
+                const replyText = String(chip.getAttribute('data-reply-text') || '').trim();
+                if (!replyText) return;
+                if (replyText.toLowerCase() === 'view my accommodation bookings') {
+                    window.location.href = myAccommodationBookingsUrl;
+                    return;
+                }
+                chip.setAttribute('disabled', 'disabled');
+                await requestChatbotReply(replyText, { addUserBubble: true });
+            });
 
             // Show chat modal when button is clicked
             chatButton.addEventListener('click', function() {
+                const isAuthenticated = document.body.getAttribute('data-authenticated') === 'true';
+                if (!isAuthenticated) {
+                    const loginModal = document.getElementById('loginModal');
+                    if (loginModal) {
+                        loginModal.style.display = 'block';
+                    }
+                    return;
+                }
                 chatModal.style.display = 'block';
+                if (!hasLoadedInitialHotelSuggestions) {
+                    hasLoadedInitialHotelSuggestions = true;
+                    requestChatbotReply('show default hotel suggestions', { addUserBubble: false, initSuggestions: true });
+                }
                 if (chatInput && typeof chatInput.focus === 'function') {
                     try {
                         chatInput.focus({ preventScroll: true });
@@ -2142,11 +2575,52 @@
             chatClose.addEventListener('click', function() {
                 chatModal.style.display = 'none';
             });
+            if (chatSurveyOpenBtn && chatSurveyModal) {
+                chatSurveyOpenBtn.addEventListener('click', function() {
+                    chatSurveyModal.style.display = 'block';
+                });
+            }
+            if (chatSurveyCloseBtn && chatSurveyModal) {
+                chatSurveyCloseBtn.addEventListener('click', function() {
+                    chatSurveyModal.style.display = 'none';
+                });
+            }
+            if (chatSurveySubmitBtn && chatSurveyQuestions) {
+                chatSurveySubmitBtn.addEventListener('click', async function() {
+                    const responseItems = [];
+                    let hasMissing = false;
+                    chatSurveyQuestions.querySelectorAll('select[data-survey-code]').forEach((selectEl) => {
+                        const code = String(selectEl.getAttribute('data-survey-code') || '').trim();
+                        const score = Number(selectEl.value || 0);
+                        if (!code || !Number.isInteger(score) || score < 1 || score > 5) {
+                            hasMissing = true;
+                            return;
+                        }
+                        responseItems.push({ statement_code: code, likert_score: score });
+                    });
+                    if (hasMissing || responseItems.length !== surveyQuestionBank.length) {
+                        alert('Please answer all SUS, TAM, and difficulty items (1-5).');
+                        return;
+                    }
+                    chatSurveySubmitBtn.disabled = true;
+                    await sendUsabilityFeedback({
+                        instrument: 'sus_tam_difficulty_full',
+                        responses: responseItems,
+                        comment: chatSurveyComment ? String(chatSurveyComment.value || '').trim() : '',
+                    });
+                    chatSurveySubmitBtn.disabled = false;
+                    alert('Survey submitted. Thank you!');
+                    if (chatSurveyModal) chatSurveyModal.style.display = 'none';
+                });
+            }
 
             // Close chat modal when clicking outside
             window.addEventListener('click', function(event) {
                 if (event.target === chatModal) {
                     chatModal.style.display = 'none';
+                }
+                if (chatSurveyModal && event.target === chatSurveyModal) {
+                    chatSurveyModal.style.display = 'none';
                 }
             });
 
@@ -2154,69 +2628,895 @@
             async function sendMessage() {
                 const message = chatInput.value.trim();
                 if (message) {
-                    // Add user message
-                    addMessage(message, 'user');
                     chatInput.value = '';
-                    chatSend.disabled = true;
-                    addMessage('Thinking...', 'bot', true);
+                    await requestChatbotReply(message, { addUserBubble: true });
+                }
+            }
 
-                    try {
-                        const response = await fetch('/api/chat/', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ message: message })
-                        });
+            async function requestChatbotReply(message, options = {}) {
+                const addUserBubble = options.addUserBubble !== false;
+                const initSuggestions = options.initSuggestions === true;
 
-                        const contentType = response.headers.get('content-type') || '';
-                        let data = null;
-                        let rawText = '';
+                if (addUserBubble) {
+                    addMessage(message, 'user');
+                }
 
-                        if (contentType.includes('application/json')) {
-                            data = await response.json();
-                        } else {
-                            rawText = await response.text();
-                        }
+                chatSend.disabled = true;
+                addMessage(getUiText('chat_thinking', 'Thinking...'), 'bot', true);
 
-                        removeTypingMessage();
+                try {
+                    const response = await fetch('/api/chat/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ message: message, init_suggestions: initSuggestions })
+                    });
 
-                        if (!response.ok) {
-                            const fallbackMsg = data?.fulfillmentText || data?.message || rawText || 'Server error.';
-                            addMessage(`Chatbot error (${response.status}). ${fallbackMsg}`, 'bot');
-                        } else if (data) {
-                            addMessage(data.fulfillmentText || 'No response from assistant.', 'bot');
-                        } else {
-                            addMessage('Chatbot returned a non-JSON response. Check server logs.', 'bot');
-                        }
-                    } catch (error) {
-                        removeTypingMessage();
-                        addMessage('Sorry, I could not connect to the chatbot right now.', 'bot');
-                        console.error('Chatbot error:', error);
-                    } finally {
-                        chatSend.disabled = false;
-                        if (chatInput && typeof chatInput.focus === 'function') {
-                            try {
-                                chatInput.focus({ preventScroll: true });
-                            } catch (e) {
-                                // Ignore unsupported focus options.
+                    const contentType = response.headers.get('content-type') || '';
+                    let data = null;
+                    let rawText = '';
+
+                    if (contentType.includes('application/json')) {
+                        data = await response.json();
+                    } else {
+                        rawText = await response.text();
+                    }
+
+                    removeTypingMessage();
+
+                    if (!response.ok) {
+                        const fallbackMsg = data?.fulfillmentText || data?.message || rawText || 'Server error.';
+                        if (response.status === 401) {
+                            addMessage(
+                                fallbackMsg || getUiText('chat_login_required', 'Please log in first to use the chatbot.'),
+                                'bot'
+                            );
+                            const loginModal = document.getElementById('loginModal');
+                            if (loginModal) {
+                                loginModal.style.display = 'block';
                             }
+                            return;
+                        }
+                        addMessage(`Chatbot error (${response.status}). ${fallbackMsg}`, 'bot');
+                    } else if (data) {
+                        if (data.redirect_url) {
+                            window.location.href = String(data.redirect_url);
+                            return;
+                        }
+                        addMessage(data.fulfillmentText || 'No response from assistant.', 'bot', false, data);
+                        if (Array.isArray(data.quick_replies) && data.quick_replies.length > 0) {
+                            addQuickReplies(data.quick_replies);
+                        }
+                        if (data.receipt_text) {
+                            addDownloadMessage(
+                                'Download Booking Receipt',
+                                String(data.receipt_text),
+                                String(data.receipt_filename || 'ibayaw_booking_receipt.txt')
+                            );
+                        }
+                        if (data.billing_link) {
+                            addLinkMessage(resolveChatLinkLabel(data), data.billing_link);
+                        }
+                    } else {
+                        addMessage(getUiText('chat_non_json_error', 'Chatbot returned a non-JSON response. Check server logs.'), 'bot');
+                    }
+                } catch (error) {
+                    removeTypingMessage();
+                    addMessage(getUiText('chat_connect_error', 'Sorry, I could not connect to the chatbot right now.'), 'bot');
+                    console.error('Chatbot error:', error);
+                } finally {
+                    chatSend.disabled = false;
+                    if (chatInput && typeof chatInput.focus === 'function') {
+                        try {
+                            chatInput.focus({ preventScroll: true });
+                        } catch (e) {
+                            // Ignore unsupported focus options.
                         }
                     }
                 }
             }
 
             // Add message to chat
-            function addMessage(text, sender, isTyping = false) {
+            function addMessage(text, sender, isTyping = false, payload = null) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${sender}`;
                 if (isTyping) {
                     messageDiv.setAttribute('data-typing', 'true');
                 }
-                messageDiv.textContent = text;
-                messageDiv.style.whiteSpace = 'pre-line';
+                let structuredContent = null;
+                if (sender === 'bot' && !isTyping) {
+                    structuredContent =
+                        buildAccommodationRecommendationTraceCard(text, payload) ||
+                        buildBillingSummaryCard(text) ||
+                        buildBookingSummaryCard(text);
+                }
+
+                if (structuredContent) {
+                    messageDiv.appendChild(structuredContent);
+                } else {
+                    messageDiv.textContent = text;
+                    messageDiv.style.whiteSpace = 'pre-line';
+                }
+                if (sender === 'bot' && !isTyping && payload?.show_feedback_prompt === true) {
+                    appendUxFeedbackControls(messageDiv);
+                }
                 chatMessages.appendChild(messageDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function appendUxFeedbackControls(messageDiv) {
+                const row = document.createElement('div');
+                row.style.display = 'flex';
+                row.style.gap = '8px';
+                row.style.marginTop = '8px';
+                row.style.alignItems = 'center';
+                row.style.flexWrap = 'wrap';
+
+                const label = document.createElement('span');
+                label.textContent = 'Was this helpful?';
+                label.style.fontSize = '0.72rem';
+                label.style.fontWeight = '700';
+                label.style.color = '#4b6078';
+                row.appendChild(label);
+
+                const makeBtn = (text, likert) => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.textContent = text;
+                    btn.style.padding = '4px 8px';
+                    btn.style.borderRadius = '999px';
+                    btn.style.border = '1px solid #c3d4ea';
+                    btn.style.background = '#f2f7ff';
+                    btn.style.color = '#214c7b';
+                    btn.style.fontSize = '0.71rem';
+                    btn.style.fontWeight = '700';
+                    btn.style.cursor = 'pointer';
+                    btn.addEventListener('click', async () => {
+                        btn.disabled = true;
+                        await sendUsabilityFeedback({
+                            statement_code: 'CHAT_UX_HELPFULNESS',
+                            likert_score: likert,
+                            comment: '',
+                        });
+                        row.innerHTML = '<span style="font-size:0.72rem;color:#3b6b4a;font-weight:700;">Thanks for the feedback.</span>';
+                    });
+                    return btn;
+                };
+
+                row.appendChild(makeBtn('Yes', 5));
+                row.appendChild(makeBtn('Needs improvement', 2));
+                messageDiv.appendChild(row);
+            }
+
+            function buildAccommodationRecommendationTraceCard(text, payload) {
+                const traceItems = Array.isArray(payload?.recommendation_trace)
+                    ? payload.recommendation_trace
+                    : null;
+                if (!traceItems || traceItems.length === 0) {
+                    return null;
+                }
+                const fallbackMode = String(payload?.recommendation_fallback || 'strict').trim().toLowerCase();
+
+                const card = document.createElement('div');
+                card.style.display = 'grid';
+                card.style.gap = '12px';
+                card.style.padding = '2px 1px';
+
+                const title = document.createElement('div');
+                title.textContent = 'Accommodation Recommendations';
+                title.style.fontWeight = '800';
+                title.style.fontSize = '0.96rem';
+                title.style.letterSpacing = '0.01em';
+                title.style.color = '#16344a';
+                card.appendChild(title);
+
+                if (fallbackMode && fallbackMode !== 'strict') {
+                    const fallbackNotice = document.createElement('div');
+                    fallbackNotice.style.padding = '8px 10px';
+                    fallbackNotice.style.borderRadius = '10px';
+                    fallbackNotice.style.border = '1px solid #ead9a9';
+                    fallbackNotice.style.background = '#fff8df';
+                    fallbackNotice.style.color = '#684d00';
+                    fallbackNotice.style.fontSize = '0.78rem';
+                    fallbackNotice.style.fontWeight = '700';
+                    fallbackNotice.textContent = 'Showing broadened matches because strict filters had limited results.';
+                    card.appendChild(fallbackNotice);
+                }
+
+                traceItems.forEach((item) => {
+                    const itemBox = document.createElement('div');
+                    itemBox.style.border = '1px solid #c7d7e6';
+                    itemBox.style.borderRadius = '14px';
+                    itemBox.style.padding = '10px 12px';
+                    itemBox.style.background = 'linear-gradient(180deg, #f8fbff 0%, #f2f7fb 100%)';
+                    itemBox.style.boxShadow = '0 1px 2px rgba(12, 40, 66, 0.08)';
+                    itemBox.style.display = 'grid';
+                    itemBox.style.gap = '6px';
+                    itemBox.style.position = 'relative';
+
+                    const heading = document.createElement('div');
+                    heading.textContent = `${item.rank || ''}. ${item.title || ''}`;
+                    heading.style.fontWeight = '700';
+                    heading.style.fontSize = '0.92rem';
+                    heading.style.lineHeight = '1.3';
+                    heading.style.color = '#1a324d';
+                    itemBox.appendChild(heading);
+
+                    const metaRow = document.createElement('div');
+                    metaRow.style.display = 'flex';
+                    metaRow.style.flexWrap = 'wrap';
+                    metaRow.style.gap = '6px';
+                    metaRow.style.marginTop = '1px';
+
+                    const makePill = (text) => {
+                        const pill = document.createElement('span');
+                        pill.textContent = text;
+                        pill.style.display = 'inline-flex';
+                        pill.style.alignItems = 'center';
+                        pill.style.gap = '4px';
+                        pill.style.padding = '3px 8px';
+                        pill.style.borderRadius = '999px';
+                        pill.style.fontSize = '0.72rem';
+                        pill.style.fontWeight = '700';
+                        pill.style.letterSpacing = '0.01em';
+                        pill.style.background = '#e7f1ff';
+                        pill.style.color = '#1b4a8a';
+                        return pill;
+                    };
+
+                    if (item && item.location) {
+                        metaRow.appendChild(makePill(`Location: ${item.location}`));
+                    }
+                    if (item?.price_per_night || item?.rate) {
+                        const rate = item?.price_per_night || item?.rate;
+                        metaRow.appendChild(makePill(`Rate: PHP ${rate}/night`));
+                    }
+                    if (item?.person_limit) {
+                        metaRow.appendChild(makePill(`Capacity: ${item.person_limit} pax`));
+                    }
+                    if (metaRow.childNodes.length > 0) {
+                        itemBox.appendChild(metaRow);
+                    }
+
+                    if (item && item.room_id) {
+                        const roomMeta = document.createElement('div');
+                        roomMeta.textContent = `Room ID: ${item.room_id}`;
+                        roomMeta.style.fontSize = '0.74rem';
+                        roomMeta.style.fontWeight = '700';
+                        roomMeta.style.color = '#355775';
+                        roomMeta.style.opacity = '0.92';
+                        itemBox.appendChild(roomMeta);
+                    }
+
+                    if (item && item.subtitle) {
+                        const sub = document.createElement('div');
+                        sub.textContent = String(item.subtitle);
+                        sub.style.fontSize = '0.81rem';
+                        sub.style.lineHeight = '1.35';
+                        sub.style.color = '#51667b';
+                        itemBox.appendChild(sub);
+                    }
+
+                    const matchStrengthRaw = String(item?.match_strength || '').trim();
+                    const matchStrength = matchStrengthRaw || 'Low';
+                    const scoreValue = Number(item?.ranking_score ?? item?.match_score);
+                    if (Number.isFinite(scoreValue) || matchStrengthRaw) {
+                        const matchRow = document.createElement('div');
+                        matchRow.style.display = 'flex';
+                        matchRow.style.alignItems = 'center';
+                        matchRow.style.gap = '8px';
+                        matchRow.style.flexWrap = 'wrap';
+
+                        const strengthBadge = document.createElement('span');
+                        strengthBadge.textContent = `Match: ${matchStrength}`;
+                        strengthBadge.style.display = 'inline-block';
+                        strengthBadge.style.padding = '2px 8px';
+                        strengthBadge.style.borderRadius = '999px';
+                        strengthBadge.style.fontSize = '0.73rem';
+                        strengthBadge.style.fontWeight = '800';
+                        strengthBadge.style.letterSpacing = '0.01em';
+
+                        const normalizedStrength = matchStrength.toLowerCase();
+                        if (normalizedStrength === 'high') {
+                            strengthBadge.style.background = '#d9f2e6';
+                            strengthBadge.style.color = '#0f6b44';
+                        } else if (normalizedStrength === 'medium') {
+                            strengthBadge.style.background = '#fff2cf';
+                            strengthBadge.style.color = '#845800';
+                        } else {
+                            strengthBadge.style.background = '#f6dee1';
+                            strengthBadge.style.color = '#9a2a3a';
+                        }
+                        matchRow.appendChild(strengthBadge);
+
+                        const scoreLine = document.createElement('div');
+                        scoreLine.style.fontSize = '0.77rem';
+                        scoreLine.style.fontWeight = '700';
+                        scoreLine.style.color = '#355775';
+                        if (Number.isFinite(scoreValue)) {
+                            scoreLine.textContent = `Score: ${scoreValue.toFixed(2)}`;
+                        } else {
+                            scoreLine.textContent = 'Score: N/A';
+                        }
+                        matchRow.appendChild(scoreLine);
+                        itemBox.appendChild(matchRow);
+
+                        if (Number.isFinite(scoreValue)) {
+                            const meterTrack = document.createElement('div');
+                            meterTrack.style.height = '6px';
+                            meterTrack.style.width = '100%';
+                            meterTrack.style.borderRadius = '999px';
+                            meterTrack.style.background = '#dce7f4';
+                            meterTrack.style.overflow = 'hidden';
+
+                            const meterFill = document.createElement('div');
+                            meterFill.style.height = '100%';
+                            meterFill.style.width = `${Math.max(0, Math.min(100, scoreValue * 100))}%`;
+                            meterFill.style.borderRadius = '999px';
+                            if (scoreValue >= 0.8) {
+                                meterFill.style.background = 'linear-gradient(90deg, #0f9f67, #2db585)';
+                            } else if (scoreValue >= 0.55) {
+                                meterFill.style.background = 'linear-gradient(90deg, #d89b00, #efb84b)';
+                            } else {
+                                meterFill.style.background = 'linear-gradient(90deg, #bf3f59, #d76a7f)';
+                            }
+                            meterTrack.appendChild(meterFill);
+                            itemBox.appendChild(meterTrack);
+                        }
+                    }
+
+                    const reasons = Array.isArray(item?.reasons) ? item.reasons : [];
+                    if (reasons.length > 0) {
+                        const ul = document.createElement('ul');
+                        ul.style.margin = '2px 0 0 18px';
+                        ul.style.padding = '0';
+                        ul.style.color = '#2b4056';
+                        ul.style.fontSize = '0.81rem';
+                        ul.style.lineHeight = '1.36';
+                        reasons.forEach((reason) => {
+                            const li = document.createElement('li');
+                            const reasonText = String(reason);
+                            li.textContent = reasonText;
+                            li.style.marginBottom = '2px';
+                            const lowered = reasonText.toLowerCase();
+                            if (
+                                lowered.includes('outside preferred location') ||
+                                lowered.includes('different type') ||
+                                lowered.includes('no amenity keyword match')
+                            ) {
+                                li.style.color = '#8a2438';
+                                li.style.fontWeight = '600';
+                            } else if (lowered.includes('partial amenity match')) {
+                                li.style.color = '#835300';
+                                li.style.fontWeight = '600';
+                            }
+                        ul.appendChild(li);
+                    });
+                    itemBox.appendChild(ul);
+                    }
+
+                    if (item && item.room_id) {
+                        const bookRow = document.createElement('div');
+                        bookRow.style.display = 'flex';
+                        bookRow.style.gap = '7px';
+                        bookRow.style.marginTop = '4px';
+
+                        const bookBtn = document.createElement('button');
+                        bookBtn.type = 'button';
+                        bookBtn.textContent = `Start booking Room ${item.room_id}`;
+                        bookBtn.style.border = '1px solid #c6daef';
+                        bookBtn.style.background = '#f7fbff';
+                        bookBtn.style.color = '#1d4d89';
+                        bookBtn.style.borderRadius = '10px';
+                        bookBtn.style.padding = '5px 10px';
+                        bookBtn.style.fontSize = '0.74rem';
+                        bookBtn.style.fontWeight = '700';
+                        bookBtn.style.cursor = 'pointer';
+                        bookBtn.style.boxShadow = '0 6px 14px rgba(12, 53, 95, 0.10)';
+                        bookBtn.addEventListener('click', async () => {
+                            await logRecommendationClick({
+                                room_id: item?.room_id || null,
+                                accom_id: item?.accom_id || null,
+                                rank: item?.rank || null,
+                                scoring_mode: item?.scoring_mode || '',
+                            });
+                            await requestChatbotReply(`book room ${String(item.room_id).trim()}`, {
+                                addUserBubble: true,
+                            });
+                        });
+                        bookRow.appendChild(bookBtn);
+
+                        const detailsHint = document.createElement('span');
+                        detailsHint.textContent = 'Add dates in the next message.';
+                        detailsHint.style.fontSize = '0.71rem';
+                        detailsHint.style.fontWeight = '700';
+                        detailsHint.style.color = '#4b6078';
+                        detailsHint.style.alignSelf = 'center';
+                        bookRow.appendChild(detailsHint);
+
+                        itemBox.appendChild(bookRow);
+                    }
+
+                    card.appendChild(itemBox);
+                });
+
+                return card;
+            }
+
+            function buildBookingSummaryCard(text) {
+                const raw = String(text || '').trim();
+                if (!raw) return null;
+
+                const lines = raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+                const header = lines[0] || '';
+                const isBookingSummary =
+                    header === 'Booking Receipt / Summary (Accommodation)' ||
+                    header === 'Booking Summary (Draft - not yet saved)' ||
+                    header === 'Booking Draft (Not yet saved)';
+
+                if (!isBookingSummary) {
+                    return null;
+                }
+
+                const card = document.createElement('div');
+                card.style.display = 'grid';
+                card.style.gap = '9px';
+                card.style.padding = '4px 2px';
+
+                const title = document.createElement('div');
+                title.textContent = header;
+                title.style.fontWeight = '800';
+                title.style.fontSize = '0.95rem';
+                title.style.color = '#14344d';
+                title.style.lineHeight = '1.25';
+                card.appendChild(title);
+
+                const rows = lines.slice(1)
+                    .map(line => {
+                        const idx = line.indexOf(':');
+                        if (idx === -1) return null;
+                        return {
+                            key: line.slice(0, idx).trim(),
+                            value: line.slice(idx + 1).trim(),
+                        };
+                    })
+                    .filter(Boolean);
+
+                const keyOrder = [
+                    'Booking ID',
+                    'Hotel',
+                    'Room',
+                    'Check-in',
+                    'Check-out',
+                    'Nights',
+                    'Guests',
+                    'Rate per night',
+                    'Estimated Total',
+                    'Booking Status',
+                    'Payment Status',
+                ];
+
+                const byKey = new Map(rows.map(r => [r.key, r.value]));
+                keyOrder.forEach((key) => {
+                    if (!byKey.has(key)) return;
+                    card.appendChild(createBookingSummaryRow(key, byKey.get(key)));
+                });
+
+                const confirmLine = lines.find(line =>
+                    /^reply\s+Yes\s+to\s+confirm/i.test(line) ||
+                    /^confirm booking.*\(Yes\/No\)/i.test(line)
+                );
+                if (confirmLine) {
+                    const confirmBox = document.createElement('div');
+                    confirmBox.style.padding = '9px 10px';
+                    confirmBox.style.borderRadius = '10px';
+                    confirmBox.style.border = '1px dashed #9fbfe0';
+                    confirmBox.style.background = '#eef5fc';
+
+                    const confirmTitle = document.createElement('div');
+                    confirmTitle.textContent = 'Confirmation Required';
+                    confirmTitle.style.fontSize = '0.78rem';
+                    confirmTitle.style.fontWeight = '800';
+                    confirmTitle.style.letterSpacing = '0.01em';
+                    confirmTitle.style.color = '#1e4e79';
+
+                    const confirmText = document.createElement('div');
+                    confirmText.textContent = confirmLine;
+                    confirmText.style.marginTop = '3px';
+                    confirmText.style.fontSize = '0.8rem';
+                    confirmText.style.lineHeight = '1.35';
+                    confirmText.style.color = '#2e4f6d';
+
+                    confirmBox.appendChild(confirmTitle);
+                    confirmBox.appendChild(confirmText);
+                    card.appendChild(confirmBox);
+                }
+
+                return card;
+            }
+
+            function buildBillingSummaryCard(text) {
+                const raw = String(text || '').trim();
+                if (!raw) return null;
+
+                const lines = raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+                const header = lines[0] || '';
+                if (!/^Billing Summary for /i.test(header)) {
+                    return null;
+                }
+
+                const card = document.createElement('div');
+                card.style.display = 'grid';
+                card.style.gap = '9px';
+                card.style.padding = '4px 2px';
+
+                const title = document.createElement('div');
+                title.textContent = 'Billing Summary';
+                title.style.fontWeight = '800';
+                title.style.fontSize = '0.95rem';
+                title.style.color = '#14344d';
+                title.style.lineHeight = '1.25';
+                card.appendChild(title);
+
+                const subject = document.createElement('div');
+                subject.textContent = header.replace(/^Billing Summary for\s*/i, '').replace(/:\s*$/, '');
+                subject.style.fontSize = '0.84rem';
+                subject.style.fontWeight = '700';
+                subject.style.color = '#2c4964';
+                subject.style.padding = '6px 8px';
+                subject.style.borderRadius = '8px';
+                subject.style.background = 'rgba(238, 245, 252, 0.85)';
+                subject.style.border = '1px solid #d4e2f0';
+                card.appendChild(subject);
+
+                const rows = lines.slice(1)
+                    .map(line => {
+                        const idx = line.indexOf(':');
+                        if (idx === -1) return null;
+                        return {
+                            key: line.slice(0, idx).trim(),
+                            value: line.slice(idx + 1).trim(),
+                        };
+                    })
+                    .filter(Boolean);
+
+                rows.forEach(({ key, value }) => {
+                    card.appendChild(createBillingSummaryRow(key, value));
+                });
+
+                return card;
+            }
+
+            function createBillingSummaryRow(label, value) {
+                const row = document.createElement('div');
+                row.style.display = 'flex';
+                row.style.justifyContent = 'space-between';
+                row.style.alignItems = 'center';
+                row.style.gap = '10px';
+                row.style.padding = '6px 8px';
+                row.style.borderRadius = '8px';
+                row.style.background = 'rgba(255, 255, 255, 0.55)';
+
+                const labelEl = document.createElement('span');
+                labelEl.textContent = label;
+                labelEl.style.fontSize = '0.84rem';
+                labelEl.style.fontWeight = '600';
+                labelEl.style.color = '#44576d';
+
+                const valueEl = document.createElement('span');
+                valueEl.textContent = value;
+                valueEl.style.fontSize = '0.88rem';
+                valueEl.style.color = '#1d2d3f';
+                valueEl.style.textAlign = 'right';
+                valueEl.style.wordBreak = 'break-word';
+
+                const normalizedLabel = String(label || '').toLowerCase();
+                if (normalizedLabel.includes('total amount due')) {
+                    valueEl.style.fontWeight = '800';
+                    valueEl.style.color = '#0f5f99';
+                    row.style.background = 'linear-gradient(180deg, #eef7ff 0%, #e3f1ff 100%)';
+                    row.style.border = '1px solid #c9ddf3';
+                }
+
+                row.appendChild(labelEl);
+                row.appendChild(valueEl);
+                return row;
+            }
+
+            function createBookingSummaryRow(label, value) {
+                const row = document.createElement('div');
+                row.style.display = 'flex';
+                row.style.justifyContent = 'space-between';
+                row.style.alignItems = 'center';
+                row.style.gap = '10px';
+                row.style.padding = '6px 8px';
+                row.style.borderRadius = '8px';
+                row.style.background = 'rgba(255, 255, 255, 0.55)';
+
+                const labelEl = document.createElement('span');
+                labelEl.textContent = label;
+                labelEl.style.fontSize = '0.84rem';
+                labelEl.style.fontWeight = '600';
+                labelEl.style.color = '#44576d';
+
+                const valueEl = document.createElement('span');
+                valueEl.textContent = value;
+                valueEl.style.fontSize = '0.88rem';
+                valueEl.style.color = '#1d2d3f';
+                valueEl.style.textAlign = 'right';
+                valueEl.style.wordBreak = 'break-word';
+
+                if (label === 'Estimated Total') {
+                    valueEl.style.fontWeight = '700';
+                    valueEl.style.color = '#0f5f99';
+                }
+
+                if (label === 'Booking Status' || label === 'Payment Status') {
+                    valueEl.style.padding = '3px 8px';
+                    valueEl.style.borderRadius = '999px';
+                    valueEl.style.fontWeight = '700';
+                    valueEl.style.fontSize = '0.78rem';
+
+                    const normalized = String(value || '').toLowerCase();
+                    if (normalized.includes('pending')) {
+                        valueEl.style.background = '#fff3cd';
+                        valueEl.style.color = '#8a6d1d';
+                    } else if (normalized.includes('awaiting')) {
+                        valueEl.style.background = '#dbe9fb';
+                        valueEl.style.color = '#1f4f85';
+                    } else if (normalized.includes('unpaid')) {
+                        valueEl.style.background = '#f8d7da';
+                        valueEl.style.color = '#842029';
+                    } else if (normalized.includes('paid') || normalized.includes('confirmed')) {
+                        valueEl.style.background = '#d1e7dd';
+                        valueEl.style.color = '#0f5132';
+                    } else {
+                        valueEl.style.background = '#e9ecef';
+                        valueEl.style.color = '#495057';
+                    }
+                }
+
+                row.appendChild(labelEl);
+                row.appendChild(valueEl);
+                return row;
+            }
+
+            function addLinkMessage(label, url) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message bot';
+                const actionButton = document.createElement('button');
+                actionButton.type = 'button';
+                actionButton.textContent = label || 'Open Booking / Billing';
+                actionButton.title = 'Open booking/billing page';
+                actionButton.style.display = 'inline-block';
+                actionButton.style.marginTop = '2px';
+                actionButton.style.padding = '8px 12px';
+                actionButton.style.borderRadius = '8px';
+                actionButton.style.border = 'none';
+                actionButton.style.cursor = 'pointer';
+                actionButton.style.background = 'linear-gradient(135deg, #1f64d6, #179fc4)';
+                actionButton.style.color = '#fff';
+                actionButton.style.fontWeight = '600';
+                actionButton.style.wordBreak = 'normal';
+                actionButton.addEventListener('click', async function() {
+                    await logRecommendationClick({
+                        item_ref: 'chat:billing_link_click',
+                        scoring_mode: 'billing_link',
+                    });
+                    window.open(url, '_blank');
+                });
+                messageDiv.appendChild(actionButton);
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function addQuickReplies(replies) {
+                const options = Array.isArray(replies)
+                    ? replies
+                        .map(item => {
+                            if (item && typeof item === 'object') {
+                                const value = String(item.value || '').trim();
+                                if (!value) return null;
+                                const label = String(item.label || value).trim();
+                                return { label, value };
+                            }
+                            const value = String(item || '').trim();
+                            if (!value) return null;
+                            return { label: value, value };
+                        })
+                        .filter(Boolean)
+                    : [];
+                if (options.length === 0) return;
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message bot';
+                messageDiv.style.padding = '9px 10px';
+
+                const wrap = document.createElement('div');
+                wrap.style.display = 'flex';
+                wrap.style.flexWrap = 'wrap';
+                wrap.style.gap = '7px';
+
+                options.slice(0, 4).forEach((option) => {
+                    const chip = document.createElement('button');
+                    chip.type = 'button';
+                    chip.textContent = option.label;
+                    chip.setAttribute('data-quick-reply', '1');
+                    chip.setAttribute('data-reply-text', option.value);
+                    chip.style.padding = '6px 10px';
+                    chip.style.borderRadius = '999px';
+                    chip.style.border = '1px solid #b7cbe6';
+                    chip.style.background = 'linear-gradient(180deg, #f9fcff, #ecf4ff)';
+                    chip.style.color = '#1e4f85';
+                    chip.style.fontSize = '0.78rem';
+                    chip.style.fontWeight = '700';
+                    chip.style.cursor = 'pointer';
+                    wrap.appendChild(chip);
+                });
+
+                messageDiv.appendChild(wrap);
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function addDownloadMessage(label, content, filename) {
+                const textContent = String(content || '').trim();
+                if (!textContent) return;
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message bot';
+
+                const actionButton = document.createElement('button');
+                actionButton.type = 'button';
+                actionButton.textContent = label || 'Download Receipt';
+                actionButton.title = 'Download booking receipt';
+                actionButton.style.display = 'inline-block';
+                actionButton.style.marginTop = '2px';
+                actionButton.style.padding = '8px 12px';
+                actionButton.style.borderRadius = '8px';
+                actionButton.style.border = 'none';
+                actionButton.style.cursor = 'pointer';
+                actionButton.style.background = 'linear-gradient(135deg, #0f7a63, #16a085)';
+                actionButton.style.color = '#fff';
+                actionButton.style.fontWeight = '700';
+
+                actionButton.addEventListener('click', function() {
+                    const baseFilename = String(filename || 'ibayaw_booking_receipt.png')
+                        .replace(/[^a-zA-Z0-9._-]/g, '_')
+                        .replace(/\.[^.]+$/, '');
+                    const safeFilename = `${baseFilename}.png`;
+
+                    const lines = textContent.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+                    const topLine = lines[0] || 'IBAYAW TOUR - ACCOMMODATION BOOKING RECEIPT';
+                    const detailLines = lines.slice(1);
+
+                    const canvas = document.createElement('canvas');
+                    const width = 1200;
+                    const rowHeight = 48;
+                    const cardPadding = 56;
+                    const detailCount = Math.max(detailLines.length, 8);
+                    const height = 220 + (detailCount * rowHeight) + 60;
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    const ctx = canvas.getContext('2d');
+                    if (!ctx) return;
+
+                    const bgGradient = ctx.createLinearGradient(0, 0, width, height);
+                    bgGradient.addColorStop(0, '#f0f6ff');
+                    bgGradient.addColorStop(1, '#dff0ec');
+                    ctx.fillStyle = bgGradient;
+                    ctx.fillRect(0, 0, width, height);
+
+                    // Header strip
+                    const headerGradient = ctx.createLinearGradient(0, 0, width, 0);
+                    headerGradient.addColorStop(0, '#0f4ea8');
+                    headerGradient.addColorStop(1, '#0ea5a2');
+                    ctx.fillStyle = headerGradient;
+                    ctx.fillRect(0, 0, width, 120);
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '700 42px Poppins, Arial, sans-serif';
+                    ctx.fillText('IBAYAW TOUR', 56, 54);
+                    ctx.font = '500 24px Poppins, Arial, sans-serif';
+                    ctx.fillText('Accommodation Booking Receipt', 56, 92);
+
+                    // Main white card
+                    const cardX = 42;
+                    const cardY = 140;
+                    const cardWidth = width - (cardX * 2);
+                    const cardHeight = height - cardY - 30;
+                    ctx.fillStyle = '#ffffff';
+                    ctx.strokeStyle = '#d2e1f3';
+                    ctx.lineWidth = 2;
+                    roundRect(ctx, cardX, cardY, cardWidth, cardHeight, 22);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#1f3f61';
+                    ctx.font = '700 28px Poppins, Arial, sans-serif';
+                    ctx.fillText(topLine, cardX + cardPadding, cardY + 46);
+
+                    ctx.font = '600 20px Poppins, Arial, sans-serif';
+                    ctx.fillStyle = '#2d4a67';
+                    let y = cardY + 92;
+
+                    detailLines.forEach((line) => {
+                        const idx = line.indexOf(':');
+                        const label = idx >= 0 ? line.slice(0, idx + 1) : '';
+                        const value = idx >= 0 ? line.slice(idx + 1).trim() : line;
+
+                        if (label) {
+                            ctx.fillStyle = '#4a627d';
+                            ctx.fillText(label, cardX + cardPadding, y);
+                            ctx.fillStyle = /estimated total|total amount due/i.test(label) ? '#0f5f99' : '#1f3f61';
+                            ctx.font = /estimated total|total amount due/i.test(label)
+                                ? '700 20px Poppins, Arial, sans-serif'
+                                : '600 20px Poppins, Arial, sans-serif';
+                            ctx.fillText(value, cardX + 430, y);
+                            ctx.font = '600 20px Poppins, Arial, sans-serif';
+                        } else {
+                            ctx.fillStyle = '#1f3f61';
+                            ctx.fillText(value, cardX + cardPadding, y);
+                        }
+                        y += rowHeight;
+                    });
+
+                    ctx.fillStyle = '#5a6e84';
+                    ctx.font = '500 16px Poppins, Arial, sans-serif';
+                    ctx.fillText('Payment and verification are processed through the LGU Tourism Office system.', cardX + cardPadding, height - 34);
+
+                    canvas.toBlob((blob) => {
+                        if (!blob) return;
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = safeFilename;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }, 'image/png');
+                });
+
+                messageDiv.appendChild(actionButton);
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function roundRect(ctx, x, y, width, height, radius) {
+                const r = Math.min(radius, width / 2, height / 2);
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.lineTo(x + width - r, y);
+                ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+                ctx.lineTo(x + width, y + height - r);
+                ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+                ctx.lineTo(x + r, y + height);
+                ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+                ctx.lineTo(x, y + r);
+                ctx.quadraticCurveTo(x, y, x + r, y);
+                ctx.closePath();
+            }
+
+            function resolveChatLinkLabel(data) {
+                const backendLabel = (data && data.billing_link_label) ? String(data.billing_link_label).trim() : '';
+                if (backendLabel) {
+                    return backendLabel;
+                }
+
+                const reply = String((data && data.fulfillmentText) || '').toLowerCase();
+                if (reply.includes('booking receipt') || reply.includes('booking summary')) {
+                    return 'Review Booking & Billing';
+                }
+                if (reply.includes('payment')) {
+                    return 'Continue to Payment';
+                }
+                if (reply.includes('billing')) {
+                    return 'Review Billing';
+                }
+                return 'Proceed to Booking & Billing';
             }
 
             function removeTypingMessage() {
@@ -2228,6 +3528,8 @@
 
             // Send message on button click
             chatSend.addEventListener('click', sendMessage);
+            pollBookingStatusNotifications();
+            setInterval(pollBookingStatusNotifications, 60000);
 
             // Send message on Enter key
             chatInput.addEventListener('keypress', function(e) {
@@ -2344,7 +3646,7 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="profile_picture">Profile Picture (Optional)</label>
+                    <label for="profile_picture" class="required">Profile Picture</label>
                     <div class="profile-input-options">
                         <input type="file" id="profile_picture" name="picture" class="form-control" accept="image/*">
                         <button type="button" class="camera-btn" id="signup-open-camera">
@@ -3006,6 +4308,7 @@
                 
                 // Create FormData object for handling file upload
                 const formData = new FormData(this);
+                let signupResponseData = null;
                 
                 // Send AJAX request for registration
                 fetch('{% url "register" %}', {
@@ -3023,14 +4326,15 @@
                     return response.json();
                 })
                 .then(data => {
+                    signupResponseData = data;
                     if (data.success) {
                         // Registration successful, proceed with login immediately
                         console.log('Registration successful, logging in...');
                         
                         // Auto-login the user
                         const loginData = new FormData();
-                        const username = formData.get('username');
-                        loginData.append('username', username);
+                        const emailForLogin = formData.get('email');
+                        loginData.append('email', emailForLogin);
                         loginData.append('password', formData.get('password'));
                         loginData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
                         
@@ -3047,8 +4351,13 @@
                         if (data.errors) {
                             // Handle field-specific errors
                             Object.keys(data.errors).forEach(key => {
+                                if (key === '__all__') {
+                                    alert(data.errors[key]);
+                                    return;
+                                }
                                 const errorEl = document.getElementById(`${key}-error`) || 
-                                               document.getElementById(`${key.replace('_', '-')}-error`);
+                                               document.getElementById(`${key.replace(/_/g, '-')}-error`) ||
+                                               (key === 'phone_number' ? document.getElementById('phone-error') : null);
                                 if (errorEl) {
                                     errorEl.textContent = data.errors[key];
                                 }
@@ -3091,16 +4400,20 @@
                     document.getElementById('signup-form').reset();
                     
                     // Display error messages from the server
-                    if (data && data.errors) {
-                        for (const field in data.errors) {
-                            document.getElementById(`${field}-error`).textContent = data.errors[field];
+                    if (signupResponseData && signupResponseData.errors) {
+                        for (const field in signupResponseData.errors) {
+                            const fieldErrorEl = document.getElementById(`${field}-error`) ||
+                                document.getElementById(`${field.replace('_', '-')}-error`);
+                            if (fieldErrorEl) {
+                                fieldErrorEl.textContent = signupResponseData.errors[field];
+                            }
                         }
-                    } else if (data.message) {
+                    } else if (signupResponseData && signupResponseData.message) {
                         // Check if message contains information about taken usernames/emails
-                        if (data.message.includes('email is already registered')) {
+                        if (signupResponseData.message.includes('email is already registered')) {
                             document.getElementById('email-error').textContent = 'This email is already registered. Please use another or login.';
                         } else {
-                            alert(data.message);
+                            alert(signupResponseData.message);
                         }
                     } else {
                         alert('Registration failed. Please try again.');
@@ -3503,6 +4816,8 @@
         
         // Function to update interface with translations
         function updateInterfaceWithTranslations(translations) {
+            window.mainPageTranslations = translations || {};
+
             // Logo text
             const logoText = document.querySelector('.logo h1');
             if (logoText) {
@@ -3523,19 +4838,50 @@
             document.querySelector('.city-name').textContent = translations['bayawan_city'] || 'BAYAWAN CITY';
             document.querySelector('.hero-description').textContent = translations['hero_description'] || document.querySelector('.hero-description').textContent;
 
-            // User dropdown
-            document.querySelectorAll('#userDropdown a').forEach((el, index) => {
-                if (index === 0) {
-                    const iconHtml = el.innerHTML.split('</i>')[0] + '</i> ';
-                    el.innerHTML = iconHtml + (translations['my_profile'] || 'My Profile');
-                } else if (index === 1) {
-                    const iconHtml = el.innerHTML.split('</i>')[0] + '</i> ';
-                    el.innerHTML = iconHtml + (translations['update_profile'] || 'Update Profile');
-                } else if (el.getAttribute('onclick') && el.getAttribute('onclick').includes('logoutUser')) {
-                    const iconHtml = el.innerHTML.split('</i>')[0] + '</i> ';
-                    el.innerHTML = iconHtml + (translations['logout'] || 'Logout');
+            // User dropdown (selector-based so added links don't break translation order)
+            function setDropdownLinkText(anchor, text) {
+                if (!anchor || !text) return;
+                let labelNode = null;
+                anchor.childNodes.forEach(node => {
+                    if (!labelNode && node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+                        labelNode = node;
+                    }
+                });
+                if (labelNode) {
+                    labelNode.textContent = ` ${text} `;
+                } else {
+                    const badgeNode = anchor.querySelector('.request-badge');
+                    anchor.insertBefore(document.createTextNode(` ${text} `), badgeNode || null);
                 }
-            });
+            }
+
+            const userDropdown = document.getElementById('userDropdown');
+            if (userDropdown) {
+                setDropdownLinkText(
+                    userDropdown.querySelector('a[onclick*="Profile feature coming soon"]'),
+                    translations['my_profile'] || 'My Profile'
+                );
+                setDropdownLinkText(
+                    userDropdown.querySelector('#update-profile-link'),
+                    translations['update_profile'] || 'Update Profile'
+                );
+                setDropdownLinkText(
+                    Array.from(userDropdown.querySelectorAll('a')).find(el => (el.getAttribute('href') || '').includes('/accommodations/my-bookings/')),
+                    translations['my_hotel_inn_bookings'] || 'My Hotel/Inn Bookings'
+                );
+                setDropdownLinkText(
+                    Array.from(userDropdown.querySelectorAll('a')).find(el => (el.getAttribute('href') || '').includes('/companion/') && !el.classList.contains('request-notification')),
+                    translations['add_companion'] || 'Add Companion'
+                );
+                setDropdownLinkText(
+                    userDropdown.querySelector('a.request-notification'),
+                    translations['companion_requests'] || 'Companion Requests'
+                );
+                setDropdownLinkText(
+                    userDropdown.querySelector('a[onclick*="logoutUser"]'),
+                    translations['logout'] || 'Logout'
+                );
+            }
 
             // Tour packages section
             const headerTitle = document.querySelector('.header-title h2:first-child');
@@ -3558,6 +4904,106 @@
                 exploreLink.textContent = translations['explore_all_tour'] || 'EXPLORE ALL TOUR';
             }
 
+            // About section
+            const aboutHeading = document.querySelector('#about-us h2');
+            if (aboutHeading) {
+                aboutHeading.textContent = translations['about_ibayaw_tour'] || 'About Ibayaw Tour';
+            }
+            const aboutLead = document.querySelector('#about-us .container > p');
+            if (aboutLead) {
+                aboutLead.textContent = translations['about_ibayaw_description'] || aboutLead.textContent;
+            }
+            const aboutCards = document.querySelectorAll('#about-us .container > div > div');
+            if (aboutCards[0]) {
+                const h = aboutCards[0].querySelector('h3');
+                const p = aboutCards[0].querySelector('p');
+                if (h) h.textContent = translations['nature_adventure'] || 'Nature & Adventure';
+                if (p) p.textContent = translations['nature_adventure_desc'] || p.textContent;
+            }
+            if (aboutCards[1]) {
+                const h = aboutCards[1].querySelector('h3');
+                const p = aboutCards[1].querySelector('p');
+                if (h) h.textContent = translations['community_focus'] || 'Community Focus';
+                if (p) p.textContent = translations['community_focus_desc'] || p.textContent;
+            }
+            if (aboutCards[2]) {
+                const h = aboutCards[2].querySelector('h3');
+                const p = aboutCards[2].querySelector('p');
+                if (h) h.textContent = translations['cultural_heritage'] || 'Cultural Heritage';
+                if (p) p.textContent = translations['cultural_heritage_desc'] || p.textContent;
+            }
+
+            // Programs section
+            const programsHeading = document.querySelector('#programs h2');
+            if (programsHeading) {
+                programsHeading.textContent = translations['our_programs'] || 'Our Programs';
+            }
+            const programsLead = document.querySelector('#programs p');
+            if (programsLead) {
+                programsLead.textContent = translations['programs_description'] || programsLead.textContent;
+            }
+            const programsCta = document.querySelector('#programs a[href="#tour-packages"]');
+            if (programsCta) {
+                programsCta.textContent = translations['explore_our_tours'] || 'Explore Our Tours';
+            }
+
+            // User bookings section tabs (tour bookings)
+            const myBookingsTitle = document.querySelector('#myBookings .section-title');
+            if (myBookingsTitle) {
+                myBookingsTitle.textContent = translations['my_bookings'] || 'My Bookings';
+            }
+            const upcomingTab = document.querySelector('.tab-button[data-tab="upcoming"]');
+            if (upcomingTab) upcomingTab.textContent = translations['upcoming_tours'] || 'Upcoming Tours';
+            const currentTab = document.querySelector('.tab-button[data-tab="current"]');
+            if (currentTab) currentTab.textContent = translations['current_tours'] || 'Current Tours';
+            const pastTab = document.querySelector('.tab-button[data-tab="past"]');
+            if (pastTab) pastTab.textContent = translations['past_tours'] || 'Past Tours';
+
+            // Contact section
+            const contactHeading = document.querySelector('#contact h2');
+            if (contactHeading) {
+                contactHeading.textContent = translations['contact_us'] || 'Contact Us';
+            }
+            const contactLead = document.querySelector('#contact .container > p');
+            if (contactLead) {
+                contactLead.textContent = translations['contact_description'] || contactLead.textContent;
+            }
+            const contactCards = document.querySelectorAll('#contact .container > div > div');
+            if (contactCards[0]) {
+                const h = contactCards[0].querySelector('h3');
+                if (h) h.textContent = translations['location'] || 'Location';
+            }
+            if (contactCards[1]) {
+                const h = contactCards[1].querySelector('h3');
+                if (h) h.textContent = translations['email'] || 'Email';
+            }
+            if (contactCards[2]) {
+                const h = contactCards[2].querySelector('h3');
+                if (h) h.textContent = translations['phone'] || 'Phone';
+            }
+
+            // Chatbot UI
+            const chatHeaderTitle = document.querySelector('.chat-header h3');
+            if (chatHeaderTitle) {
+                chatHeaderTitle.textContent = translations['chat_assistant_title'] || 'Ibayaw Tour Assistant';
+            }
+            const chatHeader = document.querySelector('.chat-header');
+            if (chatHeader) {
+                chatHeader.setAttribute('data-chat-subtitle', translations['chat_assistant_subtitle'] || 'Hotel | Booking | Billing');
+            }
+            const initialBotMessage = document.querySelector('#chatMessages .message.bot');
+            if (
+                initialBotMessage &&
+                initialBotMessage.textContent &&
+                initialBotMessage.textContent.includes('Ibayaw Tour assistant')
+            ) {
+                initialBotMessage.textContent = translations['chat_welcome'] || "Hello! I'm your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City.";
+            }
+            const chatInputEl = document.getElementById('chatInput');
+            if (chatInputEl) {
+                chatInputEl.placeholder = translations['chat_input_placeholder'] || 'Type your message...';
+            }
+
             // Tour cards - update both the demo cards and the real cards
             document.querySelectorAll('.package-card').forEach(card => {
                 // Price label
@@ -3574,22 +5020,27 @@
                 // Time/duration label
                 const timeElement = card.querySelector('.package-time');
                 if (timeElement) {
-                    const timeIcon = timeElement.querySelector('i');
                     const timeSpan = timeElement.querySelector('span');
-                    if (timeSpan && translations['duration_based']) {
-                        // Check if this contains "Duration based on schedule" text
-                        if (timeSpan.textContent.includes('Duration based')) {
+                    if (timeSpan) {
+                        const durationText = timeSpan.textContent.trim();
+
+                        // Persist a stable type so repeated language switches keep translating correctly.
+                        if (!timeSpan.dataset.durationMode) {
+                            timeSpan.dataset.durationMode = /\d/.test(durationText) ? 'numeric' : 'based';
+                        }
+
+                        if (timeSpan.dataset.durationMode === 'based') {
                             timeSpan.textContent = translations['duration_based'] || 'Duration based on schedule';
-                        } else if (timeSpan.textContent.includes('day')) {
-                            // Don't change actual day numbers, just the "days" text
-                            const dayText = timeSpan.textContent.trim();
-                            if (dayText === '1 day' && translations['day_singular']) {
-                                timeSpan.textContent = '1 ' + translations['day_singular'];
-                            } else if (translations['day_plural']) {
-                                const parts = dayText.split(' ');
-                                if (parts.length >= 2) {
-                                    timeSpan.textContent = parts[0] + ' ' + translations['day_plural'];
-                                }
+                        } else {
+                            // Rebuild "<number> <day(s)>" from numeric part only.
+                            const numberMatch = durationText.match(/(\d+(?:\s*-\s*\d+)?)/);
+                            if (numberMatch) {
+                                const numberPart = numberMatch[1].replace(/\s+/g, '');
+                                const isRange = numberPart.includes('-');
+                                const dayUnit = (!isRange && parseInt(numberPart, 10) === 1)
+                                    ? (translations['day_singular'] || 'day')
+                                    : (translations['day_plural'] || 'days');
+                                timeSpan.textContent = `${numberPart} ${dayUnit}`;
                             }
                         }
                     }
@@ -3619,22 +5070,51 @@
                         descElement.textContent = translations[descKey];
                     }
                 } else {
-                    // This is a demo card - translate based on the title
+                    // This is a demo card - use a stable key so repeated language switches keep working.
                     const titleElement = card.querySelector('.package-title');
                     const descElement = card.querySelector('.package-description');
-                    
-                    if (titleElement) {
-                        const cardType = titleElement.textContent.trim().toLowerCase();
-                        if (translations[`${cardType}_tour`]) {
-                            titleElement.textContent = translations[`${cardType}_tour`];
+
+                    function inferDemoTourKey(titleText) {
+                        const normalized = (titleText || '').trim().toLowerCase();
+                        const keyByLabel = {
+                            'forest': 'forest',
+                            'gubat': 'forest',
+                            'kalasangan': 'forest',
+                            'bosque': 'forest',
+                            'river': 'river',
+                            'ilog': 'river',
+                            'suba': 'river',
+                            'rio': 'river',
+                            'rÃ­o': 'river',
+                            'sea': 'sea',
+                            'dagat': 'sea',
+                            'mar': 'sea',
+                            'mountain': 'mountain',
+                            'bundok': 'mountain',
+                            'bukid': 'mountain',
+                            'montana': 'mountain',
+                            'montaÃ±a': 'mountain',
+                            'sunset': 'sunset',
+                            'paglubog ng araw': 'sunset',
+                            'pagsalop sa adlaw': 'sunset',
+                            'atardecer': 'sunset'
+                        };
+                        return keyByLabel[normalized] || null;
+                    }
+
+                    if (!card.dataset.demoTourKey && titleElement) {
+                        const inferredKey = inferDemoTourKey(titleElement.textContent);
+                        if (inferredKey) {
+                            card.dataset.demoTourKey = inferredKey;
                         }
                     }
-                    
-                    if (descElement) {
-                        const cardType = titleElement.textContent.trim().toLowerCase();
-                        if (translations[`${cardType}_description`]) {
-                            descElement.textContent = translations[`${cardType}_description`];
-                        }
+
+                    const cardType = card.dataset.demoTourKey;
+                    if (cardType && titleElement && translations[`${cardType}_tour`]) {
+                        titleElement.textContent = translations[`${cardType}_tour`];
+                    }
+                    if (cardType && descElement && translations[`${cardType}_description`]) {
+                        descElement.textContent = translations[`${cardType}_description`];
                     }
                 }
             });
@@ -3993,64 +5473,6 @@
             }
         });
         
-        // Form submission handling to include file uploads
-        const signupForm = document.getElementById('signup-form');
-        
-        signupForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // Create FormData object to handle file uploads
-            const formData = new FormData(this);
-            
-            // Add the age value to form data
-            formData.append('age', document.getElementById('age').value);
-            
-            // AJAX form submission
-            fetch('{% url "register" %}', {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Show success message
-                    document.getElementById('signup-success').style.display = 'block';
-                    
-                    // Redirect or refresh after a brief delay
-                    setTimeout(function() {
-                        window.location.reload();
-                    }, 2000);
-                } else {
-                    // Display validation errors
-                    const errors = data.errors || {};
-                    
-                    // Clear all previous error messages
-                    document.querySelectorAll('.error-message').forEach(el => {
-                        el.textContent = '';
-                    });
-                    
-                    // Set new error messages
-                    Object.keys(errors).forEach(field => {
-                        const errorElement = document.getElementById(field + '-error');
-                        if (errorElement) {
-                            errorElement.textContent = errors[field];
-                        }
-                    });
-                    
-                    // Display general message if provided
-                    if (data.message) {
-                        alert(data.message);
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again later.');
-            });
-        });
     });
     </script>
 
@@ -4763,3 +6185,4 @@
     </script>
 </body>
 </html>
+

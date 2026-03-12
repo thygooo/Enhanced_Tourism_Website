@@ -1,0 +1,21 @@
+row_id,user_id,place_id,tour_id,budget_range,preferred_activity,group_size,distance_km,weather_condition,entrance_fee,cnn_class,cnn_confidence,target_label,created_at
+DT0001,U0001,P001,,low,beach,1,8.50,clear,50.00,beach,0.94,visit_yes,2026-02-12 11:00:00
+DT0002,U0002,P014,,medium,hiking,3,22.30,cloudy,120.00,landmark,0.88,visit_yes,2026-02-12 11:03:00
+DT0003,U0003,P011,,medium,park,4,12.10,clear,30.00,public,0.91,visit_yes,2026-02-12 11:06:00
+DT0004,U0004,P007,,low,shopping,2,5.20,clear,0.00,shopping,0.93,visit_yes,2026-02-12 11:09:00
+DT0005,U0005,P010,,high,landmark,2,18.00,clear,0.00,landmark,0.89,visit_yes,2026-02-12 11:12:00
+DT0006,U0006,P018,,medium,snorkeling,1,16.40,sunny,150.00,beach,0.92,visit_yes,2026-02-12 11:15:00
+DT0007,U0007,P016,,high,park,5,10.70,cloudy,25.00,public,0.90,visit_yes,2026-02-12 11:18:00
+DT0008,U0008,P002,,low,waterfall,1,19.60,rain,30.00,falls,0.95,visit_no,2026-02-12 11:21:00
+DT0009,U0009,P019,,medium,sunset,2,9.90,clear,20.00,landmark,0.87,visit_yes,2026-02-12 11:24:00
+DT0010,U0010,P008,,medium,church,3,14.50,clear,75.00,landmark,0.90,visit_yes,2026-02-12 11:27:00
+DT0011,U0011,P005,,low,photography,2,11.20,windy,0.00,landmark,0.86,visit_yes,2026-02-12 11:30:00
+DT0012,U0012,P020,,high,camping,2,35.00,clear,60.00,public,0.89,visit_yes,2026-02-12 11:33:00
+DT0013,U0013,P015,,medium,picnic,4,13.80,clear,20.00,public,0.88,visit_yes,2026-02-12 11:36:00
+DT0014,U0014,P017,,high,history,2,21.00,clear,40.00,landmark,0.91,visit_yes,2026-02-12 11:39:00
+DT0015,U0015,P013,,medium,kayak,4,17.20,sunny,120.00,beach,0.93,visit_yes,2026-02-12 11:42:00
+DT0016,U0016,P003,,low,landmark,1,7.10,clear,0.00,landmark,0.85,visit_yes,2026-02-12 11:45:00
+DT0017,U0017,P006,,medium,walk,3,6.40,cloudy,0.00,public,0.84,visit_yes,2026-02-12 11:48:00
+DT0018,U0018,P002,,medium,waterfall,3,24.30,rain,30.00,falls,0.94,visit_no,2026-02-12 11:51:00
+DT0019,U0019,P012,,high,scenic,2,15.70,clear,0.00,landmark,0.88,visit_yes,2026-02-12 11:54:00
+DT0020,U0020,P004,,low,beach,5,9.30,sunny,80.00,beach,0.92,visit_yes,2026-02-12 11:57:00

@@ -1,0 +1,21 @@
+response_id,user_id,statement_code,likert_score,comment,submitted_at
+S0001,U0001,SUS_Q1,5,easy_to_use,2026-02-12 14:00:00
+S0002,U0002,SUS_Q2,4,recommendations_good,2026-02-12 14:01:00
+S0003,U0003,SUS_Q3,5,clean_interface,2026-02-12 14:02:00
+S0004,U0004,SUS_Q4,4,fast_loading,2026-02-12 14:03:00
+S0005,U0005,SUS_Q5,5,accurate_places,2026-02-12 14:04:00
+S0006,U0006,SUS_Q6,4,helpful_filters,2026-02-12 14:05:00
+S0007,U0007,SUS_Q7,4,good_for_family,2026-02-12 14:06:00
+S0008,U0008,SUS_Q8,3,needs_more_images,2026-02-12 14:07:00
+S0009,U0009,SUS_Q9,4,results_are_relevant,2026-02-12 14:08:00
+S0010,U0010,SUS_Q10,5,very_helpful,2026-02-12 14:09:00
+S0011,U0011,REC_REL,4,good_match,2026-02-12 14:10:00
+S0012,U0012,REC_ACC,5,high_accuracy,2026-02-12 14:11:00
+S0013,U0013,REC_SAT,4,satisfied,2026-02-12 14:12:00
+S0014,U0014,REC_REL,5,excellent_results,2026-02-12 14:13:00
+S0015,U0015,REC_ACC,4,works_well,2026-02-12 14:14:00
+S0016,U0016,REC_SAT,4,good_overall,2026-02-12 14:15:00
+S0017,U0017,SYS_SPEED,4,acceptable_speed,2026-02-12 14:16:00
+S0018,U0018,SYS_SPEED,3,slow_when_raining_data,2026-02-12 14:17:00
+S0019,U0019,SYS_TRUST,5,trustworthy_suggestions,2026-02-12 14:18:00
+S0020,U0020,SYS_TRUST,4,will_use_again,2026-02-12 14:19:00

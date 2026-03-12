@@ -5,6 +5,7 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
 from django.utils import timezone
+from django.conf import settings
 
 class EmployeeManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -82,14 +83,33 @@ class UserActivity(models.Model):
 
 
 class Accomodation(models.Model):
+    APPROVAL_STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("accepted", "Accepted"),
+        ("declined", "Declined"),
+    ]
+
     accom_id = models.AutoField(primary_key=True)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="owned_accommodations",
+        null=True,
+        blank=True,
+    )
     company_name = models.CharField(max_length=200)
     email_address = models.EmailField(unique=True)
     location = models.CharField(max_length=300)
     company_type = models.CharField(max_length=100)
+    description = models.TextField(blank=True, default="")
     password = models.CharField(max_length=128)
     phone_number = models.CharField(max_length=20)
     status = models.CharField(max_length=50, null=True, blank=True, default="Pending")
+    approval_status = models.CharField(
+        max_length=20,
+        choices=APPROVAL_STATUS_CHOICES,
+        default="pending",
+    )
     profile_picture = models.ImageField(upload_to='accommodation_profiles/', blank=True, null=True)
 
     def save(self, *args, **kwargs):
@@ -97,6 +117,11 @@ class Accomodation(models.Model):
         # Django password hashes usually start with a prefix like 'pbkdf2_'
         if self.password and not self.password.startswith('pbkdf2_'):
             self.password = make_password(self.password)
+        # Keep legacy status field in sync with normalized approval_status.
+        if self.approval_status:
+            self.status = self.approval_status
+        elif self.status:
+            self.approval_status = self.status.strip().lower()
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -153,6 +178,64 @@ class Entry(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class TourismInformationQuerySet(models.QuerySet):
+    def published(self):
+        return self.filter(publication_status="published", is_active=True)
+
+
+class TourismInformation(models.Model):
+    PUBLICATION_STATUS_CHOICES = [
+        ("draft", "Draft"),
+        ("published", "Published"),
+        ("archived", "Archived"),
+    ]
+
+    tourism_info_id = models.BigAutoField(primary_key=True)
+    spot_name = models.CharField(max_length=200, db_index=True)
+    description = models.TextField(blank=True, default="")
+    location = models.CharField(max_length=300, blank=True, default="")
+    contact_information = models.CharField(max_length=255, blank=True, default="")
+    operating_hours = models.CharField(max_length=255, blank=True, default="")
+    publication_status = models.CharField(
+        max_length=20,
+        choices=PUBLICATION_STATUS_CHOICES,
+        default="draft",
+        db_index=True,
+    )
+    is_active = models.BooleanField(default=True, db_index=True)
+    image = models.ImageField(upload_to="tourism_information/", null=True, blank=True)
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="created_tourism_information",
+    )
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="updated_tourism_information",
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    objects = TourismInformationQuerySet.as_manager()
+
+    class Meta:
+        ordering = ["spot_name", "-updated_at"]
+        verbose_name = "Tourism Information"
+        verbose_name_plural = "Tourism Information"
+
+    def __str__(self):
+        return self.spot_name
+
+    @property
+    def is_published(self):
+        return self.publication_status == "published" and self.is_active
 
 class HotelConfirmation(models.Model):
     entry = models.OneToOneField(Entry, on_delete=models.CASCADE)

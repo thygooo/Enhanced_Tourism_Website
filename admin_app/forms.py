@@ -2,7 +2,7 @@
 
 from django import forms
 from .models import Employee
-from .models import Accomodation, AccommodationCertification
+from .models import Accomodation, AccommodationCertification, TourismInformation
 class EmployeeRegistrationForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput(), label="Password")
     password2 = forms.CharField(widget=forms.PasswordInput(), label="Confirm Password")
@@ -41,37 +41,58 @@ class EmployeeRegistrationForm(forms.ModelForm):
 
 
 
-class AccomodationForm(forms.ModelForm):
+class AccommodationRegistrationForm(forms.ModelForm):
     certifications = forms.FileField(required=False)
-    
+
     class Meta:
         model = Accomodation
-        # Exclude the 'status' field so it won't be validated or expected in the form.
-        exclude = ['status']
-        widgets = {
-            'company_type': forms.Select(choices=[
-                ('Hotel', 'Hotel'),
-                ('Establishment', 'Establishment'),
-                # Add more options as needed
-            ]),
-            'password': forms.PasswordInput(),
+        fields = [
+            "company_name",
+            "company_type",
+            "location",
+            "phone_number",
+            "email_address",
+            "description",
+            "password",
+            "profile_picture",
+        ]
+        labels = {
+            "company_name": "Business Name",
+            "company_type": "Business Type",
+            "location": "Address",
+            "phone_number": "Contact Number",
+            "email_address": "Contact Email",
+            "description": "Business Description",
+            "password": "Accommodation Account Password",
         }
-    
+        widgets = {
+            "company_type": forms.Select(
+                choices=[
+                    ("Hotel", "Hotel"),
+                    ("Inn", "Inn"),
+                ]
+            ),
+            "description": forms.Textarea(attrs={"rows": 4}),
+            "password": forms.PasswordInput(),
+        }
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         if commit:
             instance.save()
-            
-            # Handle certifications if provided
-            certification_files = self.files.getlist('certifications')
-            if certification_files:
-                for cert_file in certification_files:
-                    AccommodationCertification.objects.create(
-                        accommodation=instance,
-                        image=cert_file
-                    )
-                    
+
+            certification_files = self.files.getlist("certifications")
+            for cert_file in certification_files:
+                AccommodationCertification.objects.create(
+                    accommodation=instance,
+                    image=cert_file,
+                )
+
         return instance
+
+
+# Backward-compatible alias for existing imports/usages.
+AccomodationForm = AccommodationRegistrationForm
 
 
 from django import forms
@@ -126,3 +147,21 @@ class EstablishmentFormAdmin(forms.ModelForm):
             cleaned_data['entries'] = Entry.objects.filter(title=new_entry)
 
         return cleaned_data
+
+
+class TourismInformationForm(forms.ModelForm):
+    class Meta:
+        model = TourismInformation
+        fields = [
+            "spot_name",
+            "description",
+            "location",
+            "contact_information",
+            "operating_hours",
+            "publication_status",
+            "is_active",
+            "image",
+        ]
+        widgets = {
+            "description": forms.Textarea(attrs={"rows": 4}),
+        }

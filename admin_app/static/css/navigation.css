@@ -1,5 +1,10 @@
 /* Ibayaw Tour Navigation Styles */
 
+/* Desktop visual scale for admin pages (keeps layout readable without using body transform) */
+body {
+  zoom: 0.9;
+}
+
 /* CSS Variables */
 :root {
   /* Brand Colors */
@@ -182,6 +187,10 @@
 
 /* Responsive design */
 @media (max-width: 768px) {
+  body {
+    zoom: 1;
+  }
+
   .navigation {
     width: 100%;
     height: auto;

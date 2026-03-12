@@ -1,0 +1,233 @@
+intent,similarity,row_id_a,row_id_b,split_a,split_b,text_a,text_b
+book_accommodation,0.913043,59,113,val,train,book accommodation with quiet place and parking,book accomodation with quiet place and aircon
+book_accommodation,0.9,76,1073,train,val,reserve an inn sa city proper 4 6 pax now,reserve an inn sa city proper for 6 pax
+book_accommodation,0.915254,78,255,test,train,book na room na may parking,pls book na room na may parking?
+book_accommodation,0.916667,94,938,test,train,hello book na room na may near terminal,book na room na may near terminal
+book_accommodation,0.914286,95,1084,train,val,pls book accomodation with near terminal and parking,book accommodation with near terminal and parking now
+book_accommodation,0.918919,139,764,train,val,reserve an inn sa bayawan for 6 pax,pls reserve an inn sa bayawan for 4 pax
+book_accommodation,0.903226,155,1549,val,test,book accomodation with hot shower and wifi?,book accommodation with hot shower and wifi thanks
+book_accommodation,0.916667,189,480,train,val,reserve an inn sa poblacion 4 2 pax,reserve an inn sa poblacion for 1 pax
+book_accommodation,0.909091,204,221,test,train,reserve room now budget around 4000 thanks,"hi, reserve room now budget around 3500 thanks"
+book_accommodation,0.916667,280,1206,val,train,hello book room quick lang near bayawan,book room quick lang near bayawan
+book_accommodation,0.918919,314,1122,train,val,"can you reserve for 1 nights, 1 guests","can u reserve for 4 nights, 5 guests"
+book_accommodation,0.90411,412,1539,test,train,reserve room now budget around 3500 po,reserve room now budget around 1800
+book_accommodation,0.912281,496,1884,train,test,i need to book a place near city proper this weekend,hello i need to book a place near city proper this weekend now
+book_accommodation,0.9,661,764,train,val,hello reserve an inn sa bayawan for 2 pax,pls reserve an inn sa bayawan for 4 pax
+book_accommodation,0.9,787,1582,val,train,quick question: book accomodation with aircon and near terminal,quick question: book accomodation with aircon and parking
+book_accommodation,0.915254,880,1646,val,test,i need to book a place near terminal area this weekend,"ask lang, i need to book a place near terminal area this weekend"
+book_accommodation,0.90625,1022,1884,val,test,"ask lang, i need to book a place near city proper this weekend now",hello i need to book a place near city proper this weekend now
+book_accommodation,0.914286,1028,1810,val,train,"can u reserve 4 4 nights, 2 guests","can you reserve 4 2 nights, 1 guests"
+book_accommodation,0.907563,1042,1091,train,test,book accommodation with hot shower and near terminal now,"hi, book accommodation with hot shower and near terminal thanks"
+book_accommodation,0.913043,1044,1473,test,train,"hi, can you reserve for 5 nights, 6 guests pls","hi, can you reserve for 1 nights, 6 guests now"
+book_accommodation,0.909091,1044,1638,test,train,"hi, can you reserve for 5 nights, 6 guests pls","hi, can you reserve for 2 nights, 4 guests"
+book_accommodation,0.909091,1085,1910,test,train,hello i need to book a place near villareal this weekend,i need to book a place near villareal this weekend now
+book_accommodation,0.917647,1119,1885,test,train,"ask lang, need room tonight pls, 6 kami thanks","ask lang, need room tonight pls, 6 kami"
+book_accommodation,0.9,1122,1852,val,train,"can u reserve for 4 nights, 5 guests","uy can you reserve for 4 nights, 5 guests po"
+book_accommodation,0.909091,1165,1297,train,test,book room quick lang near villareal thanks,book room quick lang near villareal
+book_accommodation,0.911111,1441,1473,val,train,"hi, can you reserve 4 5 nights, 1 guests now","hi, can you reserve for 1 nights, 6 guests now"
+book_accommodation,0.917647,1778,1857,val,train,reserve an inn sa near downtown 4 4 pax,"hi, reserve an inn sa near downtown 4 4 pax po"
+calculate_accommodation_billing,0.91358,4,1401,train,val,hello calculate room bill for 4 nights pls,uy calculate room bill for 4 nights pls
+calculate_accommodation_billing,0.901408,7,795,train,test,pls calculate room bill for 5 nights,uy calculate room bill for 2 nights
+calculate_accommodation_billing,0.909091,45,795,val,test,calcuate room bill for 3 nights,uy calculate room bill for 2 nights
+calculate_accommodation_billing,0.911765,45,1447,val,train,calcuate room bill for 3 nights,hello calcuate room bill for 3 nights
+calculate_accommodation_billing,0.909091,187,373,val,train,pa compute ng room payment with aircon thanks,pa compute ng room payment with wifi thanks
+calculate_accommodation_billing,0.915663,187,682,val,train,pa compute ng room payment with aircon thanks,pa compute ng room payment with aircon
+calculate_accommodation_billing,0.9,187,1227,val,train,pa compute ng room payment with aircon thanks,"ask lang, pa compute ng room payment with aircon thanks"
+calculate_accommodation_billing,0.910891,188,1126,train,val,uy bill estimate for inn stay near terminal area now,pls bill estimate for inn stay near terminal area
+calculate_accommodation_billing,0.90411,211,970,val,train,uy hm total if 1 guests for 5 nights,"hi, hm total if 1 guests for 3 nights"
+calculate_accommodation_billing,0.915663,228,1609,test,train,bill estimate for inn stay near nangka thanks,bill estimate for inn stay near nangka
+calculate_accommodation_billing,0.900901,254,986,train,test,pls total stay payment from 2026-04-17 to 2026-04-19 thanks,total stay payment from 2026-04-17 to 2026-04-19 now
+calculate_accommodation_billing,0.900901,262,604,test,train,quick question: bill estimate for inn stay near nangka,quick question: bill estimate for inn stay near villareal
+calculate_accommodation_billing,0.917431,262,1470,test,train,quick question: bill estimate for inn stay near nangka,quick question: bill estimate for inn stay near bayawan
+calculate_accommodation_billing,0.906667,289,1558,test,train,uy room billing breakdown please pls,uy room billing breakdown please thanks
+calculate_accommodation_billing,0.9,308,1015,train,test,pls how much babayaran sa room 2,how much babayaran sa room 7
+calculate_accommodation_billing,0.909091,325,1013,test,train,bill estimate for inn stay near city proper now,bill estimate 4 inn stay near city proper
+calculate_accommodation_billing,0.909091,339,927,train,val,hm total if 3 guests for 1 nights thanks,hm total if 3 guests for 1 nights now
+calculate_accommodation_billing,0.90566,382,679,test,train,total stay payment from 2026-04-02 to 2026-04-04,"ask lang, total stay payment from 2026-04-02 to 2026-04-04"
+calculate_accommodation_billing,0.914286,391,934,train,val,calculate room bill for 1 nights now,calculate room bill 4 2 nights now
+calculate_accommodation_billing,0.906667,423,1345,val,train,hello calculate room bill 4 5 nights,hello calcuate room bill 4 1 nights pls
+calculate_accommodation_billing,0.90411,423,1447,val,train,hello calculate room bill 4 5 nights,hello calcuate room bill for 3 nights
+calculate_accommodation_billing,0.912621,446,1126,train,val,hello bill estimate for inn stay near terminal area po,pls bill estimate for inn stay near terminal area
+calculate_accommodation_billing,0.90625,447,450,train,test,calculate room bill 4 4 nights,"hi, calculate room bill 4 3 nights"
+calculate_accommodation_billing,0.90625,447,934,train,val,calculate room bill 4 4 nights,calculate room bill 4 2 nights now
+calculate_accommodation_billing,0.914286,450,1092,test,val,"hi, calculate room bill 4 3 nights","hi, calculate room bill for 4 nights"
+calculate_accommodation_billing,0.911392,478,1825,val,train,uy room charge hm with extra guest pls,uy room charge hm with extra guest thanks
+calculate_accommodation_billing,0.918919,488,736,val,train,how much babayaran sa room 4 thanks,pls how much babayaran sa room 8 thanks
+calculate_accommodation_billing,0.909091,494,968,train,val,pls what is my accommodation total around budget 2200,"hi, what is my accommodation total around budget 2200 now"
+calculate_accommodation_billing,0.907407,528,968,train,val,what is my accommodation total around budget 700 po,"hi, what is my accommodation total around budget 2200 now"
+calculate_accommodation_billing,0.90411,675,795,train,test,uy calcuate room bill for 5 nights now,uy calculate room bill for 2 nights
+calculate_accommodation_billing,0.916667,679,1111,train,val,"ask lang, total stay payment from 2026-04-02 to 2026-04-04","ask lang, total stay payment from 2026-04-24 to 2026-04-26 now"
+calculate_accommodation_billing,0.909091,733,1219,val,test,uy calculate accom bill pls,"hi, calculate accom bill pls"
+calculate_accommodation_billing,0.901408,795,1092,test,val,uy calculate room bill for 2 nights,"hi, calculate room bill for 4 nights"
+calculate_accommodation_billing,0.918919,795,1401,test,val,uy calculate room bill for 2 nights,uy calculate room bill for 4 nights pls
+calculate_accommodation_billing,0.9,870,1878,train,test,"ask lang, bill estimate for inn stay near city proper",pls bill estimate for inn stay near city proper
+calculate_accommodation_billing,0.905263,972,1798,test,train,"ask lang, pa compute ng room payment with parking","ask lang, pa compute ng room payment with wifi"
+calculate_accommodation_billing,0.909091,1013,1878,train,test,bill estimate 4 inn stay near city proper,pls bill estimate for inn stay near city proper
+calculate_accommodation_billing,0.9,1015,1179,test,train,how much babayaran sa room 7,how much babayaran sa room 22 po
+calculate_accommodation_billing,0.9,1015,1245,test,train,how much babayaran sa room 7,uy how much babayaran sa room 40
+calculate_accommodation_billing,0.910569,1111,1896,val,train,"ask lang, total stay payment from 2026-04-24 to 2026-04-26 now","ask lang, total stay payment from 2026-03-25 to 2026-03-27 po"
+calculate_accommodation_billing,0.913043,1126,1359,val,train,pls bill estimate for inn stay near terminal area,bill estimate 4 inn stay near terminal area
+calculate_accommodation_billing,0.90411,1319,1698,val,train,compute lodging cost sa poblacion thanks,compute lodging cost sa poblacion
+calculate_accommodation_billing,0.916667,1558,1909,train,val,uy room billing breakdown please thanks,room billing breakdown pls thanks
+calculate_billing,0.91954,22,823,train,test,"ask lang, pa compute tour cost budget 2500 po","ask lang, pa compute tour cost budget 3000"
+calculate_billing,0.911765,30,1450,test,val,hm tour package for nature trip,hello hm tour package for nature trip
+calculate_billing,0.911392,82,493,train,test,what is total sa adventure itinerary?,hello what is total sa adventure itinerary
+calculate_billing,0.916667,146,1171,test,train,cost of guided tour hm now,cost of guided tour hm
+calculate_billing,0.916667,152,1450,train,val,hello hm tour package for farm trip,hello hm tour package for nature trip
+calculate_billing,0.909091,161,1182,train,val,pls what is total sa heritage itinerary po,what is total sa heritage itinerary
+calculate_billing,0.914286,177,1716,test,train,pls what is total sa farm itinerary,"hi, what is total sa farm itinerary"
+calculate_billing,0.909091,196,1805,val,train,"hi, what is total sa sunset itinerary now",what is total sa sunset itinerary po
+calculate_billing,0.904762,202,1808,test,train,"ask lang, what is total sa sunset itinerary","ask lang, what is total sa city itinerary"
+calculate_billing,0.909091,225,1182,test,val,what is total sa heritage itinerary thanks,what is total sa heritage itinerary
+calculate_billing,0.9,225,1191,test,train,what is total sa heritage itinerary thanks,what is total sa city itinerary thanks
+calculate_billing,0.911392,266,886,test,train,uy what is total sa waterfall itinerary now,what is total sa waterfall itinerary
+calculate_billing,0.918033,291,1772,val,train,tour fee estimate for 6 pax po,tour fee estimate for 3 pax now
+calculate_billing,0.912281,291,1858,val,train,tour fee estimate for 6 pax po,tour fee estimate for 5 pax
+calculate_billing,0.909091,342,1639,val,train,quick question: what is total sa waterfall itinerary,quick question: what is total sa farm itinerary
+calculate_billing,0.90625,421,1839,test,train,uy how much if family tour 1 days?,how much if family tour 5 days
+calculate_billing,0.909091,427,1482,train,val,uy hm tour package for waterfall trip,hello hm tour package for waterfall trip
+calculate_billing,0.914286,457,1750,train,test,pa compute tour cost budget 1200 now,pa compute tour cost budget 900 po
+calculate_billing,0.903226,471,863,val,train,quick question: tour fee estimate for 3 pax,quick question: tour fee estimate for 6 pax thanks
+calculate_billing,0.915663,475,1573,train,test,tour total payment near near boulevard,tour total payment near near boulevard thanks
+calculate_billing,0.917647,481,1790,test,train,tour total payment near terminal area thanks,tour total payment near terminal area now
+calculate_billing,0.918919,499,1217,val,train,tour total payment near kalumboyan,hello tour total payment near kalumboyan
+calculate_billing,0.906667,499,1288,val,train,tour total payment near kalumboyan,tour total payment near kalumboyan thanks
+calculate_billing,0.90411,516,741,val,train,"hi, tour total payment near villareal po",tour total payment near villareal
+calculate_billing,0.903226,522,1686,val,train,"hi, need tour quote under 3500 po","hi, need tour quote under 900"
+calculate_billing,0.907216,562,1210,train,test,quick question: tour total payment near bayawan,quick question: tour total payment near kalumboyan
+calculate_billing,0.91358,608,1488,val,train,what is total sa farm itinerary thanks,uy what is total sa family itinerary thanks
+calculate_billing,0.906667,656,1365,val,train,"hi, pa compute tour cost budget 700 pls","hi, pa compute tour cost budget 1200"
+calculate_billing,0.916667,668,1321,train,test,tour bill po 4 weekend,tour bill po 4 weekend now
+calculate_billing,0.9,687,1136,test,train,quick question: what is total sa sunset itinerary,quick question: what is total sa heritage itinerary
+calculate_billing,0.909091,696,1750,train,test,pa compute tour cost budget 2500,pa compute tour cost budget 900 po
+calculate_billing,0.913043,793,1318,test,train,quick question: hm tour package for sunset trip,quick question: hm tour package for city trip
+calculate_billing,0.90566,901,1169,train,test,tour bill po for weekend,pls tour bill po for weekend?
+calculate_billing,0.911392,1063,1603,train,test,hello pa compute tour cost budget 900,hello pa compute tour cost budget 2500 pls
+calculate_billing,0.916667,1171,1238,train,test,cost of guided tour hm,"hi, cost of guided tour hm"
+calculate_billing,0.910891,1251,1286,val,train,quick question: hm tour package for nature trip pls,quick question: hm tour package for adventure trip
+calculate_billing,0.918919,1662,1715,train,val,tour total payment near poblacion pls,tour total payment near poblacion now
+get_accommodation_recommendation,0.907407,15,1788,test,train,hello recommend inn in kalumboyan for 4 guests under 3500,recommend inn in kalumboyan for 3 guests under 2500
+get_accommodation_recommendation,0.912621,79,1410,train,test,pls recommend inn in poblacion for 2 guests under 700,recommend inn in poblacion for 5 guests under 1200
+get_accommodation_recommendation,0.906977,128,1383,val,train,pls hotel suggestion please with hot shower po,hotel suggestion please with hot shower?
+get_accommodation_recommendation,0.901099,128,1725,val,train,pls hotel suggestion please with hot shower po,hello hotel suggestion please with hot shower
+get_accommodation_recommendation,0.917431,131,860,val,train,quick question: pa suggest place to stay near bayawan,quick question: pa suggest place to stay near kalumboyan
+get_accommodation_recommendation,0.914286,131,1503,val,train,quick question: pa suggest place to stay near bayawan,quick question: pa suggest place to stay near nangka
+get_accommodation_recommendation,0.907407,131,1636,val,train,quick question: pa suggest place to stay near bayawan,quick question: pa suggest place to stay near poblacion
+get_accommodation_recommendation,0.901408,158,1021,val,train,uy find me a quiet room with aircon,find me a quiet room with aircon now
+get_accommodation_recommendation,0.901408,158,1248,val,train,uy find me a quiet room with aircon,find me a quiet room with aircon pls
+get_accommodation_recommendation,0.90411,193,443,train,val,pls best budget room around 700 thanks,best budget room around 2500 thanks
+get_accommodation_recommendation,0.902439,200,1110,train,test,"ask lang, inn reco near terminal please","ask lang, inn reco near terminal pls thanks"
+get_accommodation_recommendation,0.902655,251,372,train,val,uy suggest hotel or inn from 2026-04-02 to 2026-04-04,"ask lang, suggest hotel or inn from 2026-04-02 to 2026-04-04"
+get_accommodation_recommendation,0.90566,252,1189,train,val,"ask lang, any affordable accommodation for 4 pax po","ask lang, any affordable accommodation for 2 pax thanks"
+get_accommodation_recommendation,0.915254,360,1879,test,train,uy san okay mag stay 4 3 nights,san okay mag stay 4 2 nights
+get_accommodation_recommendation,0.911392,369,1246,val,train,pa suggest place to stay near nangka,pa suggest place to stay near nangka thanks
+get_accommodation_recommendation,0.911392,369,1599,val,train,pa suggest place to stay near nangka,uy pa suggest place to stay near nangka now
+get_accommodation_recommendation,0.901408,388,1093,train,val,looking for rooms near poblacion,looking for rooms near poblacion thanks
+get_accommodation_recommendation,0.916667,443,1738,val,train,best budget room around 2500 thanks,uy best budget room around 900 thanks
+get_accommodation_recommendation,0.900901,479,1058,train,val,pls suggest hotel or inn from 2026-03-20 to 2026-03-22,pls suggest hotel or inn from 2026-04-10 to 2026-04-12 po
+get_accommodation_recommendation,0.901961,495,730,test,train,pa suggest place to stay near near boulevard now,uy pa suggest place to stay near near boulevard thanks
+get_accommodation_recommendation,0.916667,509,1249,test,train,"hi, san okay mag stay for 5 nights pls","hi, san okay mag stay for 3 nights"
+get_accommodation_recommendation,0.909091,572,737,train,test,"hi, best budget room around 3500",hello best budget room around 3500
+get_accommodation_recommendation,0.903226,595,1260,test,val,need accom options with breakfast and wifi,hello need accom options with breakfast and wifi po
+get_accommodation_recommendation,0.906977,595,1770,test,train,need accom options with breakfast and wifi,need accom options with breakfast and aircon
+get_accommodation_recommendation,0.918919,734,919,val,train,recomend inn in near boulevard for 2 guests under 4000,recommend inn in near boulevard for 3 guests under 700 po
+get_accommodation_recommendation,0.912281,734,1364,val,train,recomend inn in near boulevard for 2 guests under 4000,"hi, recommend inn in near boulevard for 6 guests under 3000?"
+get_accommodation_recommendation,0.9,810,1197,test,train,best budget room around 2200,uy best budget room around 2500?
+get_accommodation_recommendation,0.9,810,1506,test,train,best budget room around 2200,pls best budget room around 1200
+get_accommodation_recommendation,0.909091,881,891,val,train,suggest hotel or inn from 2026-04-17 to 2026-04-19?,hello suggest hotel or inn from 2026-04-17 to 2026-04-19 po
+get_accommodation_recommendation,0.913793,891,1058,train,val,hello suggest hotel or inn from 2026-04-17 to 2026-04-19 po,pls suggest hotel or inn from 2026-04-10 to 2026-04-12 po
+get_accommodation_recommendation,0.901099,906,1796,train,test,quick question: looking for rooms near bayawan,quick question: looking for rooms near nangka
+get_accommodation_recommendation,0.912621,1024,1866,train,test,recommend inn in bayawan for 3 guests under 2200 po,recommend inn in bayawan for 1 guests under 3000 now
+get_accommodation_recommendation,0.91358,1047,1342,train,test,hotel suggestion pls with quiet place pls,hotel suggestion please with quiet place
+get_accommodation_recommendation,0.909091,1135,1866,train,test,recommend inn in bayawan for 6 guests under 700,recommend inn in bayawan for 1 guests under 3000 now
+get_accommodation_recommendation,0.9,1189,1509,val,train,"ask lang, any affordable accommodation for 2 pax thanks",any affordable accommodation for 2 pax thanks
+get_accommodation_recommendation,0.90566,1410,1681,test,train,recommend inn in poblacion for 5 guests under 1200,hello recommend inn in poblacion for 5 guests under 3000
+get_recommendation,0.901408,83,1710,val,train,uy suggest trip idea near villareal now,suggest trip idea near villareal
+get_recommendation,0.909091,84,939,train,test,recommend which tour package we should take,recommend which tour package we should choose
+get_recommendation,0.910891,96,1343,val,train,quick question: recommend a waterfall tour in bayawan,quick question: recommend a farm tour in bayawan
+get_recommendation,0.909091,100,1849,train,val,san maganda puntahan this weekend thanks,san maganda puntahan this weekend pls
+get_recommendation,0.909091,165,1856,val,train,"hi, san maganda puntahan this weekend po",san maganda puntahan this weekend now
+get_recommendation,0.907216,166,1464,test,train,quick question: tour reco 4 6 guests budget 900,quick question: tour reco for 5 guests budget 2500
+get_recommendation,0.917647,184,1702,val,train,"ask lang, give me quick tour suggestion thanks","ask lang, give me quick tour suggestion"
+get_recommendation,0.911392,186,1453,train,test,recommend a heritage tour in bayawan,recommend a heritage tour in bayawan thanks
+get_recommendation,0.914286,191,1862,train,test,quick question: travel recommendation 4 short trip now,quick question: travel recomendation for short trip
+get_recommendation,0.914286,199,1186,train,test,recomend chill itinerary one day?,"hi, recommend chill itinerary one day"
+get_recommendation,0.915663,236,1918,val,train,"ask lang, pa suggest scenic tour spots","ask lang, pa suggest scenic tour spots thanks"
+get_recommendation,0.906667,247,1228,train,test,best adventure activity for family,pls best adventure activity for family po
+get_recommendation,0.918919,271,1898,train,val,"hi, need outdoor destination reco now",pls need outdoor destination reco now
+get_recommendation,0.902439,274,873,test,train,suggest trip idea near near boulevard,pls suggest trip idea near near boulevard now
+get_recommendation,0.901408,305,1376,test,train,uy recommend a city tour in bayawan pls,recommend a city tour in bayawan
+get_recommendation,0.91358,305,1886,test,val,uy recommend a city tour in bayawan pls,uy recommend a city tour in bayawan thanks
+get_recommendation,0.918919,333,399,train,test,hello recommend a sunset tour in bayawan,recommend a sunset tour in bayawan
+get_recommendation,0.906667,399,1867,test,train,recommend a sunset tour in bayawan,recommend a sunset tour in bayawan thanks
+get_recommendation,0.916667,422,1674,test,val,uy tour ideas na di mahal?,tour ideas na di mahal
+get_recommendation,0.909091,422,1906,test,train,uy tour ideas na di mahal?,uy tour ideas na di mahal pls
+get_recommendation,0.914286,431,1239,train,val,"hi, what tour bagay for friends pls","hi, what tour bagay for friends now"
+get_recommendation,0.918919,489,1029,test,train,best waterfall activity 4 family now,uy best waterfall activity 4 family po
+get_recommendation,0.911765,588,1315,test,val,hello pa suggest scenic tour spots?,pls pa suggest scenic tour spots?
+get_recommendation,0.90625,617,1612,train,val,suggest trip idea near nangka,hello suggest trip idea near nangka
+get_recommendation,0.906667,621,691,train,test,travel recommendation 4 short trip pls,travel recomendation 4 short trip now
+get_recommendation,0.91358,636,1541,train,val,"hi, travel recommendation for short trip po","hi, travel recommendation 4 short trip"
+get_recommendation,0.911392,636,1823,train,val,"hi, travel recommendation for short trip po",travel recommendation for short trip
+get_recommendation,0.916667,645,1674,train,val,"hi, tour ideas na di mahal",tour ideas na di mahal
+get_recommendation,0.90411,665,1849,train,val,uy san maganda puntahan this weekend,san maganda puntahan this weekend pls
+get_recommendation,0.9,691,750,test,train,travel recomendation 4 short trip now,uy travel recommendation for short trip now
+get_recommendation,0.911392,750,1823,train,val,uy travel recommendation for short trip now,travel recommendation for short trip
+get_recommendation,0.905263,768,822,train,val,"ask lang, recommend a nature tour in bayawan now","ask lang, recommend a adventure tour in bayawan"
+get_recommendation,0.916667,777,1674,train,val,tour ideas na di mahal now,tour ideas na di mahal
+get_recommendation,0.906977,785,1494,val,train,tour reco for 2 guests budget 3500 thanks,pls tour reco for 4 guests budget 1500 thanks
+get_recommendation,0.902439,854,1864,train,test,recommend a waterfall tour in bayawan,"hi, recommend a waterfall tour in bayawan now"
+get_recommendation,0.91358,854,1904,train,val,recommend a waterfall tour in bayawan,recommend a waterfall tour in bayawan thanks
+get_recommendation,0.909091,947,1823,train,val,hello travel recomendation for short trip,travel recommendation for short trip
+get_recommendation,0.906667,1023,1186,train,test,hello recomend chill itinerary one day,"hi, recommend chill itinerary one day"
+get_recommendation,0.911765,1099,1706,train,test,hello best nature activity 4 family,pls best nature activity 4 family
+get_recommendation,0.916667,1117,1815,train,test,pls best city activity for family po,"hi, best city activity for family po"
+get_recommendation,0.906977,1187,1831,test,train,"ask lang, tour reco 4 2 guests budget 2500","ask lang, tour reco for 4 guests budget 1200"
+get_recommendation,0.918919,1242,1384,train,test,"hi, need outdoor destination reco pls",pls need outdoor destination reco pls
+get_recommendation,0.906667,1270,1541,train,val,pls travel recomendation 4 short trip,"hi, travel recommendation 4 short trip"
+get_recommendation,0.90625,1271,1301,train,test,need outdoor destination reco,uy need outdoor destination reco po
+get_recommendation,0.916667,1284,1564,train,val,"ask lang, san maganda puntahan this weekend thanks","ask lang, san maganda puntahan this weekend po"
+get_recommendation,0.909091,1304,1827,val,train,pls travel recommendation for short trip thanks,travel recommendation 4 short trip thanks
+get_recommendation,0.910891,1343,1700,train,val,quick question: recommend a farm tour in bayawan,quick question: recommend a adventure tour in bayawan
+get_recommendation,0.918919,1384,1898,test,val,pls need outdoor destination reco pls,pls need outdoor destination reco now
+get_recommendation,0.916667,1640,1674,train,val,pls tour ideas na di mahal,tour ideas na di mahal
+get_recommendation,0.918919,1849,1856,val,train,san maganda puntahan this weekend pls,san maganda puntahan this weekend now
+get_tourism_information,0.918919,16,1689,train,val,"hi, ano entrance fee and schedule pls",pls ano entrance fee and schedule pls
+get_tourism_information,0.918919,16,1765,train,test,"hi, ano entrance fee and schedule pls","hi, ano entrance fee and schedule now"
+get_tourism_information,0.9,32,521,test,train,tourism info about poblacion,tourisn info about poblacion now
+get_tourism_information,0.905983,42,180,train,test,quick question: details about heritage destinations please,quick question: details about adventure destinations please
+get_tourism_information,0.914286,60,921,test,val,hello tourism info about near downtown,tourism info about near downtown
+get_tourism_information,0.917647,67,1107,val,train,what are tourist spots in near downtown,"hi, what are tourist spots in near downtown po"
+get_tourism_information,0.917647,67,1673,val,train,what are tourist spots in near downtown,what are tourist spots in near downtown thanks
+get_tourism_information,0.902439,167,958,test,train,"hi, details about sunset destinations pls",details about sunset destinations pls pls
+get_tourism_information,0.91358,167,1104,test,train,"hi, details about sunset destinations pls",details about sunset destinations please
+get_tourism_information,0.911111,175,1145,train,val,i need destination details be4e mag tour thanks,i need destination details be4e mag tour po
+get_tourism_information,0.904348,180,1174,test,train,quick question: details about adventure destinations please,quick question: details about sunset destinations please
+get_tourism_information,0.901408,260,921,train,val,tourism info about near downtown thanks,tourism info about near downtown
+get_tourism_information,0.916667,316,818,train,test,hello tourism info about near boulevard,tourism info about near boulevard
+get_tourism_information,0.914894,320,1704,train,test,hello details about family destinations please,hello details about farm destinations please pls
+get_tourism_information,0.90411,367,818,train,test,tourism info about near boulevard thanks,tourism info about near boulevard
+get_tourism_information,0.903846,375,1507,test,train,"ask lang, facts about tourism sites near near boulevard","hi, facts about tourism sites near near boulevard"
+get_tourism_information,0.901408,439,875,train,test,pls tourist spot background info pls po,tourist spot background info pls
+get_tourism_information,0.917647,515,554,train,test,hello what are tourist spots in bayawan,hello what are tourist spots in bayawan thanks
+get_tourism_information,0.901099,556,689,train,val,facts about tourism sites near villareal thanks,facts about tourisn sites near villareal now
+get_tourism_information,0.916667,579,673,test,train,"ask lang, details about family destinations pls","ask lang, details about farm destinations pls pls"
+get_tourism_information,0.905263,610,1577,val,train,facts about tourisn sites near terminal area thanks,facts about tourism sites near terminal area
+get_tourism_information,0.901099,689,1610,val,train,facts about tourisn sites near villareal now,"hi, facts about tourism sites near villareal po"
+get_tourism_information,0.917647,724,1518,val,train,hello facts about tourism sites near bayawan,uy facts about tourism sites near bayawan
+get_tourism_information,0.910891,729,1220,train,test,hello where to check official attraction details po,"hi, where to check official attraction details pls"
+get_tourism_information,0.91358,837,1828,train,val,"ask lang, how to get to popular spots thanks","ask lang, how to get to popular spots"
+get_tourism_information,0.9,868,1236,train,val,pls tourisn info about bayawan,"hi, tourisn info about bayawan"
+get_tourism_information,0.901408,875,1683,test,train,tourist spot background info pls,uy tourist spot background info pls pls
+get_tourism_information,0.914286,875,1713,test,train,tourist spot background info pls,hello tourist spot background info pls
+get_tourism_information,0.917647,952,1656,train,test,"ask lang, ano entrance fee and schedule thanks","ask lang, ano entrance fee and schedule"
+get_tourism_information,0.917647,973,1145,train,val,i need destination details before mag tour,i need destination details be4e mag tour po
+get_tourism_information,0.909091,989,1056,train,test,uy share infromation sa local attractions,share in4mation sa local attractions
+get_tourism_information,0.901099,1086,1901,train,test,quick question: tourisn info about bayawan thanks,quick question: tourism info about bayawan
+get_tourism_information,0.91954,1145,1253,val,train,i need destination details be4e mag tour po,"hi, i need destination details be4e mag tour"
+get_tourism_information,0.913043,1204,1220,train,test,where to check official attraction details,"hi, where to check official attraction details pls"
+get_tourism_information,0.915254,1236,1709,val,train,"hi, tourisn info about bayawan",uy tourisn info about bayawan
+get_tourism_information,0.918919,1443,1689,train,val,pls ano entrance fee and schedule now,pls ano entrance fee and schedule pls
+get_tourism_information,0.918919,1443,1765,train,test,pls ano entrance fee and schedule now,"hi, ano entrance fee and schedule now"
+get_tourism_information,0.915663,1518,1678,train,test,uy facts about tourism sites near bayawan,facts about tourism sites near bayawan pls
+get_tourism_information,0.909091,1566,1672,val,train,what are tourist spots in terminal area thanks,what are tourist spots in terminal area po

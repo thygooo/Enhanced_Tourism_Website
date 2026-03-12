@@ -1,0 +1,94 @@
+{
+  "seed_csv": "thesis_data_templates\\text_cnn_messages_final_refined.csv",
+  "output_csv": "thesis_data_templates\\text_cnn_messages_final_expanded_v3.csv",
+  "raw_before_counts": {
+    "book_accommodation": 62,
+    "calculate_accommodation_billing": 55,
+    "calculate_billing": 57,
+    "get_accommodation_recommendation": 43,
+    "get_recommendation": 49,
+    "get_tourism_information": 62
+  },
+  "after_clean_counts": {
+    "book_accommodation": 320,
+    "calculate_accommodation_billing": 320,
+    "calculate_billing": 320,
+    "get_accommodation_recommendation": 320,
+    "get_recommendation": 320,
+    "get_tourism_information": 320
+  },
+  "target_per_intent": 320,
+  "total_rows": 1920,
+  "split_counts": {
+    "book_accommodation": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    },
+    "calculate_accommodation_billing": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    },
+    "calculate_billing": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    },
+    "get_accommodation_recommendation": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    },
+    "get_recommendation": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    },
+    "get_tourism_information": {
+      "test": 32,
+      "train": 256,
+      "val": 32
+    }
+  },
+  "leakage_threshold": 0.9,
+  "leakage_pair_count": 232,
+  "build_stats": {
+    "book_accommodation": {
+      "seed_added": 49,
+      "gen_added": 271,
+      "near_rejected": 1533,
+      "pattern_capped": 0
+    },
+    "calculate_accommodation_billing": {
+      "seed_added": 55,
+      "gen_added": 265,
+      "near_rejected": 3977,
+      "pattern_capped": 0
+    },
+    "calculate_billing": {
+      "seed_added": 57,
+      "gen_added": 263,
+      "near_rejected": 2552,
+      "pattern_capped": 0
+    },
+    "get_accommodation_recommendation": {
+      "seed_added": 39,
+      "gen_added": 281,
+      "near_rejected": 934,
+      "pattern_capped": 0
+    },
+    "get_recommendation": {
+      "seed_added": 49,
+      "gen_added": 271,
+      "near_rejected": 3556,
+      "pattern_capped": 0
+    },
+    "get_tourism_information": {
+      "seed_added": 62,
+      "gen_added": 258,
+      "near_rejected": 2089,
+      "pattern_capped": 0
+    }
+  }
+}

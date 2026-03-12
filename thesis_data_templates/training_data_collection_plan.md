@@ -1,0 +1,304 @@
+# Training Data Collection Plan (Text-CNN + Decision Tree)
+
+Use this file as the team checklist and reference for collecting real-world data for training.
+
+This plan supports:
+
+- `Text-CNN` (text-based user message classification)
+- `Decision Tree` (accommodation recommendation relevance/selection/booking prediction)
+
+## 1. Purpose
+
+The goal is to collect real-world data from the current system in a consistent format so the team can:
+
+- train models later using actual data
+- avoid reformatting datasets
+- keep labels consistent
+- support thesis evaluation and documentation
+
+## 2. Datasets to Build
+
+You already have templates for these:
+
+- `thesis_data_templates/text_cnn_messages.csv`
+- `thesis_data_templates/accommodation_reco_training.csv`
+- `thesis_data_templates/labeling_guide.md`
+
+This file explains what to collect and how to prepare it.
+
+## 3. Data to Collect for Text-CNN Training
+
+## 3.1 Unit of Data
+
+One row = one user message (chatbot message or manually curated message sample).
+
+## 3.2 Required Fields to Collect
+
+- `message_id`
+- `message_text`
+- `source` (`chatbot_log`, `manual_label`, `test`, etc.)
+- `timestamp`
+
+Labels to assign (manual or semi-automatic):
+
+- `label_intent`
+- `label_accommodation_type` (optional but recommended)
+- `label_budget_level` (optional but recommended)
+- `label_location_signal` (optional but recommended)
+- `split` (`train`, `val`, `test`)
+
+## 3.3 Where to Get the Data in Your System
+
+Primary sources (current system):
+
+- chatbot requests/messages handled in `ai_chatbot/views.py`
+- chatbot interaction UI calls in `guest_app/templates/mainpage.html`
+- recommendation-related logs in `ai_chatbot` models (for linking context)
+
+If raw message text is not yet stored persistently, collect through:
+
+- temporary export logging (recommended)
+- controlled user testing sessions
+- manually curated message sets based on real user phrasing
+
+## 3.4 What Counts as Good Text-CNN Data
+
+Collect a variety of messages:
+
+- complete requests
+- incomplete/follow-up messages
+- greetings and small talk
+- typo/grammar variations
+- English/Tagalog/Cebuano mixed phrasing (if part of your user base)
+- short and long messages
+
+Avoid collecting only “perfect” example prompts.
+
+## 4. Data to Collect for Decision Tree Training
+
+## 4.1 Unit of Data
+
+One row = one recommendation candidate shown to a user for a specific query/session.
+
+Example:
+
+- If one user query shows 3 rooms, record 3 rows.
+
+## 4.2 Required Fields to Collect (Structured Features)
+
+Request-side features:
+
+- `query_id`
+- `session_id`
+- `user_id_hash` (anonymized; optional if not available)
+- `requested_guests`
+- `requested_budget`
+- `requested_location`
+- `requested_accommodation_type`
+- `nights_requested` (if available)
+
+Candidate-side features:
+
+- `room_id`
+- `accom_id`
+- `room_price_per_night`
+- `room_capacity`
+- `room_available` (0/1)
+- `accom_location`
+- `company_type` (hotel/inn)
+
+Model-context features (recommended):
+
+- `cnn_intent_label`
+- `cnn_confidence`
+- `shown_rank`
+- `timestamp`
+
+Outcome/target fields:
+
+- `was_clicked` (0/1)
+- `was_booked` (0/1)
+- `was_selected` (0/1)
+- `relevance_label` (`relevant` / `not_relevant`)
+
+## 4.3 Where to Get the Data in Your System
+
+Likely sources in your current project:
+
+- recommendation generation in `ai_chatbot/views.py`
+- accommodation recommendation endpoint in `guest_app/views.py`
+- booking records in `guest_app/models.py` (`AccommodationBooking`)
+- room/accommodation data in `admin_app` models
+
+Recommended additions if not yet logged:
+
+- which room IDs were shown for each query
+- displayed rank (`shown_rank`)
+- user clicked/selected room (frontend event log)
+- mapping between `query_id/session_id` and `booking_id`
+
+## 4.4 What Counts as Good Decision Tree Data
+
+Good training data has:
+
+- both booked and non-booked recommendations
+- different budgets (low/mid/high)
+- different guest counts
+- different locations
+- both hotel and inn types
+- available and unavailable cases (if shown)
+
+Do not collect only successful bookings.
+
+## 5. Data You Should Also Collect (Recommended Extras)
+
+These are not always direct training features, but they are useful for analysis, debugging, and thesis evaluation.
+
+## 5.1 System Performance / Telemetry
+
+- response time (chatbot endpoint)
+- success/failure status
+- error messages (sanitized)
+- request volume per day
+
+Use for:
+
+- response efficiency metrics
+- system performance discussion
+
+## 5.2 Recommendation Interaction Logs
+
+- recommendation shown
+- recommendation clicked
+- recommendation selected
+- recommendation booked
+
+Use for:
+
+- engagement metrics
+- conversion funnel analysis
+- recommendation effectiveness
+
+## 5.3 Usability / Acceptance Data (Later Phase)
+
+- SUS responses
+- TAM responses (PU, PEOU)
+- optional comments/feedback
+
+Use for:
+
+- thesis evaluation (SOP #3 and #4)
+
+## 6. Privacy, Ethics, and Data Handling
+
+Before using real-world data:
+
+- anonymize personal identifiers
+- do not store plain names, phone numbers, email addresses in training datasets
+- hash user ID if user-level linkage is needed
+- limit exported fields to only what is necessary
+
+Recommended anonymization fields:
+
+- `user_id_hash` instead of actual user ID
+- remove names from `message_text` if present
+
+## 7. Labeling Workflow (Team Process)
+
+Use `thesis_data_templates/labeling_guide.md` as the standard.
+
+Recommended process:
+
+1. Export raw data batch.
+2. Clean and normalize fields.
+3. Label Text-CNN rows (intent first).
+4. Label Decision Tree relevance/outcomes.
+5. Review a sample for consistency.
+6. Freeze batch version.
+
+## 7.1 Team Roles (Suggested)
+
+- Member 1: Data export and cleaning
+- Member 2: Text-CNN labeling
+- Member 3: Decision Tree labeling
+- Member 4: QA review / consistency check
+
+Roles can rotate weekly.
+
+## 8. Data Quality Checklist (Per Batch)
+
+Before training on any batch, verify:
+
+- no missing required columns
+- no invalid label names
+- binary fields only `0/1`
+- timestamps are present and formatted consistently
+- no duplicate rows (unless intentionally repeated)
+- no personally identifiable information
+- class distribution is not extremely imbalanced (or document if it is)
+
+## 9. Suggested Weekly Collection Targets (Starter)
+
+Pilot phase targets (adjust based on usage):
+
+- Text-CNN messages: `100 to 200` real messages/week
+- Decision Tree rows: `100 to 300` recommendation candidate rows/week
+- Labeled review sample: `10 to 20 percent` of rows rechecked by another member
+
+After pilot:
+
+- increase targets based on actual traffic and team capacity
+
+## 10. File Naming and Versioning (Recommended)
+
+Do not overwrite old data without backup.
+
+Suggested naming:
+
+- `text_cnn_messages_raw_YYYY-MM-DD.csv`
+- `text_cnn_messages_labeled_v1_YYYY-MM-DD.csv`
+- `accommodation_reco_raw_YYYY-MM-DD.csv`
+- `accommodation_reco_labeled_v1_YYYY-MM-DD.csv`
+
+Track changes in a simple log:
+
+- date
+- batch name
+- row count
+- labeler(s)
+- notes/issues
+
+## 11. What to Do Next (Immediate Action Plan)
+
+## 11.1 This Week
+
+- finalize label names and thresholds (use `labeling_guide.md`)
+- collect first pilot batch of real chatbot messages
+- collect first pilot batch of recommendation rows
+- label pilot batch
+
+## 11.2 After Pilot Batch
+
+- review labeling consistency
+- adjust guide if needed
+- build/export scripts from Django data to CSV templates
+- start preprocessing and training pipeline dry runs
+
+## 11.3 Before Final Training
+
+- confirm enough real data volume
+- freeze dataset version
+- document train/val/test split
+- run training and record metrics
+
+## 12. Notes for Thesis Writing (Status Framing)
+
+You can describe your current status as:
+
+- integrated AI-ready prototype with existing recommendation/booking flows
+- dataset schema and labeling protocol prepared
+- real-world data collection and labeling in progress
+- model training to be performed using collected real-world data
+
+This is a strong and honest development stage for a thesis project.
+

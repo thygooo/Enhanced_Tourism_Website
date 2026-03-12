@@ -1,0 +1,9 @@
+﻿record_id,session_id,user_id_hash,query_id,requested_guests,requested_budget,requested_location,requested_accommodation_type,room_id,accom_id,room_price_per_night,room_capacity,room_available,accom_location,company_type,nights_requested,cnn_intent_label,cnn_confidence,shown_rank,timestamp,was_clicked,was_booked,was_selected,relevance_label
+REC0001,S001,UHASH_001,Q001,2,2000,Bayawan City,inn,12,5,1800,2,1,Bayawan City,inn,2,get_accommodation_recommendation,0.94,1,2026-02-25T10:00:00,1,1,1,relevant
+REC0002,S001,UHASH_001,Q001,2,2000,Bayawan City,inn,18,7,2200,2,1,Bayawan City,hotel,2,get_accommodation_recommendation,0.94,2,2026-02-25T10:00:00,0,0,0,not_relevant
+REC0003,S002,UHASH_002,Q002,4,3500,Poblacion,hotel,25,9,3200,4,1,Poblacion,hotel,1,get_accommodation_recommendation,0.88,1,2026-02-25T10:05:00,1,0,1,relevant
+REC0004,S002,UHASH_002,Q002,4,3500,Poblacion,hotel,27,9,4100,4,1,Poblacion,hotel,1,get_accommodation_recommendation,0.88,2,2026-02-25T10:05:00,0,0,0,not_relevant
+REC0005,S003,UHASH_003,Q003,3,1500,,either,31,12,1400,3,1,Suba,inn,3,get_accommodation_recommendation,0.79,1,2026-02-25T10:12:00,1,0,1,relevant
+REC0006,S003,UHASH_003,Q003,3,1500,,either,33,12,1600,3,1,Suba,inn,3,get_accommodation_recommendation,0.79,2,2026-02-25T10:12:00,0,0,0,not_relevant
+REC0007,S004,UHASH_004,Q004,1,1000,Terminal Area,inn,40,15,900,1,0,Terminal Area,inn,1,get_accommodation_recommendation,0.91,1,2026-02-25T10:20:00,0,0,0,not_relevant
+REC0008,S004,UHASH_004,Q004,1,1000,Terminal Area,inn,41,15,950,2,1,Terminal Area,inn,1,get_accommodation_recommendation,0.91,2,2026-02-25T10:20:00,1,1,1,relevant

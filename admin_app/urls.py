@@ -6,6 +6,8 @@ app_name = 'admin_app'
 urlpatterns = [
     # Authentication routes
     path('login/', views.login, name='login'),
+    path('forgot-password/', views.forgot_password, name='forgot_password'),
+    path('reset-password/', views.reset_password, name='reset_password'),
     path('admin/logout/', views.admin_logout, name='admin_logout'),
 
     # Dashboard routes
@@ -13,8 +15,16 @@ urlpatterns = [
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('accommodation_dashboard/', views.accommodation_dashboard, name='accommodation_dashboard'),
     path('establishment_dashboard/', views.establishment_summary, name='establishment_dashboard'),
+    path('map/', views.map_view, name='map'),
     path('tour_calendar/', views.tour_calendar, name='tour_calendar'),
     path('activity-tracker/', views.activity_tracker, name='activity_tracker'),
+    path('survey-results/', views.survey_results_dashboard, name='survey_results_dashboard'),
+    path('api/survey-results/', views.survey_results_api, name='survey_results_api'),
+    path('tourism-information/', views.tourism_information_manage, name='tourism_information_manage'),
+    path('tourism-information/add/', views.tourism_information_create, name='tourism_information_create'),
+    path('tourism-information/<int:tourism_info_id>/edit/', views.tourism_information_edit, name='tourism_information_edit'),
+    path('tourism-information/<int:tourism_info_id>/publish/', views.tourism_information_publish, name='tourism_information_publish'),
+    path('tourism-information/<int:tourism_info_id>/archive/', views.tourism_information_archive, name='tourism_information_archive'),
     
     # Employee specific routes
     path('employee/assigned-tours/', views.employee_assigned_tours, name='employee_assigned_tours'),
@@ -40,22 +50,22 @@ urlpatterns = [
 
     # AJAX endpoints for immediate database actions
     # Region endpoints
-    # path('ajax/add_region/', views.ajax_add_region, name='ajax_add_region'),
-    # path('ajax/edit_region/', views.ajax_edit_region, name='ajax_edit_region'),
-    # path('ajax/delete_region/', views.ajax_delete_region, name='ajax_delete_region'),
+    path('ajax/add_region/', views.ajax_add_region, name='ajax_add_region'),
+    path('ajax/edit_region/', views.ajax_edit_region, name='ajax_edit_region'),
+    path('ajax/delete_region/', views.ajax_delete_region, name='ajax_delete_region'),
 
     # Country endpoints
-    # path('ajax/add_country/', views.ajax_add_country, name='ajax_add_country'),
-    # path('ajax/edit_country/', views.ajax_edit_country, name='ajax_edit_country'),
-    # path('ajax/delete_country/', views.ajax_delete_country, name='ajax_delete_country'),
+    path('ajax/add_country/', views.ajax_add_country, name='ajax_add_country'),
+    path('ajax/edit_country/', views.ajax_edit_country, name='ajax_edit_country'),
+    path('ajax/delete_country/', views.ajax_delete_country, name='ajax_delete_country'),
 
     # Entry endpoints
-    # path('ajax/add_entry/', views.ajax_add_entry, name='ajax_add_entry'),
-    # path('ajax/edit_entry/', views.ajax_edit_entry, name='ajax_edit_entry'),
-    # path('ajax/delete_entry/', views.ajax_delete_entry, name='ajax_delete_entry'),
+    path('ajax/add_entry/', views.ajax_add_entry, name='ajax_add_entry'),
+    path('ajax/edit_entry/', views.ajax_edit_entry, name='ajax_edit_entry'),
+    path('ajax/delete_entry/', views.ajax_delete_entry, name='ajax_delete_entry'),
 
-    # path('ajax_mark_as_hotel/', views.ajax_mark_as_hotel, name='ajax_mark_as_hotel'),
-    # path('ajax_mark_summary_as_hotel/', views.ajax_mark_summary_as_hotel, name='ajax_mark_summary_as_hotel'),
+    path('ajax_mark_as_hotel/', views.ajax_mark_as_hotel, name='ajax_mark_as_hotel'),
+    path('ajax_mark_summary_as_hotel/', views.ajax_mark_summary_as_hotel, name='ajax_mark_summary_as_hotel'),
     
     # Employee tour assignment routes
     # path('admin/assign-employee/', views.assign_employee_to_tour, name='assign_employee_to_tour'),

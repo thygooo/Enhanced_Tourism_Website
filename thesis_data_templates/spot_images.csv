@@ -1,0 +1,21 @@
+image_id,place_id,image_path,class_label,split,source,quality_pass,labeled_by,labeled_at,notes
+IMG001,P001,images/cnn/p001_01.jpg,beach,train,field_capture,TRUE,team_a,2026-02-10 09:15:00,clear_sky
+IMG002,P002,images/cnn/p002_01.jpg,falls,train,field_capture,TRUE,team_a,2026-02-10 09:20:00,good_focus
+IMG003,P003,images/cnn/p003_01.jpg,landmark,train,field_capture,TRUE,team_b,2026-02-10 09:25:00,daytime
+IMG004,P004,images/cnn/p004_01.jpg,beach,train,field_capture,TRUE,team_b,2026-02-10 09:30:00,with_people
+IMG005,P005,images/cnn/p005_01.jpg,landmark,train,field_capture,TRUE,team_a,2026-02-10 09:35:00,wide_angle
+IMG006,P006,images/cnn/p006_01.jpg,public,train,field_capture,TRUE,team_a,2026-02-10 09:40:00,sunset
+IMG007,P007,images/cnn/p007_01.jpg,shopping,train,field_capture,TRUE,team_b,2026-02-10 09:45:00,busy_scene
+IMG008,P008,images/cnn/p008_01.jpg,landmark,train,field_capture,TRUE,team_b,2026-02-10 09:50:00,front_view
+IMG009,P009,images/cnn/p009_01.jpg,landmark,train,field_capture,TRUE,team_a,2026-02-10 09:55:00,cloudy
+IMG010,P010,images/cnn/p010_01.jpg,landmark,train,field_capture,TRUE,team_a,2026-02-10 10:00:00,long_shot
+IMG011,P011,images/cnn/p011_01.jpg,public,train,field_capture,TRUE,team_b,2026-02-10 10:05:00,garden_view
+IMG012,P012,images/cnn/p012_01.jpg,landmark,train,field_capture,TRUE,team_b,2026-02-10 10:10:00,bright_light
+IMG013,P013,images/cnn/p013_01.jpg,beach,val,field_capture,TRUE,team_a,2026-02-10 10:15:00,water_sports
+IMG014,P014,images/cnn/p014_01.jpg,landmark,val,field_capture,TRUE,team_a,2026-02-10 10:20:00,hiking_path
+IMG015,P015,images/cnn/p015_01.jpg,public,val,field_capture,TRUE,team_b,2026-02-10 10:25:00,trees
+IMG016,P016,images/cnn/p016_01.jpg,public,val,field_capture,TRUE,team_b,2026-02-10 10:30:00,riverbank
+IMG017,P017,images/cnn/p017_01.jpg,landmark,test,field_capture,TRUE,team_a,2026-02-10 10:35:00,lighthouse
+IMG018,P018,images/cnn/p018_01.jpg,beach,test,field_capture,TRUE,team_a,2026-02-10 10:40:00,coral_area
+IMG019,P019,images/cnn/p019_01.jpg,landmark,test,field_capture,TRUE,team_b,2026-02-10 10:45:00,sunset_view
+IMG020,P020,images/cnn/p020_01.jpg,public,test,field_capture,TRUE,team_b,2026-02-10 10:50:00,trail_entrance

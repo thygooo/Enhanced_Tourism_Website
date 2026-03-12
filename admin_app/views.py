@@ -1,8 +1,8 @@
 from django.contrib.auth import logout
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import EmployeeRegistrationForm, AccomodationForm
+from .forms import EmployeeRegistrationForm, AccommodationRegistrationForm
 from .models import AdminInfo, Accomodation, Employee, UserActivity, AccommodationCertification
 from accom_app.forms import OtherEstabForm
 from django.http import HttpResponse
@@ -11,21 +11,158 @@ from accom_app.models import Other_Estab
 from django.http import HttpResponse
 import json
 
-from .forms import EstablishmentFormAdmin
-from .models import Region, Country, Entry, HotelConfirmation
+from .forms import EstablishmentFormAdmin, TourismInformationForm
+from .models import Region, Country, Entry, HotelConfirmation, TourismInformation
 from accom_app.models import Summary
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
+from django.conf import settings
+from django.core.mail import send_mail
+from django.core import signing
 from functools import wraps
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
-from django.db.models import Q
+from django.db import transaction
+from django.db.models import Q, Count, Avg
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
 import datetime as dt
 from tour_app.models import Tour_Add, Tour_Schedule, Tour_Event
 from guest_app.models import Guest, Pending, AccommodationBooking
+from guest_app.booking_integrity import sync_room_current_availability
 from .models import TourAssignment
+from ai_chatbot.models import UsabilitySurveyResponse
+
+
+PASSWORD_RESET_SALT = "admin_app.password_reset"
+
+
+def _build_password_reset_token(account_type, account_id, email):
+    payload = {
+        "account_type": account_type,
+        "account_id": str(account_id),
+        "email": str(email).strip().lower(),
+    }
+    return signing.dumps(payload, salt=PASSWORD_RESET_SALT)
+
+
+def _load_password_reset_token(token, max_age_seconds=3600):
+    try:
+        return signing.loads(token, salt=PASSWORD_RESET_SALT, max_age=max_age_seconds), None
+    except signing.SignatureExpired:
+        return None, "This reset link has expired. Please request a new one."
+    except signing.BadSignature:
+        return None, "Invalid reset link."
+
+
+def _find_reset_account_by_email(email):
+    normalized = (email or "").strip().lower()
+    if not normalized:
+        return None
+
+    employee = Employee.objects.filter(email__iexact=normalized).first()
+    if employee:
+        return {"type": "employee", "obj": employee, "email": employee.email}
+
+    accom = Accomodation.objects.filter(email_address__iexact=normalized).first()
+    if accom:
+        return {"type": "accommodation", "obj": accom, "email": accom.email_address}
+
+    return None
+
+
+def forgot_password(request):
+    if request.method == "POST":
+        email = (request.POST.get("email") or "").strip()
+
+        account = _find_reset_account_by_email(email)
+        # Avoid account enumeration: show the same message regardless.
+        if account:
+            token = _build_password_reset_token(
+                account_type=account["type"],
+                account_id=getattr(account["obj"], "pk"),
+                email=account["email"],
+            )
+            reset_link = request.build_absolute_uri(
+                reverse("admin_app:reset_password") + f"?token={token}"
+            )
+            subject = "Ibayaw Tour Password Reset"
+            message = (
+                "We received a request to reset your password.\n\n"
+                f"Use this link to reset your password (valid for 1 hour):\n{reset_link}\n\n"
+                "If you did not request this, you can ignore this email."
+            )
+            try:
+                send_mail(
+                    subject,
+                    message,
+                    getattr(settings, "DEFAULT_FROM_EMAIL", None),
+                    [account["email"]],
+                    fail_silently=False,
+                )
+            except Exception:
+                messages.error(request, "Unable to send reset email right now. Please try again later.")
+                return render(request, "forgot_password.html")
+
+        messages.success(
+            request,
+            "If the email exists in our system, a password reset link has been sent.",
+        )
+        return redirect("admin_app:forgot_password")
+
+    return render(request, "forgot_password.html")
+
+
+def reset_password(request):
+    token = (request.GET.get("token") or request.POST.get("token") or "").strip()
+    payload, token_error = _load_password_reset_token(token) if token else (None, "Missing reset token.")
+
+    if token_error:
+        messages.error(request, token_error)
+        return render(request, "reset_password.html", {"token": token, "token_valid": False})
+
+    account_type = payload.get("account_type")
+    account_id = payload.get("account_id")
+    email = (payload.get("email") or "").strip().lower()
+
+    account_obj = None
+    if account_type == "employee":
+        account_obj = Employee.objects.filter(pk=account_id, email__iexact=email).first()
+    elif account_type == "accommodation":
+        account_obj = Accomodation.objects.filter(pk=account_id, email_address__iexact=email).first()
+
+    if not account_obj:
+        messages.error(request, "The account for this reset link was not found.")
+        return render(request, "reset_password.html", {"token": token, "token_valid": False})
+
+    if request.method == "POST":
+        password = request.POST.get("password") or ""
+        confirm_password = request.POST.get("confirm_password") or ""
+
+        if len(password) < 8:
+            messages.error(request, "Password must be at least 8 characters long.")
+            return render(request, "reset_password.html", {"token": token, "token_valid": True})
+
+        if password != confirm_password:
+            messages.error(request, "Passwords do not match.")
+            return render(request, "reset_password.html", {"token": token, "token_valid": True})
+
+        if account_type == "employee":
+            account_obj.set_password(password)
+            account_obj.save()
+        else:
+            account_obj.password = make_password(password)
+            account_obj.save(update_fields=["password"])
+
+        messages.success(request, "Password reset successful. You can now log in.")
+        return redirect("admin_app:login")
+
+    return render(
+        request,
+        "reset_password.html",
+        {"token": token, "token_valid": True, "email": email},
+    )
 
 def log_activity(request, employee, activity_type, description=None, page=None):
     """
@@ -76,6 +213,17 @@ def admin_required(view_func):
         return view_func(request, *args, **kwargs)
     return wrapped_view
 
+
+def is_accommodation_owner(user):
+    if not user or not getattr(user, "is_authenticated", False):
+        return False
+
+    role_value = str(getattr(user, "role", "") or "").strip().lower()
+    if role_value in {"accommodation_owner", "accommodation owner"}:
+        return True
+
+    return user.groups.filter(name__iexact="accommodation_owner").exists()
+
 def map_view(request):
     """
     View function that renders the map.html template.
@@ -92,7 +240,10 @@ def map_view(request):
     except Employee.DoesNotExist:
         pass
     
-    return render(request, 'map.html')
+    return render(request, 'map.html', {
+        'map_mode': 'admin',
+        'can_edit_bookmarks': True,
+    })
 
 # Employee registration view
 def employee_register(request):
@@ -121,8 +272,10 @@ def login(request):
         password = request.POST.get('password')
 
         # Try authenticating as an Employee first.
-        try:
-            employee = Employee.objects.get(email=username_or_email)
+        employee = Employee.objects.filter(
+            Q(email__iexact=username_or_email) | Q(username__iexact=username_or_email)
+        ).first()
+        if employee:
             if employee.check_password(password):
                 if employee.status.lower() != "accepted":
                     messages.error(request, "Your employee account is not approved yet.")
@@ -163,12 +316,12 @@ def login(request):
                     return redirect('admin_app:employee_dashboard')
             else:
                 messages.error(request, "Invalid username or password")
-        except Employee.DoesNotExist:
+        else:
             # Not found in Employee table; try Accomodation.
             try:
                 accom = Accomodation.objects.get(email_address=username_or_email)
                 if check_password(password, accom.password):
-                    if accom.status.lower() != "accepted":
+                    if (accom.approval_status or "").lower() != "accepted":
                         messages.error(request, "Your accommodation account is not approved yet.")
                         return redirect('admin_app:login')
 
@@ -228,10 +381,20 @@ def admin_logout(request):
 
 
 def accommodation_register(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "Please log in first to register your accommodation.")
+        return redirect('/guest_app/login/')
+    if not is_accommodation_owner(request.user):
+        return HttpResponseForbidden("Only accommodation owners can register accommodations.")
+
     if request.method == 'POST':
-        form = AccomodationForm(request.POST, request.FILES)
+        form = AccommodationRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
-            accommodation = form.save()  # Form now handles certifications internally
+            accommodation = form.save(commit=False)
+            accommodation.owner = request.user
+            accommodation.approval_status = "pending"
+            accommodation.status = "pending"
+            accommodation.save()
             
             # Process individual certification files
             for key, file in request.FILES.items():
@@ -241,12 +404,12 @@ def accommodation_register(request):
                         image=file
                     )
                     
-            messages.success(request, "Accomodation registered successfully! You can now log in.")
-            return redirect('admin_app:login')  # Redirect to login after successful registration
+            messages.success(request, "Accommodation submitted successfully. Await admin approval.")
+            return redirect('accommodation_page')
         else:
             messages.error(request, "Please correct the errors below.")
     else:
-        form = AccomodationForm()
+        form = AccommodationRegistrationForm()
 
     # Add request object to context for template conditional rendering
     context = {
@@ -255,14 +418,16 @@ def accommodation_register(request):
     }
     return render(request, 'accommodation.html', context)
 
+@admin_required
 def create_accommodation(request):
     accommodations = Accomodation.objects.all()
     return render(request, 'accommodation.html', {'accommodations': accommodations})
 
+@admin_required
 def pending_accommodation(request):
-    pending_accommodations = Accomodation.objects.filter(status__iexact="Pending")
-    accepted_accommodations = Accomodation.objects.filter(status__iexact="Accepted")
-    declined_accommodations = Accomodation.objects.filter(status__iexact="Declined")
+    pending_accommodations = Accomodation.objects.select_related("owner").filter(approval_status="pending")
+    accepted_accommodations = Accomodation.objects.select_related("owner").filter(approval_status="accepted")
+    declined_accommodations = Accomodation.objects.select_related("owner").filter(approval_status="declined")
     context = {
         'pending_accommodations': pending_accommodations,
         'accepted_accommodations': accepted_accommodations,
@@ -320,8 +485,12 @@ def accommodation_booking_update(request, booking_id):
         return redirect('admin_app:accommodation_bookings')
 
     booking.save()
+    if booking.room_id:
+        with transaction.atomic():
+            sync_room_current_availability(booking.room)
     return redirect('admin_app:accommodation_bookings')
 
+@admin_required
 def accommodation_update(request, pk):
     try:
         accom = Accomodation.objects.get(pk=pk)
@@ -333,8 +502,9 @@ def accommodation_update(request, pk):
         new_status = request.POST.get('status')
         # Directly store the lowercase status values.
         if new_status in ['accepted', 'declined']:
+            accom.approval_status = new_status
             accom.status = new_status
-            accom.save(update_fields=['status'])
+            accom.save(update_fields=['approval_status', 'status'])
             messages.success(request, "Status updated successfully.")
         else:
             messages.error(request, "Invalid status selected.")
@@ -348,6 +518,7 @@ from django.contrib import messages
 from .models import Employee
 
 
+@admin_required
 def update_employees(request, emp_id):
     employee = get_object_or_404(Employee, emp_id=emp_id)
     if request.method == 'POST':
@@ -473,8 +644,7 @@ def employee_accommodations(request):
         return redirect('admin_app:login')
     
     # Get accommodations (hotels, attractions, etc.)
-    from accom_app.models import Accomodation
-    accommodations = Accomodation.objects.filter(status='Accepted')
+    accommodations = Accomodation.objects.filter(approval_status="accepted")
     
     # Log the activity
     log_activity(request, employee, 'view_page', description='Viewed accommodations')
@@ -610,6 +780,7 @@ def accommodation_dashboard(request):
 # ------------------------------------------------------------------------------
 # Standard Form Processing (if needed for batch updates)
 # ------------------------------------------------------------------------------
+@ensure_csrf_cookie
 def admin_create_form(request):
     # Check if the user is logged in as either employee or admin (which is also an employee)
     if request.session.get('user_type') != 'employee' or not request.session.get('employee_id'):
@@ -688,14 +859,139 @@ def admin_create_form(request):
     return render(request, 'accom_establishment.html', context)
 
 def establishment_summary(request):
-    regions = Region.objects.all()
-    countries = Country.objects.all()
-    entries = Entry.objects.all()
-    return render(request, 'your_template.html', {
-        'regions': regions,
-        'countries': countries,
-        'entries': entries
-    })
+    if request.session.get('user_type') != 'establishment' or not request.session.get('accom_id'):
+        return redirect('admin_app:login')
+
+    try:
+        accom = Accomodation.objects.get(accom_id=request.session.get('accom_id'))
+    except Accomodation.DoesNotExist:
+        return redirect('admin_app:login')
+
+    is_hotel = (accom.company_type or "").lower() == "hotel"
+    context = {
+        'username': accom.company_name or accom.email_address,
+        'is_hotel': is_hotel,
+        'submissions_count': 0,
+        'pending_forms': 0,
+        'completed_forms': 0,
+        'recent_activities': [],
+    }
+
+    if is_hotel:
+        from admin_app.models import Room
+        context['available_rooms'] = Room.objects.filter(
+            accommodation=accom,
+            status='AVAILABLE'
+        )
+
+    return render(request, 'estab_dashboard.html', context)
+
+
+@admin_required
+def tourism_information_manage(request):
+    query = str(request.GET.get("q", "") or "").strip()
+    status = str(request.GET.get("status", "") or "").strip().lower()
+
+    rows = TourismInformation.objects.all().order_by("spot_name", "-updated_at")
+    if query:
+        rows = rows.filter(
+            Q(spot_name__icontains=query)
+            | Q(description__icontains=query)
+            | Q(location__icontains=query)
+            | Q(contact_information__icontains=query)
+        )
+    if status in {"draft", "published", "archived"}:
+        rows = rows.filter(publication_status=status)
+
+    context = {
+        "tourism_rows": rows,
+        "query": query,
+        "status_filter": status,
+    }
+    return render(request, "tourism_information_manage.html", context)
+
+
+@admin_required
+def tourism_information_create(request):
+    if request.method == "POST":
+        form = TourismInformationForm(request.POST, request.FILES)
+        if form.is_valid():
+            row = form.save(commit=False)
+            user = getattr(request, "user", None)
+            if user is not None and getattr(user, "is_authenticated", False):
+                row.created_by = user
+                row.updated_by = user
+            row.save()
+            messages.success(request, "Tourism information created successfully.")
+            return redirect("admin_app:tourism_information_manage")
+    else:
+        form = TourismInformationForm()
+
+    return render(
+        request,
+        "tourism_information_form.html",
+        {"form": form, "page_title": "Add Tourism Information", "is_edit": False},
+    )
+
+
+@admin_required
+def tourism_information_edit(request, tourism_info_id):
+    row = get_object_or_404(TourismInformation, tourism_info_id=tourism_info_id)
+    if request.method == "POST":
+        form = TourismInformationForm(request.POST, request.FILES, instance=row)
+        if form.is_valid():
+            updated_row = form.save(commit=False)
+            user = getattr(request, "user", None)
+            if user is not None and getattr(user, "is_authenticated", False):
+                updated_row.updated_by = user
+            updated_row.save()
+            messages.success(request, "Tourism information updated successfully.")
+            return redirect("admin_app:tourism_information_manage")
+    else:
+        form = TourismInformationForm(instance=row)
+
+    return render(
+        request,
+        "tourism_information_form.html",
+        {
+            "form": form,
+            "page_title": f"Edit Tourism Information: {row.spot_name}",
+            "is_edit": True,
+            "tourism_row": row,
+        },
+    )
+
+
+@admin_required
+@require_POST
+def tourism_information_publish(request, tourism_info_id):
+    row = get_object_or_404(TourismInformation, tourism_info_id=tourism_info_id)
+    row.publication_status = "published"
+    row.is_active = True
+    user = getattr(request, "user", None)
+    if user is not None and getattr(user, "is_authenticated", False):
+        row.updated_by = user
+        row.save(update_fields=["publication_status", "is_active", "updated_by", "updated_at"])
+    else:
+        row.save(update_fields=["publication_status", "is_active", "updated_at"])
+    messages.success(request, f"Published tourism information: {row.spot_name}")
+    return redirect("admin_app:tourism_information_manage")
+
+
+@admin_required
+@require_POST
+def tourism_information_archive(request, tourism_info_id):
+    row = get_object_or_404(TourismInformation, tourism_info_id=tourism_info_id)
+    row.publication_status = "archived"
+    row.is_active = False
+    user = getattr(request, "user", None)
+    if user is not None and getattr(user, "is_authenticated", False):
+        row.updated_by = user
+        row.save(update_fields=["publication_status", "is_active", "updated_by", "updated_at"])
+    else:
+        row.save(update_fields=["publication_status", "is_active", "updated_at"])
+    messages.success(request, f"Archived tourism information: {row.spot_name}")
+    return redirect("admin_app:tourism_information_manage")
 
 # ------------------------------------------------------------------------------
 # AJAX Endpoints for Immediate (Auto) Save
@@ -703,6 +999,7 @@ def establishment_summary(request):
 
 # ----- REGION Endpoints -----
 @require_POST
+@admin_required
 def ajax_add_region(request):
     region_name = request.POST.get('name', '').strip()
     if region_name:
@@ -711,6 +1008,7 @@ def ajax_add_region(request):
     return JsonResponse({'status': 'error', 'error': 'Missing region name'}, status=400)
 
 @require_POST
+@admin_required
 def ajax_edit_region(request):
     region_id = request.POST.get('region_id')
     new_name = request.POST.get('name', '').strip()
@@ -722,6 +1020,7 @@ def ajax_edit_region(request):
     return JsonResponse({'status': 'error', 'error': 'Invalid parameters'}, status=400)
 
 @require_POST
+@admin_required
 def ajax_delete_region(request):
     region_id = request.POST.get('region_id')
     if region_id:
@@ -732,6 +1031,7 @@ def ajax_delete_region(request):
 
 # ----- COUNTRY Endpoints -----
 @require_POST
+@admin_required
 def ajax_add_country(request):
     region_id = request.POST.get('region_id')
     country_name = request.POST.get('name', '').strip()
@@ -742,6 +1042,7 @@ def ajax_add_country(request):
     return JsonResponse({'status': 'error', 'error': 'Invalid parameters'}, status=400)
 
 @require_POST
+@admin_required
 def ajax_edit_country(request):
     country_id = request.POST.get('country_id')
     new_name = request.POST.get('name', '').strip()
@@ -753,6 +1054,7 @@ def ajax_edit_country(request):
     return JsonResponse({'status': 'error', 'error': 'Invalid parameters'}, status=400)
 
 @require_POST
+@admin_required
 def ajax_delete_country(request):
     country_id = request.POST.get('country_id')
     if country_id:
@@ -763,6 +1065,7 @@ def ajax_delete_country(request):
 
 # ----- ENTRY Endpoints -----
 @require_POST
+@admin_required
 def ajax_add_entry(request):
     entry_title = request.POST.get('title', '').strip()
     if entry_title:
@@ -771,6 +1074,7 @@ def ajax_add_entry(request):
     return JsonResponse({'status': 'error', 'error': 'Missing entry title'}, status=400)
 
 @require_POST
+@admin_required
 def ajax_edit_entry(request):
     entry_id = request.POST.get('entry_id')
     new_title = request.POST.get('title', '').strip()
@@ -782,6 +1086,7 @@ def ajax_edit_entry(request):
     return JsonResponse({'status': 'error', 'error': 'Invalid parameters'}, status=400)
 
 @require_POST
+@admin_required
 def ajax_delete_entry(request):
     entry_id = request.POST.get('entry_id')
     if entry_id:
@@ -823,15 +1128,50 @@ def ajax_mark_summary_as_hotel(request):
     return JsonResponse({"status": "error", "message": "Invalid request"})
 
 
+@admin_required
 def tour_calendar(request):
     """
     View function for displaying the tour calendar interface.
     """
-    # In a real application, you would fetch tour data from the database here
-    # For now, we'll just render the template with sample data that's defined in the template
-    
+    schedules = (
+        Tour_Schedule.objects.select_related("tour")
+        .all()
+        .order_by("start_time")
+    )
+
+    color_map = {
+        "active": "#34a853",
+        "completed": "#4285f4",
+        "cancelled": "#ea4335",
+    }
+
+    calendar_tours = []
+    for sched in schedules:
+        local_start = timezone.localtime(sched.start_time) if timezone.is_aware(sched.start_time) else sched.start_time
+        local_end = timezone.localtime(sched.end_time) if timezone.is_aware(sched.end_time) else sched.end_time
+        calendar_tours.append({
+            "schedId": sched.sched_id,
+            "tourName": sched.tour.tour_name,
+            "start": local_start.date().isoformat(),
+            "end": local_end.date().isoformat(),
+            "startDateTime": local_start.isoformat(),
+            "endDateTime": local_end.isoformat(),
+            "price": f"PHP {sched.price:.2f}",
+            "confirmedBookings": int(sched.slots_booked or 0),
+            "slotsAvailable": int(sched.slots_available or 0),
+            "status": sched.status,
+            "color": color_map.get(sched.status, "#fbbc05"),
+            "description": sched.tour.description or "",
+        })
+
+    initial_calendar_date = timezone.localdate().isoformat()
+    if calendar_tours:
+        initial_calendar_date = calendar_tours[0]["start"]
+
     context = {
-        'page_title': 'Tour Calendar'
+        'page_title': 'Tour Calendar',
+        'calendar_tours': calendar_tours,
+        'initial_calendar_date': initial_calendar_date,
     }
     
     return render(request, 'tour_calendar.html', context)
@@ -936,6 +1276,114 @@ def activity_tracker(request):
         pass
     
     return render(request, 'activity_tracker.html', context)
+
+
+SURVEY_SOURCE_OPTIONS = ("all", "unlabeled", "demo_seeded", "pilot_test", "real_world")
+
+
+def _normalize_survey_source(raw_value):
+    source = str(raw_value or "all").strip().lower()
+    if source not in SURVEY_SOURCE_OPTIONS:
+        return "all"
+    return source
+
+
+def _to_positive_int(raw_value, default_value, max_value):
+    try:
+        parsed = int(raw_value)
+    except (TypeError, ValueError):
+        parsed = default_value
+    if parsed < 1:
+        parsed = default_value
+    return min(parsed, max_value)
+
+
+def _build_survey_results_payload(days=30, source="all", limit=100):
+    selected_source = _normalize_survey_source(source)
+    days_window = _to_positive_int(days, 30, 3650)
+    row_limit = _to_positive_int(limit, 100, 1000)
+
+    since = timezone.now() - dt.timedelta(days=days_window)
+    qs = UsabilitySurveyResponse.objects.filter(submitted_at__gte=since)
+    if selected_source != "all":
+        qs = qs.filter(data_source=selected_source)
+
+    total_responses = qs.count()
+    total_batches = qs.exclude(survey_batch_id="").values("survey_batch_id").distinct().count()
+    total_users = qs.exclude(user_id=None).values("user_id").distinct().count()
+
+    quick_helpfulness_avg = qs.filter(statement_code="CHAT_UX_HELPFULNESS").aggregate(
+        avg=Avg("likert_score")
+    )["avg"]
+
+    per_statement = list(
+        qs.values("statement_code")
+        .annotate(response_count=Count("response_id"), avg_score=Avg("likert_score"))
+        .order_by("statement_code")
+    )
+    for row in per_statement:
+        if row.get("avg_score") is not None:
+            row["avg_score"] = round(float(row["avg_score"]), 3)
+
+    recent_rows = qs.select_related("user").order_by("-submitted_at")[:row_limit]
+    recent_data = []
+    for row in recent_rows:
+        user_obj = getattr(row, "user", None)
+        recent_data.append(
+            {
+                "response_id": row.response_id,
+                "submitted_at": row.submitted_at.isoformat() if row.submitted_at else "",
+                "statement_code": row.statement_code,
+                "likert_score": row.likert_score,
+                "survey_batch_id": row.survey_batch_id or "",
+                "data_source": row.data_source,
+                "user_id": getattr(user_obj, "pk", None),
+                "username": getattr(user_obj, "username", "") if user_obj else "",
+            }
+        )
+
+    return {
+        "filters": {
+            "days": days_window,
+            "source": selected_source,
+            "limit": row_limit,
+        },
+        "summary": {
+            "total_responses": total_responses,
+            "total_batches": total_batches,
+            "distinct_users": total_users,
+            "chat_ux_helpfulness_avg": round(float(quick_helpfulness_avg), 3)
+            if quick_helpfulness_avg is not None
+            else None,
+        },
+        "per_statement": per_statement,
+        "recent_rows": recent_data,
+    }
+
+
+@admin_required
+def survey_results_dashboard(request):
+    source = _normalize_survey_source(request.GET.get("source", "all"))
+    days = _to_positive_int(request.GET.get("days", 30), 30, 3650)
+    limit = _to_positive_int(request.GET.get("limit", 100), 100, 1000)
+
+    context = {
+        "selected_source": source,
+        "selected_days": days,
+        "selected_limit": limit,
+        "source_options": SURVEY_SOURCE_OPTIONS,
+    }
+    return render(request, "survey_results.html", context)
+
+
+@admin_required
+def survey_results_api(request):
+    source = _normalize_survey_source(request.GET.get("source", "all"))
+    days = _to_positive_int(request.GET.get("days", 30), 30, 3650)
+    limit = _to_positive_int(request.GET.get("limit", 100), 100, 1000)
+
+    payload = _build_survey_results_payload(days=days, source=source, limit=limit)
+    return JsonResponse(payload)
 
 
 @admin_required

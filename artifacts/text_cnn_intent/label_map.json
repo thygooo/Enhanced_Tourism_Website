@@ -1,0 +1,10 @@
+{
+  "classes": [
+    "book_accommodation",
+    "calculate_accommodation_billing",
+    "calculate_billing",
+    "get_accommodation_recommendation",
+    "get_recommendation",
+    "get_tourism_information"
+  ]
+}

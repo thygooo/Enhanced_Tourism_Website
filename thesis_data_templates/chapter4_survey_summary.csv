@@ -1,0 +1,6 @@
+metric_group,metric_name,metric_value,notes
+survey,survey_batches,0,data_source=all
+survey,sus_avg_score_0_100,,average SUS score across complete batches
+survey,pu_avg_likert_1_5,,average of PU items across batches
+survey,peu_avg_likert_1_5,,average of PEU items across batches
+survey,chat_ux_helpfulness_avg_likert_1_5,4.7,quick feedback rows where statement_code=CHAT_UX_HELPFULNESS

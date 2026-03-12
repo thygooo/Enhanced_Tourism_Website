@@ -8,6 +8,104 @@
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 12px 20px;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .logo img {
+            height: 42px;
+            width: auto;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: #2f4f2f;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .user-profile-nav {
+            position: relative;
+            margin-left: auto;
+        }
+
+        .user-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #f3f7f1;
+        }
+
+        .nav-profile-pic {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            border: 2px solid #dfead9;
+            flex-shrink: 0;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #2f4f2f;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            min-width: 220px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+            overflow: hidden;
+            z-index: 30;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 10px 14px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .user-dropdown a:hover {
+            background: #f5f7f8;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #eceff1;
+        }
+
         .container {
             max-width: 1200px;
             margin: 100px auto 50px;

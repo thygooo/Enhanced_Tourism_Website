@@ -1,0 +1,129 @@
+GROUP CHAT DATA COLLECTION ASSIGNMENT TEMPLATE
+
+Copy-paste this in your GC and edit names/dates.
+
+==================================================
+AI TRAINING DATA TASKS (TEXT-CNN + DECISION TREE)
+==================================================
+
+Goal this week:
+- Collect pilot batch for Text-CNN and Decision Tree datasets
+- Label data consistently using labeling_guide.md
+
+Target for this week:
+- Text-CNN messages: 100 to 200 rows
+- Decision Tree recommendation rows: 100 to 300 rows
+- QA review: 10% to 20% of labeled rows
+
+Deadline:
+- [Insert date and time]
+
+--------------------------------------------------
+1) DATA EXPORT / COLLECTION
+--------------------------------------------------
+
+Assigned to: [Name]
+
+Tasks:
+- Gather chatbot message records (anonymized)
+- Gather recommendation candidate records (anonymized)
+- Gather booking outcomes linked to room_id/query/session if possible
+- Save raw files with date-based names
+
+Output files:
+- text_cnn_messages_raw_[YYYY-MM-DD].csv
+- accommodation_reco_raw_[YYYY-MM-DD].csv
+
+--------------------------------------------------
+2) TEXT-CNN LABELING
+--------------------------------------------------
+
+Assigned to: [Name]
+
+Tasks:
+- Label `label_intent`
+- Label optional fields:
+  - label_accommodation_type
+  - label_budget_level
+  - label_location_signal
+- Assign split (train/val/test) later after enough rows
+
+Reference:
+- thesis_data_templates/labeling_guide.md
+- thesis_data_templates/text_cnn_messages.csv
+
+Target:
+- [e.g., first 120 rows]
+
+--------------------------------------------------
+3) DECISION TREE LABELING
+--------------------------------------------------
+
+Assigned to: [Name]
+
+Tasks:
+- Check recommendation candidate rows
+- Fill outcome fields:
+  - was_clicked
+  - was_selected
+  - was_booked
+- Assign relevance_label (relevant / not_relevant)
+
+Reference:
+- thesis_data_templates/labeling_guide.md
+- thesis_data_templates/accommodation_reco_training.csv
+
+Target:
+- [e.g., first 200 rows]
+
+--------------------------------------------------
+4) QA / CONSISTENCY CHECK
+--------------------------------------------------
+
+Assigned to: [Name]
+
+Tasks:
+- Recheck 10% to 20% of labeled rows
+- Look for invalid labels / typos
+- Check duplicates and missing required fields
+- Confirm no personal info appears in training data
+
+Common checks:
+- label_intent values are valid
+- binary fields are only 0/1
+- relevance_label is only relevant/not_relevant
+- timestamps are consistent
+
+--------------------------------------------------
+5) TEAM LEAD / INTEGRATION
+--------------------------------------------------
+
+Assigned to: [Name]
+
+Tasks:
+- Merge cleaned/labeled batches
+- Record row counts and issues
+- Update training_data_collection_plan.txt if process changes
+- Prepare batch for pilot training dry run
+
+--------------------------------------------------
+6) REPORT FORMAT (SEND BACK TO GC)
+--------------------------------------------------
+
+Please send this after your task:
+
+Name:
+Task:
+Rows processed:
+Files updated:
+Issues found:
+Need help with:
+
+==================================================
+NOTES
+==================================================
+
+- These pilot datasets are for format validation and initial labeling consistency.
+- Final thesis training/evaluation should use larger real-world collected data.
+- Do not share raw personal data in the group chat.
+

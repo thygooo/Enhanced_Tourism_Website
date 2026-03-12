@@ -1,0 +1,9 @@
+﻿message_id,message_text,label_intent,label_accommodation_type,label_budget_level,label_location_signal,source,timestamp,split
+MSG0001,"recommend a cheap inn in bayawan for 2 guests",get_accommodation_recommendation,inn,low,with_location,manual_label,2026-02-25T09:00:00,train
+MSG0002,"calculate hotel bill for room 12 for 2 nights",calculate_accommodation_billing,hotel,unspecified,without_location,manual_label,2026-02-25T09:05:00,train
+MSG0003,"book room 5 from 2026-03-10 to 2026-03-12 for 3 guests",book_accommodation,unknown,unspecified,without_location,manual_label,2026-02-25T09:10:00,val
+MSG0004,"show me hotel recommendations near poblacion under 2500",get_accommodation_recommendation,hotel,mid,with_location,chatbot_log,2026-02-25T09:12:00,test
+MSG0005,"hello",greeting,unknown,unspecified,without_location,chatbot_log,2026-02-25T09:15:00,train
+MSG0006,"i need a place to stay for 4 people",follow_up_clarification,either,unspecified,without_location,manual_label,2026-02-25T09:18:00,train
+MSG0007,"how much is the room at bayawan pension house",calculate_accommodation_billing,unknown,unspecified,with_location,chatbot_log,2026-02-25T09:20:00,val
+MSG0008,"can you reserve an inn near the terminal tomorrow",book_accommodation,inn,unspecified,with_location,manual_label,2026-02-25T09:22:00,test

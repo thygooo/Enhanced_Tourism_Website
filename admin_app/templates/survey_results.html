@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Results - Admin Panel</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f4f6f8;
+            color: #253548;
+        }
+        header {
+            background: #21364b;
+            color: #fff;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .container {
+            width: 95%;
+            max-width: 1240px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+        }
+        .row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: end;
+            margin-bottom: 16px;
+        }
+        .field {
+            display: grid;
+            gap: 4px;
+        }
+        .field label {
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        .field input, .field select {
+            padding: 8px;
+            border: 1px solid #cfd7df;
+            border-radius: 4px;
+            min-width: 130px;
+        }
+        .btn {
+            border: none;
+            border-radius: 4px;
+            padding: 9px 12px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: 700;
+        }
+        .btn-primary { background: #2674d9; }
+        .btn-secondary { background: #5e6b78; text-decoration: none; display: inline-block; }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .card {
+            background: #f8fbff;
+            border: 1px solid #d9e6f4;
+            border-radius: 6px;
+            padding: 12px;
+        }
+        .card .label {
+            font-size: 0.78rem;
+            color: #4e6074;
+        }
+        .card .value {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-top: 6px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border-bottom: 1px solid #e7edf4;
+            padding: 8px;
+            text-align: left;
+            font-size: 0.82rem;
+        }
+        th {
+            background: #edf3fa;
+            color: #2d4662;
+        }
+        .grid-two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        @media (max-width: 980px) {
+            .grid-two {
+                grid-template-columns: 1fr;
+            }
+        }
+        .small-note {
+            font-size: 0.75rem;
+            color: #5b6d80;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div><strong>Ibayaw Tour</strong> - Survey Results</div>
+        <div>
+            <a href="{% url 'admin_app:admin_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+            <a href="{% url 'admin_app:admin_logout' %}" class="btn btn-secondary">Logout</a>
+        </div>
+    </header>
+    <div class="container">
+        <h2 style="margin-top:0;">Live Survey Results</h2>
+        <p class="small-note">Data source can be switched between seeded and real-world records. Auto-refresh every 15 seconds.</p>
+
+        <div class="row">
+            <div class="field">
+                <label for="source">Data Source</label>
+                <select id="source">
+                    {% for opt in source_options %}
+                    <option value="{{ opt }}" {% if selected_source == opt %}selected{% endif %}>{{ opt }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="field">
+                <label for="days">Days Window</label>
+                <input id="days" type="number" min="1" max="3650" value="{{ selected_days }}">
+            </div>
+            <div class="field">
+                <label for="limit">Recent Rows</label>
+                <input id="limit" type="number" min="1" max="1000" value="{{ selected_limit }}">
+            </div>
+            <button id="refreshBtn" class="btn btn-primary">Refresh</button>
+        </div>
+
+        <div class="cards">
+            <div class="card"><div class="label">Total Responses</div><div class="value" id="totalResponses">-</div></div>
+            <div class="card"><div class="label">Survey Batches</div><div class="value" id="totalBatches">-</div></div>
+            <div class="card"><div class="label">Distinct Users</div><div class="value" id="distinctUsers">-</div></div>
+            <div class="card"><div class="label">Quick Helpfulness Avg</div><div class="value" id="helpfulnessAvg">-</div></div>
+        </div>
+
+        <div class="grid-two">
+            <div>
+                <h3>Per Statement Summary</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Statement</th>
+                            <th>Count</th>
+                            <th>Avg Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statementBody">
+                        <tr><td colspan="3">No data.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h3>Recent Responses</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Submitted</th>
+                            <th>Code</th>
+                            <th>Score</th>
+                            <th>Batch</th>
+                            <th>Source</th>
+                            <th>User</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentBody">
+                        <tr><td colspan="6">No data.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const sourceEl = document.getElementById('source');
+            const daysEl = document.getElementById('days');
+            const limitEl = document.getElementById('limit');
+            const refreshBtn = document.getElementById('refreshBtn');
+
+            function toText(value) {
+                if (value === null || value === undefined || value === '') return '-';
+                return String(value);
+            }
+
+            function params() {
+                const q = new URLSearchParams();
+                q.set('source', sourceEl.value || 'all');
+                q.set('days', daysEl.value || '30');
+                q.set('limit', limitEl.value || '100');
+                return q.toString();
+            }
+
+            async function load() {
+                try {
+                    const res = await fetch(`/admin_app/api/survey-results/?${params()}`, { method: 'GET' });
+                    if (!res.ok) return;
+                    const data = await res.json();
+                    const summary = data.summary || {};
+
+                    document.getElementById('totalResponses').textContent = toText(summary.total_responses);
+                    document.getElementById('totalBatches').textContent = toText(summary.total_batches);
+                    document.getElementById('distinctUsers').textContent = toText(summary.distinct_users);
+                    document.getElementById('helpfulnessAvg').textContent = toText(summary.chat_ux_helpfulness_avg);
+
+                    const statementBody = document.getElementById('statementBody');
+                    const statementRows = Array.isArray(data.per_statement) ? data.per_statement : [];
+                    if (statementRows.length === 0) {
+                        statementBody.innerHTML = '<tr><td colspan="3">No data.</td></tr>';
+                    } else {
+                        statementBody.innerHTML = statementRows.map((row) => (
+                            `<tr><td>${toText(row.statement_code)}</td><td>${toText(row.response_count)}</td><td>${toText(row.avg_score)}</td></tr>`
+                        )).join('');
+                    }
+
+                    const recentBody = document.getElementById('recentBody');
+                    const recentRows = Array.isArray(data.recent_rows) ? data.recent_rows : [];
+                    if (recentRows.length === 0) {
+                        recentBody.innerHTML = '<tr><td colspan="6">No data.</td></tr>';
+                    } else {
+                        recentBody.innerHTML = recentRows.map((row) => (
+                            `<tr>` +
+                            `<td>${toText(row.submitted_at)}</td>` +
+                            `<td>${toText(row.statement_code)}</td>` +
+                            `<td>${toText(row.likert_score)}</td>` +
+                            `<td>${toText(row.survey_batch_id)}</td>` +
+                            `<td>${toText(row.data_source)}</td>` +
+                            `<td>${toText(row.username || row.user_id)}</td>` +
+                            `</tr>`
+                        )).join('');
+                    }
+                } catch (err) {
+                    // Keep page resilient on transient API errors.
+                }
+            }
+
+            refreshBtn.addEventListener('click', load);
+            sourceEl.addEventListener('change', load);
+
+            load();
+            setInterval(load, 15000);
+        })();
+    </script>
+</body>
+</html>

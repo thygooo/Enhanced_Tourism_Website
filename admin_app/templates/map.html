@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bayawan City Map - Admin</title>
+  <title>Bayawan City Map{% if map_mode == 'admin' %} - Admin{% endif %}</title>
   
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -27,23 +27,32 @@
       top: 0;
       left: 0;
       width: 100%;
+      box-sizing: border-box;
       background-color: #104CBA;
       color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
       padding: 0 20px;
       height: 60px;
       z-index: 1001;
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     .navbar-title {
+      flex: 1;
+      min-width: 0;
       font-weight: bold;
       font-size: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .navbar-links {
       display: flex;
       gap: 15px;
+      flex-shrink: 0;
+      align-items: center;
     }
     .navbar-links a {
       color: white;
@@ -54,6 +63,68 @@
     }
     .navbar-links a:hover {
       background-color: rgba(255,255,255,0.2);
+    }
+
+    @media (max-width: 900px) {
+      .navbar {
+        padding: 0 12px;
+        gap: 8px;
+      }
+      .navbar-title {
+        font-size: 15px;
+      }
+      .navbar-links {
+        gap: 6px;
+      }
+      .navbar-links a {
+        padding: 4px 6px;
+        font-size: 13px;
+      }
+      .search-box {
+        width: min(280px, calc(100vw - 24px));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .navbar {
+        height: auto;
+        min-height: 60px;
+        padding: 8px 10px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .navbar-title {
+        width: 100%;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        line-height: 1.2;
+        font-size: 14px;
+      }
+      .navbar-links {
+        width: 100%;
+        justify-content: flex-end;
+      }
+      #map {
+        height: calc(100vh - 88px);
+        margin-top: 88px;
+      }
+      .search-box {
+        top: 98px;
+        left: 12px;
+        transform: none;
+        width: calc(100vw - 24px);
+        max-width: none;
+      }
+      .route-info {
+        top: 150px;
+        left: 12px;
+        max-width: calc(100vw - 24px);
+      }
+      .gps-controls {
+        top: 150px;
+        right: 12px;
+      }
     }
     .back-button {
       position: absolute;
@@ -247,9 +318,13 @@
 <body>
   <!-- Navigation Bar -->
   <div class="navbar">
-    <div class="navbar-title">Bayawan City - Interactive Tourist Map (Admin View)</div>
+    <div class="navbar-title">Bayawan City - Interactive Tourist Map {% if map_mode == 'admin' %}(Admin View){% else %}(Guest View){% endif %}</div>
     <div class="navbar-links">
+      {% if map_mode == 'admin' %}
       <a href="{% url 'admin_app:admin_dashboard' %}">Dashboard</a>
+      {% else %}
+      <a href="{% url 'main-page' %}">Main Page</a>
+      {% endif %}
       <a href="#">Map</a>
     </div>
   </div>
@@ -292,6 +367,7 @@
   </div>
   
   <!-- Custom Marker Controls -->
+  {% if can_edit_bookmarks %}
   <div class="custom-marker-controls">
     <h4>Add Custom Marker</h4>
     <input type="text" class="custom-input" id="marker-name" placeholder="Enter location name">
@@ -316,6 +392,7 @@
     
     <button class="control-button" id="add-marker">Place Marker</button>
   </div>
+  {% endif %}
   
   <!-- GPS Controls -->
   <div class="gps-controls">
@@ -345,6 +422,8 @@
   <script>
     // Include the CSRF token directly in the template
     const csrftoken = "{{ csrf_token }}";
+    const MAP_MODE = "{{ map_mode|default:'guest' }}";
+    const CAN_EDIT_BOOKMARKS = {{ can_edit_bookmarks|yesno:"true,false" }};
     console.log("CSRF Token from template:", csrftoken ? "✓ Success" : "✗ Failed");
     
     // Initialize map
@@ -450,9 +529,10 @@
     
     // Function to add a marker to the map
     function addMarkerToMap(loc, isDraggable = false, id = null) {
+      const allowEdit = Boolean(CAN_EDIT_BOOKMARKS && id);
       var marker = L.marker([loc.lat, loc.lng], {
         icon: icons[loc.category] || icons.custom,
-        draggable: isDraggable
+        draggable: Boolean(isDraggable && CAN_EDIT_BOOKMARKS)
       });
       
       // Store the location's name and GPS coordinates in the marker's options for later use
@@ -504,7 +584,7 @@
       }
       
       // Add edit/delete buttons if the marker has an ID (saved in database)
-      if (id) {
+      if (allowEdit) {
         popupContent += `
           <div style="display: flex; gap: 10px; margin-top: 10px;">
             <button class="edit-bookmark" data-id="${id}" style="flex: 1; padding: 8px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">Edit</button>
@@ -556,7 +636,7 @@
           });
           
           // Update position when dragged
-          if (isDraggable) {
+          if (isDraggable && CAN_EDIT_BOOKMARKS) {
             marker.on('dragend', function(e) {
               updateBookmarkPosition(id, e.target.getLatLng());
             });
@@ -591,7 +671,8 @@
     }
     
     // Add image preview functionality for the main form
-    document.getElementById('marker-image').addEventListener('change', function(e) {
+    const markerImageInput = document.getElementById('marker-image');
+    if (markerImageInput) markerImageInput.addEventListener('change', function(e) {
       var preview = document.getElementById('preview-img');
       var previewContainer = document.getElementById('image-preview');
       
@@ -608,7 +689,8 @@
     });
     
     // Add custom marker functionality with image
-    document.getElementById('add-marker').addEventListener('click', function() {
+    const addMarkerBtn = document.getElementById('add-marker');
+    if (addMarkerBtn) addMarkerBtn.addEventListener('click', function() {
       var name = document.getElementById('marker-name').value;
       var category = document.getElementById('marker-category').value;
       var details = document.getElementById('marker-details').value;
@@ -665,7 +747,7 @@
               lat: bookmark.lat,
               lng: bookmark.lng,
               details: bookmark.details
-            }, true, bookmark.id);
+            }, CAN_EDIT_BOOKMARKS, bookmark.id);
           });
         } else {
           console.log("No bookmarks found in the response");
@@ -673,7 +755,7 @@
       })
       .catch(error => {
         console.error("Error loading bookmarks:", error);
-        alert("Error loading bookmarks. Check the console for details.");
+        console.warn("Error loading bookmarks. Map will continue without saved bookmarks.");
       });
     }
     
@@ -1044,27 +1126,7 @@
     // Load saved bookmarks from the database
     loadBookmarks();
     
-    // Create test bookmark if no bookmarks exist after 3 seconds
-    setTimeout(() => {
-      // Check if any bookmarks were loaded
-      const hasBookmarks = Object.keys(markersById).length > 0;
-      console.log("Bookmark check:", hasBookmarks ? `${Object.keys(markersById).length} bookmarks found` : "No bookmarks found");
-      
-      // If no bookmarks, create a test one
-      if (!hasBookmarks) {
-        console.log("Creating a test bookmark...");
-        const testBookmark = {
-          name: "Bayawan City Hall",
-          category: "landmark",
-          lat: 750,
-          lng: 640,
-          details: "The Bayawan City Hall is the center of local government"
-        };
-        
-        // Create a test bookmark automatically
-        createBookmark(testBookmark);
-      }
-    }, 3000);
+    // Removed auto test-bookmark creation to keep the map data stable.
     
     // Function to upload an image for a bookmark
     function uploadBookmarkImage(bookmarkId, file, callback) {

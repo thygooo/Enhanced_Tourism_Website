@@ -641,8 +641,7 @@
                       <li>
                           <span>Room ID: {{ room.room_id }} ({{ room.room_name }}) - Capacity: {{ room.person_limit }} person(s)</span>
                           <div>
-                              <button class="register-btn" data-room-id="{{ room.room_id }}">Register</button>
-                              <button class="scan-qr-btn" data-room-id="{{ room.room_id }}">Scan QR</button>
+                              <button class="button" type="button" disabled title="Disabled in revised booking flow">Direct Assign Disabled</button>
                               <button class="delete-btn" data-room-id="{{ room.room_id }}">Delete</button>
                           </div>
                       </li>
@@ -791,7 +790,7 @@
     <div class="modal-content" style="max-width: 500px;">
         <span class="close" id="closeManualCheckInBtn">&times;</span>
         <h2>Manual Check-in Form</h2>
-        <form action="{% url 'accom_app:minimal_check_in' %}" method="post" id="manualCheckInForm">
+        <form action="#" method="post" id="manualCheckInForm">
             {% csrf_token %}
             <input type="hidden" id="manualRoomId" name="room_id" value="">
             <input type="hidden" id="manualGuestIds" name="guest_ids" value="">
@@ -904,34 +903,8 @@
             // Disable button to prevent multiple clicks
             $(this).prop('disabled', true).text('Checking in...');
             
-            $.ajax({
-                type: "POST",
-                url: "{% url 'accom_app:minimal_check_in' %}",
-                data: {
-                    room_id: currentRoomId,
-                    guest_ids: JSON.stringify(selectedGuests)
-                },
-                success: function(response) {
-                    console.log('Success response:', response);
-                    
-                    // Show success alert regardless of UI updates
-                    alert('Success! Guests checked in');
-                    
-                    // Reload guests to reflect changes
-                    loadGuestsForRoom(currentRoomId);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error response:', xhr.responseText);
-                    console.error('Status code:', xhr.status);
-                    console.error('Error:', error);
-                    
-                    alert('Error checking in guests. See console for details.');
-                },
-                complete: function() {
-                    // Re-enable button
-                    $('#checkInBtn').prop('disabled', false).text('CHECK IN');
-                }
-            });
+            alert("Direct group check-in endpoint is currently disabled in the revised room flow. Use room registration per selected room.");
+            $('#checkInBtn').prop('disabled', false).text('CHECK IN');
         });
         
         console.log("Dashboard initialization complete.");
@@ -1095,10 +1068,10 @@
                     roomsData.forEach(function(room) {
                         roomListHtml += `
                             <li>
-                                <span>Room: ${room.name} - Capacity: ${room.capacity} - Available: ${room.availability}</span>
+                                <span>Room: ${room.room_name || room.name} - Capacity: ${room.person_limit || room.capacity} - Available: ${room.current_availability || room.availability}</span>
                                 <div>
-                                    <button class="register-btn" data-room-id="${room.id}">Register</button>
-                                    <button class="scan-qr-btn" data-room-id="${room.id}">Scan QR</button>
+                                    <button class="edit-btn" data-room-id="${room.id}">Edit</button>
+                                    <button class="button" type="button" disabled title="Disabled in revised booking flow">Direct Assign Disabled</button>
                                     <button class="delete-btn" data-room-id="${room.id}">Delete</button>
                                 </div>
                             </li>
@@ -1109,27 +1082,77 @@
                     // Set the room list HTML for the admin modal
                     $('.modal-content #roomListContainer').html(roomListHtml);
                     
-                    // Add event listeners to the admin modal buttons
-                    $('.modal-content .scan-qr-btn').on('click', function() {
-                        var roomId = $(this).data('room-id');
-                        $("#qrScannerModal").data('room-id', roomId);
-                        qrScannerModal.style.display = "block";
-                        scanResult.style.display = "none";
-                        // Automatically start the camera scanner
-                        startScanner();
-                    });
-                    
-                    $('.modal-content .register-btn').on('click', function() {
-                        var roomId = $(this).data('room-id');
-                        $('#regRoomId').val(roomId);
-                        registerGuestModal.style.display = "block";
-                    });
-                    
+                    // Direct owner-side assignment is intentionally disabled in revised flow.
                     $('.modal-content .delete-btn').on('click', function() {
                         var roomId = $(this).data('room-id');
                         if(confirm("Are you sure you want to delete this room? This will also delete all guest registrations for this room.")) {
                             deleteRoom(roomId);
                         }
+                    });
+
+                    $('.modal-content .edit-btn').on('click', function() {
+                        var roomId = $(this).data('room-id');
+                        var room = roomsData.find(function(r) { return String(r.id) === String(roomId); });
+                        if (!room) {
+                            alert("Unable to load room details.");
+                            return;
+                        }
+
+                        var roomType = prompt("Room type / name:", room.room_type || room.room_name || "");
+                        if (roomType === null) {
+                            return;
+                        }
+                        var capacity = prompt("Capacity (person limit):", String(room.person_limit || room.capacity || 0));
+                        if (capacity === null) {
+                            return;
+                        }
+                        var price = prompt("Price per night:", String(room.price_per_night || "0.00"));
+                        if (price === null) {
+                            return;
+                        }
+                        var status = prompt("Availability status (AVAILABLE/OCCUPIED/UNAVAILABLE):", String(room.availability_status || room.status || "AVAILABLE"));
+                        if (status === null) {
+                            return;
+                        }
+                        var amenities = prompt(
+                            "Amenities (comma-separated):",
+                            Array.isArray(room.amenities) ? room.amenities.join(", ") : ""
+                        );
+                        if (amenities === null) {
+                            return;
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            url: "{% url 'accom_app:update_room_ajax' %}",
+                            data: {
+                                room_id: roomId,
+                                room_type: roomType,
+                                room_name: roomType,
+                                capacity: capacity,
+                                price_per_night: price,
+                                availability_status: status,
+                                amenities: amenities,
+                                current_availability: room.current_availability || room.availability || 0
+                            },
+                            success: function(response) {
+                                if (response.status === "success") {
+                                    alert("Room updated successfully.");
+                                    loadRoomDataForAdmin();
+                                    loadRooms();
+                                } else {
+                                    alert("Error: " + (response.message || "Unable to update room."));
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                try {
+                                    var payload = JSON.parse(xhr.responseText || "{}");
+                                    alert("Error: " + (payload.message || error));
+                                } catch (e) {
+                                    alert("Error updating room: " + error);
+                                }
+                            }
+                        });
                     });
                 } else {
                     console.log("No rooms found for admin modal");
@@ -1204,33 +1227,10 @@
         // Show loading indicator
         $('#guestGrid').html('<div class="empty-state">Loading guests...</div>');
         
-        // AJAX call to get guests for the selected room
-        $.ajax({
-            url: "{% url 'accom_app:get_room_guests' %}",
-            type: "GET",
-            data: { room_id: roomId, group: currentGroupFilter },
-            success: function(response) {
-                console.log("Guests loaded:", response);
-                
-                if (response.guests && response.guests.length > 0) {
-                    displayGuests(response.guests);
-                } else {
-                    // No guests found for this room
-                    $('#guestGrid').html('<div class="empty-state">No guests assigned to this room yet.</div>');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("Error loading guests:", error);
-                console.error("Response:", xhr.responseText);
-                
-                try {
-                    var response = JSON.parse(xhr.responseText);
-                    $('#guestGrid').html('<div class="empty-state">Error: ' + (response.message || response.error || error) + '</div>');
-                } catch(e) {
-                    $('#guestGrid').html('<div class="empty-state">Error loading guests. Please try again.</div>');
-                }
-            }
-        });
+        $('#guestGrid').html(
+            '<div class="empty-state">Per-room guest listing endpoint is not enabled in the revised room module. ' +
+            'Room CRUD remains active.</div>'
+        );
     }
     
     // Display guests in the guest grid
@@ -1806,47 +1806,7 @@
     // Add a function to handle room check-out
     function checkOutRoom(roomId) {
         if (confirm("Are you sure you want to check out all guests from this room?")) {
-            $.ajax({
-                type: "POST",
-                url: "{% url 'accom_app:check_out_guests' %}",
-                data: {
-                    room_id: roomId
-                },
-                success: function(response) {
-                    if (response.status === "success") {
-                        // Update UI to show the room is now available
-                        var roomElement = $(`.room-item[data-room-id="${roomId}"]`);
-                        roomElement.removeClass('occupied');
-                        roomElement.find('.check-out-btn').remove();
-                        roomElement.find('.room-name i').remove();
-                        
-                        // Update availability display
-                        roomElement.find('.availability-count').text(response.new_availability);
-                        
-                        // Add occupied time information to the UI
-                        var occupiedInfoHtml = `
-                            <div class="occupied-info" style="margin-top: 15px; padding: 10px; background-color: #f5f5f5; border-radius: 5px;">
-                                <h3>Room Checkout Summary</h3>
-                                <p>Total occupied time: ${response.occupied_time}</p>
-                                <p>Checked out: ${new Date().toLocaleString()}</p>
-                            </div>
-                        `;
-                        
-                        $('#guestGrid').prepend(occupiedInfoHtml);
-                        
-                        // Show success message
-                        alert(`Room checked out successfully. Total occupied time: ${response.occupied_time}`);
-                        
-                        // Refresh room data
-                        loadRooms();
-                    } else {
-                        alert("Error: " + response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert("An error occurred while checking out the room: " + error);
-                }
-            });
+            alert("Bulk room checkout endpoint is disabled in the revised room module.");
         }
     }
 
@@ -1855,28 +1815,8 @@
         console.log("Creating sample rooms...");
         $(this).prop('disabled', true).text('Creating rooms...');
         
-        $.ajax({
-            type: "GET",
-            url: "{% url 'accom_app:create_sample_rooms' %}",
-            success: function(response) {
-                console.log("Sample rooms created:", response);
-                if (response.status === 'success') {
-                    alert(`Created ${response.created_rooms.length} sample rooms: ${response.created_rooms.join(', ')}`);
-                    // Reload rooms to show the new sample rooms
-                    loadRooms();
-                    loadRoomDataForAdmin();
-                } else {
-                    alert("Error: " + response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("Error creating sample rooms:", error);
-                alert("An error occurred: " + error);
-            },
-            complete: function() {
-                $('#createSampleRoomsBtn').prop('disabled', false).text('Create Sample Rooms');
-            }
-        });
+        alert("Sample room generator endpoint is disabled. Add rooms using the Add Room modal.");
+        $('#createSampleRoomsBtn').prop('disabled', false).text('Create Sample Rooms');
     });
 
     // Manual check-in button handler

@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f7fb; margin: 0; }
+        .dashboard-container { display: flex; min-height: 100vh; }
+        .content { flex: 1; padding: 24px; }
+        .card { max-width: 900px; background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .field { margin-bottom: 12px; }
+        .field label { display: block; font-weight: 600; margin-bottom: 4px; }
+        .field input, .field textarea, .field select { width: 100%; padding: 8px; box-sizing: border-box; }
+        .actions { display: flex; gap: 10px; margin-top: 14px; }
+        .btn { display: inline-block; padding: 8px 12px; border-radius: 8px; text-decoration: none; border: 0; cursor: pointer; }
+        .btn-primary { background: #2f6fed; color: #fff; }
+        .btn-muted { background: #6c757d; color: #fff; }
+        .errors { color: #c92a2a; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <div class="navigation">
+        {% include 'components/navigation.html' %}
+    </div>
+    <div class="content">
+        <div class="card">
+            <h1>{{ page_title }}</h1>
+
+            {% if form.errors %}
+            <div class="errors">Please correct the errors below.</div>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="field">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <div class="errors">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">{% if is_edit %}Update{% else %}Create{% endif %}</button>
+                    <a href="{% url 'admin_app:tourism_information_manage' %}" class="btn btn-muted">Back to list</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

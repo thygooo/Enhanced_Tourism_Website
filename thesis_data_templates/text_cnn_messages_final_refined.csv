@@ -1,0 +1,329 @@
+message_text,label_intent,split
+book room 22 for 2 guests from 2026-03-20 to 2026-03-22,book_accommodation,test
+book room 4 for one night,book_accommodation,test
+book room 5 for 2 nights,book_accommodation,test
+book room 5 from 2026-03-10 to 2026-03-12 for 3 guests,book_accommodation,test
+book room 6 for 2 guests,book_accommodation,test
+book room 7 for 2 guests from 2026-03-25 to 2026-03-27,book_accommodation,test
+i want this room please proceed to booking,book_accommodation,test
+please book any available room under 2000,book_accommodation,test
+reserve an inn room for tomorrow night,book_accommodation,test
+reserve one double room for 2 adults,book_accommodation,test
+book,book_accommodation,train
+book a place to stay for 3 nights,book_accommodation,train
+book an inn for one guest tomorrow,book_accommodation,train
+book an inn room with wifi for two guests,book_accommodation,train
+book now,book_accommodation,train
+book room 15 from april 12 to april 14,book_accommodation,train
+book room 3,book_accommodation,train
+book room 3 for 2 guests from 2026-03-25 to 2026-03-27,book_accommodation,train
+book room 3 for 2 nights from 2026-03-13 to 2026-03-15,book_accommodation,train
+book room 3 from 2026-03-29 to 2026-03-31,book_accommodation,train
+book room 5 for 1 guest from 2026-03-10 to 2026-03-12,book_accommodation,train
+book room 5 for 2 nights from 2026-03-13 to 2026-03-15,book_accommodation,train
+book room 6 from 2026-03-29 to 2026-03-31,book_accommodation,train
+book room 60 for 2 guests from 2026-03-20 to 2026-03-22,book_accommodation,train
+book room 64 for 6 guests from 2026-03-13 to 2026-03-15,book_accommodation,train
+book room 68 for 2 from 2026-04-17 to 2026-04-19,book_accommodation,train
+book room 68 for 2 guests from 2026-03-31 to 2026-04-02,book_accommodation,train
+book room 7 for 2 guests from 2026-03-20 to 2026-03-22,book_accommodation,train
+book the available inn room for tonight,book_accommodation,train
+book the cheapest available room tonight,book_accommodation,train
+book this accommodation from friday to sunday,book_accommodation,train
+can i reserve that hotel room now,book_accommodation,train
+can you book a hotel room from april 4 to april 6,book_accommodation,train
+can you reserve an inn near the terminal tomorrow,book_accommodation,train
+confirm reservation for room 10,book_accommodation,train
+help me book accommodation for saturday,book_accommodation,train
+i am ready to reserve now,book_accommodation,train
+i need to book a stay near poblacion,book_accommodation,train
+i need to reserve accommodation for next week,book_accommodation,train
+i want to reserve an inn room tonight,book_accommodation,train
+lock in this room for me,book_accommodation,train
+make a reservation for 2 guests from may 1 to may 3,book_accommodation,train
+please book room 7 for me,book_accommodation,train
+please create my room reservation,book_accommodation,train
+please reserve a hotel in bayawan for two nights,book_accommodation,train
+reserve a hotel stay for 2 adults and 1 child,book_accommodation,train
+reserve a room for my family of 4,book_accommodation,train
+reserve a room near the terminal for tomorrow,book_accommodation,train
+reserve my stay from june 10 to june 12,book_accommodation,train
+reserve room 2 for tomorrow night,book_accommodation,train
+reserve room 8 check in monday check out wednesday,book_accommodation,train
+set my booking for 3 people this weekend,book_accommodation,train
+show accommodation bookings,book_accommodation,train
+book a room for 2 guests this friday,book_accommodation,val
+book room 12 for 2 guests from 2026-03-25 to 2026-03-27,book_accommodation,val
+book room 5 for 2 guests from 2026-04-10 to 2026-04-12,book_accommodation,val
+book room 59 for 2 guests from 2026-04-05 to 2026-04-07,book_accommodation,val
+book room 6 for 2 guests from 2026-03-25 to 2026-03-27,book_accommodation,val
+book room 73 for 3 guests from 2026-03-20 to 2026-03-22,book_accommodation,val
+continue with booking for room 6,book_accommodation,val
+i want to finalize the room booking,book_accommodation,val
+secure a room for us this weekend,book_accommodation,val
+calculate accommodation bill for room 14,calculate_accommodation_billing,test
+can you compute lodging invoice today,calculate_accommodation_billing,test
+compute the hotel room bill for 2 nights and 2 guests,calculate_accommodation_billing,test
+compute total payment for hotel stay from april 10 to april 12,calculate_accommodation_billing,test
+estimate inn accommodation charges for family trip,calculate_accommodation_billing,test
+give me room charge breakdown for 4 nights,calculate_accommodation_billing,test
+i need the room invoice amount,calculate_accommodation_billing,test
+total room charge for 3 nights please,calculate_accommodation_billing,test
+what is the total cost of my hotel stay,calculate_accommodation_billing,test
+calculate accommodation payment for two rooms,calculate_accommodation_billing,train
+calculate bill for accommodation from august 3 to august 6,calculate_accommodation_billing,train
+calculate bill for bayawan inn room 3,calculate_accommodation_billing,train
+calculate hotel bill for room 12 for 2 nights,calculate_accommodation_billing,train
+calculate hotel charge for room 5 and extra bed,calculate_accommodation_billing,train
+calculate lodging cost for one guest two nights,calculate_accommodation_billing,train
+calculate room payment for check in july 2 check out july 4,calculate_accommodation_billing,train
+calculate the accommodation bill for room 5 for 2 nights,calculate_accommodation_billing,train
+calculate the hotel room bill amount due for this stay,calculate_accommodation_billing,train
+calculate the total accommodation payment for this hotel stay,calculate_accommodation_billing,train
+can you estimate hotel charges for 5 nights,calculate_accommodation_billing,train
+compute hotel bill with one child included,calculate_accommodation_billing,train
+compute inn payment for 1 night stay,calculate_accommodation_billing,train
+compute lodging payment for a 2 day stay,calculate_accommodation_billing,train
+compute my inn bill for friday and saturday,calculate_accommodation_billing,train
+compute the accommodation bill for my room stay,calculate_accommodation_billing,train
+generate accommodation invoice estimate,calculate_accommodation_billing,train
+hotel invoice for 2 nights and breakfast,calculate_accommodation_billing,train
+how much is hotel room total for 4 guests,calculate_accommodation_billing,train
+how much is overnight room charge,calculate_accommodation_billing,train
+how much is the full accommodation payment,calculate_accommodation_billing,train
+how much is the inn stay total from check in friday to sunday,calculate_accommodation_billing,train
+how much is the room at bayawan pension house,calculate_accommodation_billing,train
+how much should i pay for this accommodation,calculate_accommodation_billing,train
+how much will i pay for this hotel room,calculate_accommodation_billing,train
+please calculate my lodging bill now,calculate_accommodation_billing,train
+please compute accommodation charges for 2 adults,calculate_accommodation_billing,train
+please estimate charge for room plus service fee,calculate_accommodation_billing,train
+please show accommodation amount due,calculate_accommodation_billing,train
+room billing estimate under bayawan pension house,calculate_accommodation_billing,train
+room billing for check in tomorrow check out sunday,calculate_accommodation_billing,train
+room fee total for two nights and two guests,calculate_accommodation_billing,train
+room payment calculation for weekend trip,calculate_accommodation_billing,train
+show my room payment total for the weekend,calculate_accommodation_billing,train
+show room billing computation for my stay,calculate_accommodation_billing,train
+total accommodation fee for room 11,calculate_accommodation_billing,train
+what is the lodging amount due for 2 guests,calculate_accommodation_billing,train
+what is the payable amount for room 18,calculate_accommodation_billing,train
+calculate the hotel room amount due for this 2-night stay,calculate_accommodation_billing,val
+compute hotel payment for room 9 for 2 nights,calculate_accommodation_billing,val
+estimate hotel bill from april 5 to april 7,calculate_accommodation_billing,val
+hotel stay total for 3 guests please,calculate_accommodation_billing,val
+how much is my inn stay for 3 nights,calculate_accommodation_billing,val
+show full hotel billing details,calculate_accommodation_billing,val
+what is my accommodation billing summary,calculate_accommodation_billing,val
+what is the final room payment for this hotel stay,calculate_accommodation_billing,val
+can you compute tour invoice amount,calculate_billing,test
+how much do we owe for this tour,calculate_billing,test
+how much will group tour payment be,calculate_billing,test
+please calculate per head tour cost,calculate_billing,test
+tour cost estimate for tomorrow,calculate_billing,test
+tour invoice for 5 guests please,calculate_billing,test
+what is the cost for mountain tour,calculate_billing,test
+what is the payment due for our city tour activity for 4 people,calculate_billing,test
+calculate amount payable for river cruise,calculate_billing,train
+calculate our day trip payment,calculate_billing,train
+calculate the total bill for this tour package,calculate_billing,train
+calculate the total cost of the river tour package for 3 guests,calculate_billing,train
+calculate total cost of our itinerary,calculate_billing,train
+calculate tour bill for 2 guests,calculate_billing,train
+calculate travel package bill for two,calculate_billing,train
+can you calculate excursion cost,calculate_billing,train
+check tour charge for student group,calculate_billing,train
+compute activity tour charges,calculate_billing,train
+compute amount due for weekend tour,calculate_billing,train
+compute payment for nature excursion,calculate_billing,train
+compute total payment for river tour,calculate_billing,train
+compute total payment for weekend package,calculate_billing,train
+estimate guided tour price for 6,calculate_billing,train
+estimate tour charges under 1500 budget,calculate_billing,train
+how much is the payable for island trip,calculate_billing,train
+how much should we pay for city tour,calculate_billing,train
+i need the final tour payment,calculate_billing,train
+i want the exact tour payment amount,calculate_billing,train
+need bill computation for adventure tour,calculate_billing,train
+need quick tour billing estimate,calculate_billing,train
+please calculate package cost for 3 pax,calculate_billing,train
+please check tour billing details,calculate_billing,train
+please compute billing for group tour,calculate_billing,train
+please estimate total tour charge,calculate_billing,train
+please give total tour cost for 4,calculate_billing,train
+show me tour invoice summary,calculate_billing,train
+show the payable amount for the eco adventure tour package,calculate_billing,train
+show tour price computation for family trip,calculate_billing,train
+total bill for eco tour package,calculate_billing,train
+tour amount calculation for 3 adults,calculate_billing,train
+tour billing estimate for family of 5,calculate_billing,train
+tour billing for 2 adults and 1 child,calculate_billing,train
+tour payment breakdown please,calculate_billing,train
+what is our remaining tour balance,calculate_billing,train
+what is the billing for our package,calculate_billing,train
+what is the final tour total for 2 days,calculate_billing,train
+what is the package price per guest,calculate_billing,train
+what is the tour amount due today,calculate_billing,train
+calculate the tour cost for the guided heritage walk activity,calculate_billing,val
+compute tour total with entrance fees,calculate_billing,val
+how much does this trip cost in total,calculate_billing,val
+how much is the sightseeing package,calculate_billing,val
+how much is the tour cost for 4 people,calculate_billing,val
+show total charge for day tour,calculate_billing,val
+tour package payment estimate now,calculate_billing,val
+what is the total price of boat tour,calculate_billing,val
+what is the tour fee for 1 guest,calculate_billing,val
+broaden location,get_accommodation_recommendation,test
+can you recommend an inn for one night,get_accommodation_recommendation,test
+hotel recommendations for family of four,get_accommodation_recommendation,test
+i need accommodation suggestions in bayawan city,get_accommodation_recommendation,test
+need an inn near the terminal for 1 budget is under 1000,get_accommodation_recommendation,test
+recommend a hotel in poblacion for 2 guests under 2500 from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,test
+recommend an inn near terminal for 1 guest under 1000,get_accommodation_recommendation,test
+best hotel option for weekend stay,get_accommodation_recommendation,train
+find an inn with good location,get_accommodation_recommendation,train
+find me an affordable inn with wifi,get_accommodation_recommendation,train
+find me an inn in suba for 4 guests under 2500 with wifi and aircon for 2 nights,get_accommodation_recommendation,train
+give me inn choices below 1500,get_accommodation_recommendation,train
+help me find a hotel with clean rooms,get_accommodation_recommendation,train
+i need a place to stay under 1800,get_accommodation_recommendation,train
+include both hotel and inn,get_accommodation_recommendation,train
+recommend a cheap inn in bayawan for 2 guests,get_accommodation_recommendation,train
+recommend a hotel for 2 adults and 1 child,get_accommodation_recommendation,train
+recommend a hotel in bayawan,get_accommodation_recommendation,train
+recommend a hotel in bayawan for 2 guests under 2000,get_accommodation_recommendation,train
+recommend a hotel in bayawan under 2500,get_accommodation_recommendation,train
+"recommend a hotel in poblacion for 2 guests, budget 2000 per night, from 2026-03-20 to 2026-03-22",get_accommodation_recommendation,train
+recommend a hotel in poblacion for 4 guests under 2500 with aircon from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+recommend accommodation in bayawan city for 1 guest budget 1200 with parking,get_accommodation_recommendation,train
+recommend accommodation with larger room capacity,get_accommodation_recommendation,train
+recommend an inn in bayawan for 2 guests under 1500,get_accommodation_recommendation,train
+recommend an inn in kalumboyan for 3 guests under 2500 with wifi and aircon from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+recommend an inn in suba for 4 guests under 2500 with wifi and aircon from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+recommend an inn in ubos for 4 guests under 2500 with wifi and aircon from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+show available hotels near poblacion,get_accommodation_recommendation,train
+show me an inn near poblacion under 1500,get_accommodation_recommendation,train
+show me budget friendly accommodation,get_accommodation_recommendation,train
+show me hotel recommendations near poblacion under 2500,get_accommodation_recommendation,train
+show me options with beach view under 3000 for 3 guests in banga,get_accommodation_recommendation,train
+show me options with wifi and aircon,get_accommodation_recommendation,train
+suggest a quiet inn near downtown,get_accommodation_recommendation,train
+suggest an inn near the city center for 2,get_accommodation_recommendation,train
+with aircon and wifi,get_accommodation_recommendation,train
+any inn suggestion with parking,get_accommodation_recommendation,val
+need an inn near terminal for 2 guests,get_accommodation_recommendation,val
+need hotel options for 3 guests,get_accommodation_recommendation,val
+recommend an inn in poblacion for 3 guests under 2500 with wifi and aircon from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,val
+suggest accommodation close to terminal,get_accommodation_recommendation,val
+which hotel is good for business trip,get_accommodation_recommendation,val
+help me choose a weekend tour,get_recommendation,test
+please suggest an adventure tour,get_recommendation,test
+recommend a beginner-friendly trek tour option,get_recommendation,test
+recommend a river activity tour,get_recommendation,test
+recommend which tour is worth trying,get_recommendation,test
+suggest a low budget activity tour in bayawan,get_recommendation,test
+suggest a scenic tour nearby,get_recommendation,test
+suggest a tour option under 1200 budget,get_recommendation,test
+best choice for a quick tour,get_recommendation,train
+can you recommend a calm itinerary,get_recommendation,train
+can you suggest a half day tour,get_recommendation,train
+please suggest a day trip in bayawan,get_recommendation,train
+recommend a fun tour for 2 people,get_recommendation,train
+recommend a good nature tour option,get_recommendation,train
+recommend a low-budget tour option,get_recommendation,train
+recommend a popular tour route,get_recommendation,train
+recommend a relaxing day tour,get_recommendation,train
+recommend a sunset tour experience,get_recommendation,train
+recommend a tour option for seniors,get_recommendation,train
+recommend a tour option that is good for students,get_recommendation,train
+recommend a tour option with nature views and photo spots,get_recommendation,train
+recommend an eco-friendly tour option,get_recommendation,train
+recommend cheaper tour package options,get_recommendation,train
+recommend something for a birthday outing,get_recommendation,train
+recommend the best tour package for a family of four,get_recommendation,train
+recommend the top tour options in bayawan,get_recommendation,train
+recommend tour options for a family outing,get_recommendation,train
+recommend what tour we can do tomorrow,get_recommendation,train
+recommend which tour package we should choose,get_recommendation,train
+recommend which tour package we should take,get_recommendation,train
+show me recommended available tour options,get_recommendation,train
+suggest a cultural tour option for us,get_recommendation,train
+suggest a morning tour activity,get_recommendation,train
+suggest a tour for first time visitors,get_recommendation,train
+suggest a tour for one day only,get_recommendation,train
+suggest a tour with light activity,get_recommendation,train
+suggest the best tour option for a rainy day,get_recommendation,train
+suggest tour options for couples,get_recommendation,train
+suggest tour plans for 4 friends,get_recommendation,train
+what do you recommend for sightseeing,get_recommendation,train
+what is your best tour for 3 guests,get_recommendation,train
+what trip do you suggest this weekend,get_recommendation,train
+best group tour option please,get_recommendation,val
+i choose 1,get_recommendation,val
+recommend a short city tour,get_recommendation,val
+recommend a tour that fits a family budget,get_recommendation,val
+recommend a weekend getaway tour,get_recommendation,val
+recommend an outdoor tour with views,get_recommendation,val
+which tour is best for kids,get_recommendation,val
+do you have attraction details for weekend,get_tourism_information,test
+give me destination details for visitors,get_tourism_information,test
+i need info about local landmarks,get_tourism_information,test
+i need travel info for bayawan,get_tourism_information,test
+list bayawan attractions with brief details,get_tourism_information,test
+show me local attraction descriptions,get_tourism_information,test
+what are the contact details of tourist places,get_tourism_information,test
+what destinations are good for day trips,get_tourism_information,test
+what destinations are near the city center,get_tourism_information,test
+where is the location and contact number of the eco park,get_tourism_information,test
+any beach attraction information,get_tourism_information,train
+can you provide tourism office info,get_tourism_information,train
+can you show tourism details by location,get_tourism_information,train
+do you have tourism information for new visitors,get_tourism_information,train
+give me details of inland tourist spots,get_tourism_information,train
+give me information about mountain spots,get_tourism_information,train
+give me quick info about city attractions,get_tourism_information,train
+i need operating hours for tourist spots,get_tourism_information,train
+i want info about cultural sites,get_tourism_information,train
+share attraction information in bayawan city,get_tourism_information,train
+share information about local heritage spots,get_tourism_information,train
+show attraction information with location,get_tourism_information,train
+show details of tourist sites,get_tourism_information,train
+show me points of interest in bayawan,get_tourism_information,train
+show me tourism details for families,get_tourism_information,train
+show me tourism information near terminal area,get_tourism_information,train
+show me updated tourist spot information,get_tourism_information,train
+show tourism highlights in bayawan,get_tourism_information,train
+show tourism information about bayawan,get_tourism_information,train
+show tourism information records and details for bayawan,get_tourism_information,train
+tell me about bayawan eco parks,get_tourism_information,train
+tell me about parks and recreation sites,get_tourism_information,train
+tell me tourist attractions near poblacion,get_tourism_information,train
+tell me where the landmarks are located,get_tourism_information,train
+tourism information please,get_tourism_information,train
+what are the must visit spots,get_tourism_information,train
+what are the opening hours of attractions,get_tourism_information,train
+what are the popular places to visit,get_tourism_information,train
+what are the top tourist landmarks now,get_tourism_information,train
+what attraction details and locations can help with trip planning,get_tourism_information,train
+what attractions are good for kids,get_tourism_information,train
+what destinations are best for groups,get_tourism_information,train
+what landmarks are open on weekends,get_tourism_information,train
+what nature attractions are in bayawan and where are they located,get_tourism_information,train
+what places are recommended for photos,get_tourism_information,train
+what places can we visit in bayawan city,get_tourism_information,train
+what sightseeing places are available,get_tourism_information,train
+what tourist areas are accessible,get_tourism_information,train
+where are the famous landmarks,get_tourism_information,train
+where can i read tourist spot descriptions,get_tourism_information,train
+where can we go for sightseeing,get_tourism_information,train
+which attractions are family friendly,get_tourism_information,train
+which tourist spots are open today,get_tourism_information,train
+can you list historical places,get_tourism_information,val
+i want details about waterfalls in bayawan,get_tourism_information,val
+list scenic spots around bayawan,get_tourism_information,val
+tourism guide information please,get_tourism_information,val
+what are the opening hours of bayawan tourist spots,get_tourism_information,val
+what attractions for couples are available and where are they located,get_tourism_information,val
+what farm tourism spots are available in bayawan,get_tourism_information,val
+what tourist spots are in bayawan and what are their details,get_tourism_information,val
+which attractions have contact information,get_tourism_information,val

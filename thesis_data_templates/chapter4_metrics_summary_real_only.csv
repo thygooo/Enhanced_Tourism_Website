@@ -1,0 +1,21 @@
+metric_group,metric_name,metric_value,window,notes
+recommendation,accommodation_queries,0,last_365_days_real_world,filtered by data_source=real_world
+recommendation,queries_with_results,0,last_365_days_real_world,
+recommendation,hit_rate_pct,0,last_365_days_real_world,with_results / accommodation_queries
+recommendation,avg_top1_score,,last_365_days_real_world,top-ranked item score
+recommendation,avg_decision_tree_score,,last_365_days_real_world,from recommendation trace
+recommendation,hybrid_dt_mode_count,0,last_365_days_real_world,"scoring_mode in (hybrid_textcnn_decisiontree, hybrid_textcnn_surrogate_tree)"
+recommendation,hybrid_surrogate_tree_mode_count,0,last_365_days_real_world,scoring_mode=hybrid_textcnn_surrogate_tree
+recommendation,fallback_mode_count,0,last_365_days_real_world,scoring_mode=hybrid_fallback_heuristic
+recommendation,no_match_count,0,last_365_days_real_world,recommendation list empty
+recommendation,no_match_pct,0,last_365_days_real_world,no_match_count / accommodation_queries
+funnel,views,0,last_365_days_real_world,RecommendationEvent view
+funnel,clicks,0,last_365_days_real_world,RecommendationEvent click
+funnel,books,0,last_365_days_real_world,RecommendationEvent book
+funnel,ctr_pct,0,last_365_days_real_world,clicks / views
+funnel,book_rate_pct,0,last_365_days_real_world,books / views
+performance,chat_requests,0,last_365_days_real_world,SystemMetricLog module=chat
+performance,chat_success_rate_pct,0,last_365_days_real_world,success_flag=true / total
+performance,chat_avg_response_ms,,last_365_days_real_world,
+performance,chat_p95_response_ms,,last_365_days_real_world,
+errors,top_error_messages,,last_365_days_real_world,up to top 5

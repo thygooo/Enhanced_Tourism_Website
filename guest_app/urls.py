@@ -55,6 +55,8 @@ urlpatterns = [
 
     # Accommodation recommendation and booking
     path('accommodations/', views.accommodation_page, name='accommodation_page'),
+    path('accommodations/my-bookings/', views.my_accommodation_bookings, name='my_accommodation_bookings'),
+    path('accommodations/my-bookings/<int:booking_id>/cancel/', views.cancel_my_accommodation_booking, name='cancel_my_accommodation_booking'),
     path('accommodations/recommend/', views.accommodation_recommend, name='accommodation_recommend'),
     path('accommodations/billing/', views.accommodation_billing, name='accommodation_billing'),
     path('accommodations/book/', views.accommodation_book, name='accommodation_book'),

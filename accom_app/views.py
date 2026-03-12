@@ -1,15 +1,236 @@
 import json
 import datetime
+from decimal import Decimal, InvalidOperation
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils import timezone
 # Import models from admin_app since that's where they're defined
-from admin_app.models import Region, Country, Entry, Accomodation
+from admin_app.models import (
+    Region,
+    Country,
+    Entry,
+    Accomodation,
+    Room as AdminRoom,
+    RoomAssignment as AdminRoomAssignment,
+)
 # Import the Answer model from accom_app to store submitted form data
 from .models import Summary
-from .models import HotelRooms, RoomsGuestAdd
+from .models import (
+    HotelRooms,
+    RoomsGuestAdd,
+    Room as AccomRoom,
+    RoomAssignment as AccomRoomAssignment,
+    AuthoritativeRoomDetails,
+)
+from guest_app.models import Guest
 from django.http import JsonResponse, HttpResponseForbidden
+from django.conf import settings
 from django.views.decorators.http import require_POST
 import calendar
 from django.db.models.functions import ExtractMonth
+from django.db import transaction
+
+
+def _is_accommodation_owner_user(user):
+    if not user or not getattr(user, "is_authenticated", False):
+        return False
+
+    role_value = str(getattr(user, "role", "") or "").strip().lower()
+    if role_value in {"accommodation_owner", "accommodation owner"}:
+        return True
+
+    try:
+        return user.groups.filter(name__iexact="accommodation_owner").exists()
+    except Exception:
+        return False
+
+
+def _resolve_room_management_accommodation(request):
+    """
+    Compatibility-aware authorization resolver for owner room management.
+
+    Primary path:
+    - authenticated accommodation owner
+    - accommodation.owner must match request.user
+
+    Transitional fallback path:
+    - allows legacy session-only accommodation accounts only when
+      accommodation.owner is NULL (unlinked historical records).
+    """
+    session_accom_id = request.session.get("accom_id")
+    approval_required = "accepted"
+
+    if getattr(request.user, "is_authenticated", False):
+        if not _is_accommodation_owner_user(request.user):
+            return None, False, "Only accommodation owners can manage rooms."
+
+        owned_qs = Accomodation.objects.filter(owner=request.user)
+        accommodation = None
+        if session_accom_id:
+            accommodation = owned_qs.filter(accom_id=session_accom_id).first()
+        if accommodation is None:
+            accommodation = owned_qs.order_by("accom_id").first()
+        if accommodation is None:
+            return None, False, "You do not own any accommodation record."
+
+        if str(accommodation.approval_status or "").lower() != approval_required:
+            return None, False, "Your accommodation account is not approved yet."
+        return accommodation, False, ""
+
+    # Transitional support: preserve old accommodation-session login for unlinked records.
+    session_user_type = str(request.session.get("user_type") or "").strip().lower()
+    if session_accom_id and session_user_type in {"accomodation", "establishment"}:
+        accommodation = Accomodation.objects.filter(
+            accom_id=session_accom_id,
+            owner__isnull=True,
+        ).first()
+        if accommodation is not None:
+            if str(accommodation.approval_status or "").lower() != approval_required:
+                return None, False, "Your accommodation account is not approved yet."
+            return accommodation, True, ""
+
+    return None, False, "Authentication required for room management."
+
+
+ROOM_STATUS_SET = {"AVAILABLE", "OCCUPIED", "UNAVAILABLE"}
+
+
+def _normalize_status(raw_status, *, default="AVAILABLE"):
+    status_value = str(raw_status or "").strip().upper()
+    if status_value in ROOM_STATUS_SET:
+        return status_value
+    return default
+
+
+def _parse_positive_int(raw_value, *, field_label):
+    try:
+        value = int(str(raw_value).strip())
+    except (TypeError, ValueError):
+        raise ValueError(f"{field_label} must be a valid number.")
+    if value < 0:
+        raise ValueError(f"{field_label} cannot be negative.")
+    return value
+
+
+def _parse_price(raw_value):
+    raw = str(raw_value if raw_value is not None else "").strip()
+    if raw == "":
+        return Decimal("0.00")
+    try:
+        value = Decimal(raw)
+    except (InvalidOperation, ValueError):
+        raise ValueError("Price per night must be a valid amount.")
+    if value < 0:
+        raise ValueError("Price per night cannot be negative.")
+    return value
+
+
+def _normalize_amenities(raw_value):
+    if raw_value in (None, ""):
+        return []
+    if isinstance(raw_value, list):
+        raw_list = raw_value
+    else:
+        text = str(raw_value).strip()
+        if not text:
+            return []
+        try:
+            parsed = json.loads(text)
+            if isinstance(parsed, list):
+                raw_list = parsed
+            else:
+                raw_list = [text]
+        except Exception:
+            raw_list = [part.strip() for part in text.split(",")]
+    seen = set()
+    normalized = []
+    for item in raw_list:
+        cleaned = str(item or "").strip()
+        if not cleaned:
+            continue
+        key = cleaned.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        normalized.append(cleaned[:60])
+    return normalized[:20]
+
+
+def _room_field_payload(request):
+    room_name = str(request.POST.get("room_name") or "").strip()
+    room_type = str(request.POST.get("room_type") or "").strip()
+    status_raw = request.POST.get("availability_status", request.POST.get("status"))
+    amenities_raw = request.POST.get("amenities")
+
+    if not room_name and room_type:
+        room_name = room_type
+
+    person_limit_raw = request.POST.get("person_limit", request.POST.get("capacity", 0))
+    price_raw = request.POST.get("price_per_night", request.POST.get("price", "0"))
+    current_availability_raw = request.POST.get("current_availability")
+
+    person_limit = _parse_positive_int(person_limit_raw, field_label="Capacity")
+    price_per_night = _parse_price(price_raw)
+    status_value = _normalize_status(status_raw, default="AVAILABLE")
+    amenities = _normalize_amenities(amenities_raw)
+    room_type_value = room_type or room_name
+
+    if current_availability_raw in (None, ""):
+        current_availability = person_limit
+    else:
+        current_availability = _parse_positive_int(
+            current_availability_raw,
+            field_label="Current availability",
+        )
+        if current_availability > person_limit:
+            current_availability = person_limit
+
+    return {
+        "room_name": room_name,
+        "room_type": room_type_value,
+        "person_limit": person_limit,
+        "price_per_night": price_per_night,
+        "status": status_value,
+        "amenities": amenities,
+        "current_availability": current_availability,
+    }
+
+
+def _set_room_details(room, *, room_type, amenities):
+    details, _created = AuthoritativeRoomDetails.objects.get_or_create(room=room)
+    details.room_type = str(room_type or "").strip()[:100]
+    details.amenities = json.dumps(amenities or [], ensure_ascii=True)
+    details.save(update_fields=["room_type", "amenities", "updated_at"])
+    return details
+
+
+def _serialize_room(room):
+    details = getattr(room, "owner_details", None)
+    amenities = []
+    room_type = room.room_name
+    if details is not None:
+        room_type = details.room_type or room.room_name
+        try:
+            parsed = json.loads(details.amenities or "[]")
+            if isinstance(parsed, list):
+                amenities = [str(item) for item in parsed]
+        except Exception:
+            amenities = []
+
+    return {
+        "id": room.room_id,
+        "room_id": room.room_id,
+        "name": room.room_name,
+        "room_name": room.room_name,
+        "room_type": room_type,
+        "capacity": int(room.person_limit or 0),
+        "person_limit": int(room.person_limit or 0),
+        "price_per_night": f"{Decimal(str(room.price_per_night or 0)):.2f}",
+        "status": str(room.status or "AVAILABLE").upper(),
+        "availability_status": str(room.status or "AVAILABLE").upper(),
+        "availability": int(room.current_availability or 0),
+        "current_availability": int(room.current_availability or 0),
+        "amenities": amenities,
+    }
 
 def other_estab_create(request):
     """
@@ -256,37 +477,23 @@ def other_estab_create_pt2(request):
     return render(request, 'other_estab_form_pt2.html')
 
 def register_room(request):
-    # Ensure the user is logged in as an accommodation or establishment account.
-    if not request.session.get('accom_id'):
-        return redirect('admin_app:login')
-    
-    from admin_app.models import Accomodation, Room
-    current_accom_id = request.session.get('accom_id')
-    
-    try:
-        accommodation = Accomodation.objects.get(accom_id=current_accom_id)
-    except Accomodation.DoesNotExist:
-        return redirect('admin_app:login')
-    
+    accommodation, _legacy_mode, auth_error = _resolve_room_management_accommodation(request)
+    if accommodation is None:
+        return HttpResponseForbidden(auth_error or "Unauthorized.")
+
     # Only allow access for Hotel accounts.
     if accommodation.company_type.lower() != "hotel":
         return HttpResponseForbidden("You do not have permission to access this page.")
-    
-    # Get hotel rooms and enhance with availability information
-    hotel_rooms = Room.objects.filter(accommodation=accommodation)
-    
-    # Add current_availability to each room
-    for room in hotel_rooms:
-        # Try to find corresponding Room model for availability
-        try:
-            room_model = Room.objects.get(accommodation=accommodation, room_name=room.room_name)
-            room.current_availability = room_model.current_availability or room.person_limit
-        except Room.DoesNotExist:
-            # If no matching Room model exists, use person_limit as fallback
-            room.current_availability = room.person_limit
-    
+
+    hotel_rooms = (
+        AdminRoom.objects.select_related("owner_details")
+        .filter(accommodation=accommodation)
+        .order_by("room_name")
+    )
+
     context = {
         'hotel_rooms': hotel_rooms,
+        'rooms_payload': [_serialize_room(room) for room in hotel_rooms],
     }
     return render(request, 'register_room.html', context)
 
@@ -294,63 +501,163 @@ def add_room_ajax(request):
     """Function to add a new room via AJAX"""
     if request.method != 'POST':
         return JsonResponse({'status': 'error', 'message': 'Only POST method is allowed'}, status=405)
-        
-    accom_id = request.session.get('accom_id')
-    room_name = request.POST.get('room_name')
-    person_limit = request.POST.get('person_limit', 4)  # Default person_limit to 4 if not provided
-    
-    if not accom_id:
-        return JsonResponse({'status': 'error', 'message': 'Not logged in as accommodation or establishment.'}, status=403)
-    if not room_name:
-        return JsonResponse({'status': 'error', 'message': 'Room name is required.'}, status=400)
-    
-    # Validate person_limit is a non-negative integer
+
+    accom, _legacy_mode, auth_error = _resolve_room_management_accommodation(request)
+    if accom is None:
+        return JsonResponse({'status': 'error', 'message': auth_error}, status=403)
+
     try:
-        person_limit = int(person_limit)
-        if person_limit < 0:
-            return JsonResponse({'status': 'error', 'message': 'Person limit cannot be negative.'}, status=400)
-    except (ValueError, TypeError):
-        return JsonResponse({'status': 'error', 'message': 'Person limit must be a valid number.'}, status=400)
-    
-    try:
-        # Get accommodation object
-        from admin_app.models import Accomodation, Room
-        accom = Accomodation.objects.get(accom_id=accom_id)
-        
+        payload = _room_field_payload(request)
+        if not payload["room_name"]:
+            return JsonResponse(
+                {'status': 'error', 'message': 'Room name or room type is required.'},
+                status=400,
+            )
+
         # Check if a room with this name already exists for this accommodation
-        if Room.objects.filter(accommodation=accom, room_name=room_name).exists():
+        if AdminRoom.objects.filter(accommodation=accom, room_name=payload["room_name"]).exists():
             return JsonResponse({
                 'status': 'error', 
-                'message': f'Room with name "{room_name}" already exists.'
+                'message': f'Room with name "{payload["room_name"]}" already exists.'
             }, status=400)
-        
-        # Create Room instance
-        new_room = Room.objects.create(
-            accommodation=accom, 
-            room_name=room_name,
-            person_limit=person_limit,
-            current_availability=person_limit,
-            status='AVAILABLE'
+
+        # Authoritative write path: admin_app.Room only.
+        new_room = AdminRoom.objects.create(
+            accommodation=accom,
+            room_name=payload["room_name"],
+            person_limit=payload["person_limit"],
+            current_availability=payload["current_availability"],
+            price_per_night=payload["price_per_night"],
+            status=payload["status"],
         )
-        
+        _set_room_details(
+            new_room,
+            room_type=payload["room_type"],
+            amenities=payload["amenities"],
+        )
+        new_room = AdminRoom.objects.select_related("owner_details").get(pk=new_room.pk)
+
         return JsonResponse({
             'status': 'success',
-            'room_id': new_room.room_id,
-            'room_name': new_room.room_name,
-            'person_limit': new_room.person_limit,
-            'current_availability': new_room.current_availability,
-            'status': new_room.status
+            'room': _serialize_room(new_room),
         })
+    except ValueError as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
     except Exception as e:
         import traceback
         error_details = traceback.format_exc()
         print(f"Error adding room: {str(e)}\n{error_details}")
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
 
+
+def get_rooms_json(request):
+    accom, _legacy_mode, auth_error = _resolve_room_management_accommodation(request)
+    if accom is None:
+        return JsonResponse({'status': 'error', 'message': auth_error}, status=403)
+
+    rooms = (
+        AdminRoom.objects.select_related("owner_details")
+        .filter(accommodation=accom)
+        .order_by("room_name")
+    )
+    return JsonResponse({
+        "status": "success",
+        "rooms": [_serialize_room(room) for room in rooms],
+    })
+
+
+@require_POST
+def update_room_ajax(request):
+    accom, _legacy_mode, auth_error = _resolve_room_management_accommodation(request)
+    if accom is None:
+        return JsonResponse({'status': 'error', 'message': auth_error}, status=403)
+
+    room_id_raw = request.POST.get("room_id")
+    if room_id_raw in (None, ""):
+        return JsonResponse({'status': 'error', 'message': 'Room ID is required.'}, status=400)
+
+    try:
+        room_id = int(str(room_id_raw).strip())
+    except (TypeError, ValueError):
+        return JsonResponse({'status': 'error', 'message': 'Invalid room ID.'}, status=400)
+
+    try:
+        payload = _room_field_payload(request)
+        if not payload["room_name"]:
+            return JsonResponse(
+                {'status': 'error', 'message': 'Room name or room type is required.'},
+                status=400,
+            )
+
+        with transaction.atomic():
+            room = AdminRoom.objects.select_for_update().filter(
+                room_id=room_id,
+                accommodation=accom,
+            ).first()
+            if room is None:
+                return JsonResponse(
+                    {'status': 'error', 'message': 'Room not found or not authorized.'},
+                    status=404,
+                )
+
+            duplicate_exists = AdminRoom.objects.filter(
+                accommodation=accom,
+                room_name=payload["room_name"],
+            ).exclude(room_id=room.room_id).exists()
+            if duplicate_exists:
+                return JsonResponse(
+                    {'status': 'error', 'message': f'Room with name "{payload["room_name"]}" already exists.'},
+                    status=400,
+                )
+
+            room.room_name = payload["room_name"]
+            room.person_limit = payload["person_limit"]
+            room.price_per_night = payload["price_per_night"]
+            room.status = payload["status"]
+
+            desired_availability = min(payload["current_availability"], payload["person_limit"])
+            room.current_availability = desired_availability
+            room.save(update_fields=[
+                "room_name",
+                "person_limit",
+                "price_per_night",
+                "status",
+                "current_availability",
+                "updated_at",
+            ])
+
+            _set_room_details(
+                room,
+                room_type=payload["room_type"],
+                amenities=payload["amenities"],
+            )
+
+        room = AdminRoom.objects.select_related("owner_details").get(room_id=room_id)
+        return JsonResponse({"status": "success", "room": _serialize_room(room)})
+    except ValueError as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
 @require_POST
 def register_guest_to_room(request):
     """Register a guest to a room with check-in and check-out dates"""
-    accom_id = request.session.get('accom_id')
+    accom, legacy_mode, auth_error = _resolve_room_management_accommodation(request)
+    if accom is None:
+        return JsonResponse({'status': 'error', 'message': auth_error}, status=403)
+
+    if not bool(getattr(settings, "ALLOW_LEGACY_OWNER_ROOM_ASSIGNMENT", False)):
+        return JsonResponse(
+            {
+                "status": "error",
+                "message": (
+                    "Direct owner guest-to-room assignment is disabled in the revised booking architecture. "
+                    "Use the guest reservation flow so booking integrity, overlap checks, billing, and companions stay consistent."
+                ),
+            },
+            status=409,
+        )
+
     room_id = request.POST.get('room_id')
     guest_first_name = request.POST.get('guest_first_name')
     guest_last_name = request.POST.get('guest_last_name')
@@ -359,13 +666,18 @@ def register_guest_to_room(request):
     num_guests = request.POST.get('num_guests', 1)
     
     # Validate inputs
-    if not all([accom_id, room_id, guest_first_name, guest_last_name, checked_in, checked_out]):
+    if not all([room_id, guest_first_name, guest_last_name, checked_in, checked_out]):
         return JsonResponse({'status': 'error', 'message': 'All fields are required.'}, status=400)
     
     try:
-        # Get accommodation and room
-        accom = Accomodation.objects.get(accom_id=accom_id)
-        room = Room.objects.get(room_id=room_id, accommodation=accom)
+        try:
+            num_guests_int = int(num_guests)
+            if num_guests_int <= 0:
+                return JsonResponse({'status': 'error', 'message': 'Guest count must be at least 1.'}, status=400)
+        except (TypeError, ValueError):
+            return JsonResponse({'status': 'error', 'message': 'Invalid guest count.'}, status=400)
+
+        admin_room = AdminRoom.objects.get(room_id=room_id, accommodation=accom)
         
         # Convert dates to datetime objects
         checked_in_date = datetime.datetime.strptime(checked_in, '%Y-%m-%d').date()
@@ -381,52 +693,81 @@ def register_guest_to_room(request):
         # Determine the month (for reporting)
         month = checked_in_date.strftime('%B')
         
-        # Create or get a guest
-        guest, created = Guest.objects.get_or_create(
-            first_name=guest_first_name,
-            last_name=guest_last_name,
-            defaults={
-                'status': 'PENDING'
-            }
-        )
+        # Create or reuse a lightweight walk-in guest profile for room assignment tracking.
+        guest = Guest.objects.filter(
+            first_name__iexact=guest_first_name,
+            last_name__iexact=guest_last_name,
+            email__iendswith='@walkin.local',
+        ).first()
+
+        if guest is None:
+            safe_first = ''.join(ch.lower() for ch in guest_first_name if ch.isalnum()) or "guest"
+            safe_last = ''.join(ch.lower() for ch in guest_last_name if ch.isalnum()) or "walkin"
+            unique_token = timezone.now().strftime("%Y%m%d%H%M%S%f")
+            base_username = f"{safe_first}.{safe_last}"
+            username = f"{base_username}.{unique_token}"[:100]
+            email = f"{base_username}.{unique_token}@walkin.local"
+            phone_seed = ''.join(ch for ch in unique_token if ch.isdigit())[-11:]
+            phone_number = phone_seed if phone_seed else "00000000000"
+
+            guest = Guest.objects.create(
+                first_name=guest_first_name,
+                last_name=guest_last_name,
+                username=username,
+                email=email,
+                country_of_origin="Walk-in",
+                phone_number=phone_number,
+                sex='M',
+                password='walkin-temporary-password',
+            )
         
-        # Create RoomsGuestAdd record for legacy data
-        booking = RoomsGuestAdd.objects.create(
-            room_id=room,
-            accom_id=accom,
-            checked_in=checked_in_date,
-            checked_out=checked_out_date,
-            no_of_nights=no_of_nights,
-            month=month,
-            num_guests=num_guests
-        )
-        
-        # Create a RoomAssignment record for the new schema
-        assignment = RoomAssignment.objects.create(
-            room=room,
+        # Authoritative assignment write path.
+        assignment = AdminRoomAssignment.objects.create(
+            room=admin_room,
             guest=guest,
             is_owner=True,
             checked_in=timezone.make_aware(datetime.datetime.combine(checked_in_date, datetime.time.min)),
             checked_out=timezone.make_aware(datetime.datetime.combine(checked_out_date, datetime.time.min)),
         )
-        
-        # Update room status and availability
-        room.status = 'OCCUPIED'
-        room.current_availability = max(0, room.current_availability - int(num_guests))
-        room.last_check_in = timezone.now()
-        room.save()
+
+        booking_id = None
+        # Transitional legacy persistence only for pre-existing mapped legacy rooms.
+        # This avoids creating new parallel-room records.
+        if legacy_mode:
+            legacy_room = AccomRoom.objects.filter(
+                accom_id=accom,
+                room_name=admin_room.room_name,
+            ).first()
+            if legacy_room is not None:
+                legacy_booking = RoomsGuestAdd.objects.create(
+                    room_id=legacy_room,
+                    accom_id=accom,
+                    checked_in=checked_in_date,
+                    checked_out=checked_out_date,
+                    no_of_nights=no_of_nights,
+                    month=month,
+                    num_guests=num_guests_int,
+                )
+                AccomRoomAssignment.objects.create(
+                    room=legacy_room,
+                    guest=guest,
+                    is_owner=True,
+                    checked_in=timezone.make_aware(datetime.datetime.combine(checked_in_date, datetime.time.min)),
+                    checked_out=timezone.make_aware(datetime.datetime.combine(checked_out_date, datetime.time.min)),
+                )
+                booking_id = legacy_booking.id
         
         return JsonResponse({
             'status': 'success',
-            'booking_id': booking.id,
+            'booking_id': booking_id,
             'assignment_id': assignment.assignment_id,
             'guest_name': f"{guest.first_name} {guest.last_name}",
             'checked_in': checked_in,
             'checked_out': checked_out,
             'nights': no_of_nights,
-            'guests': num_guests
+            'guests': num_guests_int
         })
-    except Room.DoesNotExist:
+    except AdminRoom.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': 'Room not found or not authorized.'}, status=404)
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
@@ -436,32 +777,30 @@ def delete_room_ajax(request):
     """
     AJAX view to delete a hotel room and all associated guest registrations.
     """
-    accom_id = request.session.get('accom_id')
+    accom, _legacy_mode, auth_error = _resolve_room_management_accommodation(request)
     room_id = request.POST.get('room_id')
-    
-    if not accom_id:
-        return JsonResponse({'status': 'error', 'message': 'Not logged in as accommodation or establishment.'}, status=403)
+
+    if accom is None:
+        return JsonResponse({'status': 'error', 'message': auth_error}, status=403)
     
     if not room_id:
         return JsonResponse({'status': 'error', 'message': 'Room ID is required.'}, status=400)
-    
+
     try:
-        # Get the room and verify it belongs to this accommodation
-        from admin_app.models import Accomodation, Room  # Import Room model
-        accom = Accomodation.objects.get(accom_id=accom_id)
-        hotel_room = Room.objects.get(room_id=room_id, accommodation=accom)
-        
-        # First delete all guest registrations for this room
-        RoomsGuestAdd.objects.filter(room_id=hotel_room).delete()
-        
-        # Delete any corresponding Room instances with the same name
-        Room.objects.filter(accommodation=accom, room_name=hotel_room.room_name).delete()
-        
-        # Then delete the HotelRooms instance itself
-        hotel_room.delete()
-        
+        with transaction.atomic():
+            hotel_room = AdminRoom.objects.select_for_update().get(room_id=room_id, accommodation=accom)
+
+            # Transitional cleanup for legacy rows that mirror this authoritative room.
+            legacy_rooms = AccomRoom.objects.filter(accom_id=accom, room_name=hotel_room.room_name)
+            if legacy_rooms.exists():
+                RoomsGuestAdd.objects.filter(room_id__in=legacy_rooms).delete()
+                AccomRoomAssignment.objects.filter(room__in=legacy_rooms).delete()
+                legacy_rooms.delete()
+
+            hotel_room.delete()
+
         return JsonResponse({'status': 'success'})
-    except Room.DoesNotExist:
+    except AdminRoom.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': 'Room not found or not authorized to delete.'}, status=404)
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)

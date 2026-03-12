@@ -73,6 +73,25 @@ class Room(models.Model):
     def __str__(self):
         return f"Room {self.room_id} ({self.room_name}) for Accomodation {self.accom_id}"
 
+
+class AuthoritativeRoomDetails(models.Model):
+    """
+    Sidecar metadata for admin_app.Room fields not present in authoritative schema.
+    """
+    room = models.OneToOneField(
+        'admin_app.Room',
+        on_delete=models.CASCADE,
+        related_name='owner_details',
+    )
+    room_type = models.CharField(max_length=100, blank=True, default="")
+    amenities = models.TextField(blank=True, default="")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        label = self.room_type or getattr(self.room, "room_name", "")
+        return f"Room details for {label} (Room {getattr(self.room, 'room_id', '')})"
+
 # This is just to maintain database compatibility during migration
 class HotelRooms(Room):
     class Meta:

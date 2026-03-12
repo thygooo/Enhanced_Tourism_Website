@@ -86,11 +86,13 @@
               <thead>
                 <tr>
                   <th>Company Name</th>
+                  <th>Owner</th>
                   <th>Email Address</th>
                   <th>Location</th>
                   <th>Company Type</th>
+                  <th>Description</th>
                   <th>Phone Number</th>
-                  <th>Status</th>
+                  <th>Approval Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -98,19 +100,18 @@
                 {% for accom in pending_accommodations %}
                 <tr>
                   <td>{{ accom.company_name }}</td>
+                  <td>{% if accom.owner %}{{ accom.owner.username }}{% else %}N/A{% endif %}</td>
                   <td>{{ accom.email_address }}</td>
                   <td>{{ accom.location }}</td>
                   <td>{{ accom.company_type }}</td>
+                  <td>{{ accom.description|default:"-" }}</td>
                   <td>{{ accom.phone_number }}</td>
-                  <td>{{ accom.status }}</td>
+                  <td>{{ accom.approval_status|title }}</td>
                   <td>
                     <form method="post" action="{% url 'admin_app:accommodation_update' accom.accom_id %}">
                       {% csrf_token %}
-                      <select name="status" required>
-                        <option value="accepted">accepted</option>
-                        <option value="declined">declined</option>
-                      </select>
-                      <button type="submit" class="update-btn">Update</button>
+                      <button type="submit" name="status" value="accepted" class="update-btn">Accept</button>
+                      <button type="submit" name="status" value="declined" class="update-btn">Decline</button>
                     </form>
                   </td>
                 </tr>
@@ -130,11 +131,13 @@
               <thead>
                 <tr>
                   <th>Company Name</th>
+                  <th>Owner</th>
                   <th>Email Address</th>
                   <th>Location</th>
                   <th>Company Type</th>
+                  <th>Description</th>
                   <th>Phone Number</th>
-                  <th>Status</th>
+                  <th>Approval Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -142,19 +145,18 @@
                 {% for accom in accepted_accommodations %}
                 <tr>
                   <td>{{ accom.company_name }}</td>
+                  <td>{% if accom.owner %}{{ accom.owner.username }}{% else %}N/A{% endif %}</td>
                   <td>{{ accom.email_address }}</td>
                   <td>{{ accom.location }}</td>
                   <td>{{ accom.company_type }}</td>
+                  <td>{{ accom.description|default:"-" }}</td>
                   <td>{{ accom.phone_number }}</td>
-                  <td>{{ accom.status }}</td>
+                  <td>{{ accom.approval_status|title }}</td>
                   <td>
                     <form method="post" action="{% url 'admin_app:accommodation_update' accom.accom_id %}">
                       {% csrf_token %}
-                      <select name="status" required>
-                        <option value="accepted">accepted</option>
-                        <option value="declined">declined</option>
-                      </select>
-                      <button type="submit" class="update-btn">Update</button>
+                      <input type="hidden" name="status" value="declined">
+                      <button type="submit" class="update-btn">Decline</button>
                     </form>
                   </td>
                 </tr>
@@ -172,11 +174,13 @@
               <thead>
                 <tr>
                   <th>Company Name</th>
+                  <th>Owner</th>
                   <th>Email Address</th>
                   <th>Location</th>
                   <th>Company Type</th>
+                  <th>Description</th>
                   <th>Phone Number</th>
-                  <th>Status</th>
+                  <th>Approval Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -184,19 +188,18 @@
                 {% for accom in declined_accommodations %}
                 <tr>
                   <td>{{ accom.company_name }}</td>
+                  <td>{% if accom.owner %}{{ accom.owner.username }}{% else %}N/A{% endif %}</td>
                   <td>{{ accom.email_address }}</td>
                   <td>{{ accom.location }}</td>
                   <td>{{ accom.company_type }}</td>
+                  <td>{{ accom.description|default:"-" }}</td>
                   <td>{{ accom.phone_number }}</td>
-                  <td>{{ accom.status }}</td>
+                  <td>{{ accom.approval_status|title }}</td>
                   <td>
                     <form method="post" action="{% url 'admin_app:accommodation_update' accom.accom_id %}">
                       {% csrf_token %}
-                      <select name="status" required>
-                        <option value="accepted">accepted</option>
-                        <option value="declined">declined</option>
-                      </select>
-                      <button type="submit" class="update-btn">Update</button>
+                      <input type="hidden" name="status" value="accepted">
+                      <button type="submit" class="update-btn">Re-accept</button>
                     </form>
                   </td>
                 </tr>

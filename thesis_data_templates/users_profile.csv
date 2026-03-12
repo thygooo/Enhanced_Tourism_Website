@@ -1,0 +1,21 @@
+user_id,age_group,sex,budget_range,trip_type,preferred_activities,distance_tolerance_km,has_disability,disability_type,city,country_of_origin,created_at
+U0001,18-24,F,low,solo,beach|photography,20,FALSE,,Nasugbu,Philippines,2026-02-11 08:00:00
+U0002,25-34,M,medium,friends,hiking|landmarks,40,FALSE,,Lian,Philippines,2026-02-11 08:05:00
+U0003,35-44,F,medium,family,parks|food,25,FALSE,,Balayan,Philippines,2026-02-11 08:10:00
+U0004,18-24,M,low,friends,shopping|cafes,15,FALSE,,Lemery,Philippines,2026-02-11 08:15:00
+U0005,45-54,F,high,couple,landmarks|relaxation,60,FALSE,,Tagaytay,Philippines,2026-02-11 08:20:00
+U0006,25-34,F,medium,solo,beach|snorkeling,30,FALSE,,Nasugbu,Philippines,2026-02-11 08:25:00
+U0007,35-44,M,high,family,resorts|parks,50,FALSE,,Calaca,Philippines,2026-02-11 08:30:00
+U0008,18-24,F,low,solo,waterfalls|nature,35,FALSE,,Tuy,Philippines,2026-02-11 08:35:00
+U0009,25-34,M,medium,couple,beach|sunset,30,FALSE,,Balayan,Philippines,2026-02-11 08:40:00
+U0010,55+,F,medium,family,church|landmarks,20,TRUE,mobility,Laurel,Philippines,2026-02-11 08:45:00
+U0011,18-24,M,low,friends,night_view|food,18,FALSE,,Nasugbu,Philippines,2026-02-11 08:50:00
+U0012,25-34,F,high,solo,hiking|camping,70,FALSE,,Ternate,Philippines,2026-02-11 08:55:00
+U0013,35-44,F,medium,family,parks|education,25,FALSE,,Lian,Philippines,2026-02-11 09:00:00
+U0014,45-54,M,high,couple,landmarks|history,55,FALSE,,Tagaytay,Philippines,2026-02-11 09:05:00
+U0015,25-34,F,medium,friends,beach|kayak,35,FALSE,,Nasugbu,Philippines,2026-02-11 09:10:00
+U0016,18-24,M,low,solo,photography|landmarks,22,FALSE,,Lemery,Philippines,2026-02-11 09:15:00
+U0017,35-44,F,medium,family,public_parks|food,28,FALSE,,Calaca,Philippines,2026-02-11 09:20:00
+U0018,25-34,M,medium,friends,hiking|waterfalls,45,FALSE,,Tuy,Philippines,2026-02-11 09:25:00
+U0019,55+,M,high,couple,scenic_views|culture,30,TRUE,hearing,Balayan,Philippines,2026-02-11 09:30:00
+U0020,18-24,F,low,friends,beach|music,20,FALSE,,Nasugbu,Philippines,2026-02-11 09:35:00

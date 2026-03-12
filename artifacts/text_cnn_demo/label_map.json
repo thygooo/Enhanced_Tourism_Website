@@ -1,0 +1,9 @@
+{
+  "classes": [
+    "hostel",
+    "hotel",
+    "inn",
+    "resort",
+    "transient_house"
+  ]
+}

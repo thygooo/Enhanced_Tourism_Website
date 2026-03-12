@@ -1,0 +1,1921 @@
+message_text,label_intent,split
+recommend inn in nangka for 5 guests under 4000,get_accommodation_recommendation,train
+"ask lang, facts about tourism sites near terminal area",get_tourism_information,train
+please estimate charge for room plus service fee,calculate_accommodation_billing,train
+"ask lang, room charge hm with extra guest",calculate_accommodation_billing,train
+hello calculate room bill for 4 nights pls,calculate_accommodation_billing,train
+recommend inn in terminal area for 5 guests under 3000,get_accommodation_recommendation,train
+what is the lodging amount due for 2 guests,calculate_accommodation_billing,train
+pls calculate room bill for 5 nights,calculate_accommodation_billing,train
+"hi, bill estimate for inn stay near villareal thanks",calculate_accommodation_billing,train
+pls facts about tourisn sites near poblacion,get_tourism_information,train
+"ask lang, recomend a waterfall tour in bayawan",get_recommendation,train
+uy looking 4 rooms near near downtown,get_accommodation_recommendation,train
+"ask lang, what tour bagay for friends",get_recommendation,train
+"ask lang, pa compute ng room payment with hot shower",calculate_accommodation_billing,train
+quick question: suggest trip idea near nangka,get_recommendation,train
+hello recommend inn in kalumboyan for 4 guests under 3500,get_accommodation_recommendation,test
+"hi, ano entrance fee and schedule pls",get_tourism_information,train
+uy book accommodation with breakfast and aircon,book_accommodation,train
+i want to finalize the room booking,book_accommodation,train
+quick question: need outdoor destination reco,get_recommendation,train
+what is total sa farm itinerary now,calculate_billing,val
+pa suggest place to stay near city proper,get_accommodation_recommendation,train
+"ask lang, pa compute tour cost budget 2500 po",calculate_billing,train
+quick question: compute lodging cost sa poblacion,calculate_accommodation_billing,val
+hello room charge hm with extra guest,calculate_accommodation_billing,train
+hm tour package for heritage trip,calculate_billing,train
+quick question: share information sa local attractions,get_tourism_information,train
+"ask lang, need outdoor destination reco thanks",get_recommendation,train
+hello recommend inn in villareal for 5 guests under 3000 thanks,get_accommodation_recommendation,train
+show me local attraction descriptions,get_tourism_information,train
+hm tour package for nature trip,calculate_billing,test
+compute total payment for weekend package,calculate_billing,train
+tourism info about poblacion,get_tourism_information,test
+"ask lang, suggest trip idea near poblacion",get_recommendation,train
+book room 5 for 1 guest from 2026-03-10 to 2026-03-12,book_accommodation,train
+quick question: what tour bagay for friends?,get_recommendation,test
+need accom options with quiet place and hot shower,get_accommodation_recommendation,train
+"hi, hm total if 5 guests 4 3 nights po",calculate_accommodation_billing,train
+quick question: book accommodation with aircon and quiet place,book_accommodation,train
+hotel suggestion please with breakfast thanks,get_accommodation_recommendation,train
+where is the location and contact number of the eco park,get_tourism_information,train
+"ask lang, recommend a heritage tour in bayawan",get_recommendation,train
+quick question: details about heritage destinations please,get_tourism_information,train
+"ask lang, recommend a family tour in bayawan thanks",get_recommendation,train
+uy list must-visit places in bayawan po,get_tourism_information,train
+calcuate room bill for 3 nights,calculate_accommodation_billing,val
+hello san okay mag stay 4 3 nights,get_accommodation_recommendation,train
+"ask lang, best adventure activity for family",get_recommendation,train
+uy what is my accommodation total around budget 3500,calculate_accommodation_billing,train
+"ask lang, calculate tour bill for 3 guests",calculate_billing,train
+show tourism highlights in bayawan,get_tourism_information,test
+"ask lang, book room quick lang near nangka po",book_accommodation,val
+quick question: tourism info about near downtown,get_tourism_information,train
+quick question: compute lodging cost sa city proper now,calculate_accommodation_billing,train
+hello suggest trip idea near bayawan,get_recommendation,train
+pls calcuate accom bill pls,calculate_accommodation_billing,train
+what is my accommodation billing summary,calculate_accommodation_billing,train
+room billing for check in tomorrow check out sunday,calculate_accommodation_billing,train
+need accom options with aircon and near terminal pls,get_accommodation_recommendation,train
+book accommodation with quiet place and parking,book_accommodation,val
+hello tourism info about near downtown,get_tourism_information,test
+pls best sunset activity 4 family,get_recommendation,train
+book accommodation with quiet place and wifi,book_accommodation,val
+hello room charge hm with extra guest thanks,calculate_accommodation_billing,train
+"ask lang, room billing breakdown please",calculate_accommodation_billing,test
+best hotel option for weekend stay,get_accommodation_recommendation,test
+"ask lang, best adventure activity 4 family thanks",get_recommendation,train
+what are tourist spots in near downtown,get_tourism_information,val
+compute lodging cost sa near boulevard pls,calculate_accommodation_billing,train
+best city activity 4 family thanks,get_recommendation,train
+hello how much babayaran sa room 27 po,calculate_accommodation_billing,train
+recommend a sunset tour experience,get_recommendation,train
+uy calcuate tour bill 4 5 guests po,calculate_billing,train
+uy how to get to popular spots now,get_tourism_information,train
+hello tour reco for 2 guests budget 1200 now,get_recommendation,train
+"hi, confirm booking ko for room 5 thanks",book_accommodation,train
+reserve an inn sa city proper 4 6 pax now,book_accommodation,train
+quick question: pa suggest place to stay near villareal,get_accommodation_recommendation,train
+book na room na may parking,book_accommodation,test
+pls recommend inn in poblacion for 2 guests under 700,get_accommodation_recommendation,train
+uy best family activity 4 family,get_recommendation,train
+book room 5 from 2026-03-10 to 2026-03-12 for 3 guests,book_accommodation,train
+what is total sa adventure itinerary?,calculate_billing,train
+uy suggest trip idea near villareal now,get_recommendation,val
+recommend which tour package we should take,get_recommendation,train
+what is total sa family itinerary,calculate_billing,train
+"ask lang, need tour quote under 1500",calculate_billing,train
+quick question: book na room na may near terminal po,book_accommodation,train
+how much is the payable for island trip,calculate_billing,train
+estimate tour charges under 1500 budget,calculate_billing,train
+hello what tour bagay for friends,get_recommendation,train
+suggest trip idea near bayawan,get_recommendation,train
+"ask lang, what are tourist spots in kalumboyan",get_tourism_information,train
+uy recommend inn in city proper for 2 guests under 3500,get_accommodation_recommendation,train
+hello book na room na may near terminal,book_accommodation,test
+pls book accomodation with near terminal and parking,book_accommodation,train
+quick question: recommend a waterfall tour in bayawan,get_recommendation,val
+book accommodation with wifi and aircon,book_accommodation,train
+quick question: what are tourist spots in near downtown,get_tourism_information,train
+pls details about sunset destinations pls now,get_tourism_information,train
+san maganda puntahan this weekend thanks,get_recommendation,train
+quick question: pa compute ng room payment with wifi thanks,calculate_accommodation_billing,val
+recommend cheaper tour package options,get_recommendation,train
+calculate bill for bayawan inn room 3,calculate_accommodation_billing,train
+show total charge for day tour,calculate_billing,train
+what tourist spots are in bayawan and what are their details,get_tourism_information,train
+open hours for attractions in bayawan thanks,get_tourism_information,train
+quick question: compute lodging cost sa nangka?,calculate_accommodation_billing,train
+quick question: cost of guided tour hm po,calculate_billing,test
+hm tour package for family trip,calculate_billing,train
+calcuate room bill 4 5 nights pls,calculate_accommodation_billing,train
+help me book accommodation for saturday,book_accommodation,train
+uy hm tour package for farm trip,calculate_billing,train
+book accomodation with quiet place and aircon,book_accommodation,train
+hello book accommodation with parking and breakfast,book_accommodation,train
+hello tourisn info about city proper,get_tourism_information,train
+suggest trip idea near kalumboyan po,get_recommendation,train
+"ask lang, tour reco for 2 guests budget 3000 thanks",get_recommendation,train
+how much room 40 from 2026-05-01 to 2026-05-03 thanks,calculate_accommodation_billing,train
+how much will group tour payment be,calculate_billing,train
+hotel recommendations for family of four,get_accommodation_recommendation,train
+need accom options with hot shower and wifi,get_accommodation_recommendation,train
+show tourism information records and details for bayawan,get_tourism_information,val
+room billing breakdown please now,calculate_accommodation_billing,train
+i need the room invoice amount,calculate_accommodation_billing,test
+uy give me quick tour suggestion now,get_recommendation,train
+what attractions are good for kids,get_tourism_information,train
+pls facts about tourism sites near villareal,get_tourism_information,train
+pls hotel suggestion please with hot shower po,get_accommodation_recommendation,val
+"hi, need room tonight pls, 6 kami po",book_accommodation,train
+suggest a tour for first time visitors,get_recommendation,train
+quick question: pa suggest place to stay near bayawan,get_accommodation_recommendation,val
+"ask lang, how much room 4 from 2026-04-10 to 2026-04-12",calculate_accommodation_billing,train
+"ask lang, what are tourist spots in bayawan",get_tourism_information,train
+hello compute lodging cost sa near boulevard,calculate_accommodation_billing,train
+calculate the tour cost for the guided heritage walk activity,calculate_billing,train
+"ask lang, need accom options with hot shower and breakfast",get_accommodation_recommendation,train
+tell me about bayawan eco parks,get_tourism_information,train
+i want the exact tour payment amount,calculate_billing,train
+reserve an inn sa bayawan for 6 pax,book_accommodation,train
+hello looking for rooms near bayawan,get_accommodation_recommendation,train
+pls pa compute ng room payment with wifi po,calculate_accommodation_billing,train
+hello what is total sa sunset itinerary,calculate_billing,train
+hm total if 5 guests for 5 nights po,calculate_accommodation_billing,val
+compute lodging cost sa near boulevard thanks,calculate_accommodation_billing,train
+recommend inn in villareal for 2 guests under 1200,get_accommodation_recommendation,train
+cost of guided tour hm now,calculate_billing,test
+quick question: give me quick tour suggestion,get_recommendation,train
+hm room total,calculate_accommodation_billing,val
+uy book na room na may aircon pls,book_accommodation,test
+quick question: suggest trip idea near villareal,get_recommendation,train
+"hi, tourism info about kalumboyan",get_tourism_information,train
+hello hm tour package for farm trip,calculate_billing,train
+"ask lang, what are tourist spots in poblacion",get_tourism_information,train
+pls tour reco for 3 guests budget 1800,get_recommendation,train
+book accomodation with hot shower and wifi?,book_accommodation,val
+estimate hotel bill from april 5 to april 7,calculate_accommodation_billing,train
+reserve an inn sa nangka for 6 pax thanks,book_accommodation,train
+uy find me a quiet room with aircon,get_accommodation_recommendation,val
+quick question: reserve room now budget around 3000 now,book_accommodation,train
+san maganda puntahan,get_recommendation,train
+pls what is total sa heritage itinerary po,calculate_billing,train
+"ask lang, tour total payment near near downtown",calculate_billing,train
+i need travel info for bayawan,get_tourism_information,train
+pls san okay mag stay for 4 nights,get_accommodation_recommendation,train
+"hi, san maganda puntahan this weekend po",get_recommendation,val
+quick question: tour reco 4 6 guests budget 900,get_recommendation,test
+"hi, details about sunset destinations pls",get_tourism_information,test
+details about city destinations pls,get_tourism_information,train
+hello tour total payment near nangka,calculate_billing,train
+"recommend a hotel in poblacion for 2 guests, budget 2000 per night, from 2026-03-20 to 2026-03-22",get_accommodation_recommendation,train
+"ask lang, book accommodation with breakfast and aircon",book_accommodation,train
+hotel suggestion please with breakfast,get_accommodation_recommendation,train
+book accommodation with parking and aircon,book_accommodation,train
+"hi, list must-visit places in bayawan pls",get_tourism_information,train
+i need destination details be4e mag tour thanks,get_tourism_information,train
+"hi, tour fee estimate for 6 pax thanks",calculate_billing,train
+pls what is total sa farm itinerary,calculate_billing,test
+i need to book a place near near downtown this weekend,book_accommodation,val
+pls suggest trip idea near nangka pls,get_recommendation,train
+quick question: details about adventure destinations please,get_tourism_information,test
+"ask lang, book na room na may quiet place",book_accommodation,val
+uy hm tour package for city trip,calculate_billing,train
+"hi, compute lodging cost sa bayawan",calculate_accommodation_billing,train
+"ask lang, give me quick tour suggestion thanks",get_recommendation,val
+uy recommend inn in terminal area for 4 guests under 3000 thanks,get_accommodation_recommendation,train
+recommend a heritage tour in bayawan,get_recommendation,train
+pa compute ng room payment with aircon thanks,calculate_accommodation_billing,val
+uy bill estimate for inn stay near terminal area now,calculate_accommodation_billing,train
+reserve an inn sa poblacion 4 2 pax,book_accommodation,train
+quick question: pa compute ng room payment with quiet place,calculate_accommodation_billing,train
+quick question: travel recommendation 4 short trip now,get_recommendation,train
+hello inn reco near terminal please,get_accommodation_recommendation,train
+pls best budget room around 700 thanks,get_accommodation_recommendation,train
+hello hotel suggestion please with near terminal,get_accommodation_recommendation,train
+quick question: recommend inn in near downtown for 6 guests under 1800,get_accommodation_recommendation,train
+"hi, what is total sa sunset itinerary now",calculate_billing,val
+book room 10 4 6 guests from 2026-04-24 to 2026-04-26,book_accommodation,train
+quick question: compute excursion payment,calculate_billing,train
+recomend chill itinerary one day?,get_recommendation,train
+"ask lang, inn reco near terminal please",get_accommodation_recommendation,train
+book accommodation with aircon and wifi,book_accommodation,train
+"ask lang, what is total sa sunset itinerary",calculate_billing,test
+pls reserve an inn sa villareal for 3 pax thanks,book_accommodation,train
+reserve room now budget around 4000 thanks,book_accommodation,test
+book now,book_accommodation,train
+"ask lang, pa suggest place to stay near nangka",get_accommodation_recommendation,train
+"ask lang, hm tour package for waterfall trip",calculate_billing,train
+can you compute tour invoice amount,calculate_billing,train
+book accommodation with parking and wifi thanks,book_accommodation,val
+compute amount due for weekend tour,calculate_billing,train
+uy hm total if 1 guests for 5 nights,calculate_accommodation_billing,val
+what is total sa waterfall itinerary thanks,calculate_billing,train
+uy pa compute tour cost budget 1500 pls,calculate_billing,train
+how much tour,calculate_billing,val
+uy looking 4 rooms near city proper thanks,get_accommodation_recommendation,train
+hello total stay payment from 2026-04-24 to 2026-04-26,calculate_accommodation_billing,train
+recommend tour options for a family outing,get_recommendation,train
+show full hotel billing details,calculate_accommodation_billing,train
+"hi, confirm booking ko for room 7",book_accommodation,train
+compute inn payment for 1 night stay,calculate_accommodation_billing,train
+"hi, reserve room now budget around 3500 thanks",book_accommodation,train
+quick question: best sunset activity for family,get_recommendation,train
+quick question: what are tourist spots in city proper,get_tourism_information,train
+compute lodging cost sa nangka,calculate_accommodation_billing,train
+what is total sa heritage itinerary thanks,calculate_billing,test
+hello ano entrance fee and schedule,get_tourism_information,train
+"ask lang, book accommodation with hot shower and wifi",book_accommodation,test
+bill estimate for inn stay near nangka thanks,calculate_accommodation_billing,test
+need hotel options for 3 guests,get_accommodation_recommendation,train
+"hi, book room 6 for 4 guests from 2026-04-02 to 2026-04-04",book_accommodation,train
+hello reserve an inn sa kalumboyan for 5 pax,book_accommodation,train
+give me quick info about city attractions,get_tourism_information,train
+broaden location,get_accommodation_recommendation,train
+uy reserve an inn sa terminal area 4 5 pax,book_accommodation,train
+which tour is best for kids,get_recommendation,train
+"ask lang, pa suggest scenic tour spots",get_recommendation,val
+quick question: reserve an inn sa kalumboyan for 4 pax,book_accommodation,val
+hello hm tour package 4 family trip,calculate_billing,train
+recommend the best tour package for a family of four,get_recommendation,val
+"ask lang, can you reserve for 4 nights, 2 guests",book_accommodation,train
+i need to book a place near bayawan this weekend,book_accommodation,train
+book accommodation with parking and quiet place po,book_accommodation,train
+"quick question: need room tonight pls, 4 kami",book_accommodation,val
+bill estimate for inn stay near near boulevard,calculate_accommodation_billing,train
+find me a quiet room with parking thanks,get_accommodation_recommendation,train
+hotel suggestion pls with hot shower pls,get_accommodation_recommendation,train
+best adventure activity for family,get_recommendation,train
+uy need tour quote under 3000,calculate_billing,train
+suggest trip idea near terminal area,get_recommendation,train
+best waterfall activity for family,get_recommendation,train
+uy suggest hotel or inn from 2026-04-02 to 2026-04-04,get_accommodation_recommendation,train
+"ask lang, any affordable accommodation for 4 pax po",get_accommodation_recommendation,train
+quick question: what is my accommodation total around budget 900 thanks,calculate_accommodation_billing,train
+pls total stay payment from 2026-04-17 to 2026-04-19 thanks,calculate_accommodation_billing,train
+pls book na room na may parking?,book_accommodation,train
+best nature activity for family now,get_recommendation,train
+"ask lang, tour reco for 3 guests budget 4000 po",get_recommendation,train
+pls bill estimate for inn stay near kalumboyan pls,calculate_accommodation_billing,train
+"pls need room tonight pls, 2 kami now",book_accommodation,train
+tourism info about near downtown thanks,get_tourism_information,train
+suggest a low budget activity tour in bayawan,get_recommendation,train
+quick question: bill estimate for inn stay near nangka,calculate_accommodation_billing,test
+hello hm tour package for family trip pls,calculate_billing,train
+recommend inn in city proper for 6 guests under 4000 po,get_accommodation_recommendation,train
+uy calculate tour bill for 3 guests pls,calculate_billing,train
+uy what is total sa waterfall itinerary now,calculate_billing,test
+book na room na may breakfast thanks,book_accommodation,train
+"ask lang, san okay mag stay for 5 nights",get_accommodation_recommendation,train
+suggest trip idea near nangka thanks,get_recommendation,train
+"ask lang, hotel suggestion pls with breakfast",get_accommodation_recommendation,train
+"hi, need outdoor destination reco now",get_recommendation,train
+recommend a hotel in bayawan,get_accommodation_recommendation,val
+hotel suggestion please with near terminal now,get_accommodation_recommendation,train
+suggest trip idea near near boulevard,get_recommendation,test
+show me points of interest in bayawan,get_tourism_information,val
+"hi, looking for rooms near near boulevard",get_accommodation_recommendation,train
+recommend a tour option for seniors,get_recommendation,train
+"can you reserve for 3 nights, 6 guests po",book_accommodation,train
+bill estimate 4 inn stay near near downtown po,calculate_accommodation_billing,val
+hello book room quick lang near bayawan,book_accommodation,val
+share information about local heritage spots,get_tourism_information,test
+quick question: need accom options with hot shower and quiet place now,get_accommodation_recommendation,val
+"hi, how to get to popular spots po",get_tourism_information,train
+"hi, best adventure activity for family pls",get_recommendation,train
+compute my inn bill for friday and saturday,calculate_accommodation_billing,train
+hello what are tourist spots in poblacion,get_tourism_information,train
+"hi, total stay payment from 2026-03-28 to 2026-03-30",calculate_accommodation_billing,train
+"hi, how much room 4 from 2026-04-17 to 2026-04-19 thanks",calculate_accommodation_billing,train
+uy room billing breakdown please pls,calculate_accommodation_billing,test
+compute lodging cost sa terminal area thanks,calculate_accommodation_billing,test
+tour fee estimate for 6 pax po,calculate_billing,val
+recomend chill itinerary one day thanks,get_recommendation,train
+hello reserve room now budget around 1200 now,book_accommodation,test
+tour total payment near nangka?,calculate_billing,train
+details about adventure destinations please,get_tourism_information,train
+pa compute ng room payment with breakfast pls,calculate_accommodation_billing,train
+"hi, need tour quote under 1200 now",calculate_billing,train
+hello hm total if 2 guests 4 1 nights thanks,calculate_accommodation_billing,train
+uy pa suggest scenic tour spots pls,get_recommendation,train
+"hello need room tonight pls, 2 kami",book_accommodation,train
+recommend something for a birthday outing,get_recommendation,test
+"ask lang, how much if family tour 1 days",calculate_billing,train
+hello how much room 48 from 2026-03-28 to 2026-03-30 po,calculate_accommodation_billing,test
+quick question: pa suggest scenic tour spots,get_recommendation,train
+uy recommend a city tour in bayawan pls,get_recommendation,test
+quick question: confirm booking ko for room 12?,book_accommodation,train
+pls best farm activity 4 family now,get_recommendation,train
+pls how much babayaran sa room 2,calculate_accommodation_billing,train
+hello compute lodging cost sa villareal,calculate_accommodation_billing,train
+hello suggest trip idea near city proper,get_recommendation,train
+"ask lang, need outdoor destination reco",get_recommendation,train
+estimate inn accommodation charges for family trip,calculate_accommodation_billing,train
+uy how much babayaran sa room 59 now,calculate_accommodation_billing,train
+"can you reserve for 1 nights, 1 guests",book_accommodation,train
+quick question: recommend inn in kalumboyan for 2 guests under 700,get_accommodation_recommendation,train
+hello tourism info about near boulevard,get_tourism_information,train
+do you have tourism information for new visitors,get_tourism_information,train
+best family activity for family thanks,get_recommendation,train
+pls reserve room now budget around 1500,book_accommodation,train
+hello details about family destinations please,get_tourism_information,train
+uy book accomodation with hot shower and aircon,book_accommodation,train
+"ask lang, recommend a sunset tour in bayawan",get_recommendation,val
+how much if family tour 4 days now,calculate_billing,train
+"ask lang, best heritage activity for family",get_recommendation,train
+bill estimate for inn stay near city proper now,calculate_accommodation_billing,test
+pls give me quick tour suggestion pls,get_recommendation,train
+hello tourism info about kalumboyan,get_tourism_information,train
+quick question: tourist spot background info pls,get_tourism_information,train
+"ask lang, i need destination details be4e mag tour",get_tourism_information,test
+details about nature destinations please thanks,get_tourism_information,train
+details about heritage destinations please,get_tourism_information,train
+facts about tourism sites near nangka,get_tourism_information,train
+hello recommend a sunset tour in bayawan,get_recommendation,train
+i choose 1,get_recommendation,train
+uy what are tourist spots in city proper,get_tourism_information,train
+best farm activity 4 family,get_recommendation,train
+need accom options with parking and breakfast,get_accommodation_recommendation,test
+quick question: bill estimate for inn stay near poblacion,calculate_accommodation_billing,train
+hm total if 3 guests for 1 nights thanks,calculate_accommodation_billing,train
+"ask lang, what tour bagay 4 friends now",get_recommendation,train
+please show accommodation amount due,calculate_accommodation_billing,train
+quick question: what is total sa waterfall itinerary,calculate_billing,val
+quick question: book na room na may quiet place,book_accommodation,train
+pls recommend chill itinerary one day po,get_recommendation,train
+uy book accommodation with near terminal and aircon,book_accommodation,train
+hello list must-visit places in bayawan now,get_tourism_information,train
+"hi, room billing breakdown please",calculate_accommodation_billing,train
+hello room billing breakdown please,calculate_accommodation_billing,train
+uy tour reco for 5 guests budget 4000,get_recommendation,train
+best farm activity for family pls,get_recommendation,train
+hello need accom options with near terminal and quiet place,get_accommodation_recommendation,train
+inn reco near terminal please,get_accommodation_recommendation,train
+"ask lang, what is total sa heritage itinerary",calculate_billing,train
+quick question: recommend inn in terminal area for 1 guests under 1500 pls,get_accommodation_recommendation,test
+total accommodation fee for room 11,calculate_accommodation_billing,train
+"ask lang, reserve an inn sa near downtown for 3 pax",book_accommodation,train
+"hi, recommend a sunset tour in bayawan pls",get_recommendation,train
+book accommodation with wifi and hot shower,book_accommodation,train
+book accommodation with hot shower and parking,book_accommodation,train
+uy san okay mag stay 4 3 nights,get_accommodation_recommendation,test
+compute hotel payment for room 9 for 2 nights,calculate_accommodation_billing,val
+"ask lang, hm total if 2 guests for 5 nights?",calculate_accommodation_billing,train
+how much babayaran sa room 40 now,calculate_accommodation_billing,train
+what tour bagay for friends thanks,get_recommendation,val
+give me details of inland tourist spots,get_tourism_information,train
+"hi, bill estimate for inn stay near near downtown",calculate_accommodation_billing,train
+tourism info about near boulevard thanks,get_tourism_information,train
+quick question: suggest trip idea near city proper,get_recommendation,test
+pa suggest place to stay near nangka,get_accommodation_recommendation,val
+quick question: what is total sa adventure itinerary,calculate_billing,train
+hotel invoice for 2 nights and breakfast,calculate_accommodation_billing,train
+"ask lang, suggest hotel or inn from 2026-04-02 to 2026-04-04",get_accommodation_recommendation,val
+pa compute ng room payment with wifi thanks,calculate_accommodation_billing,train
+"hi, suggest trip idea near bayawan thanks",get_recommendation,test
+"ask lang, facts about tourism sites near near boulevard",get_tourism_information,test
+hello how much room 22 from 2026-04-02 to 2026-04-04,calculate_accommodation_billing,test
+hello find me a quiet room with quiet place,get_accommodation_recommendation,train
+"hi, details about heritage destinations please thanks",get_tourism_information,train
+i need to book a place near near boulevard this weekend,book_accommodation,train
+details about adventure destinations pls pls,get_tourism_information,train
+compute the accommodation bill for my room stay,calculate_accommodation_billing,train
+total stay payment from 2026-04-02 to 2026-04-04,calculate_accommodation_billing,test
+"ask lang, calcuate tour bill 4 2 guests",calculate_billing,train
+"ask lang, bill estimate for inn stay near poblacion",calculate_accommodation_billing,train
+room total pls,calculate_accommodation_billing,train
+pa reserve,book_accommodation,train
+quick question: pa suggest place to stay near near downtown now,get_accommodation_recommendation,train
+looking for rooms near poblacion,get_accommodation_recommendation,train
+"hi, share information sa local attractions pls",get_tourism_information,train
+uy any affordable accommodation for 2 pax pls,get_accommodation_recommendation,train
+calculate room bill for 1 nights now,calculate_accommodation_billing,train
+hello calculate tour bill 4 4 guests,calculate_billing,train
+calculate tour bill for 2 guests,calculate_billing,train
+pls recommend a nature tour in bayawan thanks,get_recommendation,train
+hello tourism info about terminal area pls,get_tourism_information,train
+best sunset activity for family,get_recommendation,train
+hello book na room na may hot shower,book_accommodation,train
+book room 5 for 2 nights,book_accommodation,train
+recommend a sunset tour in bayawan,get_recommendation,test
+pwede pa reserve room 4 from 2026-04-10 to 2026-04-12 now,book_accommodation,test
+calculate accom bill pls now,calculate_accommodation_billing,train
+"ask lang, tour total payment near terminal area",calculate_billing,train
+pa suggest place to stay near kalumboyan,get_accommodation_recommendation,train
+"ask lang, looking for rooms near nangka",get_accommodation_recommendation,test
+best budget room around 3000 po,get_accommodation_recommendation,train
+bill estimate for inn stay near poblacion now,calculate_accommodation_billing,train
+uy what are tourist spots in kalumboyan now,get_tourism_information,train
+recommend which tour is worth trying,get_recommendation,train
+hello find me a quiet room with breakfast,get_accommodation_recommendation,train
+"hi, tour reco for 6 guests budget 3000",get_recommendation,train
+pls suggest trip idea near terminal area pls,get_recommendation,train
+reserve room now budget around 3500 po,book_accommodation,test
+share information sa local attractions now,get_tourism_information,train
+find me a quiet room with near terminal,get_accommodation_recommendation,train
+hello hotel suggestion please with wifi,get_accommodation_recommendation,train
+recommend a fun tour for 2 people,get_recommendation,train
+"hi, pa compute ng room payment with aircon pls",calculate_accommodation_billing,train
+quick question: how much babayaran sa room 72 pls,calculate_accommodation_billing,train
+uy tour fee estimate 4 5 pax,calculate_billing,train
+what is the tour amount due today,calculate_billing,test
+uy how much if family tour 1 days?,calculate_billing,test
+uy tour ideas na di mahal?,get_recommendation,test
+hello calculate room bill 4 5 nights,calculate_accommodation_billing,val
+pls recommend a waterfall tour in bayawan pls,get_recommendation,train
+hello how much room 27 from 2026-03-28 to 2026-03-30 thanks,calculate_accommodation_billing,train
+uy find me a quiet room with breakfast po,get_accommodation_recommendation,train
+uy hm tour package for waterfall trip,calculate_billing,train
+quick question: hm tour package for heritage trip,calculate_billing,train
+tourism info about nangka,get_tourism_information,train
+pa book po ng room from 2026-04-17 to 2026-04-19 pls,book_accommodation,train
+"hi, what tour bagay for friends pls",get_recommendation,train
+book accommodation with breakfast and parking,book_accommodation,train
+hello book room 12 for 1 guests from 2026-03-20 to 2026-03-22,book_accommodation,train
+tour ideas na di mahal thanks,get_recommendation,train
+"ask lang, facts about tourism sites near bayawan",get_tourism_information,train
+reserve a room for my family of 4,book_accommodation,train
+"ask lang, tourism info about near downtown",get_tourism_information,train
+recommend a low-budget tour option,get_recommendation,train
+pls tourist spot background info pls po,get_tourism_information,train
+can you calculate excursion cost,calculate_billing,train
+uy facts about tourism sites near city proper thanks,get_tourism_information,test
+"ask lang, recommend inn in city proper for 2 guests under 1800",get_accommodation_recommendation,train
+best budget room around 2500 thanks,get_accommodation_recommendation,val
+pa compute tour cost budget 3000 thanks,calculate_billing,train
+"hi, inn reco near terminal pls",get_accommodation_recommendation,train
+hello bill estimate for inn stay near terminal area po,calculate_accommodation_billing,train
+calculate room bill 4 4 nights,calculate_accommodation_billing,train
+"hi, facts about tourism sites near poblacion thanks",get_tourism_information,train
+hello tour fee estimate for 1 pax,calculate_billing,train
+"hi, calculate room bill 4 3 nights",calculate_accommodation_billing,test
+hello best farm activity for family,get_recommendation,train
+facts about tourism sites near city proper,get_tourism_information,train
+uy reserve an inn sa kalumboyan for 1 pax pls,book_accommodation,train
+hello best heritage activity for family,get_recommendation,train
+can you recommend a calm itinerary,get_recommendation,train
+"ask lang, calculate room bill for 4 nights",calculate_accommodation_billing,train
+pa compute tour cost budget 1200 now,calculate_billing,train
+"hi, how much room 8 from 2026-04-24 to 2026-04-26 pls",calculate_accommodation_billing,val
+"ask lang, recommend inn in kalumboyan for 4 guests under 3500",get_accommodation_recommendation,train
+"ask lang, where to check official attraction details",get_tourism_information,train
+"ask lang, tourism info about villareal",get_tourism_information,val
+info sa bayawan,get_tourism_information,train
+need accom options with wifi and aircon now,get_accommodation_recommendation,test
+"hi, tourism info about poblacion thanks",get_tourism_information,train
+how much is the inn stay total from check in friday to sunday,calculate_accommodation_billing,train
+"can you reserve for 1 nights, 4 guests thanks",book_accommodation,train
+book room quick lang near poblacion now,book_accommodation,train
+i need to reserve accommodation for next week,book_accommodation,train
+"hi, tour billing breakdown pls now",calculate_billing,train
+need bill computation for adventure tour,calculate_billing,val
+quick question: tour fee estimate for 3 pax,calculate_billing,val
+pls calcuate room bill for 4 nights now,calculate_accommodation_billing,train
+suggest trip idea near city proper,get_recommendation,train
+hello share information sa local attractions po,get_tourism_information,train
+tour total payment near near boulevard,calculate_billing,train
+compute lodging cost sa kalumboyan,calculate_accommodation_billing,train
+"hi, hm tour package for farm trip?",calculate_billing,train
+uy room charge hm with extra guest pls,calculate_accommodation_billing,val
+pls suggest hotel or inn from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+reserve an inn sa poblacion for 1 pax,book_accommodation,val
+tour total payment near terminal area thanks,calculate_billing,test
+"ask lang, list must-visit places in bayawan",get_tourism_information,train
+pls recommend a adventure tour in bayawan,get_recommendation,train
+need outdoor destination reco thanks,get_recommendation,train
+hello recommend a nature tour in bayawan,get_recommendation,train
+"hi, san okay mag stay 4 5 nights",get_accommodation_recommendation,train
+how much is my inn stay for 3 nights,calculate_accommodation_billing,train
+how much babayaran sa room 4 thanks,calculate_accommodation_billing,val
+best waterfall activity 4 family now,get_recommendation,test
+need accom options with near terminal and parking,get_accommodation_recommendation,train
+can you list historical places,get_tourism_information,val
+looking 4 rooms near city proper now,get_accommodation_recommendation,train
+hello what is total sa adventure itinerary,calculate_billing,test
+pls what is my accommodation total around budget 2200,calculate_accommodation_billing,train
+pa suggest place to stay near near boulevard now,get_accommodation_recommendation,test
+i need to book a place near city proper this weekend,book_accommodation,train
+quick question: book room quick lang near bayawan thanks,book_accommodation,val
+show my room payment total for the weekend,calculate_accommodation_billing,train
+tour total payment near kalumboyan,calculate_billing,val
+"ask lang, recommend inn in poblacion for 5 guests under 1500 po",get_accommodation_recommendation,train
+hello room options na cheap lang,get_accommodation_recommendation,train
+tour reco 4 1 guests budget 1200,get_recommendation,train
+"ask lang, reserve an inn sa city proper for 6 pax",book_accommodation,train
+book accommodation with quiet place and hot shower,book_accommodation,train
+"ask lang, i need to book a place near villareal this weekend now",book_accommodation,train
+best farm activity for family now,get_recommendation,train
+calculate the hotel room bill amount due for this stay,calculate_accommodation_billing,train
+book room 68 for 2 from 2026-04-17 to 2026-04-19,book_accommodation,test
+"hi, san okay mag stay for 5 nights pls",get_accommodation_recommendation,test
+"ask lang, hotel suggestion please with hot shower",get_accommodation_recommendation,val
+"hi, tour reco for 5 guests budget 2200 pls",get_recommendation,train
+pa book po ng room from 2026-04-02 to 2026-04-04 thanks,book_accommodation,train
+"ask lang, details about sunset destinations pls",get_tourism_information,train
+"ask lang, compute lodging cost sa terminal area",calculate_accommodation_billing,train
+hello what are tourist spots in bayawan,get_tourism_information,train
+"hi, tour total payment near villareal po",calculate_billing,val
+best sunset activity 4 family po,get_recommendation,train
+best adventure activity 4 family po,get_recommendation,train
+suggest trip idea near terminal area thanks,get_recommendation,train
+hello suggest hotel or inn from 2026-05-01 to 2026-05-03,get_accommodation_recommendation,train
+tourisn info about poblacion now,get_tourism_information,train
+"hi, need tour quote under 3500 po",calculate_billing,val
+reserve an inn sa near downtown for 6 pax po,book_accommodation,train
+pls hm tour package for family trip po,calculate_billing,train
+pa suggest hotel,get_accommodation_recommendation,train
+can you recommend an inn for one night,get_accommodation_recommendation,test
+suggest accommodation close to terminal,get_accommodation_recommendation,train
+what is my accommodation total around budget 700 po,calculate_accommodation_billing,train
+"hi, inn reco near terminal please now",get_accommodation_recommendation,train
+hello calculate accom bill pls thanks,calculate_accommodation_billing,train
+pls room charge hm with extra guest now,calculate_accommodation_billing,train
+hello tourism info about bayawan,get_tourism_information,train
+list must-visit places in bayawan,get_tourism_information,train
+suggest a tour option under 1200 budget,get_recommendation,test
+what destinations are best for groups,get_tourism_information,test
+suggest an inn near the city center for 2,get_accommodation_recommendation,train
+"ask lang, best family activity for family",get_recommendation,train
+pls compute lodging cost sa poblacion po,calculate_accommodation_billing,train
+"ask lang, hm tour package for heritage trip now",calculate_billing,train
+hello need accom options with hot shower and aircon,get_accommodation_recommendation,train
+book na room na may hot shower,book_accommodation,train
+book room quick lang near near boulevard thanks,book_accommodation,train
+tell me tourist attractions near poblacion,get_tourism_information,train
+cost of guided tour hm thanks,calculate_billing,train
+"hi, best waterfall activity 4 family",get_recommendation,train
+pls recommend a farm tour in bayawan,get_recommendation,train
+quick question: room options na cheap lang,get_accommodation_recommendation,train
+uy pwede pa reserve room 12 from 2026-03-28 to 2026-03-30,book_accommodation,train
+uy calculate tour bill for 6 guests now,calculate_billing,train
+uy recommend chill itinerary one day pls,get_recommendation,train
+compute activity tour charges,calculate_billing,train
+tour billing for 2 adults and 1 child,calculate_billing,train
+tell me where the landmarks are located,get_tourism_information,train
+hello what are tourist spots in bayawan thanks,get_tourism_information,test
+looking for rooms near kalumboyan,get_accommodation_recommendation,train
+facts about tourism sites near villareal thanks,get_tourism_information,train
+"ask lang, recommend inn in villareal for 6 guests under 700",get_accommodation_recommendation,train
+cheap room reco,get_accommodation_recommendation,train
+"hi, pwede pa reserve room 8 from 2026-04-02 to 2026-04-04",book_accommodation,train
+"hi, best nature activity for family",get_recommendation,train
+calculate amount payable for river cruise,calculate_billing,train
+quick question: tour total payment near bayawan,calculate_billing,train
+hello recommend a family tour in bayawan,get_recommendation,train
+what nature attractions are in bayawan and where are they located,get_tourism_information,train
+san okay mag stay 4 1 nights now,get_accommodation_recommendation,train
+quick question: need accom options with breakfast and aircon,get_accommodation_recommendation,train
+how to get to popular spots,get_tourism_information,train
+need accom options with aircon and hot shower,get_accommodation_recommendation,test
+calculate accom bill pls pls,calculate_accommodation_billing,val
+can you show tourism details by location,get_tourism_information,train
+compute excursion payment thanks,calculate_billing,train
+"hi, best budget room around 3500",get_accommodation_recommendation,train
+"hi, pa suggest scenic tour spots now",get_recommendation,train
+best family activity for family,get_recommendation,train
+tour fee estimate 4 4 pax,calculate_billing,train
+quick question: how much room 48 from 2026-04-24 to 2026-04-26 thanks,calculate_accommodation_billing,train
+"hi, tourism info about villareal pls",get_tourism_information,train
+set my booking for 3 people this weekend,book_accommodation,train
+"ask lang, details about family destinations pls",get_tourism_information,test
+calculate room payment for check in july 2 check out july 4,calculate_accommodation_billing,train
+"ask lang, what are tourist spots in terminal area",get_tourism_information,train
+hello confirm booking ko for room 5,book_accommodation,train
+how much is the full accommodation payment,calculate_accommodation_billing,test
+uy what are tourist spots in terminal area?,get_tourism_information,train
+hm tour package for heritage trip thanks,calculate_billing,train
+uy book room quick lang near nangka,book_accommodation,train
+uy tour reco for 4 guests budget 900 now,get_recommendation,train
+hello pa suggest scenic tour spots?,get_recommendation,test
+book na room na may quiet place,book_accommodation,train
+pls recommend a nature tour in bayawan now,get_recommendation,train
+best nature activity for family pls,get_recommendation,train
+quick question: room billing breakdown pls,calculate_accommodation_billing,train
+recommend accommodation with larger room capacity,get_accommodation_recommendation,val
+bill estimate 4 inn stay near villareal?,calculate_accommodation_billing,train
+need accom options with breakfast and wifi,get_accommodation_recommendation,test
+what tour bagay 4 friends po,get_recommendation,train
+"hi, suggest hotel or inn from 2026-04-10 to 2026-04-12",get_accommodation_recommendation,val
+hm tour package 4 sunset trip po,calculate_billing,train
+"ask lang, tour total payment near nangka pls",calculate_billing,train
+"ask lang, need accom options with parking and wifi thanks",get_accommodation_recommendation,train
+hello book na room na may breakfast,book_accommodation,train
+hello what are tourist spots in city proper,get_tourism_information,train
+compute total payment for river tour,calculate_billing,val
+quick question: bill estimate for inn stay near villareal,calculate_accommodation_billing,train
+quick question: bill estimate 4 inn stay near near downtown,calculate_accommodation_billing,train
+pa book po ng room from 2026-05-01 to 2026-05-03,book_accommodation,train
+need an inn near the terminal for 1 budget is under 1000,get_accommodation_recommendation,test
+what is total sa farm itinerary thanks,calculate_billing,val
+can you compute lodging invoice today,calculate_accommodation_billing,train
+facts about tourisn sites near terminal area thanks,get_tourism_information,val
+reserve a room near the terminal for tomorrow,book_accommodation,train
+hello tourism info about villareal,get_tourism_information,train
+"ask lang, bill estimate for inn stay near near boulevard",calculate_accommodation_billing,train
+pa suggest scenic tour spots thanks,get_recommendation,train
+hello i need destination details before mag tour thanks,get_tourism_information,train
+need accom options with quiet place and parking thanks,get_accommodation_recommendation,train
+suggest trip idea near nangka,get_recommendation,train
+compute tour fee,calculate_billing,train
+room billing breakdown pls,calculate_accommodation_billing,train
+quick question: compute lodging cost sa near boulevard,calculate_accommodation_billing,train
+travel recommendation 4 short trip pls,get_recommendation,train
+quick question: book room quick lang near near downtown,book_accommodation,test
+how much do we owe for this tour,calculate_billing,train
+"ask lang, facts about tourism sites near city proper",get_tourism_information,val
+quick question: suggest trip idea near kalumboyan,get_recommendation,test
+list must-visit places in bayawan thanks,get_tourism_information,train
+tour total hm,calculate_billing,test
+pa suggest place to stay near villareal,get_accommodation_recommendation,train
+what are tourist spots in kalumboyan,get_tourism_information,train
+quick question: any affordable accommodation for 6 pax?,get_accommodation_recommendation,train
+need tour quote under 1800 pls,calculate_billing,train
+tour bill po 4 weekend pls,calculate_billing,train
+quick question: i need destination details before mag tour,get_tourism_information,val
+"ask lang, what tour bagay for friends thanks",get_recommendation,train
+calcuate room bill for 5 nights thanks,calculate_accommodation_billing,train
+"hi, travel recommendation for short trip po",get_recommendation,train
+any inn suggestion with parking,get_accommodation_recommendation,val
+"hi, recommend inn in poblacion for 5 guests under 900 thanks",get_accommodation_recommendation,train
+how to get to popular spots thanks,get_tourism_information,train
+tour total payment near near downtown,calculate_billing,train
+book room 55 for 1 guests from 2026-03-25 to 2026-03-27 pls,book_accommodation,train
+hm tour package for adventure trip now,calculate_billing,train
+quick question: calculate tour bill 4 6 guests pls,calculate_billing,train
+book room 72 4 5 guests from 2026-03-20 to 2026-03-22 now,book_accommodation,train
+"hi, tour ideas na di mahal",get_recommendation,train
+quick question: facts about tourism sites near kalumboyan,get_tourism_information,train
+uy total stay payment from 2026-03-28 to 2026-03-30 pls,calculate_accommodation_billing,train
+"ask lang, details about city destinations please now",get_tourism_information,train
+reserve room 8 check in monday check out wednesday,book_accommodation,train
+recommend a adventure tour in bayawan thanks,get_recommendation,train
+"ask lang, tour bill po for weekend",calculate_billing,train
+"hi, need room tonight pls, 1 kami?",book_accommodation,train
+uy book na room na may breakfast,book_accommodation,test
+quick question: tourism info about terminal area,get_tourism_information,train
+need accom options with quiet place and wifi,get_accommodation_recommendation,train
+"hi, pa compute tour cost budget 700 pls",calculate_billing,val
+lock in this room for me,book_accommodation,train
+hello hm tour package for sunset trip,calculate_billing,train
+"ask lang, compute lodging cost sa villareal now",calculate_accommodation_billing,train
+can you provide tourism office info,get_tourism_information,train
+hello reserve an inn sa bayawan for 2 pax,book_accommodation,train
+room payment calculation for weekend trip,calculate_accommodation_billing,train
+suggest trip idea near near downtown,get_recommendation,train
+hello pwede pa reserve room 3 from 2026-05-01 to 2026-05-03,book_accommodation,test
+uy san maganda puntahan this weekend,get_recommendation,train
+hello hm total if 4 guests for 4 nights thanks,calculate_accommodation_billing,train
+"ask lang, recommend a farm tour in bayawan",get_recommendation,train
+tour bill po 4 weekend,calculate_billing,train
+book accommodation with quiet place and breakfast,book_accommodation,train
+what is the cost for mountain tour,calculate_billing,train
+cost of guided tour hm pls,calculate_billing,train
+"need room tonight pls, 6 kami",book_accommodation,train
+"ask lang, details about farm destinations pls pls",get_tourism_information,train
+pls compute lodging cost sa kalumboyan thanks,calculate_accommodation_billing,train
+uy calcuate room bill for 5 nights now,calculate_accommodation_billing,train
+tour reco pls,get_recommendation,train
+room options na cheap lang thanks,get_accommodation_recommendation,train
+pa suggest scenic tour spots,get_recommendation,val
+"ask lang, total stay payment from 2026-04-02 to 2026-04-04",calculate_accommodation_billing,train
+please compute accommodation charges for 2 adults,calculate_accommodation_billing,train
+"quick question: can you reserve for 4 nights, 6 guests po",book_accommodation,train
+pa compute ng room payment with aircon,calculate_accommodation_billing,train
+reserve na,book_accommodation,train
+quick question: reserve an inn sa nangka for 3 pax,book_accommodation,train
+quick question: pa compute ng room payment with hot shower?,calculate_accommodation_billing,train
+uy pa book po ng room from 2026-03-28 to 2026-03-30,book_accommodation,test
+quick question: what is total sa sunset itinerary,calculate_billing,test
+uy san okay mag stay for 5 nights po,get_accommodation_recommendation,train
+facts about tourisn sites near villareal now,get_tourism_information,val
+uy suggest trip idea near near downtown now,get_recommendation,train
+travel recomendation 4 short trip now,get_recommendation,test
+quick question: best heritage activity for family,get_recommendation,train
+hello bill estimate for inn stay near near downtown pls,calculate_accommodation_billing,train
+pls reserve an inn sa terminal area 4 4 pax,book_accommodation,train
+quick question: recommend inn in poblacion for 6 guests under 3000 now,get_accommodation_recommendation,train
+pa compute tour cost budget 2500,calculate_billing,train
+quick question: calculate tour bill for 5 guests thanks,calculate_billing,train
+hello pa suggest place to stay near near boulevard,get_accommodation_recommendation,train
+recommend what tour we can do tomorrow,get_recommendation,train
+quick question: pa compute ng room payment with breakfast,calculate_accommodation_billing,train
+uy hm total if 1 guests 4 2 nights,calculate_accommodation_billing,val
+"ask lang, best waterfall activity for family",get_recommendation,val
+hello tourism info about nangka,get_tourism_information,train
+"ask lang, hotel suggestion please with parking",get_accommodation_recommendation,train
+details about city destinations please now,get_tourism_information,train
+pls details about heritage destinations pls pls,get_tourism_information,train
+"ask lang, bill estimate for inn stay near kalumboyan",calculate_accommodation_billing,train
+quick question: tour ideas na di mahal,get_recommendation,train
+book room 3 for 2 guests from 2026-04-24 to 2026-04-26 po,book_accommodation,train
+what is total sa city itinerary,calculate_billing,train
+"hi, i need destination details before mag tour pls",get_tourism_information,train
+recomend a farm tour in bayawan pls,get_recommendation,train
+i want this room please proceed to booking,book_accommodation,train
+give me room charge breakdown for 4 nights,calculate_accommodation_billing,train
+quick question: what are tourist spots in villareal,get_tourism_information,train
+"hi, tourisn info about nangka",get_tourism_information,train
+"ask lang, book room quick lang near near boulevard",book_accommodation,test
+bill estimate for inn stay near near downtown thanks,calculate_accommodation_billing,train
+uy tour total payment near city proper,calculate_billing,train
+pls room billing breakdown please,calculate_accommodation_billing,train
+calculate accommodation bill for room 14,calculate_accommodation_billing,train
+quick question: tourism info about city proper,get_tourism_information,train
+"ask lang, i need to book a place near kalumboyan this weekend po",book_accommodation,train
+hello facts about tourism sites near bayawan,get_tourism_information,val
+hello compute lodging cost sa poblacion?,calculate_accommodation_billing,train
+hm tour package for sunset trip,calculate_billing,train
+quick question: best budget room around 1200 thanks,get_accommodation_recommendation,train
+what are the must visit spots,get_tourism_information,val
+hello where to check official attraction details po,get_tourism_information,train
+uy pa suggest place to stay near near boulevard thanks,get_accommodation_recommendation,train
+book accommodation with aircon and breakfast,book_accommodation,train
+pls need tour quote under 3500?,calculate_billing,val
+uy calculate accom bill pls,calculate_accommodation_billing,val
+recomend inn in near boulevard for 2 guests under 4000,get_accommodation_recommendation,val
+best nature activity for family thanks,get_recommendation,train
+pls how much babayaran sa room 8 thanks,calculate_accommodation_billing,train
+hello best budget room around 3500,get_accommodation_recommendation,test
+book room 7 for 1 guests from 2026-05-01 to 2026-05-03 thanks,book_accommodation,val
+"hi, pa book po ng room from 2026-04-10 to 2026-04-12",book_accommodation,train
+looking for rooms near kalumboyan thanks,get_accommodation_recommendation,train
+tour total payment near villareal,calculate_billing,train
+pls bill estimate for inn stay near near downtown now,calculate_accommodation_billing,train
+recommend a short city tour,get_recommendation,train
+"ask lang, hm tour package 4 nature trip",calculate_billing,test
+quick question: tour total payment near villareal,calculate_billing,train
+recommend a good nature tour option,get_recommendation,train
+make a reservation for 2 guests from may 1 to may 3,book_accommodation,train
+show the payable amount for the eco adventure tour package,calculate_billing,train
+please reserve a hotel in bayawan for two nights,book_accommodation,train
+uy travel recommendation for short trip now,get_recommendation,train
+uy tour reco 4 5 guests budget 2200,get_recommendation,train
+"hi, best budget room around 2200 pls",get_accommodation_recommendation,val
+what places are recommended for photos,get_tourism_information,test
+looking for rooms near nangka po,get_accommodation_recommendation,train
+what is total sa nature itinerary,calculate_billing,train
+how much if family tour 3 days thanks,calculate_billing,train
+"ask lang, tour ideas na di mahal thanks",get_recommendation,train
+uy details about farm destinations pls?,get_tourism_information,train
+quick question: calculate tour bill for 2 guests,calculate_billing,train
+book na room na may aircon,book_accommodation,train
+facts about tourisn sites near nangka thanks,get_tourism_information,train
+pls san okay mag stay 4 5 nights,get_accommodation_recommendation,train
+book accomodation with breakfast and near terminal,book_accommodation,train
+pls reserve an inn sa bayawan for 4 pax,book_accommodation,val
+"hi, need tour quote under 4000 pls",calculate_billing,train
+how much is hotel room total for 4 guests,calculate_accommodation_billing,test
+quick question: tour total payment near nangka,calculate_billing,train
+"ask lang, recommend a nature tour in bayawan now",get_recommendation,train
+hello reserve an inn sa villareal for 5 pax,book_accommodation,train
+hello recommend inn in terminal area for 5 guests under 3500 now,get_accommodation_recommendation,train
+calculate the total accommodation payment for this hotel stay,calculate_accommodation_billing,train
+looking 4 rooms near bayawan now,get_accommodation_recommendation,val
+pa suggest place to stay near poblacion,get_accommodation_recommendation,train
+pls tour billing breakdown please,calculate_billing,train
+"ask lang, what are tourist spots in near boulevard now",get_tourism_information,train
+best heritage activity 4 family thanks,get_recommendation,train
+tour ideas na di mahal now,get_recommendation,train
+how much is the sightseeing package,calculate_billing,train
+i need to book a place near poblacion this weekend,book_accommodation,train
+need accom options with parking and quiet place,get_accommodation_recommendation,val
+can you reserve an inn near the terminal tomorrow,book_accommodation,train
+"hi, tour fee estimate 4 3 pax now",calculate_billing,train
+quick question: compute lodging cost sa terminal area now,calculate_accommodation_billing,train
+generate accommodation invoice estimate,calculate_accommodation_billing,train
+tour reco for 2 guests budget 3500 thanks,get_recommendation,val
+pls pa compute ng room payment with near terminal thanks,calculate_accommodation_billing,train
+quick question: book accomodation with aircon and near terminal,book_accommodation,val
+"ask lang, travel recommendation for short trip",get_recommendation,train
+hello tour total payment near poblacion,calculate_billing,train
+hello calculate room bill for 5 nights thanks,calculate_accommodation_billing,train
+book accommodation with parking and near terminal,book_accommodation,train
+please estimate total tour charge,calculate_billing,train
+quick question: hm tour package for sunset trip,calculate_billing,test
+i want to reserve an inn room tonight,book_accommodation,train
+uy calculate room bill for 2 nights,calculate_accommodation_billing,test
+quick question: need accom options with parking and aircon,get_accommodation_recommendation,train
+"hi, hm total if 2 guests 4 4 nights",calculate_accommodation_billing,train
+ano tourist spots,get_tourism_information,train
+uy tour total payment near near downtown thanks,calculate_billing,train
+hello details about waterfall destinations please,get_tourism_information,train
+need accom options with wifi and near terminal now,get_accommodation_recommendation,train
+uy find me a quiet room with hot shower pls,get_accommodation_recommendation,train
+calculate accommodation payment for two rooms,calculate_accommodation_billing,train
+hello best city activity for family,get_recommendation,train
+book room quick lang near city proper,book_accommodation,train
+calcuate accom bill pls thanks,calculate_accommodation_billing,train
+"ask lang, compute lodging cost sa near downtown",calculate_accommodation_billing,train
+please give total tour cost for 4,calculate_billing,train
+quick question: facts about tourisn sites near nangka now,get_tourism_information,train
+best budget room around 2200,get_accommodation_recommendation,test
+hello tour reco for 4 guests budget 900,get_recommendation,train
+what are tourist spots in nangka thanks,get_tourism_information,train
+hm tour package for farm trip now,calculate_billing,train
+recommend an inn near terminal for 1 guest under 1000,get_accommodation_recommendation,train
+"hi, find me a quiet room with wifi pls",get_accommodation_recommendation,train
+"ask lang, tour billing breakdown please",calculate_billing,val
+book room 3,book_accommodation,train
+tourism info about near boulevard,get_tourism_information,test
+tourism info about city proper,get_tourism_information,val
+hello compute lodging cost sa near downtown now,calculate_accommodation_billing,val
+hm total if 6 guests for 2 nights,calculate_accommodation_billing,train
+"ask lang, recommend a adventure tour in bayawan",get_recommendation,val
+"ask lang, pa compute tour cost budget 3000",calculate_billing,test
+"ask lang, find me a quiet room with hot shower",get_accommodation_recommendation,train
+hello bill estimate for inn stay near poblacion,calculate_accommodation_billing,train
+reserve an inn sa near boulevard for 4 pax,book_accommodation,train
+hello details about city destinations pls po,get_tourism_information,train
+uy what are tourist spots in near boulevard,get_tourism_information,train
+book accommodation with breakfast and quiet place,book_accommodation,val
+quick question: book accommodation with wifi and hot shower,book_accommodation,train
+hello tourism info about bayawan thanks,get_tourism_information,train
+tourism info about kalumboyan po,get_tourism_information,train
+confirm reservation for room 10,book_accommodation,test
+quick question: need tour quote under 1200,calculate_billing,train
+"ask lang, tour total payment near near boulevard",calculate_billing,test
+hotel reco pls,get_accommodation_recommendation,train
+"ask lang, how to get to popular spots thanks",get_tourism_information,train
+hello what tour bagay 4 friends pls,get_recommendation,train
+uy reserve an inn sa terminal area for 3 pax po,book_accommodation,train
+pls calculate tour bill for 5 guests,calculate_billing,train
+book na room na may parking thanks,book_accommodation,train
+need accom options with quiet place and near terminal pls,get_accommodation_recommendation,train
+best sunset activity for family thanks,get_recommendation,test
+quick question: list must-visit places in bayawan,get_tourism_information,train
+hello tour billing breakdown please,calculate_billing,train
+"ask lang, tour fee estimate for 5 pax thanks",calculate_billing,train
+hm tour package for waterfall trip now,calculate_billing,train
+hello what is my accommodation total around budget 900,calculate_accommodation_billing,train
+what farm tourism spots are available in bayawan,get_tourism_information,train
+hello compute lodging cost sa bayawan,calculate_accommodation_billing,train
+what destinations are good for day trips,get_tourism_information,val
+show details of tourist sites,get_tourism_information,test
+hello tour ideas na di mahal,get_recommendation,train
+recommend a waterfall tour in bayawan,get_recommendation,train
+need accom options with breakfast and near terminal po,get_accommodation_recommendation,train
+uy tour total payment near terminal area,calculate_billing,train
+"ask lang, compute lodging cost sa kalumboyan po",calculate_accommodation_billing,train
+room charge hm with extra guest,calculate_accommodation_billing,train
+bill estimate for inn stay near kalumboyan,calculate_accommodation_billing,train
+quick question: pa suggest place to stay near kalumboyan,get_accommodation_recommendation,train
+details about family destinations please pls,get_tourism_information,train
+tour reco for 4 guests budget 3500,get_recommendation,train
+quick question: tour fee estimate for 6 pax thanks,calculate_billing,train
+find me an inn in suba for 4 guests under 2500 with wifi and aircon for 2 nights,get_accommodation_recommendation,train
+where can we go for sightseeing,get_tourism_information,test
+"hi, what are tourist spots in nangka po",get_tourism_information,train
+"ask lang, suggest trip idea near near downtown",get_recommendation,train
+pls tourisn info about bayawan,get_tourism_information,train
+"hi, recommend inn in kalumboyan 4 2 guests under 3000",get_accommodation_recommendation,train
+"ask lang, bill estimate for inn stay near city proper",calculate_accommodation_billing,train
+give me destination details for visitors,get_tourism_information,train
+reserve an inn sa nangka for 1 pax,book_accommodation,train
+pls suggest trip idea near near boulevard now,get_recommendation,train
+hello recomend a waterfall tour in bayawan,get_recommendation,train
+tourist spot background info pls,get_tourism_information,test
+book accommodation with parking and breakfast pls,book_accommodation,train
+quick question: book room quick lang near terminal area,book_accommodation,train
+book accommodation with breakfast and wifi,book_accommodation,test
+uy what is total sa sunset itinerary,calculate_billing,train
+i need to book a place near terminal area this weekend,book_accommodation,val
+suggest hotel or inn from 2026-04-17 to 2026-04-19?,get_accommodation_recommendation,val
+"hi, tour reco for 2 guests budget 1500 po",get_recommendation,train
+"hi, tour billing breakdown please",calculate_billing,train
+pls book room quick lang near kalumboyan,book_accommodation,train
+calculate tour bill 4 4 guests,calculate_billing,train
+what is total sa waterfall itinerary,calculate_billing,train
+"hi, recommend inn in bayawan for 1 guests under 900",get_accommodation_recommendation,train
+"hi, reserve room now budget around 4000",book_accommodation,train
+what are the top tourist landmarks now,get_tourism_information,val
+quick question: calculate accom bill pls,calculate_accommodation_billing,train
+hello suggest hotel or inn from 2026-04-17 to 2026-04-19 po,get_accommodation_recommendation,train
+hello recommend chill itinerary one day thanks,get_recommendation,train
+where can i read tourist spot descriptions,get_tourism_information,test
+quick question: facts about tourism sites near poblacion,get_tourism_information,train
+compute lodging payment for a 2 day stay,calculate_accommodation_billing,val
+hello reserve room now budget around 700 thanks,book_accommodation,train
+tourist spot background info pls thanks,get_tourism_information,test
+"ask lang, bill estimate for inn stay near nangka",calculate_accommodation_billing,train
+quick question: book na room na may aircon,book_accommodation,train
+calculate our day trip payment,calculate_billing,train
+tour bill po for weekend,calculate_billing,train
+"ask lang, tourisn info about bayawan",get_tourism_information,train
+give me quick tour suggestion thanks,get_recommendation,train
+hm total if 2 guests 4 4 nights now,calculate_accommodation_billing,train
+hello room billing breakdown pls po,calculate_accommodation_billing,train
+quick question: looking for rooms near bayawan,get_accommodation_recommendation,train
+"ask lang, book room 59 for 3 guests from 2026-04-10 to 2026-04-12",book_accommodation,train
+pls pa suggest place to stay near bayawan,get_accommodation_recommendation,train
+san okay mag stay for 4 nights now,get_accommodation_recommendation,train
+book room 6 for 2 guests,book_accommodation,train
+pls where to check official attraction details now,get_tourism_information,train
+tour fee estimate 4 4 pax thanks,calculate_billing,train
+uy pa compute tour cost budget 1200 thanks,calculate_billing,train
+"hi, i need to book a place near nangka this weekend",book_accommodation,val
+quick question: compute lodging cost sa kalumboyan,calculate_accommodation_billing,train
+"hi, how much babayaran sa room 31",calculate_accommodation_billing,test
+quick question: calculate accom bill pls thanks,calculate_accommodation_billing,train
+"ask lang, bill estimate 4 inn stay near villareal",calculate_accommodation_billing,train
+recommend inn in near boulevard for 3 guests under 700 po,get_accommodation_recommendation,train
+"ask lang, looking for rooms near terminal area",get_accommodation_recommendation,train
+tourism info about near downtown,get_tourism_information,val
+"hi, hm tour package for sunset trip pls",calculate_billing,train
+"ask lang, i need to book a place near near downtown this weekend",book_accommodation,val
+recomend inn in city proper for 3 guests under 1800,get_accommodation_recommendation,train
+can you suggest a half day tour,get_recommendation,train
+hm total if 2 guests 4 1 nights,calculate_accommodation_billing,train
+hm total if 3 guests for 1 nights now,calculate_accommodation_billing,val
+"need room tonight pls, 3 kami po",book_accommodation,train
+quick question: pa book po ng room from 2026-04-02 to 2026-04-04,book_accommodation,train
+best waterfall activity for family thanks,get_recommendation,train
+hello pa compute ng room payment with wifi now,calculate_accommodation_billing,train
+uy confirm booking ko for room 5,book_accommodation,train
+book the cheapest available room tonight,book_accommodation,train
+calculate room bill 4 2 nights now,calculate_accommodation_billing,val
+"hi, confirm booking ko for room 40 po",book_accommodation,train
+how much should we pay for city tour,calculate_billing,train
+"ask lang, tourism info about near boulevard",get_tourism_information,train
+book na room na may near terminal,book_accommodation,train
+recommend which tour package we should choose,get_recommendation,test
+open hours for attractions in bayawan,get_tourism_information,train
+"ask lang, what are tourist spots in villareal",get_tourism_information,train
+uy tour bill po for weekend now,calculate_billing,train
+"hi, tour billing breakdown pls pls",calculate_billing,train
+"ask lang, how much babayaran sa room 3",calculate_accommodation_billing,train
+hm tour package 4 farm trip po,calculate_billing,train
+quick question: hotel suggestion pls with quiet place now,get_accommodation_recommendation,val
+hello travel recomendation for short trip,get_recommendation,train
+recommend inn in nangka for 2 guests under 700 thanks,get_accommodation_recommendation,train
+uy facts about tourism sites near near downtown,get_tourism_information,train
+calculate hotel bill for room 12 for 2 nights,calculate_accommodation_billing,val
+quick question: facts about tourism sites near villareal,get_tourism_information,train
+"ask lang, ano entrance fee and schedule thanks",get_tourism_information,train
+calcuate tour bill for 3 guests now,calculate_billing,train
+calcuate room bill 4 2 nights thanks,calculate_accommodation_billing,train
+"ask lang, tourisn info about terminal area",get_tourism_information,train
+uy how much babayaran sa room 22 pls,calculate_accommodation_billing,train
+recommend a relaxing day tour,get_recommendation,val
+details about sunset destinations pls pls,get_tourism_information,train
+book room 15 from april 12 to april 14,book_accommodation,train
+hello facts about tourism sites near poblacion,get_tourism_information,train
+"ask lang, compute lodging cost sa poblacion",calculate_accommodation_billing,train
+suggest a morning tour activity,get_recommendation,train
+please book room 7 for me,book_accommodation,train
+quick question: i need to book a place near villareal this weekend,book_accommodation,train
+how much is the tour cost for 4 people,calculate_billing,train
+recommend a hotel for 2 adults and 1 child,get_accommodation_recommendation,train
+quick question: recommend chill itinerary one day,get_recommendation,train
+"hi, what is my accommodation total around budget 2200 now",calculate_accommodation_billing,val
+how much room 72 from 2026-03-25 to 2026-03-27 po,calculate_accommodation_billing,test
+"hi, hm total if 1 guests for 3 nights",calculate_accommodation_billing,train
+"ask lang, tourism info about city proper",get_tourism_information,val
+"ask lang, pa compute ng room payment with parking",calculate_accommodation_billing,test
+i need destination details before mag tour,get_tourism_information,train
+what tour bagay for friends,get_recommendation,train
+recommend inn in bayawan for 1 guests under 1800 thanks,get_accommodation_recommendation,train
+uy open hours 4 attractions in bayawan pls,get_tourism_information,train
+best city activity for family,get_recommendation,train
+suggest a tour for one day only,get_recommendation,train
+"ask lang, pa book po ng room from 2026-04-10 to 2026-04-12",book_accommodation,train
+quick question: facts about tourism sites near near downtown,get_tourism_information,train
+hello recommend inn in near downtown for 2 guests under 2200 po,get_accommodation_recommendation,train
+give me information about mountain spots,get_tourism_information,test
+inn suggestion?,get_accommodation_recommendation,train
+book accommodation with aircon and hot shower now,book_accommodation,train
+how much is the room at bayawan pension house,calculate_accommodation_billing,val
+total stay payment from 2026-04-17 to 2026-04-19 now,calculate_accommodation_billing,test
+reserve an inn sa villareal for 6 pax,book_accommodation,train
+quick question: i need to book a place near poblacion this weekend pls,book_accommodation,train
+uy share infromation sa local attractions,get_tourism_information,train
+can i reserve that hotel room now,book_accommodation,train
+quick question: bill estimate for inn stay near terminal area,calculate_accommodation_billing,train
+please calculate package cost for 3 pax,calculate_billing,val
+recommend accommodation in bayawan city for 1 guest budget 1200 with parking,get_accommodation_recommendation,train
+any affordable accommodation for 4 pax,get_accommodation_recommendation,train
+book accommodation with wifi and near terminal po,book_accommodation,train
+details about family destinations pls,get_tourism_information,train
+reserve an inn sa kalumboyan for 1 pax,book_accommodation,train
+"ask lang, cost of guided tour hm?",calculate_billing,val
+recommend a hotel in poblacion for 2 guests under 2500 from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,test
+what are tourist spots in city proper thanks,get_tourism_information,test
+hello san okay mag stay for 5 nights,get_accommodation_recommendation,train
+show me updated tourist spot information,get_tourism_information,train
+pls pa compute ng room payment with parking thanks,calculate_accommodation_billing,train
+quick question: suggest hotel or inn from 2026-04-10 to 2026-04-12,get_accommodation_recommendation,train
+suggest tour options for couples,get_recommendation,train
+tell me about parks and recreation sites,get_tourism_information,train
+uy tourism info about terminal area thanks,get_tourism_information,train
+what is your best tour for 3 guests,get_recommendation,train
+recommend inn in bayawan 4 1 guests under 2500 pls,get_accommodation_recommendation,train
+calculate bill for accommodation from august 3 to august 6,calculate_accommodation_billing,train
+"hi, book accommodation with aircon and parking",book_accommodation,train
+suggest hotel or inn from 2026-03-25 to 2026-03-27 now,get_accommodation_recommendation,train
+bill estimate 4 inn stay near city proper,calculate_accommodation_billing,train
+hello recommend inn in nangka for 3 guests under 900,get_accommodation_recommendation,train
+how much babayaran sa room 7,calculate_accommodation_billing,test
+hello need outdoor destination reco,get_recommendation,train
+looking for rooms near bayawan,get_accommodation_recommendation,train
+quick question: hm total if 6 guests 4 5 nights,calculate_accommodation_billing,train
+book the available inn room for tonight,book_accommodation,test
+hello book room 10 4 2 guests from 2026-03-20 to 2026-03-22,book_accommodation,train
+find me a quiet room with aircon now,get_accommodation_recommendation,train
+"ask lang, i need to book a place near city proper this weekend now",book_accommodation,val
+hello recomend chill itinerary one day,get_recommendation,train
+recommend inn in bayawan for 3 guests under 2200 po,get_accommodation_recommendation,train
+hello cost of guided tour hm,calculate_billing,train
+hotel stay total for 3 guests please,calculate_accommodation_billing,val
+uy reserve an inn sa city proper 4 1 pax,book_accommodation,train
+"can u reserve 4 4 nights, 2 guests",book_accommodation,val
+uy best waterfall activity 4 family po,get_recommendation,train
+compute lodging cost sa nangka thanks,calculate_accommodation_billing,train
+open hours 4 attractions in bayawan now,get_tourism_information,val
+"ask lang, book room quick lang near poblacion",book_accommodation,train
+please calculate my lodging bill now,calculate_accommodation_billing,train
+uy book room quick lang near poblacion,book_accommodation,train
+tour total payment near bayawan,calculate_billing,train
+compute total payment for hotel stay from april 10 to april 12,calculate_accommodation_billing,train
+uy book room quick lang near city proper now,book_accommodation,train
+check tour charge for student group,calculate_billing,train
+compute lodging cost sa bayawan now,calculate_accommodation_billing,train
+book room 3 from 2026-03-29 to 2026-03-31,book_accommodation,train
+best city activity 4 family po,get_recommendation,train
+book accommodation with hot shower and near terminal now,book_accommodation,train
+pls hm total if 4 guests 4 2 nights,calculate_accommodation_billing,train
+"hi, can you reserve for 5 nights, 6 guests pls",book_accommodation,test
+book room quick lang near terminal area thanks,book_accommodation,train
+pls inn reco near terminal pls now,get_accommodation_recommendation,train
+hotel suggestion pls with quiet place pls,get_accommodation_recommendation,train
+calculate the total cost of the river tour package for 3 guests,calculate_billing,train
+tourism info about city proper thanks,get_tourism_information,train
+tourisn info about kalumboyan,get_tourism_information,train
+"ask lang, how much babayaran sa room 14 thanks",calculate_accommodation_billing,train
+book accommodation with wifi and parking,book_accommodation,train
+pls hm tour package for adventure trip,calculate_billing,train
+trip idea,get_recommendation,train
+pls compute lodging cost sa kalumboyan pls,calculate_accommodation_billing,train
+share in4mation sa local attractions,get_tourism_information,test
+hello hm total if 2 guests 4 4 nights pls,calculate_accommodation_billing,train
+pls suggest hotel or inn from 2026-04-10 to 2026-04-12 po,get_accommodation_recommendation,val
+need accom options with breakfast and hot shower,get_accommodation_recommendation,train
+book a place to stay for 3 nights,book_accommodation,test
+looking for rooms near terminal area pls,get_accommodation_recommendation,train
+pwede pa reserve room 48 from 2026-03-20 to 2026-03-22 po,book_accommodation,train
+hello pa compute tour cost budget 900,calculate_billing,train
+reserve an inn sa terminal area for 1 pax,book_accommodation,train
+"ask lang, pa suggest place to stay near villareal",get_accommodation_recommendation,train
+what is the total cost of my hotel stay,calculate_accommodation_billing,train
+"ask lang, open hours for attractions in bayawan",get_tourism_information,train
+hello what are tourist spots in terminal area,get_tourism_information,train
+pls need tour quote under 1800 thanks,calculate_billing,train
+"hi, open hours 4 attractions in bayawan",get_tourism_information,train
+quick question: book accommodation with quiet place and parking,book_accommodation,train
+hello reserve an inn sa nangka for 3 pax,book_accommodation,train
+reserve an inn sa city proper for 6 pax,book_accommodation,val
+hello pa book po ng room from 2026-03-25 to 2026-03-27,book_accommodation,train
+quick question: i need to book a place near city proper this weekend pls,book_accommodation,train
+uy compute lodging cost sa near boulevard,calculate_accommodation_billing,train
+"ask lang, book accommodation with wifi and parking thanks",book_accommodation,val
+pa suggest place to stay near villareal thanks,get_accommodation_recommendation,train
+pls suggest trip idea near kalumboyan,get_recommendation,train
+book room quick lang near kalumboyan po,book_accommodation,train
+hello book na room na may aircon,book_accommodation,train
+pls hm tour package 4 waterfall trip,calculate_billing,test
+quick question: tour total payment near city proper,calculate_billing,train
+book accommodation with near terminal and parking now,book_accommodation,val
+hello i need to book a place near villareal this weekend,book_accommodation,test
+quick question: tourisn info about bayawan thanks,get_tourism_information,train
+what is the payable amount for room 18,calculate_accommodation_billing,train
+quick question: what are tourist spots in poblacion?,get_tourism_information,train
+recommend a hotel in bayawan under 2500,get_accommodation_recommendation,train
+uy reserve room now budget around 3000,book_accommodation,train
+"hi, book accommodation with hot shower and near terminal thanks",book_accommodation,test
+"hi, calculate room bill for 4 nights",calculate_accommodation_billing,val
+looking for rooms near poblacion thanks,get_accommodation_recommendation,val
+quick question: tour billing breakdown please,calculate_billing,test
+pls find me a quiet room with quiet place now,get_accommodation_recommendation,train
+book a room for 2 guests this friday,book_accommodation,train
+"ask lang, details about adventure destinations please",get_tourism_information,train
+"hi, how much if family tour 3 days",calculate_billing,train
+hello best nature activity 4 family,get_recommendation,train
+hello book room quick lang near nangka,book_accommodation,train
+calculate hotel charge for room 5 and extra bed,calculate_accommodation_billing,train
+can you book a hotel room from april 4 to april 6,book_accommodation,train
+list scenic spots around bayawan,get_tourism_information,train
+details about sunset destinations please,get_tourism_information,train
+tour cost estimate for tomorrow,calculate_billing,test
+what are tourist spots in poblacion thanks,get_tourism_information,train
+"hi, what are tourist spots in near downtown po",get_tourism_information,train
+recommend a popular tour route,get_recommendation,train
+tour billing breakdown pls,calculate_billing,train
+"ask lang, inn reco near terminal pls thanks",get_accommodation_recommendation,test
+"ask lang, total stay payment from 2026-04-24 to 2026-04-26 now",calculate_accommodation_billing,val
+reserve an inn room for tomorrow night,book_accommodation,train
+"hi, give me quick tour suggestion pls",get_recommendation,train
+quick question: reserve an inn sa bayawan for 6 pax,book_accommodation,train
+"ask lang, suggest trip idea near near boulevard",get_recommendation,train
+book accommodation with parking and hot shower,book_accommodation,train
+pls best city activity for family po,get_recommendation,train
+pls need tour quote under 2200 now,calculate_billing,test
+"ask lang, need room tonight pls, 6 kami thanks",book_accommodation,test
+what attractions for couples are available and where are they located,get_tourism_information,val
+tourism info about terminal area,get_tourism_information,train
+"can u reserve for 4 nights, 5 guests",book_accommodation,val
+quick question: pwede pa reserve room 68 from 2026-03-25 to 2026-03-27,book_accommodation,train
+recommend a tour option that is good for students,get_recommendation,train
+quick question: open hours for attractions in bayawan,get_tourism_information,train
+pls bill estimate for inn stay near terminal area,calculate_accommodation_billing,val
+need tour quote under 4000 now,calculate_billing,train
+hotel suggestion pls with near terminal,get_accommodation_recommendation,train
+best choice for a quick tour,get_recommendation,train
+"uy need room tonight pls, 2 kami",book_accommodation,train
+"hi, suggest trip idea near kalumboyan",get_recommendation,train
+pls find me a quiet room with wifi thanks,get_accommodation_recommendation,train
+quick question: inn reco near terminal please,get_accommodation_recommendation,train
+quick question: confirm booking ko for room 5 now,book_accommodation,train
+recommend inn in bayawan for 6 guests under 700,get_accommodation_recommendation,train
+quick question: what is total sa heritage itinerary,calculate_billing,train
+recommend a nature tour in bayawan,get_recommendation,train
+any af4dable accommodation for 6 pax,get_accommodation_recommendation,train
+please check tour billing details,calculate_billing,train
+"hi, any af4dable accommodation for 3 pax thanks",get_accommodation_recommendation,train
+"hi, recomend a city tour in bayawan po",get_recommendation,train
+hello best adventure activity for family?,get_recommendation,train
+"hi, suggest trip idea near villareal thanks",get_recommendation,train
+compute the hotel room bill for 2 nights and 2 guests,calculate_accommodation_billing,train
+i need destination details be4e mag tour po,get_tourism_information,val
+quick question: recommend a nature tour in bayawan thanks,get_recommendation,train
+suggest trip idea near city proper thanks,get_recommendation,train
+"hi, reserve an inn sa villareal for 2 pax thanks",book_accommodation,train
+tour amount calculation for 3 adults,calculate_billing,train
+pls best sunset activity for family pls,get_recommendation,train
+compute payment for nature excursion,calculate_billing,test
+"ask lang, reserve an inn sa kalumboyan for 6 pax thanks",book_accommodation,train
+calcuate tour bill 4 6 guests now,calculate_billing,train
+uy what are tourist spots in poblacion,get_tourism_information,train
+book this accommodation from friday to sunday,book_accommodation,train
+book accommodation with wifi and quiet place,book_accommodation,train
+need accom options with near terminal and aircon pls,get_accommodation_recommendation,train
+"hi, bill estimate 4 inn stay near kalumboyan now",calculate_accommodation_billing,test
+uy best family activity for family pls,get_recommendation,train
+pa suggest place to stay near bayawan po,get_accommodation_recommendation,train
+pls share information sa local attractions,get_tourism_information,train
+what places can we visit in bayawan city,get_tourism_information,train
+"ask lang, suggest trip idea near bayawan",get_recommendation,train
+"hi, details about nature destinations please pls",get_tourism_information,train
+book room quick lang near villareal thanks,book_accommodation,train
+calculate the hotel room amount due for this 2-night stay,calculate_accommodation_billing,train
+quick question: what is total sa city itinerary pls,calculate_billing,train
+quick question: book room quick lang near nangka,book_accommodation,train
+pls tour bill po for weekend?,calculate_billing,test
+"hi, hm total if 5 guests 4 2 nights thanks",calculate_accommodation_billing,val
+cost of guided tour hm,calculate_billing,train
+"hi, tour total payment near poblacion thanks",calculate_billing,train
+pls how to get to popular spots pls,get_tourism_information,val
+quick question: details about sunset destinations please,get_tourism_information,train
+"hi, pa compute ng room payment with hot shower now",calculate_accommodation_billing,train
+"ask lang, looking for rooms near city proper",get_accommodation_recommendation,train
+"ask lang, hotel suggestion please with near terminal",get_accommodation_recommendation,train
+calculate total cost of our itinerary,calculate_billing,train
+how much babayaran sa room 22 po,calculate_accommodation_billing,train
+uy pa compute tour cost budget 4000?,calculate_billing,val
+tourism info about kalumboyan thanks,get_tourism_information,test
+what is total sa heritage itinerary,calculate_billing,val
+hello hm tour package for heritage trip,calculate_billing,train
+compute hotel bill with one child included,calculate_accommodation_billing,train
+pls hm tour package for city trip pls,calculate_billing,train
+"hi, recommend chill itinerary one day",get_recommendation,test
+"ask lang, tour reco 4 2 guests budget 2500",get_recommendation,test
+need accom options with quiet place and aircon,get_accommodation_recommendation,train
+"ask lang, any affordable accommodation for 2 pax thanks",get_accommodation_recommendation,val
+how much room 22 from 2026-04-10 to 2026-04-12,calculate_accommodation_billing,train
+what is total sa city itinerary thanks,calculate_billing,train
+help me choose a weekend tour,get_recommendation,train
+"ask lang, bill estimate for inn stay near bayawan?",calculate_accommodation_billing,train
+pls looking for rooms near near downtown,get_accommodation_recommendation,val
+"hi, tour fee estimate for 6 pax now",calculate_billing,train
+pls pa compute tour cost budget 700,calculate_billing,train
+uy best budget room around 2500?,get_accommodation_recommendation,train
+uy suggest hotel or inn from 2026-05-01 to 2026-05-03 po,get_accommodation_recommendation,train
+hello best sunset activity 4 family,get_recommendation,train
+suggest tour plans for 4 friends,get_recommendation,train
+hello san maganda puntahan this weekend,get_recommendation,train
+tour reco 4 5 guests budget 1500 now,get_recommendation,train
+quick question: how to get to popular spots thanks,get_tourism_information,train
+where to check official attraction details,get_tourism_information,train
+"ask lang, what is total sa adventure itinerary",calculate_billing,val
+book room quick lang near bayawan,book_accommodation,train
+hello any affordable accommodation for 6 pax?,get_accommodation_recommendation,train
+total bill for eco tour package,calculate_billing,test
+san okay mag stay for 1 nights,get_accommodation_recommendation,train
+quick question: tour total payment near kalumboyan,calculate_billing,test
+uy what tour bagay 4 friends,get_recommendation,train
+book ko ito,book_accommodation,train
+hello book na room na may hot shower thanks,book_accommodation,train
+hello need accom options with quiet place and aircon pls,get_accommodation_recommendation,train
+quick question: pa compute tour cost budget 3000,calculate_billing,train
+what are tourist spots in near boulevard thanks,get_tourism_information,train
+hello tour total payment near kalumboyan,calculate_billing,train
+pa suggest place to stay near terminal area,get_accommodation_recommendation,train
+"hi, calculate accom bill pls",calculate_accommodation_billing,test
+"hi, where to check official attraction details pls",get_tourism_information,test
+compute lodging cost sa bayawan pls,calculate_accommodation_billing,train
+quick question: compute lodging cost sa near downtown,calculate_accommodation_billing,train
+"ask lang, pa suggest place to stay near terminal area",get_accommodation_recommendation,train
+i need the final tour payment,calculate_billing,train
+calculate the total bill for this tour package,calculate_billing,test
+pls details about family destinations pls now,get_tourism_information,train
+"ask lang, pa compute ng room payment with aircon thanks",calculate_accommodation_billing,train
+pls best adventure activity for family po,get_recommendation,test
+"hi, best heritage activity for family po",get_recommendation,train
+need tour quote under 2200 thanks,calculate_billing,train
+confirm booking ko for room 68 thanks,book_accommodation,train
+"ask lang, need accom options with aircon and parking",get_accommodation_recommendation,test
+confirm booking ko 4 room 59,book_accommodation,train
+calculate travel package bill for two,calculate_billing,train
+uy book room 48 for 4 guests from 2026-03-28 to 2026-03-30,book_accommodation,val
+"hi, tourisn info about bayawan",get_tourism_information,val
+recommend an inn in kalumboyan for 3 guests under 2500 with wifi and aircon from 2026-03-20 to 2026-03-22,get_accommodation_recommendation,train
+"hi, cost of guided tour hm",calculate_billing,test
+"hi, what tour bagay for friends now",get_recommendation,val
+which hotel is good for business trip,get_accommodation_recommendation,train
+recomend inn in near downtown 4 5 guests under 1500,get_accommodation_recommendation,train
+"hi, need outdoor destination reco pls",get_recommendation,train
+quick question: facts about tourisn sites near near boulevard pls,get_tourism_information,train
+pa compute ng room payment with hot shower,calculate_accommodation_billing,train
+uy how much babayaran sa room 40,calculate_accommodation_billing,train
+pa suggest place to stay near nangka thanks,get_accommodation_recommendation,train
+book room 22 for 2 guests from 2026-03-20 to 2026-03-22,book_accommodation,train
+find me a quiet room with aircon pls,get_accommodation_recommendation,train
+"hi, san okay mag stay for 3 nights",get_accommodation_recommendation,train
+tourism guide information please,get_tourism_information,train
+quick question: hm tour package for nature trip pls,calculate_billing,val
+book accommodation with aircon and parking thanks,book_accommodation,train
+"hi, i need destination details be4e mag tour",get_tourism_information,train
+suggest a quiet inn near downtown,get_accommodation_recommendation,train
+quick question: best budget room around 700,get_accommodation_recommendation,train
+hm tour package for waterfall trip thanks,calculate_billing,train
+total stay payment from 2026-03-20 to 2026-03-22 thanks,calculate_accommodation_billing,test
+uy tour billing breakdown please now,calculate_billing,train
+need accom options with wifi and quiet place now,get_accommodation_recommendation,train
+hello need accom options with breakfast and wifi po,get_accommodation_recommendation,val
+pa compute ng room payment with wifi,calculate_accommodation_billing,train
+quick question: tour total payment near terminal area,calculate_billing,train
+uy tour fee estimate for 4 pax,calculate_billing,train
+"ask lang, reserve room now budget around 1500",book_accommodation,train
+"ask lang, tour total payment near poblacion",calculate_billing,train
+"ask lang, tourism info about poblacion",get_tourism_information,train
+hello details about nature destinations please,get_tourism_information,train
+recommend inn in villareal for 6 guests under 3000 pls,get_accommodation_recommendation,train
+"hi, details about waterfall destinations please thanks",get_tourism_information,train
+pls travel recomendation 4 short trip,get_recommendation,train
+need outdoor destination reco,get_recommendation,train
+hello tour total payment near terminal area,calculate_billing,train
+uy inn reco near terminal pls,get_accommodation_recommendation,train
+show me options with beach view under 3000 for 3 guests in banga,get_accommodation_recommendation,train
+"can you reserve 4 2 nights, 2 guests thanks",book_accommodation,train
+quick question: recomend a sunset tour in bayawan,get_recommendation,train
+pls hm total if 1 guests for 2 nights now,calculate_accommodation_billing,train
+"hi, recommend inn in near downtown for 5 guests under 900",get_accommodation_recommendation,train
+help me find a hotel with clean rooms,get_accommodation_recommendation,train
+calcuate tour bill 4 2 guests thanks,calculate_billing,train
+tour total payment near city proper pls,calculate_billing,train
+quick question: hotel suggestion please with hot shower,get_accommodation_recommendation,test
+"ask lang, suggest trip idea near terminal area",get_recommendation,train
+"ask lang, san maganda puntahan this weekend thanks",get_recommendation,train
+hello how to get to popular spots,get_tourism_information,train
+quick question: hm tour package for adventure trip,calculate_billing,train
+details about farm destinations please,get_tourism_information,train
+tour total payment near kalumboyan thanks,calculate_billing,train
+"ask lang, compute excursion payment thanks",calculate_billing,train
+"ask lang, compute excursion payment",calculate_billing,train
+calculate the accommodation bill for room 5 for 2 nights,calculate_accommodation_billing,train
+pwede book now,book_accommodation,train
+book room,book_accommodation,train
+i want info about cultural sites,get_tourism_information,val
+"ask lang, compute lodging cost sa nangka",calculate_accommodation_billing,train
+quick question: how much room 8 from 2026-04-02 to 2026-04-04 now,calculate_accommodation_billing,train
+book room quick lang near villareal,book_accommodation,test
+"hi, suggest hotel or inn from 2026-03-28 to 2026-03-30 thanks",get_accommodation_recommendation,val
+tourism info about bayawan,get_tourism_information,train
+hello suggest trip idea near villareal po,get_recommendation,train
+uy need outdoor destination reco po,get_recommendation,test
+what is my accommodation total around budget 3000 thanks,calculate_accommodation_billing,train
+book room 4 for one night,book_accommodation,train
+pls travel recommendation for short trip thanks,get_recommendation,val
+quick question: what is total sa family itinerary thanks,calculate_billing,train
+"ask lang, recommend a city tour in bayawan po",get_recommendation,train
+"hi, details about city destinations please",get_tourism_information,train
+hello book na room na may wifi,book_accommodation,val
+pls book room 6 4 3 guests from 2026-04-17 to 2026-04-19,book_accommodation,train
+recommend a family tour in bayawan,get_recommendation,train
+show me tour invoice summary,calculate_billing,train
+"ask lang, tourist spot background info pls",get_tourism_information,train
+recommend an eco-friendly tour option,get_recommendation,train
+quick question: recommend inn in bayawan for 2 guests under 2200,get_accommodation_recommendation,train
+pls pa suggest scenic tour spots?,get_recommendation,val
+hm tour package for city trip po,calculate_billing,train
+reserve one double room for 2 adults,book_accommodation,train
+quick question: hm tour package for city trip,calculate_billing,train
+compute lodging cost sa poblacion thanks,calculate_accommodation_billing,val
+tour billing estimate for family of 5,calculate_billing,train
+tour bill po 4 weekend now,calculate_billing,test
+facts about tourisn sites near near downtown pls,get_tourism_information,train
+"hi, recommend a heritage tour in bayawan pls",get_recommendation,train
+calculate tour bill for 5 guests thanks,calculate_billing,train
+pls hm total if 4 guests for 3 nights,calculate_accommodation_billing,train
+"hi, hotel suggestion pls with parking po",get_accommodation_recommendation,train
+"hi, compute excursion payment pls",calculate_billing,train
+hello open hours for attractions in bayawan now,get_tourism_information,train
+hello how much babayaran sa room 72 thanks,calculate_accommodation_billing,test
+book accommodation with near terminal and wifi,book_accommodation,train
+"ask lang, bill estimate 4 inn stay near terminal area",calculate_accommodation_billing,train
+what are the popular places to visit,get_tourism_information,val
+pls recommend inn in city proper for 6 guests under 3000,get_accommodation_recommendation,train
+quick question: what is my accomodation total around budget 1800,calculate_accommodation_billing,train
+details about waterfall destinations pls,get_tourism_information,train
+pa book po ng room from 2026-03-20 to 2026-03-22 now,book_accommodation,train
+estimate guided tour price for 6,calculate_billing,train
+pls details about adventure destinations please thanks,get_tourism_information,train
+tourism info pls,get_tourism_information,train
+need quick tour billing estimate,calculate_billing,train
+bill sa room?,calculate_accommodation_billing,train
+hotel suggestion please with quiet place,get_accommodation_recommendation,test
+quick question: recommend a farm tour in bayawan,get_recommendation,train
+"ask lang, confirm booking ko for room 27",book_accommodation,train
+hello calcuate room bill 4 1 nights pls,calculate_accommodation_billing,train
+reserve an inn sa kalumboyan 4 5 pax,book_accommodation,train
+quick question: find me a quiet room with parking,get_accommodation_recommendation,train
+find me a quiet room with wifi,get_accommodation_recommendation,train
+list bayawan attractions with brief details,get_tourism_information,train
+tour invoice for 5 guests please,calculate_billing,train
+uy suggest trip idea near nangka now,get_recommendation,test
+show me tourism information near terminal area,get_tourism_information,train
+"hi, calculate tour bill for 6 guests",calculate_billing,train
+"hi, tour bill po for weekend thanks",calculate_billing,train
+book accommodation with aircon and quiet place pls,book_accommodation,train
+hello how much if family tour 3 days pls,calculate_billing,train
+"hi, suggest trip idea near nangka pls",get_recommendation,train
+book accommodation with wifi and breakfast,book_accommodation,train
+bill estimate 4 inn stay near terminal area,calculate_accommodation_billing,train
+hello tourisn info about poblacion,get_tourism_information,train
+need accom options with aircon and wifi,get_accommodation_recommendation,train
+pls how much room 10 from 2026-04-24 to 2026-04-26,calculate_accommodation_billing,train
+"ask lang, suggest trip idea near nangka",get_recommendation,train
+"hi, recommend inn in near boulevard for 6 guests under 3000?",get_accommodation_recommendation,train
+"hi, pa compute tour cost budget 1200",calculate_billing,train
+"hi, details about farm destinations pls po",get_tourism_information,train
+"ask lang, tour total payment near bayawan",calculate_billing,train
+hello hotel suggestion pls with quiet place,get_accommodation_recommendation,train
+find me an affordable inn with wifi,get_accommodation_recommendation,val
+"ask lang, what are tourist spots in nangka",get_tourism_information,train
+facts about tourism sites near near boulevard pls,get_tourism_information,train
+bill estimate for inn stay near terminal area thanks,calculate_accommodation_billing,train
+reserve room 2 for tomorrow night,book_accommodation,test
+quick question: how much babayaran sa room 40 thanks,calculate_accommodation_billing,train
+need accom options with hot shower and near terminal,get_accommodation_recommendation,train
+recommend a city tour in bayawan,get_recommendation,train
+what are tourist spots in poblacion pls,get_tourism_information,train
+how much is overnight room charge,calculate_accommodation_billing,train
+total room charge for 3 nights please,calculate_accommodation_billing,train
+quick question: bill estimate for inn stay near near boulevard,calculate_accommodation_billing,test
+hello book room quick lang near kalumboyan thanks,book_accommodation,train
+what is total sa adventure itinerary thanks,calculate_billing,train
+hotel suggestion please with hot shower?,get_accommodation_recommendation,train
+pls need outdoor destination reco pls,get_recommendation,test
+quick question: pa suggest place to stay near near boulevard,get_accommodation_recommendation,val
+details about waterfall destinations please pls,get_tourism_information,train
+quick question: reserve room now budget around 1800 pls,book_accommodation,train
+hotel suggestion please with aircon,get_accommodation_recommendation,train
+find me a quiet room with quiet place?,get_accommodation_recommendation,train
+hello looking 4 rooms near nangka?,get_accommodation_recommendation,train
+hello tour reco for 6 guests budget 900 thanks,get_recommendation,train
+quick question: best farm activity for family thanks,get_recommendation,train
+hello calculate tour bill for 6 guests thanks,calculate_billing,train
+do you have attraction details for weekend,get_tourism_information,train
+"hi, looking for rooms near nangka",get_accommodation_recommendation,train
+please book any available room under 2000,book_accommodation,train
+find me a quiet room with breakfast thanks,get_accommodation_recommendation,train
+facts about tourism sites near kalumboyan,get_tourism_information,train
+quick question: what are tourist spots in kalumboyan?,get_tourism_information,train
+hm tour package 4 city trip,calculate_billing,train
+uy calculate room bill for 4 nights pls,calculate_accommodation_billing,val
+compute tour total with entrance fees,calculate_billing,train
+hotel suggestion pls with breakfast pls,get_accommodation_recommendation,train
+hello suggest trip idea near near boulevard?,get_recommendation,test
+hello open hours 4 attractions in bayawan?,get_tourism_information,train
+show available hotels near poblacion,get_accommodation_recommendation,train
+"ask lang, calculate accom bill pls",calculate_accommodation_billing,train
+quick question: hm total if 1 guests for 2 nights,calculate_accommodation_billing,train
+hello need accom options with near terminal and breakfast now,get_accommodation_recommendation,val
+recommend inn in poblacion for 5 guests under 1200,get_accommodation_recommendation,test
+hm tour package for family trip thanks,calculate_billing,train
+quick question: how much room 4 from 2026-05-01 to 2026-05-03 po,calculate_accommodation_billing,train
+"hi, how much babayaran sa room 55 pls",calculate_accommodation_billing,train
+recommend a river activity tour,get_recommendation,train
+"ask lang, facts about tourism sites near poblacion",get_tourism_information,train
+need accom options with quiet place and breakfast,get_accommodation_recommendation,val
+uy tour total payment near near boulevard pls,calculate_billing,train
+i need to book a stay near poblacion,book_accommodation,test
+show tour price computation for family trip,calculate_billing,train
+facts about tourism sites near poblacion po,get_tourism_information,val
+need accom options with wifi and parking,get_accommodation_recommendation,train
+pls tour total payment near nangka now,calculate_billing,train
+"ask lang, reserve an inn sa bayawan for 3 pax",book_accommodation,train
+quick question: tour bill po for weekend,calculate_billing,train
+quick question: ano entrance fee and schedule,get_tourism_information,train
+bill estimate 4 inn stay near poblacion,calculate_accommodation_billing,train
+uy total stay payment from 2026-05-01 to 2026-05-03,calculate_accommodation_billing,train
+hello i need to book a place near near downtown this weekend thanks,book_accommodation,val
+hello calculate tour bill for 3 guests,calculate_billing,train
+tour fee estimate for 3 pax thanks,calculate_billing,train
+"hi, need tour quote under 1500 thanks",calculate_billing,val
+tour total payment near nangka thanks,calculate_billing,val
+uy reserve an inn sa bayawan 4 2 pax,book_accommodation,train
+suggest the best tour option for a rainy day,get_recommendation,train
+uy facts about tourisn sites near nangka now,get_tourism_information,train
+best budget room around 1800 now,get_accommodation_recommendation,test
+what is the tour fee for 1 guest,calculate_billing,train
+tour fee estimate 4 1 pax now,calculate_billing,train
+show me an inn near poblacion under 1500,get_accommodation_recommendation,train
+share information sa local attractions thanks,get_tourism_information,train
+"hi, can you reserve 4 5 nights, 1 guests now",book_accommodation,val
+i need accommodation suggestions in bayawan city,get_accommodation_recommendation,test
+pls ano entrance fee and schedule now,get_tourism_information,train
+"ask lang, book na room na may aircon",book_accommodation,train
+suggest a scenic tour nearby,get_recommendation,train
+which attractions are family friendly,get_tourism_information,train
+hello calcuate room bill for 3 nights,calculate_accommodation_billing,train
+hotel suggestion please with wifi,get_accommodation_recommendation,train
+include both hotel and inn,get_accommodation_recommendation,train
+hello hm tour package for nature trip,calculate_billing,val
+what are the opening hours of bayawan tourist spots,get_tourism_information,train
+book room 3 for 2 nights from 2026-03-13 to 2026-03-15,book_accommodation,train
+recommend a heritage tour in bayawan thanks,get_recommendation,test
+"ask lang, recommend chill itinerary one day",get_recommendation,train
+book na room na may breakfast now,book_accommodation,train
+book accommodation with near terminal and breakfast,book_accommodation,train
+pls looking 4 rooms near bayawan,get_accommodation_recommendation,train
+pls looking for rooms near bayawan pls,get_accommodation_recommendation,train
+"ask lang, pa compute ng room payment with breakfast",calculate_accommodation_billing,train
+pls confirm booking ko for room 40,book_accommodation,train
+recommend an outdoor tour with views,get_recommendation,train
+"ask lang, what is total sa waterfall itinerary",calculate_billing,train
+what is the package price per guest,calculate_billing,train
+quick question: tour reco for 5 guests budget 2500,get_recommendation,train
+find an inn with good location,get_accommodation_recommendation,train
+need an inn near terminal for 2 guests,get_accommodation_recommendation,train
+"ask lang, pa compute ng room payment with quiet place",calculate_accommodation_billing,test
+recommend an inn in bayawan for 2 guests under 1500,get_accommodation_recommendation,train
+"ask lang, tour fee estimate for 3 pax",calculate_billing,train
+quick question: bill estimate for inn stay near bayawan,calculate_accommodation_billing,train
+can you estimate hotel charges for 5 nights,calculate_accommodation_billing,val
+room fee total for two nights and two guests,calculate_accommodation_billing,train
+"hi, can you reserve for 1 nights, 6 guests now",book_accommodation,train
+please compute billing for group tour,calculate_billing,train
+confirm booking ko for room 10 now,book_accommodation,train
+need tour quote under 2200,calculate_billing,val
+uy tour fee estimate for 1 pax pls,calculate_billing,train
+what sightseeing places are available,get_tourism_information,train
+"ask lang, bill estimate 4 inn stay near nangka pls",calculate_accommodation_billing,train
+tour package payment estimate now,calculate_billing,train
+quick question: pa compute ng room payment with aircon?,calculate_accommodation_billing,test
+hello hm tour package for waterfall trip,calculate_billing,val
+quick question: recommend inn in nangka for 2 guests under 3000,get_accommodation_recommendation,test
+recommend a cheap inn in bayawan for 2 guests,get_accommodation_recommendation,train
+"ask lang, book accomodation with aircon and breakfast",book_accommodation,test
+quick question: best family activity for family,get_recommendation,train
+need accom options with hot shower and parking?,get_accommodation_recommendation,train
+uy what is total sa family itinerary thanks,calculate_billing,train
+"ask lang, what are tourist spots in city proper",get_tourism_information,val
+how much should i pay for this accommodation,calculate_accommodation_billing,test
+quick question: reserve an inn sa city proper for 1 pax,book_accommodation,train
+i need a place to stay under 1800,get_accommodation_recommendation,val
+hello tour fee estimate 4 2 pax,calculate_billing,train
+pls tour reco for 4 guests budget 1500 thanks,get_recommendation,train
+pls total stay payment from 2026-04-10 to 2026-04-12 po,calculate_accommodation_billing,train
+quick question: how much if family tour 5 days,calculate_billing,train
+pls suggest trip idea near city proper pls,get_recommendation,train
+pls total stay payment from 2026-05-01 to 2026-05-03 now,calculate_accommodation_billing,train
+"hi, open hours for attractions in bayawan po",get_tourism_information,train
+book,book_accommodation,train
+pls confirm booking ko for room 2 po,book_accommodation,train
+hello suggest trip idea near poblacion,get_recommendation,train
+quick question: pa suggest place to stay near nangka,get_accommodation_recommendation,train
+uy details about city destinations please thanks,get_tourism_information,train
+quick question: hm tour package for waterfall trip,calculate_billing,train
+pls best budget room around 1200,get_accommodation_recommendation,train
+"hi, facts about tourism sites near near boulevard",get_tourism_information,train
+"uy can you reserve for 2 nights, 3 guests",book_accommodation,train
+any affordable accommodation for 2 pax thanks,get_accommodation_recommendation,train
+hotel suggestion please with parking,get_accommodation_recommendation,train
+hello facts about tourisn sites near nangka,get_tourism_information,train
+tour reco 4 4 guests budget 1500 pls,get_recommendation,val
+hello pa compute ng room payment with aircon?,calculate_accommodation_billing,train
+hello book accomodation with near terminal and hot shower,book_accommodation,train
+pwede pa reserve room 64 from 2026-03-25 to 2026-03-27,book_accommodation,train
+quick question: pa compute ng room payment with parking pls,calculate_accommodation_billing,train
+where are the famous landmarks,get_tourism_information,train
+uy facts about tourism sites near bayawan,get_tourism_information,train
+"ask lang, suggest trip idea near villareal po",get_recommendation,val
+tour reco for 5 guests budget 3500 now,get_recommendation,train
+quick question: calculate room bill for 4 nights,calculate_accommodation_billing,train
+what destinations are near the city center,get_tourism_information,train
+"ask lang, any af4dable accommodation for 3 pax",get_accommodation_recommendation,train
+"ask lang, compute lodging cost sa city proper",calculate_accommodation_billing,train
+please create my room reservation,book_accommodation,train
+room options na cheap lang,get_accommodation_recommendation,test
+find me a quiet room with near terminal thanks,get_accommodation_recommendation,train
+book accommodation with hot shower and breakfast,book_accommodation,train
+looking for rooms near near downtown thanks,get_accommodation_recommendation,train
+show me tourism details for families,get_tourism_information,test
+pa compute ng room payment with near terminal,calculate_accommodation_billing,train
+tour bill po 4 weekend thanks,calculate_billing,train
+please suggest an adventure tour,get_recommendation,test
+recomend inn in kalumboyan 4 1 guests under 700 po,get_accommodation_recommendation,train
+hello how to get to popular spots thanks,get_tourism_information,train
+suggest tour,get_recommendation,train
+"hi, compute excursion payment now",calculate_billing,train
+"ask lang, tourisn info about nangka",get_tourism_information,train
+reserve room now budget around 1800,book_accommodation,train
+uy cost of guided tour hm po,calculate_billing,train
+"hi, travel recommendation 4 short trip",get_recommendation,val
+book room quick lang near nangka po,book_accommodation,train
+i am ready to reserve now,book_accommodation,train
+what are the opening hours of attractions,get_tourism_information,test
+"ask lang, what is my accommodation total around budget 900",calculate_accommodation_billing,train
+"hi, what are tourist spots in poblacion now",get_tourism_information,test
+quick question: best waterfall activity for family,get_recommendation,train
+book an inn for one guest tomorrow,book_accommodation,val
+book accommodation with hot shower and wifi thanks,book_accommodation,test
+hello what is total sa family itinerary,calculate_billing,train
+"ask lang, looking for rooms near poblacion",get_accommodation_recommendation,train
+pls best waterfall activity 4 family,get_recommendation,train
+room billing estimate under bayawan pension house,calculate_accommodation_billing,train
+tourism info about villareal,get_tourism_information,train
+pls tourisn info about near downtown?,get_tourism_information,train
+hm tour package for adventure trip thanks,calculate_billing,train
+show attraction information with location,get_tourism_information,train
+uy room billing breakdown please thanks,calculate_accommodation_billing,train
+"hi, tourist spot background info pls now",get_tourism_information,train
+show me budget friendly accommodation,get_accommodation_recommendation,train
+"ask lang, best budget room around 3000",get_accommodation_recommendation,train
+recommend a beginner-friendly trek tour option,get_recommendation,train
+recommend a tour that fits a family budget,get_recommendation,train
+"ask lang, san maganda puntahan this weekend po",get_recommendation,val
+quick question: suggest trip idea near bayawan po,get_recommendation,train
+what are tourist spots in terminal area thanks,get_tourism_information,val
+"hi, tour fee estimate 4 4 pax?",calculate_billing,train
+"ask lang, book room quick lang near villareal now",book_accommodation,train
+how much if family tour 4 days pls,calculate_billing,train
+recommend inn in city proper for 1 guests under 4000 thanks,get_accommodation_recommendation,train
+pls hm tour package for nature trip po,calculate_billing,val
+what tourist areas are accessible,get_tourism_information,train
+tour total payment near near boulevard thanks,calculate_billing,test
+"ask lang, tour total payment near city proper",calculate_billing,train
+book room quick lang near terminal area,book_accommodation,train
+"ask lang, share information sa local attractions",get_tourism_information,train
+facts about tourism sites near terminal area,get_tourism_information,train
+hello hm total if 5 guests for 3 nights,calculate_accommodation_billing,train
+need accom options with near terminal and breakfast thanks,get_accommodation_recommendation,train
+hotel suggestion pls with wifi now,get_accommodation_recommendation,train
+quick question: where to check official attraction details?,get_tourism_information,train
+quick question: book accomodation with aircon and parking,book_accommodation,train
+uy what tour bagay for friends po,get_recommendation,train
+give me quick tour suggestion?,get_recommendation,val
+quick question: compute lodging cost sa bayawan now,calculate_accommodation_billing,test
+quick question: what are tourist spots in terminal area,get_tourism_information,train
+recommend a hotel in bayawan for 2 guests under 2000,get_accommodation_recommendation,test
+"hello can you reserve for 5 nights, 6 guests",book_accommodation,train
+reserve my stay from june 10 to june 12,book_accommodation,train
+quick question: total stay payment from 2026-04-02 to 2026-04-04,calculate_accommodation_billing,train
+quick question: facts about tourism sites near city proper,get_tourism_information,train
+continue with booking for room 6,book_accommodation,train
+which tourist spots are open today,get_tourism_information,train
+uy room options na cheap lang pls,get_accommodation_recommendation,test
+any beach attraction information,get_tourism_information,val
+reserve a hotel stay for 2 adults and 1 child,book_accommodation,train
+pls recommend inn in nangka for 1 guests under 1800,get_accommodation_recommendation,train
+what are tourist spots in bayawan,get_tourism_information,train
+uy pa suggest place to stay near nangka now,get_accommodation_recommendation,train
+"ask lang, compute lodging cost sa near boulevard",calculate_accommodation_billing,train
+"ask lang, book room quick lang near terminal area",book_accommodation,train
+recommend a farm tour in bayawan thanks,get_recommendation,test
+hello pa compute tour cost budget 2500 pls,calculate_billing,test
+what landmarks are open on weekends,get_tourism_information,train
+quick question: tour total payment near poblacion,calculate_billing,train
+recommend chill itinerary one day now,get_recommendation,train
+"ask lang, details about heritage destinations please",get_tourism_information,val
+how much stay,calculate_accommodation_billing,train
+bill estimate for inn stay near nangka,calculate_accommodation_billing,train
+"hi, facts about tourism sites near villareal po",get_tourism_information,train
+"ask lang, book room 35 4 2 guests from 2026-04-24 to 2026-04-26 now",book_accommodation,train
+hello suggest trip idea near nangka,get_recommendation,val
+recommend the top tour options in bayawan,get_recommendation,train
+"ask lang, book na room na may hot shower",book_accommodation,train
+quick question: room charge hm with extra guest?,calculate_accommodation_billing,train
+tour cost?,calculate_billing,train
+i need operating hours for tourist spots,get_tourism_information,train
+pls open hours for attractions in bayawan pls,get_tourism_information,train
+hello how much babayaran sa room 10?,calculate_accommodation_billing,train
+"hi, tour total payment near near downtown pls",calculate_billing,train
+pa compute ng room payment with parking,calculate_accommodation_billing,train
+quick question: tourism info about villareal,get_tourism_information,train
+need accom options with hot shower and breakfast,get_accommodation_recommendation,train
+"ask lang, book na room na may parking pls",book_accommodation,train
+tourism info about nangka thanks,get_tourism_information,train
+what attraction details and locations can help with trip planning,get_tourism_information,train
+hello bill estimate for inn stay near nangka now,calculate_accommodation_billing,train
+quick question: hm tour package for farm trip,calculate_billing,train
+"hi, facts about tourisn sites near city proper now",get_tourism_information,train
+hm tour package 4 adventure trip,calculate_billing,train
+uy recommend a adventure tour in bayawan po,get_recommendation,train
+hello pa compute ng room payment with quiet place thanks,calculate_accommodation_billing,train
+recommend a tour option with nature views and photo spots,get_recommendation,train
+book an inn room with wifi for two guests,book_accommodation,train
+quick question: find me a quiet room with aircon?,get_accommodation_recommendation,train
+quick question: pa suggest place to stay near poblacion,get_accommodation_recommendation,train
+hello pa compute ng room payment with breakfast,calculate_accommodation_billing,train
+"hi, can you reserve for 2 nights, 4 guests",book_accommodation,train
+quick question: what is total sa farm itinerary,calculate_billing,train
+pls tour ideas na di mahal,get_recommendation,train
+recommend inn in villareal for 4 guests under 700 now,get_accommodation_recommendation,train
+uy reserve an inn sa bayawan for 2 pax now,book_accommodation,train
+"ask lang, facts about tourism sites near kalumboyan",get_tourism_information,train
+what is the total price of boat tour,calculate_billing,train
+"need room tonight pls, 2 kami thanks",book_accommodation,train
+"ask lang, i need to book a place near terminal area this weekend",book_accommodation,test
+quick question: tourism info about nangka,get_tourism_information,train
+pls total stay payment from 2026-03-25 to 2026-03-27,calculate_accommodation_billing,train
+book na room na may wifi thanks,book_accommodation,train
+"ask lang, find me a quiet room with parking",get_accommodation_recommendation,train
+hello book na room na may quiet place now,book_accommodation,train
+recommend a weekend getaway tour,get_recommendation,train
+what is the billing for our package,calculate_billing,train
+quick question: book accommodation with near terminal and hot shower,book_accommodation,train
+"ask lang, best sunset activity for family",get_recommendation,train
+"ask lang, ano entrance fee and schedule",get_tourism_information,test
+tourism information please,get_tourism_information,train
+looking 4 rooms near nangka,get_accommodation_recommendation,val
+"hi, suggest trip idea near poblacion thanks",get_recommendation,train
+hm total if 6 guests 4 2 nights po,calculate_accommodation_billing,train
+"hi, details about nature destinations pls now",get_tourism_information,train
+tour total payment near poblacion pls,calculate_billing,train
+quick question: suggest trip idea near near boulevard,get_recommendation,train
+"ask lang, i need to book a place near bayawan this weekend",book_accommodation,train
+pls tour fee estimate for 1 pax,calculate_billing,train
+secure a room for us this weekend,book_accommodation,train
+book accommodation with breakfast and hot shower,book_accommodation,train
+tour total payment near villareal thanks,calculate_billing,train
+ano entrance fee and schedule po,get_tourism_information,train
+tour bill pls,calculate_billing,train
+ano entrance fee and schedule thanks,get_tourism_information,val
+what are tourist spots in terminal area po,get_tourism_information,train
+what are tourist spots in near downtown thanks,get_tourism_information,train
+tour ideas na di mahal,get_recommendation,val
+"hi, suggest trip idea near near boulevard thanks",get_recommendation,train
+tour reco for 6 guests budget 2200 po,get_recommendation,train
+quick question: best adventure activity for family,get_recommendation,train
+facts about tourism sites near bayawan pls,get_tourism_information,test
+"ask lang, bill estimate for inn stay near near downtown now",calculate_accommodation_billing,train
+please suggest a day trip in bayawan,get_recommendation,train
+hello recommend inn in poblacion for 5 guests under 3000,get_accommodation_recommendation,train
+recommend inn in near boulevard for 5 guests under 2500 thanks,get_accommodation_recommendation,train
+uy tourist spot background info pls pls,get_tourism_information,train
+pls what are tourist spots in nangka,get_tourism_information,train
+best heritage activity for family,get_recommendation,train
+"hi, need tour quote under 900",calculate_billing,train
+pls share in4mation sa local attractions thanks,get_tourism_information,train
+"ask lang, room options na cheap lang",get_accommodation_recommendation,test
+pls ano entrance fee and schedule pls,get_tourism_information,val
+quick question: book room quick lang near near boulevard,book_accommodation,train
+what is the final tour total for 2 days,calculate_billing,train
+"ask lang, suggest trip idea near city proper",get_recommendation,val
+"hi, recommend a adventure tour in bayawan now",get_recommendation,train
+"ask lang, hm tour package for adventure trip po",calculate_billing,train
+"ask lang, suggest trip idea near kalumboyan",get_recommendation,train
+hello give me quick tour suggestion,get_recommendation,train
+need stay options,get_accommodation_recommendation,train
+compute lodging cost sa poblacion,calculate_accommodation_billing,train
+quick question: compute lodging cost sa villareal,calculate_accommodation_billing,train
+quick question: recommend a adventure tour in bayawan,get_recommendation,val
+suggest a cultural tour option for us,get_recommendation,train
+"ask lang, give me quick tour suggestion",get_recommendation,train
+need accom options with aircon and parking,get_accommodation_recommendation,train
+hello details about farm destinations please pls,get_tourism_information,test
+need accom options with near terminal and wifi,get_accommodation_recommendation,train
+pls best nature activity 4 family,get_recommendation,test
+"hi, tour reco 4 3 guests budget 900",get_recommendation,train
+suggest trip idea near poblacion,get_recommendation,train
+uy tourisn info about bayawan,get_tourism_information,train
+suggest trip idea near villareal,get_recommendation,train
+details about nature destinations pls po,get_tourism_information,train
+spot details?,get_tourism_information,train
+hello tourist spot background info pls,get_tourism_information,train
+quick question: details about city destinations please po,get_tourism_information,train
+tour total payment near poblacion now,calculate_billing,val
+"hi, what is total sa farm itinerary",calculate_billing,train
+suggest hotel or inn from 2026-04-24 to 2026-04-26 thanks,get_accommodation_recommendation,train
+what are the contact details of tourist places,get_tourism_information,train
+calculate lodging cost for one guest two nights,calculate_accommodation_billing,train
+"hi, pa compute tour cost budget 3000 now",calculate_billing,train
+quick question: how much babayaran sa room 14,calculate_accommodation_billing,train
+quick question: hotel suggestion please with breakfast pls,get_accommodation_recommendation,train
+looking for rooms near villareal,get_accommodation_recommendation,train
+quick question: details about waterfall destinations please,get_tourism_information,train
+hello hotel suggestion please with hot shower,get_accommodation_recommendation,train
+compute lodging cost sa villareal thanks,calculate_accommodation_billing,train
+with aircon and wifi,get_accommodation_recommendation,test
+compute lodging cost sa city proper,calculate_accommodation_billing,train
+inn reco near terminal please thanks,get_accommodation_recommendation,train
+i need info about local landmarks,get_tourism_information,train
+please calculate per head tour cost,calculate_billing,train
+facts about tourism sites near near downtown thanks,get_tourism_information,train
+quick question: recommend a city tour in bayawan,get_recommendation,train
+"hi, pa compute ng room payment with parking po",calculate_accommodation_billing,train
+pls pwede pa reserve room 72 from 2026-04-17 to 2026-04-19,book_accommodation,train
+find me a quiet room with parking,get_accommodation_recommendation,train
+"hi, hm total if 2 guests for 5 nights now",calculate_accommodation_billing,train
+uy best budget room around 900 thanks,get_accommodation_recommendation,train
+"ask lang, pa compute tour cost budget 3500 thanks",calculate_billing,test
+hello tour bill po for weekend,calculate_billing,train
+"ask lang, tour ideas na di mahal",get_recommendation,train
+"ask lang, tourism info about kalumboyan",get_tourism_information,train
+quick question: suggest trip idea near near downtown,get_recommendation,train
+compute excursion payment,calculate_billing,val
+best farm activity 4 family thanks,get_recommendation,test
+"ask lang, need accom options with hot shower and near terminal",get_accommodation_recommendation,train
+i need to book a place near kalumboyan this weekend,book_accommodation,train
+compute lodging cost sa terminal area,calculate_accommodation_billing,test
+tour billing breakdown please thanks,calculate_billing,train
+pa compute tour cost budget 900 po,calculate_billing,test
+"hi, how much room 5 from 2026-03-20 to 2026-03-22",calculate_accommodation_billing,train
+what is total sa sunset itinerary thanks,calculate_billing,train
+share attraction information in bayawan city,get_tourism_information,train
+need accom options with hot shower and aircon thanks,get_accommodation_recommendation,train
+uy recommend inn in nangka for 1 guests under 1800 now,get_accommodation_recommendation,train
+"hi, hm tour package 4 farm trip thanks",calculate_billing,train
+pls tourism info about kalumboyan,get_tourism_information,train
+bill estimate for inn stay near bayawan,calculate_accommodation_billing,train
+hello looking for rooms near poblacion,get_accommodation_recommendation,train
+uy best farm activity for family,get_recommendation,train
+quick question: tour total payment near near boulevard,calculate_billing,train
+"ask lang, hm tour package for family trip",calculate_billing,val
+quick question: book room 35 for 4 guests from 2026-03-25 to 2026-03-27,book_accommodation,train
+pls tour fee estimate for 6 pax now,calculate_billing,train
+"hi, ano entrance fee and schedule now",get_tourism_information,test
+"hi, recommend a farm tour in bayawan",get_recommendation,train
+compute lodging cost sa near downtown thanks,calculate_accommodation_billing,train
+what is the final room payment for this hotel stay,calculate_accommodation_billing,train
+hello best budget room around 1200 now,get_accommodation_recommendation,train
+need accom options with breakfast and aircon,get_accommodation_recommendation,train
+hello hm tour package for farm trip thanks,calculate_billing,train
+tour fee estimate for 3 pax now,calculate_billing,train
+book na room na may wifi,book_accommodation,train
+book room quick lang near near boulevard,book_accommodation,train
+uy recommend inn in near downtown for 4 guests under 1200,get_accommodation_recommendation,train
+book accommodation with near terminal and quiet place,book_accommodation,train
+"ask lang, find me a quiet room with near terminal",get_accommodation_recommendation,val
+reserve an inn sa near downtown 4 4 pax,book_accommodation,val
+what trip do you suggest this weekend,get_recommendation,train
+quick question: how much room 27 from 2026-03-20 to 2026-03-22 pls,calculate_accommodation_billing,train
+book na room na may aircon thanks,book_accommodation,train
+quick question: bill estimate for inn stay near city proper,calculate_accommodation_billing,train
+open hours?,get_tourism_information,train
+show room billing computation for my stay,calculate_accommodation_billing,train
+quick question: pa compute ng room payment with near terminal,calculate_accommodation_billing,train
+what do you recommend for sightseeing,get_recommendation,test
+give me inn choices below 1500,get_accommodation_recommendation,train
+recommend inn in kalumboyan for 3 guests under 2500,get_accommodation_recommendation,train
+quick question: suggest trip idea near poblacion pls,get_recommendation,train
+tour total payment near terminal area now,calculate_billing,train
+recomend inn in terminal area 4 2 guests under 1200 thanks,get_accommodation_recommendation,train
+hello recommend a farm tour in bayawan po,get_recommendation,train
+uy bill estimate for inn stay near villareal,calculate_accommodation_billing,train
+"ask lang, pwede pa reserve room 5 from 2026-04-17 to 2026-04-19",book_accommodation,train
+show accommodation bookings,book_accommodation,train
+quick question: looking for rooms near nangka,get_accommodation_recommendation,test
+looking for rooms near near boulevard po,get_accommodation_recommendation,train
+"ask lang, pa compute ng room payment with wifi",calculate_accommodation_billing,train
+how much will i pay for this hotel room,calculate_accommodation_billing,test
+book room 10 for 5 guests from 2026-04-17 to 2026-04-19 now,book_accommodation,train
+how much does this trip cost in total,calculate_billing,val
+reserve an inn sa kalumboyan 4 2 pax thanks,book_accommodation,train
+tour billing breakdown please po,calculate_billing,train
+"hi, inn reco near terminal please pls",get_accommodation_recommendation,train
+what is total sa sunset itinerary po,calculate_billing,train
+"hi, total stay payment from 2026-03-25 to 2026-03-27 po",calculate_accommodation_billing,train
+uy where to check official attraction details thanks,get_tourism_information,train
+"ask lang, what is total sa city itinerary",calculate_billing,train
+"ask lang, facts about tourism sites near nangka pls",get_tourism_information,val
+"can you reserve 4 2 nights, 1 guests",book_accommodation,train
+quick question: how to get to popular spots po,get_tourism_information,train
+recomend inn in terminal area 4 6 guests under 3500,get_accommodation_recommendation,train
+"ask lang, hotel suggestion please with wifi po",get_accommodation_recommendation,train
+uy details about waterfall destinations please?,get_tourism_information,train
+"hi, best city activity for family po",get_recommendation,test
+pa compute ng room payment with quiet place,calculate_accommodation_billing,train
+which attractions have contact information,get_tourism_information,train
+hm tour package for sunset trip thanks,calculate_billing,train
+"ask lang, book accommodation with near terminal and parking",book_accommodation,train
+show me options with wifi and aircon,get_accommodation_recommendation,train
+"hi, book accommodation with parking and wifi",book_accommodation,val
+pwede pa reserve room 12 from 2026-04-17 to 2026-04-19 thanks,book_accommodation,test
+travel recommendation for short trip,get_recommendation,val
+"hi, tour fee estimate for 2 pax",calculate_billing,train
+uy room charge hm with extra guest thanks,calculate_accommodation_billing,train
+pls need tour quote under 4000 po,calculate_billing,train
+travel recommendation 4 short trip thanks,get_recommendation,train
+"ask lang, how to get to popular spots",get_tourism_information,val
+pls recommend inn in near downtown for 2 guests under 1500 thanks,get_accommodation_recommendation,train
+compute lodging cost sa near downtown,calculate_accommodation_billing,train
+"ask lang, tour reco for 4 guests budget 1200",get_recommendation,train
+pa suggest place to stay near near downtown,get_accommodation_recommendation,val
+show me hotel recommendations near poblacion under 2500,get_accommodation_recommendation,train
+show me recommended available tour options,get_recommendation,train
+quick question: tour reco for 4 guests budget 2200 thanks,get_recommendation,train
+quick question: san okay mag stay for 3 nights,get_accommodation_recommendation,train
+"ask lang, book na room na may breakfast po",book_accommodation,train
+book accommodation with hot shower and quiet place,book_accommodation,train
+how much if family tour 5 days,calculate_billing,train
+"ask lang, calculate room bill for 2 nights thanks",calculate_accommodation_billing,train
+pls recommend a family tour in bayawan po,get_recommendation,train
+best heritage activity 4 family now,get_recommendation,train
+hello details about waterfall destinations pls thanks,get_tourism_information,train
+hello what tour bagay 4 friends now,get_recommendation,train
+hello reserve an inn sa terminal area 4 5 pax,book_accommodation,train
+best tour?,get_recommendation,train
+tour payment breakdown please,calculate_billing,train
+compute room cost,calculate_accommodation_billing,test
+san maganda puntahan this weekend pls,get_recommendation,val
+what is the payment due for our city tour activity for 4 people,calculate_billing,train
+book room please,book_accommodation,train
+"uy can you reserve for 4 nights, 5 guests po",book_accommodation,train
+confirm booking ko for room 64,book_accommodation,train
+compute lodging cost sa city proper thanks,calculate_accommodation_billing,train
+compute lodging cost sa villareal,calculate_accommodation_billing,train
+san maganda puntahan this weekend now,get_recommendation,train
+"hi, reserve an inn sa near downtown 4 4 pax po",book_accommodation,train
+tour fee estimate for 5 pax,calculate_billing,train
+book room quick lang near near downtown,book_accommodation,test
+hm tour package 4 family trip now,calculate_billing,train
+"ask lang, tourism info about nangka thanks",get_tourism_information,train
+quick question: travel recomendation for short trip,get_recommendation,test
+hello looking for rooms near kalumboyan,get_accommodation_recommendation,train
+"hi, recommend a waterfall tour in bayawan now",get_recommendation,test
+what is our remaining tour balance,calculate_billing,val
+recommend inn in bayawan for 1 guests under 3000 now,get_accommodation_recommendation,test
+recommend a sunset tour in bayawan thanks,get_recommendation,train
+how much room 7 from 2026-03-28 to 2026-03-30 now,calculate_accommodation_billing,train
+what are tourist spots in villareal,get_tourism_information,train
+hello compute excursion payment,calculate_billing,train
+hello how much if family tour 5 days now,calculate_billing,train
+"hi, book na room na may hot shower now",book_accommodation,test
+uy ano entrance fee and schedule,get_tourism_information,train
+need accom options with parking and near terminal thanks,get_accommodation_recommendation,test
+hello tour total payment near villareal,calculate_billing,train
+"hi, suggest trip idea near kalumboyan thanks",get_recommendation,train
+"ask lang, facts about tourism sites near near downtown",get_tourism_information,train
+pls bill estimate for inn stay near city proper,calculate_accommodation_billing,test
+san okay mag stay 4 2 nights,get_accommodation_recommendation,train
+"ask lang, pa compute ng room payment with near terminal po",calculate_accommodation_billing,train
+best group tour option please,get_recommendation,val
+hello what is total sa waterfall itinerary pls,calculate_billing,train
+need tour quote under 700 po,calculate_billing,train
+hello i need to book a place near city proper this weekend now,book_accommodation,test
+"ask lang, need room tonight pls, 6 kami",book_accommodation,train
+uy recommend a city tour in bayawan thanks,get_recommendation,val
+hello calculate accom bill pls,calculate_accommodation_billing,train
+looking for rooms near city proper,get_accommodation_recommendation,train
+reserve an inn sa villareal 4 3 pax,book_accommodation,train
+uy hm tour package 4 nature trip,calculate_billing,train
+hello any af4dable accomodation for 1 pax po,get_accommodation_recommendation,train
+"ask lang, compute lodging cost sa bayawan",calculate_accommodation_billing,train
+quick question: need tour quote under 3000 po,calculate_billing,train
+quick question: san maganda puntahan this weekend,get_recommendation,val
+suggest trip idea near near downtown thanks,get_recommendation,train
+"ask lang, total stay payment from 2026-03-25 to 2026-03-27 po",calculate_accommodation_billing,train
+hello need tour quote under 1800,calculate_billing,train
+pls need outdoor destination reco now,get_recommendation,val
+show tourism information about bayawan,get_tourism_information,train
+"pls can you reserve for 3 nights, 2 guests",book_accommodation,train
+quick question: tourism info about bayawan,get_tourism_information,test
+hello compute excursion payment thanks,calculate_billing,train
+find me a quiet room with hot shower,get_accommodation_recommendation,train
+recommend a waterfall tour in bayawan thanks,get_recommendation,val
+pls book accommodation with aircon and near terminal pls,book_accommodation,train
+uy tour ideas na di mahal pls,get_recommendation,train
+uy how much room 10 from 2026-03-25 to 2026-03-27,calculate_accommodation_billing,train
+"ask lang, need accom options with aircon and near terminal",get_accommodation_recommendation,train
+room billing breakdown pls thanks,calculate_accommodation_billing,val
+i need to book a place near villareal this weekend now,book_accommodation,train
+i want details about waterfalls in bayawan,get_tourism_information,train
+need accom options with near terminal and hot shower,get_accommodation_recommendation,train
+quick question: tourism info about near boulevard,get_tourism_information,train
+hello room options na cheap lang thanks,get_accommodation_recommendation,train
+san okay mag stay for 3 nights thanks,get_accommodation_recommendation,train
+suggest a tour with light activity,get_recommendation,train
+pls cost of guided tour hm po,calculate_billing,train
+"ask lang, pa suggest scenic tour spots thanks",get_recommendation,train
+"ask lang, recommend inn in bayawan for 2 guests under 2500 now",get_accommodation_recommendation,train

@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tourism Information Management</title>
+    <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f7fb; margin: 0; }
+        .dashboard-container { display: flex; min-height: 100vh; }
+        .content { flex: 1; padding: 24px; }
+        .card { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+        .toolbar input, .toolbar select { padding: 8px; }
+        .btn { display: inline-block; padding: 8px 12px; border-radius: 8px; text-decoration: none; border: 0; cursor: pointer; }
+        .btn-primary { background: #2f6fed; color: #fff; }
+        .btn-success { background: #2f9e44; color: #fff; }
+        .btn-warning { background: #d9480f; color: #fff; }
+        .btn-muted { background: #6c757d; color: #fff; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 10px; border-bottom: 1px solid #e9ecef; vertical-align: top; }
+        .status { font-weight: 700; text-transform: uppercase; font-size: 12px; }
+        .status-draft { color: #495057; }
+        .status-published { color: #2f9e44; }
+        .status-archived { color: #d9480f; }
+        .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .messages { margin-bottom: 12px; }
+        .messages .msg { background: #e7f5ff; color: #0b7285; padding: 8px 10px; border-radius: 6px; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+<div class="dashboard-container">
+    <div class="navigation">
+        {% include 'components/navigation.html' %}
+    </div>
+    <div class="content">
+        <div class="card">
+            <h1>Tourism Information Management</h1>
+
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="msg">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="get" class="toolbar">
+                <input type="text" name="q" value="{{ query }}" placeholder="Search spot, location, contact">
+                <select name="status">
+                    <option value="">All statuses</option>
+                    <option value="draft" {% if status_filter == "draft" %}selected{% endif %}>Draft</option>
+                    <option value="published" {% if status_filter == "published" %}selected{% endif %}>Published</option>
+                    <option value="archived" {% if status_filter == "archived" %}selected{% endif %}>Archived</option>
+                </select>
+                <button type="submit" class="btn btn-muted">Filter</button>
+                <a href="{% url 'admin_app:tourism_information_create' %}" class="btn btn-primary">Add Tourism Information</a>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Spot Name</th>
+                        <th>Location</th>
+                        <th>Contact</th>
+                        <th>Operating Hours</th>
+                        <th>Status</th>
+                        <th>Active</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in tourism_rows %}
+                    <tr>
+                        <td>{{ row.spot_name }}</td>
+                        <td>{{ row.location|default:"-" }}</td>
+                        <td>{{ row.contact_information|default:"-" }}</td>
+                        <td>{{ row.operating_hours|default:"-" }}</td>
+                        <td><span class="status status-{{ row.publication_status }}">{{ row.publication_status }}</span></td>
+                        <td>{{ row.is_active|yesno:"Yes,No" }}</td>
+                        <td>
+                            <div class="actions">
+                                <a class="btn btn-muted" href="{% url 'admin_app:tourism_information_edit' row.tourism_info_id %}">Edit</a>
+                                <form method="post" action="{% url 'admin_app:tourism_information_publish' row.tourism_info_id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success">Publish</button>
+                                </form>
+                                <form method="post" action="{% url 'admin_app:tourism_information_archive' row.tourism_info_id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning">Archive</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7">No tourism information records found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

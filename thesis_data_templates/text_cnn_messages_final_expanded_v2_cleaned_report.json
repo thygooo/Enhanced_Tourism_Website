@@ -1,0 +1,22 @@
+{
+  "input_rows": 672,
+  "output_rows": 502,
+  "removed_near_or_exact": 170,
+  "before_counts": {
+    "book_accommodation": 112,
+    "calculate_accommodation_billing": 112,
+    "calculate_billing": 112,
+    "get_accommodation_recommendation": 112,
+    "get_recommendation": 112,
+    "get_tourism_information": 112
+  },
+  "after_counts": {
+    "book_accommodation": 68,
+    "calculate_accommodation_billing": 72,
+    "calculate_billing": 76,
+    "get_accommodation_recommendation": 77,
+    "get_recommendation": 102,
+    "get_tourism_information": 107
+  },
+  "cross_split_pairs_sim_ge_0.9_after_clean": 14
+}

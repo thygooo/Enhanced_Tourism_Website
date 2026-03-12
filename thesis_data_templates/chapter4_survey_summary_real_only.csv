@@ -1,0 +1,18 @@
+metric_group,metric_name,metric_value,notes
+survey,survey_batches,0,data_source=real_world
+survey,sus_avg_score_0_100,,average SUS score across complete batches
+survey,pu_avg_likert_1_5,,average of PU items across batches
+survey,peu_avg_likert_1_5,,average of PEU items across batches
+survey,pu_cronbach_alpha,,Cronbach alpha for PU_Q1..PU_Q4 across complete batches
+survey,peu_cronbach_alpha,,Cronbach alpha for PEU_Q1..PEU_Q4 across complete batches
+survey,chat_ux_helpfulness_avg_likert_1_5,,quick feedback rows where statement_code=CHAT_UX_HELPFULNESS
+difficulty,difficulty_overall_avg_likert_1_5,,all DIFF_* responses combined
+difficulty,difficulty_overall_sd,,population SD of all DIFF_* responses
+difficulty,diff_discover_avg_likert_1_5,,mean for DIFF_DISCOVER
+difficulty,diff_discover_sd,,population SD for DIFF_DISCOVER
+difficulty,diff_match_avg_likert_1_5,,mean for DIFF_MATCH
+difficulty,diff_match_sd,,population SD for DIFF_MATCH
+difficulty,diff_plan_avg_likert_1_5,,mean for DIFF_PLAN
+difficulty,diff_plan_sd,,population SD for DIFF_PLAN
+difficulty,diff_bookpay_avg_likert_1_5,,mean for DIFF_BOOKPAY
+difficulty,diff_bookpay_sd,,population SD for DIFF_BOOKPAY

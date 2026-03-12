@@ -28,6 +28,105 @@
             margin: 0 auto;
             padding: 20px;
         }
+
+        /* Navbar styles (missing styles cause raw/full-size profile image rendering) */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 12px 20px;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .logo img {
+            height: 42px;
+            width: auto;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: #2f4f2f;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .user-profile-nav {
+            position: relative;
+            margin-left: auto;
+        }
+
+        .user-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #f3f7f1;
+        }
+
+        .nav-profile-pic {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            border: 2px solid #dfead9;
+            flex-shrink: 0;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #2f4f2f;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            min-width: 220px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+            overflow: hidden;
+            z-index: 30;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 10px 14px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .user-dropdown a:hover {
+            background: #f5f7f8;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #eceff1;
+        }
         
         h1 {
             margin-bottom: 30px;
@@ -2051,7 +2150,7 @@
                         
                         <div class="form-group">
                             <label for="group">Group (Optional)</label>
-                            <select id="group" name="group" class="form-control">
+                            <select id="group" name="companion_group" class="form-control">
                                 <option value="">Select a group (optional)</option>
                                 {% for group in groups %}
                                     <option value="{{ group.id }}">{{ group.name }}</option>
@@ -2170,13 +2269,19 @@
         
         // Function to toggle add companion form
         function toggleAddForm() {
-            const form = document.getElementById('companionForm');
+            const form = document.getElementById('companionForm') || document.getElementById('add-companion-section');
+            const toggleBtn = document.getElementById('toggleFormButton');
+            if (!form) return;
             if (form.style.display === 'none' || !form.style.display) {
                 form.style.display = 'block';
-                document.getElementById('toggleFormButton').innerHTML = '<i class="fas fa-minus"></i> Hide Form';
+                if (toggleBtn) {
+                    toggleBtn.innerHTML = '<i class="fas fa-minus"></i> Hide Form';
+                }
             } else {
                 form.style.display = 'none';
-                document.getElementById('toggleFormButton').innerHTML = '<i class="fas fa-plus"></i> Add New Companion';
+                if (toggleBtn) {
+                    toggleBtn.innerHTML = '<i class="fas fa-plus"></i> Add New Companion';
+                }
             }
             
             // Scroll to form if showing
@@ -3020,7 +3125,7 @@
 
     <div id="add-companion-view" class="content-view" style="display: none;">
         <!-- This contains your add companion form -->
-        <div class="form-container" id="companionForm">
+        <div class="form-container" id="companionFormPlaceholder">
             <h2>Add New Companion</h2>
             <form method="post" enctype="multipart/form-data">
                 <!-- Your existing form code -->

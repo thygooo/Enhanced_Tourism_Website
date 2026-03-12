@@ -18,6 +18,9 @@
     .results { margin-top: 12px; }
     .result { padding: 10px 0; border-bottom: 1px solid #e7e7e7; }
     .muted { color: #6b6b6b; font-size: 0.95rem; }
+    .handoff-summary { display: none; border: 1px solid #d9e6ef; background: #f3f8fc; border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+    .handoff-summary h3 { margin: 0 0 8px; font-size: 1rem; color: #0b2c3d; }
+    .handoff-summary .row { margin: 4px 0; font-size: 0.95rem; }
   </style>
 </head>
 <body>
@@ -61,6 +64,17 @@
 
     <div class="card">
       <h2>Book a Room</h2>
+      <div id="chatbotHandoffNotice" class="muted" style="display:none; margin-bottom: 10px;">
+        Opened from chatbot. Booking details were pre-filled for review.
+      </div>
+      <div id="chatbotHandoffSummary" class="handoff-summary" aria-live="polite">
+        <h3>Chatbot Handoff Summary</h3>
+        <div class="row"><strong>Room:</strong> <span id="handoffRoomLabel">-</span></div>
+        <div class="row"><strong>Check-in:</strong> <span id="handoffCheckIn">-</span></div>
+        <div class="row"><strong>Check-out:</strong> <span id="handoffCheckOut">-</span></div>
+        <div class="row"><strong>Guests:</strong> <span id="handoffGuests">-</span></div>
+        <div class="row"><strong>Booking ID:</strong> <span id="handoffBookingId">Draft / not created yet</span></div>
+      </div>
       <form id="bookingForm">
         {% csrf_token %}
         <div class="grid">
@@ -113,41 +127,52 @@
       return cookieValue;
     }
 
+    function getCsrfToken() {
+      const hidden = document.querySelector('input[name="csrfmiddlewaretoken"]');
+      if (hidden && hidden.value) return hidden.value;
+      const cookieToken = getCookie("csrftoken");
+      if (cookieToken) return cookieToken;
+      return "";
+    }
+
     const recommendBtn = document.getElementById("recommendBtn");
     const recommendations = document.getElementById("recommendations");
     const billingBtn = document.getElementById("billingBtn");
     const billingResult = document.getElementById("billingResult");
     const bookingForm = document.getElementById("bookingForm");
+    const chatbotHandoffNotice = document.getElementById("chatbotHandoffNotice");
+    const chatbotHandoffSummary = document.getElementById("chatbotHandoffSummary");
+    const handoffRoomLabel = document.getElementById("handoffRoomLabel");
+    const handoffCheckIn = document.getElementById("handoffCheckIn");
+    const handoffCheckOut = document.getElementById("handoffCheckOut");
+    const handoffGuests = document.getElementById("handoffGuests");
+    const handoffBookingId = document.getElementById("handoffBookingId");
 
-    recommendBtn.addEventListener("click", async () => {
-      recommendations.innerHTML = "Loading recommendations...";
-      const payload = {
-        location: document.getElementById("location").value,
-        budget: document.getElementById("budget").value,
-        guests: document.getElementById("guests").value,
-        company_type: document.getElementById("company_type").value
-      };
-
-      const res = await fetch("{% url 'accommodation_recommend' %}", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": getCookie("csrftoken")
-        },
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      if (!data.success) {
-        recommendations.innerHTML = "Unable to fetch recommendations.";
-        return;
+    function setResultMessage(message, type = "error") {
+      billingResult.innerHTML = "";
+      const box = document.createElement("div");
+      box.className = "result";
+      box.style.color = type === "error" ? "#842029" : "#0f5132";
+      if (type === "error") {
+        box.style.background = "#f8d7da";
+        box.style.border = "1px solid #f5c2c7";
+        box.style.borderRadius = "8px";
+        box.style.padding = "10px";
       }
-      recommendations.innerHTML = data.results.map(item =>
-        `<div class="result"><strong>${item.title}</strong><div class="muted">${item.subtitle}</div></div>`
-      ).join("");
-    });
+      box.textContent = message;
+      billingResult.appendChild(box);
+    }
 
-    billingBtn.addEventListener("click", async () => {
-      billingResult.innerHTML = "Calculating billing...";
+    function extractValidationMessage(data, fallback) {
+      if (data && data.errors && typeof data.errors === "object") {
+        const first = Object.values(data.errors).find(Boolean);
+        if (first) return String(first);
+      }
+      return (data && data.message) ? String(data.message) : fallback;
+    }
+
+    async function runBillingCalculation() {
+      setResultMessage("Calculating billing...", "success");
       const payload = {
         room_id: document.getElementById("room_id").value,
         check_in: document.getElementById("check_in").value,
@@ -157,14 +182,20 @@
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRFToken": getCookie("csrftoken")
+          "X-CSRFToken": getCsrfToken()
         },
         body: JSON.stringify(payload)
       });
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch (e) {
+        setResultMessage(`Billing request failed (HTTP ${res.status}). Please refresh and try again.`);
+        return { success: false, message: "non_json_response" };
+      }
       if (!data.success) {
-        billingResult.innerHTML = data.message || "Billing failed.";
-        return;
+        setResultMessage(extractValidationMessage(data, "Billing failed."));
+        return data;
       }
       billingResult.innerHTML = `
         <div class="result">
@@ -173,6 +204,110 @@
           <div>Total: PHP ${data.total}</div>
         </div>
       `;
+      return data;
+    }
+
+    function applyChatbotPrefillFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const fromChatbot = params.get("from_chatbot") === "1";
+      if (!fromChatbot) return;
+
+      const roomId = params.get("room_id");
+      const checkIn = params.get("check_in");
+      const checkOut = params.get("check_out");
+      const numGuests = params.get("num_guests");
+      const focus = params.get("focus");
+      const bookingId = params.get("booking_id");
+
+      if (roomId) {
+        const roomSelect = document.getElementById("room_id");
+        if (roomSelect && [...roomSelect.options].some(opt => String(opt.value) === String(roomId))) {
+          roomSelect.value = String(roomId);
+        }
+      }
+      if (checkIn) document.getElementById("check_in").value = checkIn;
+      if (checkOut) document.getElementById("check_out").value = checkOut;
+      if (numGuests) document.getElementById("num_guests").value = numGuests;
+
+      if (chatbotHandoffNotice) {
+        chatbotHandoffNotice.style.display = "block";
+      }
+      if (chatbotHandoffSummary) {
+        const roomSelect = document.getElementById("room_id");
+        const selectedText = roomSelect && roomSelect.selectedIndex >= 0
+          ? roomSelect.options[roomSelect.selectedIndex].text
+          : "";
+        chatbotHandoffSummary.style.display = "block";
+        handoffRoomLabel.textContent = (selectedText && selectedText !== "Select a room") ? selectedText : (roomId ? `Room ID ${roomId}` : "-");
+        handoffCheckIn.textContent = checkIn || "-";
+        handoffCheckOut.textContent = checkOut || "-";
+        handoffGuests.textContent = numGuests || "-";
+        handoffBookingId.textContent = bookingId ? `#${bookingId}` : "Draft / not created yet";
+      }
+
+      if (focus === "booking") {
+        requestAnimationFrame(() => {
+          bookingForm.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+
+      const hasBillingInputs =
+        document.getElementById("room_id").value &&
+        document.getElementById("check_in").value &&
+        document.getElementById("check_out").value;
+      if (hasBillingInputs) {
+        // Fire and forget for UX convenience after chatbot handoff.
+        runBillingCalculation().catch(() => {
+          setResultMessage("Unable to auto-calculate billing. Please click Calculate Billing.");
+        });
+      }
+    }
+
+    recommendBtn.addEventListener("click", async () => {
+      recommendations.innerHTML = "Loading recommendations...";
+      try {
+        const payload = {
+          location: document.getElementById("location").value,
+          budget: document.getElementById("budget").value,
+          guests: document.getElementById("guests").value,
+          company_type: document.getElementById("company_type").value
+        };
+
+        const res = await fetch("{% url 'accommodation_recommend' %}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCsrfToken()
+          },
+          body: JSON.stringify(payload)
+        });
+        let data;
+        try {
+          data = await res.json();
+        } catch (e) {
+          recommendations.innerHTML = `Recommendation request failed (HTTP ${res.status}). Please refresh and try again.`;
+          return;
+        }
+        if (!data.success) {
+          recommendations.innerHTML = data.message || "Unable to fetch recommendations.";
+          return;
+        }
+        recommendations.innerHTML = data.results.map(item =>
+          `<div class="result"><strong>${item.title}</strong><div class="muted">${item.subtitle}</div></div>`
+        ).join("");
+      } catch (error) {
+        recommendations.innerHTML = "Unable to fetch recommendations right now. Check your login/session and try again.";
+        console.error("Recommendation fetch error:", error);
+      }
+    });
+
+    billingBtn.addEventListener("click", async () => {
+      try {
+        await runBillingCalculation();
+      } catch (error) {
+        setResultMessage("Unable to calculate billing right now. Please refresh and try again.");
+        console.error("Billing fetch error:", error);
+      }
     });
 
     bookingForm.addEventListener("submit", async (e) => {
@@ -181,17 +316,59 @@
       const res = await fetch("{% url 'accommodation_book' %}", {
         method: "POST",
         headers: {
-          "X-CSRFToken": getCookie("csrftoken")
+          "X-CSRFToken": getCsrfToken()
         },
         body: formData
       });
-      const data = await res.json();
-      if (!data.success) {
-        billingResult.innerHTML = data.message || "Booking failed.";
+      let data;
+      try {
+        data = await res.json();
+      } catch (e) {
+        setResultMessage(`Booking request failed (HTTP ${res.status}). Please refresh and try again.`);
         return;
       }
-      billingResult.innerHTML = `Booking submitted! ID: ${data.booking_id} | Total: PHP ${data.total_amount}`;
+      if (!data.success) {
+        setResultMessage(extractValidationMessage(data, "Booking failed."));
+        return;
+      }
+      billingResult.innerHTML = "";
+
+      const successBox = document.createElement("div");
+      successBox.className = "result";
+      successBox.style.display = "grid";
+      successBox.style.gap = "10px";
+
+      const successText = document.createElement("div");
+      successText.innerHTML = `<strong>Booking submitted!</strong> ID: ${data.booking_id} | Total: PHP ${data.total_amount}`;
+
+      const actions = document.createElement("div");
+      actions.style.display = "flex";
+      actions.style.gap = "8px";
+      actions.style.flexWrap = "wrap";
+
+      const backBtn = document.createElement("button");
+      backBtn.type = "button";
+      backBtn.className = "secondary";
+      backBtn.textContent = "Back to Main Page";
+      backBtn.addEventListener("click", () => {
+        window.location.href = "{% url 'main-page' %}";
+      });
+
+      const statusBtn = document.createElement("button");
+      statusBtn.type = "button";
+      statusBtn.textContent = "View My Booking Status";
+      statusBtn.addEventListener("click", () => {
+        window.location.href = "{% url 'my_accommodation_bookings' %}";
+      });
+
+      actions.appendChild(backBtn);
+      actions.appendChild(statusBtn);
+      successBox.appendChild(successText);
+      successBox.appendChild(actions);
+      billingResult.appendChild(successBox);
     });
+
+    applyChatbotPrefillFromUrl();
   </script>
 </body>
 </html>

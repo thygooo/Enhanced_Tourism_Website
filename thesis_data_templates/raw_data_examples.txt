@@ -1,0 +1,201 @@
+RAW DATA EXAMPLES TO COLLECT (FOR TRAINING)
+
+This is a chat-friendly list of the exact data to collect before training.
+
+==================================================
+1) TEXT-CNN (CHATBOT MESSAGE DATA)
+==================================================
+
+Collect these fields for each user message:
+
+- message_id
+- message_text (exact user message)
+- source (chatbot_log / manual_label / test)
+- timestamp
+- session_id (if available)
+- query_id (if available)
+
+Later labels to add:
+
+- label_intent
+- label_accommodation_type
+- label_budget_level
+- label_location_signal
+- split (train / val / test)
+
+Literal examples:
+
+1.
+message_id: MSG0101
+message_text: recommend a cheap inn in bayawan for 2 guests
+source: chatbot_log
+timestamp: 2026-03-01T09:12:11
+session_id: S1001
+query_id: Q1001
+
+2.
+message_id: MSG0102
+message_text: calculate hotel bill for room 12 for 2 nights
+source: chatbot_log
+timestamp: 2026-03-01T09:16:40
+session_id: S1001
+query_id: Q1002
+
+3.
+message_id: MSG0103
+message_text: book room 12 from 2026-03-10 to 2026-03-12 for 2 guests
+source: chatbot_log
+timestamp: 2026-03-01T09:18:21
+session_id: S1001
+query_id: Q1003
+
+4.
+message_id: MSG0104
+message_text: for 3 guests only
+source: chatbot_log
+timestamp: 2026-03-01T09:18:58
+session_id: S1001
+query_id: Q1003
+
+==================================================
+2) DECISION TREE (RECOMMENDATION CANDIDATE DATA)
+==================================================
+
+Collect one row per recommendation candidate shown to the user.
+
+Required fields to collect:
+
+- record_id
+- session_id
+- user_id_hash (anonymized)
+- query_id
+- requested_guests
+- requested_budget
+- requested_location
+- requested_accommodation_type
+- nights_requested (if available)
+- room_id
+- accom_id
+- room_price_per_night
+- room_capacity
+- room_available (0/1)
+- accom_location
+- company_type (hotel/inn)
+- shown_rank
+- timestamp
+
+Useful AI context fields (if available):
+
+- cnn_intent_label
+- cnn_confidence
+
+Outcome fields (after user action):
+
+- was_clicked (0/1)
+- was_selected (0/1)
+- was_booked (0/1)
+- relevance_label (relevant / not_relevant)
+
+Literal examples:
+
+1. (Top recommendation shown and booked)
+record_id: REC0201
+session_id: S1001
+user_id_hash: UHASH_101
+query_id: Q1001
+requested_guests: 2
+requested_budget: 2000
+requested_location: Bayawan
+requested_accommodation_type: inn
+nights_requested: 2
+room_id: 12
+accom_id: 5
+room_price_per_night: 1800
+room_capacity: 2
+room_available: 1
+accom_location: Bayawan
+company_type: inn
+shown_rank: 1
+timestamp: 2026-03-01T09:12:20
+cnn_intent_label: get_accommodation_recommendation
+cnn_confidence: 0.94
+was_clicked: 1
+was_selected: 1
+was_booked: 1
+relevance_label: relevant
+
+2. (Shown but not selected)
+record_id: REC0202
+session_id: S1001
+user_id_hash: UHASH_101
+query_id: Q1001
+requested_guests: 2
+requested_budget: 2000
+requested_location: Bayawan
+requested_accommodation_type: inn
+nights_requested: 2
+room_id: 18
+accom_id: 7
+room_price_per_night: 2200
+room_capacity: 2
+room_available: 1
+accom_location: Bayawan
+company_type: hotel
+shown_rank: 2
+timestamp: 2026-03-01T09:12:20
+cnn_intent_label: get_accommodation_recommendation
+cnn_confidence: 0.94
+was_clicked: 0
+was_selected: 0
+was_booked: 0
+relevance_label: not_relevant
+
+3. (Unavailable room shown)
+record_id: REC0206
+session_id: S1003
+user_id_hash: UHASH_103
+query_id: Q1003
+requested_guests: 1
+requested_budget: 1000
+requested_location: Terminal Area
+requested_accommodation_type: inn
+nights_requested: 1
+room_id: 40
+accom_id: 15
+room_price_per_night: 900
+room_capacity: 1
+room_available: 0
+accom_location: Terminal Area
+company_type: inn
+shown_rank: 1
+timestamp: 2026-03-01T11:20:10
+cnn_intent_label: get_accommodation_recommendation
+cnn_confidence: 0.91
+was_clicked: 0
+was_selected: 0
+was_booked: 0
+relevance_label: not_relevant
+
+==================================================
+3) EXTRA DATA (FOR THESIS EVALUATION, NOT ALWAYS TRAINING)
+==================================================
+
+Collect if possible:
+
+- chatbot response_time_ms
+- chatbot success_flag
+- endpoint status_code
+- total recommendations shown per query
+- booking conversion (shown -> selected -> booked)
+- SUS survey responses (later phase)
+- TAM responses: PU and PEOU (later phase)
+
+==================================================
+4) IMPORTANT REMINDERS
+==================================================
+
+- Use real system logs/records for final training data.
+- Anonymize user identity (use user_id_hash).
+- Do not include phone numbers, emails, or full names in training CSVs.
+- Keep labels consistent using labeling_guide.md.
+

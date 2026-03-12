@@ -183,7 +183,7 @@ function setupGuestRegistrationHandlers() {
         // Submit the form
         $.ajax({
             type: "POST",
-            url: "{% url 'accom_app:register_guest_to_room' %}",
+            url: "{% url 'accom_app:register_room_guest_ajax' %}",
             data: formData,
             success: function(response) {
                 if (response.status === "success") {
@@ -403,36 +403,7 @@ function loadRooms() {
 }
 
 function createSampleRooms() {
-    $("#roomStatusGrid").html('<div class="loading-message">Creating sample rooms...</div>');
-    
-    $.ajax({
-        url: '/accom_app/create_sample_rooms/',
-        type: 'GET',
-        dataType: 'json',
-        success: function(response) {
-            console.log("Sample rooms creation response:", response);
-            if (response.status === 'success') {
-                // Reload rooms to show the newly created ones
-                loadRooms();
-            } else {
-                $("#roomStatusGrid").html(`
-                    <div class="error-message">
-                        <p>Error creating sample rooms: ${response.message}</p>
-                    </div>
-                `);
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("Error creating sample rooms:", error);
-            $("#roomStatusGrid").html(`
-                <div class="error-message">
-                    <p>Error creating sample rooms: ${error}</p>
-                    <p>Status: ${status}</p>
-                    <p>Response: ${xhr.responseText}</p>
-                </div>
-            `);
-        }
-    });
+    $("#roomStatusGrid").html('<div class="loading-message">Sample room generator endpoint is disabled in the revised room module.</div>');
 }
 
 // Update room status display section
@@ -536,24 +507,9 @@ function loadGuestsForRoom(roomId) {
     // Reset selected guests when loading new room data
     selectedGuests = [];
     
-    // AJAX call to get guests for the selected room
-    $.ajax({
-        url: "{% url 'accom_app:get_room_guests' %}",
-        type: "GET",
-        data: { room_id: roomId, group: currentGroupFilter },
-        success: function(response) {
-            if (response.guests && response.guests.length > 0) {
-                displayGuests(response.guests);
-            } else {
-                // No guests found for this room
-                $('#guestGrid').html('<div class="empty-state">No guests assigned to this room yet.</div>');
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("Error loading guests:", error);
-            $('#guestGrid').html('<div class="empty-state">Error loading guests. Please try again.</div>');
-        }
-    });
+    $('#guestGrid').html(
+        '<div class="empty-state">Per-room guest listing endpoint is not enabled in the revised room module.</div>'
+    );
 }
 
 // Placeholder function for displaying guests (implement as needed)

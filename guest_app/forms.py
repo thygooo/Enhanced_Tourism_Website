@@ -6,6 +6,7 @@ from django.utils.html import format_html
 from django.forms.utils import flatatt
 import random
 import string
+import re
 
 class MultipleFileInput(Widget):
     """Custom widget for uploading multiple files"""
@@ -54,13 +55,38 @@ class GuestRegistrationForm(forms.ModelForm):
                  'age', 'country_of_origin', 'city', 'phone_number',
                  'email', 'company_name', 'sex', 'password', 'picture']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # The main-page signup modal does not expose a username field.
+        # Auto-generate one from the email instead of failing validation.
+        self.fields['username'].required = False
+
+    def _generate_unique_username(self, email_value):
+        base = (email_value or "").split("@")[0].strip().lower()
+        base = re.sub(r"[^a-z0-9_\.]+", "_", base)
+        base = re.sub(r"_+", "_", base).strip("._")
+        if not base:
+            base = "guest"
+
+        candidate = base
+        counter = 1
+        while Guest.objects.filter(username__iexact=candidate).exists():
+            counter += 1
+            candidate = f"{base}{counter}"
+        return candidate
+
     def clean(self):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")
         confirm_password = cleaned_data.get("confirm_password")
+        email = cleaned_data.get("email")
+        username = cleaned_data.get("username")
 
         if password != confirm_password:
             raise ValidationError("Passwords do not match.")
+
+        if not username and email:
+            cleaned_data["username"] = self._generate_unique_username(email)
 
         return cleaned_data
 

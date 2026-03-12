@@ -106,7 +106,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'project_db',            # Your DB name
         'USER': 'root',           # MySQL username
-        'PASSWORD': 'september242023',     # MySQL password
+        'PASSWORD': 'september242023',     # MySQL password september242023
         'HOST': '127.0.0.1',             # Localhost
         'PORT': '3307',                  # Default MySQL port
     }
@@ -170,8 +170,8 @@ SESSION_COOKIE_HTTPONLY = True  # Prevent JavaScript access to the session cooki
 SESSION_SAVE_EVERY_REQUEST = True  # Save the session on every request
 # settings.py
 
-#LOGIN_URL = '/guest_app/login/'  # Ensure it matches the login URL defined in your urls.py
-LOGIN_URL = '/admin_app/admin/login/'
+# Ensure @login_required redirects to an existing route (guest-facing pages use guest login).
+LOGIN_URL = '/guest_app/login/'
 
 AUTHENTICATION_BACKENDS = [
     'guest_app.backends.GuestAuthenticationBackend',  # Add your custom backend here
@@ -208,4 +208,8 @@ CSRF_USE_SESSIONS = True  # Store CSRF token in the session instead of cookie
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'guest_app.Guest'  # Replace 'guest_app' with your app name
+
+# External payment/billing page used by chatbot booking responses.
+# Set in .env for production, e.g. TOURISM_OFFICE_BILLING_URL=https://billing.example.com/pay
+TOURISM_OFFICE_BILLING_URL = os.environ.get('TOURISM_OFFICE_BILLING_URL', '')
 

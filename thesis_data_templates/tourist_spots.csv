@@ -1,0 +1,21 @@
+place_id,place_name,category,municipality,barangay,latitude,longitude,opening_hours,entrance_fee,amenities,safety_level,best_season,description,primary_image_url,status,last_validated_at
+P001,Calayo Beach,beach,Nasugbu,Calayo,14.0721,120.6023,06:00-18:00,50.00,parking|restroom|food_stalls,medium,summer,white_sand_beach,images/spots/p001.jpg,active,2026-02-10
+P002,Pico Falls,falls,Nasugbu,Putat,14.0985,120.6310,07:00-17:00,30.00,guide|restroom,medium,rainy,forest_waterfall,images/spots/p002.jpg,active,2026-02-10
+P003,Heritage Plaza,landmark,Lian,Poblacion,13.9490,120.6542,08:00-20:00,0.00,parking|food_stalls|wifi,low,all_year,historic_town_square,images/spots/p003.jpg,active,2026-02-11
+P004,Matabungkay Shore,beach,Lian,Matabungkay,13.9508,120.6261,05:30-18:30,80.00,parking|restroom|lifeguard,medium,summer,family_friendly_beach,images/spots/p004.jpg,active,2026-02-11
+P005,Kaybiang Tunnel View,landmark,Nasugbu,Kaybiang,14.1182,120.5999,00:00-23:59,0.00,viewdeck|parking,low,all_year,mountain_viewpoint,images/spots/p005.jpg,active,2026-02-12
+P006,Balayan Baywalk,public,Balayan,Poblacion,13.9402,120.7320,05:00-22:00,0.00,benches|lights|food_stalls,low,all_year,sunset_baywalk,images/spots/p006.jpg,active,2026-02-12
+P007,Lemery Market,shopping,Lemery,Maguihan,13.8804,120.9101,06:00-20:00,0.00,parking|restroom|atm,low,all_year,local_market_area,images/spots/p007.jpg,active,2026-02-12
+P008,Caleruega Chapel,landmark,Nasugbu,Kaylaway,14.1132,120.8940,08:00-17:00,75.00,parking|restroom|souvenir_shop,low,all_year,church_with_garden,images/spots/p008.jpg,active,2026-02-13
+P009,Fantasy World Site,landmark,Lemery,Diokno,13.9114,120.8688,08:00-17:00,100.00,parking|guide,medium,all_year,castle_theme_landmark,images/spots/p009.jpg,active,2026-02-13
+P010,Taal Lake Ridge,landmark,Tagaytay,Iruhin,14.1017,120.9459,06:00-19:00,0.00,viewdeck|cafes|parking,low,all_year,lake_and_volcano_view,images/spots/p010.jpg,active,2026-02-13
+P011,People Park,public,Tagaytay,Sungay,14.1160,120.9365,07:00-18:00,30.00,parking|restroom|garden,low,all_year,highland_city_park,images/spots/p011.jpg,active,2026-02-14
+P012,Twin Lakes View,landmark,Laurel,Dayap,14.0891,120.9111,08:00-20:00,0.00,parking|cafes|wifi,low,all_year,ridge_view_complex,images/spots/p012.jpg,active,2026-02-14
+P013,Kayak Cove,beach,Nasugbu,Papaya,14.0055,120.5812,06:00-18:00,120.00,kayak_rental|restroom|parking,medium,summer,water_sports_spot,images/spots/p013.jpg,active,2026-02-14
+P014,Mt Batulao Jump,landmark,Nasugbu,Kayrilaw,14.0574,120.7872,04:00-16:00,120.00,guide|parking,high,dry_season,mountain_hike_trail,images/spots/p014.jpg,active,2026-02-15
+P015,Bamboo Grove,public,Tuy,Putol,14.0203,120.7199,07:00-17:00,20.00,picnic_area|restroom,low,all_year,nature_picnic_site,images/spots/p015.jpg,active,2026-02-15
+P016,River Stone Park,public,Calaca,Balayan,13.9321,121.0160,06:00-18:00,25.00,parking|restroom|playground,low,all_year,riverside_family_park,images/spots/p016.jpg,active,2026-02-15
+P017,Old Lighthouse,landmark,Nasugbu,Wawa,14.0207,120.6174,08:00-17:00,40.00,guide|viewdeck,medium,all_year,coastal_lighthouse_site,images/spots/p017.jpg,active,2026-02-16
+P018,Coral Garden Cove,beach,Nasugbu,Calayo,14.0601,120.5904,06:00-17:00,150.00,snorkeling|restroom|parking,medium,summer,coral_snorkeling_area,images/spots/p018.jpg,active,2026-02-16
+P019,Sunset Deck,landmark,Balayan,Caloocan,13.9366,120.7218,16:00-21:00,20.00,viewdeck|food_stalls,low,dry_season,sunset_view_spot,images/spots/p019.jpg,active,2026-02-16
+P020,Green Trail Camp,public,Ternate,Sapang,14.2901,120.7163,06:00-18:00,60.00,camping|guide|restroom,medium,dry_season,forest_trail_camp,images/spots/p020.jpg,active,2026-02-17

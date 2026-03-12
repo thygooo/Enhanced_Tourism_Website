@@ -190,6 +190,25 @@ SYSTEM_TRANSLATIONS = {
         'es': 'Idioma'
     },
     
+    'my_hotel_inn_bookings': {
+        'en': 'My Hotel/Inn Bookings',
+        'tl': 'Aking Booking sa Hotel/Inn',
+        'ceb': 'Akong mga Booking sa Hotel/Inn',
+        'es': 'Mis Reservas de Hotel/Posada'
+    },
+    'add_companion': {
+        'en': 'Add Companion',
+        'tl': 'Magdagdag ng Kasama',
+        'ceb': 'Pagdugang og Kauban',
+        'es': 'Agregar Companero'
+    },
+    'companion_requests': {
+        'en': 'Companion Requests',
+        'tl': 'Mga Request ng Kasama',
+        'ceb': 'Mga Request sa Kauban',
+        'es': 'Solicitudes de Companero'
+    },
+    
     # Login/signup
     'login': {
         'en': 'Login',
@@ -270,6 +289,163 @@ SYSTEM_TRANSLATIONS = {
         'tl': 'Matagumpay na na-update ang profile!',
         'ceb': 'Malamposong na-update ang profile!',
         'es': '¡Perfil actualizado con éxito!'
+    },
+    
+    'about_ibayaw_tour': {
+        'en': 'About Ibayaw Tour',
+        'tl': 'Tungkol sa Ibayaw Tour',
+        'ceb': 'Mahitungod sa Ibayaw Tour',
+        'es': 'Sobre Ibayaw Tour'
+    },
+    'about_ibayaw_description': {
+        'en': 'Ibayaw Tour is dedicated to promoting tourism in Bayawan City, Negros Oriental, Philippines. We exist to improve the quality of life for Bayawanons by maximizing the city\'s tourism potential through innovative web solutions and exceptional tour experiences.',
+        'tl': 'Ang Ibayaw Tour ay nakatuon sa pagtataguyod ng turismo sa Bayawan City, Negros Oriental, Pilipinas. Layunin naming mapabuti ang kalidad ng buhay ng mga Bayawanon sa pamamagitan ng pagpapalakas ng potensyal ng lungsod sa turismo gamit ang makabagong web solutions at mahusay na karanasan sa tour.',
+        'ceb': 'Ang Ibayaw Tour nakatuon sa pagpalambo sa turismo sa Bayawan City, Negros Oriental, Pilipinas. Tumong namo ang pagpaayo sa kalidad sa kinabuhi sa mga Bayawanon pinaagi sa pagpalig-on sa potensyal sa syudad sa turismo gamit ang inobatibong web solutions ug maayong mga kasinatian sa tour.',
+        'es': 'Ibayaw Tour esta dedicado a promover el turismo en Bayawan City, Negros Oriental, Filipinas. Buscamos mejorar la calidad de vida de los Bayawanons maximizando el potencial turistico de la ciudad mediante soluciones web innovadoras y excelentes experiencias de tour.'
+    },
+    'nature_adventure': {
+        'en': 'Nature & Adventure',
+        'tl': 'Kalikasan at Pakikipagsapalaran',
+        'ceb': 'Kalikupan ug Panimpalad',
+        'es': 'Naturaleza y Aventura'
+    },
+    'nature_adventure_desc': {
+        'en': 'Experience the natural beauty and adventure opportunities in Bayawan City.',
+        'tl': 'Maranasan ang likas na ganda at mga oportunidad sa pakikipagsapalaran sa Bayawan City.',
+        'ceb': 'Masinati ang natural nga katahum ug mga oportunidad sa panimpalad sa Bayawan City.',
+        'es': 'Experimente la belleza natural y las oportunidades de aventura en Bayawan City.'
+    },
+    'community_focus': {
+        'en': 'Community Focus',
+        'tl': 'Pokus sa Komunidad',
+        'ceb': 'Pokus sa Komunidad',
+        'es': 'Enfoque Comunitario'
+    },
+    'community_focus_desc': {
+        'en': 'Supporting local communities and promoting sustainable tourism practices.',
+        'tl': 'Pagsuporta sa mga lokal na komunidad at pagtataguyod ng napapanatiling turismo.',
+        'ceb': 'Pagsuporta sa lokal nga mga komunidad ug pagpalambo sa malungtarong turismo nga mga pamaagi.',
+        'es': 'Apoyando a las comunidades locales y promoviendo practicas de turismo sostenible.'
+    },
+    'cultural_heritage': {
+        'en': 'Cultural Heritage',
+        'tl': 'Pamanang Kultural',
+        'ceb': 'Kultural nga Panulondon',
+        'es': 'Patrimonio Cultural'
+    },
+    'cultural_heritage_desc': {
+        'en': 'Preserving and showcasing the rich cultural heritage of Bayawan City.',
+        'tl': 'Pagpapanatili at pagpapakita ng mayamang pamanang kultural ng Bayawan City.',
+        'ceb': 'Pagpreserbar ug pagpakita sa dato nga kultural nga panulondon sa Bayawan City.',
+        'es': 'Preservar y mostrar el rico patrimonio cultural de Bayawan City.'
+    },
+    'our_programs': {
+        'en': 'Our Programs',
+        'tl': 'Aming Mga Programa',
+        'ceb': 'Among mga Programa',
+        'es': 'Nuestros Programas'
+    },
+    'programs_description': {
+        'en': 'Discover our comprehensive tourism programs designed to showcase the best of Bayawan City. From cultural experiences to adventure activities, we have something for everyone.',
+        'tl': 'Tuklasin ang aming komprehensibong mga programang pangturismo na idinisenyo upang ipakita ang pinakamaganda sa Bayawan City. Mula sa karanasang kultural hanggang sa mga aktibidad na pang-adventure, mayroong para sa lahat.',
+        'ceb': 'Diskubrehi ang among komprehensibong mga programa sa turismo nga gihimo aron ipakita ang labing maayo sa Bayawan City. Gikan sa kultural nga kasinatian hangtod sa mga adventure nga kalihokan, adunay para sa tanan.',
+        'es': 'Descubra nuestros programas turisticos integrales disenados para mostrar lo mejor de Bayawan City. Desde experiencias culturales hasta actividades de aventura, tenemos algo para todos.'
+    },
+    'explore_our_tours': {
+        'en': 'Explore Our Tours',
+        'tl': 'Tuklasin ang Aming Mga Tour',
+        'ceb': 'Susihon ang Among mga Tour',
+        'es': 'Explora Nuestros Tours'
+    },
+    'my_bookings': {
+        'en': 'My Bookings',
+        'tl': 'Aking Mga Booking',
+        'ceb': 'Akong mga Booking',
+        'es': 'Mis Reservas'
+    },
+    'upcoming_tours': {
+        'en': 'Upcoming Tours',
+        'tl': 'Mga Paparating na Tour',
+        'ceb': 'Umaabot nga mga Tour',
+        'es': 'Proximos Tours'
+    },
+    'current_tours': {
+        'en': 'Current Tours',
+        'tl': 'Kasalukuyang Tour',
+        'ceb': 'Karong mga Tour',
+        'es': 'Tours Actuales'
+    },
+    'past_tours': {
+        'en': 'Past Tours',
+        'tl': 'Mga Nakaraang Tour',
+        'ceb': 'Milabay nga mga Tour',
+        'es': 'Tours Pasados'
+    },
+    'contact_us': {
+        'en': 'Contact Us',
+        'tl': 'Makipag-ugnayan sa Amin',
+        'ceb': 'Kontaka Kami',
+        'es': 'Contactenos'
+    },
+    'contact_description': {
+        'en': 'Get in touch with us for inquiries, bookings, or any questions about your Bayawan City experience.',
+        'tl': 'Makipag-ugnayan sa amin para sa mga katanungan, booking, o anumang tanong tungkol sa iyong karanasan sa Bayawan City.',
+        'ceb': 'Kontaka kami para sa mga pangutana, booking, o bisan unsang pangutana bahin sa imong kasinatian sa Bayawan City.',
+        'es': 'Pongase en contacto con nosotros para consultas, reservas o cualquier pregunta sobre su experiencia en Bayawan City.'
+    },
+    'email': {
+        'en': 'Email',
+        'tl': 'Email',
+        'ceb': 'Email',
+        'es': 'Correo'
+    },
+    'phone': {
+        'en': 'Phone',
+        'tl': 'Telepono',
+        'ceb': 'Telepono',
+        'es': 'Telefono'
+    },
+    'chat_assistant_title': {
+        'en': 'Ibayaw Tour Assistant',
+        'tl': 'Ibayaw Tour Assistant',
+        'ceb': 'Ibayaw Tour Assistant',
+        'es': 'Asistente de Ibayaw Tour'
+    },
+    'chat_assistant_subtitle': {
+        'en': 'Hotel • Booking • Billing',
+        'tl': 'Hotel • Booking • Bayarin',
+        'ceb': 'Hotel • Booking • Bayranan',
+        'es': 'Hotel • Reserva • Facturacion'
+    },
+    'chat_welcome': {
+        'en': 'Hello! I\'m your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City.',
+        'tl': 'Hello! Ako ang iyong Ibayaw Tour assistant. Paano kita matutulungan ngayon?',
+        'ceb': 'Hello! Ako ang imong Ibayaw Tour assistant. Unsaon tika pagtabang karon?',
+        'es': 'Hola! Soy tu asistente de Ibayaw Tour. Como puedo ayudarte hoy?'
+    },
+    'chat_input_placeholder': {
+        'en': 'Type your message...',
+        'tl': 'I-type ang iyong mensahe...',
+        'ceb': 'I-type ang imong mensahe...',
+        'es': 'Escribe tu mensaje...'
+    },
+    'chat_thinking': {
+        'en': 'Thinking...',
+        'tl': 'Nag-iisip...',
+        'ceb': 'Naghunahuna...',
+        'es': 'Pensando...'
+    },
+    'chat_connect_error': {
+        'en': 'Sorry, I could not connect to the chatbot right now.',
+        'tl': 'Paumanhin, hindi ako makakonekta sa chatbot ngayon.',
+        'ceb': 'Pasayloa, dili ko makakonek sa chatbot karon.',
+        'es': 'Lo siento, no pude conectarme al chatbot en este momento.'
+    },
+    'chat_non_json_error': {
+        'en': 'Chatbot returned a non-JSON response. Check server logs.',
+        'tl': 'Nagbalik ang chatbot ng hindi JSON na sagot. Suriin ang server logs.',
+        'ceb': 'Nibalik ang chatbot og dili JSON nga tubag. Susiha ang server logs.',
+        'es': 'El chatbot devolvio una respuesta no JSON. Revise los registros del servidor.'
     },
     
     # Form labels - add as many as needed

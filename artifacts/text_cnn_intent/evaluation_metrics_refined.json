@@ -1,0 +1,81 @@
+{
+  "dataset": "thesis_data_templates\\text_cnn_messages_final_refined.csv",
+  "epochs": 2,
+  "batch_size": 32,
+  "max_tokens": 1000,
+  "sequence_length": 24,
+  "embedding_dim": 24,
+  "conv_filters": 24,
+  "kernel_size": 3,
+  "train_rows": 228,
+  "val_rows": 48,
+  "test_rows": 52,
+  "classes": [
+    "book_accommodation",
+    "calculate_accommodation_billing",
+    "calculate_billing",
+    "get_accommodation_recommendation",
+    "get_recommendation",
+    "get_tourism_information"
+  ],
+  "accuracy": 0.34615384615384615,
+  "precision_macro": 0.5016698987287223,
+  "recall_macro": 0.3270502645502646,
+  "f1_macro": 0.2732517482517483,
+  "precision_weighted": 0.5001491720948734,
+  "recall_weighted": 0.34615384615384615,
+  "f1_weighted": 0.2795656266810113,
+  "confusion_matrix": [
+    [
+      9,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      4,
+      4,
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      4,
+      4,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      2,
+      3,
+      0,
+      1,
+      1,
+      0
+    ],
+    [
+      5,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    [
+      2,
+      5,
+      0,
+      0,
+      2,
+      1
+    ]
+  ],
+  "classification_report": "                                  precision    recall  f1-score   support\n\n              book_accommodation       0.35      0.90      0.50        10\n calculate_accommodation_billing       0.24      0.44      0.31         9\n               calculate_billing       0.00      0.00      0.00         8\nget_accommodation_recommendation       1.00      0.14      0.25         7\n              get_recommendation       0.43      0.38      0.40         8\n         get_tourism_information       1.00      0.10      0.18        10\n\n                        accuracy                           0.35        52\n                       macro avg       0.50      0.33      0.27        52\n                    weighted avg       0.50      0.35      0.28        52\n",
+  "final_train_acc": 0.37719297409057617,
+  "final_val_acc": 0.375
+}

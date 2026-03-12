@@ -86,7 +86,7 @@
       <!-- Add submenu for Accommodation options -->
       <ul class="nav-submenu">
         <li class="nav-subitem">
-          <a href="{% url 'admin_app:create_accommodation' %}" class="nav-sublink {% if request.path == '/admin_app/create_accommodation/' %}active{% endif %}">
+          <a href="{% url 'admin_app:create_accommodation' %}" class="nav-sublink {% if request.path == '/admin_app/accommodation/create/' %}active{% endif %}">
             <span class="nav-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             </span>
@@ -94,7 +94,7 @@
           </a>
         </li>
         <li class="nav-subitem">
-          <a href="#" class="nav-sublink">
+          <a href="{% url 'admin_app:create_accommodation' %}" class="nav-sublink {% if request.path == '/admin_app/accommodation/create/' %}active{% endif %}">
             <span class="nav-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
             </span>
@@ -102,7 +102,7 @@
           </a>
         </li>
         <li class="nav-subitem">
-          <a href="#" class="nav-sublink">
+          <a href="{% url 'admin_app:create_accommodation' %}" class="nav-sublink {% if request.path == '/admin_app/accommodation/create/' %}active{% endif %}">
             <span class="nav-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
             </span>
