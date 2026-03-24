@@ -1,0 +1,344 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --bg: #f8f5f1;
+      --panel: #fffdf9;
+      --panel-alt: #fff7ef;
+      --ink: #3f2f26;
+      --muted: #765b48;
+      --line: #e6d7c8;
+      --brand-900: #6f4e37;
+      --brand-700: #b1743f;
+      --brand-500: #d09b6c;
+      --chip: #f2e4d6;
+      --chip-ink: #6b4423;
+    }
+
+    body {
+      font-family: "Poppins", "Segoe UI", Tahoma, Arial, sans-serif;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
+        radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
+        var(--bg);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--brand-900), var(--brand-700));
+      color: #fff;
+      padding: 30px 16px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      top: -80px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.18), rgba(255,255,255,0));
+      pointer-events: none;
+    }
+    .container {
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 18px;
+      box-sizing: border-box;
+    }
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .page {
+      max-width: 1150px;
+      margin: 0 auto 18px;
+      padding: 0 18px 18px;
+      box-sizing: border-box;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      letter-spacing: 0.01em;
+      color: #fff;
+    }
+    .subtitle {
+      margin: 8px 0 0;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 800px;
+      font-size: 0.96rem;
+    }
+    .card {
+      border: 1px solid rgba(111, 78, 55, 0.12);
+      border-radius: 16px;
+      padding: 18px;
+      background: var(--panel);
+      box-shadow: 0 10px 24px rgba(56, 33, 16, 0.08);
+      margin-bottom: 16px;
+    }
+    .card h2 {
+      margin: 0 0 10px;
+      color: #6b4423;
+      font-size: 1.12rem;
+    }
+    .muted {
+      color: var(--muted);
+      margin: 0 0 12px;
+      font-size: 0.93rem;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+    .action-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      background: linear-gradient(180deg, var(--panel-alt), #ffffff);
+      box-shadow: 0 4px 12px rgba(56, 33, 16, 0.06);
+      transition: transform 120ms ease, box-shadow 120ms ease;
+    }
+    .action-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 7px 18px rgba(56, 33, 16, 0.1);
+    }
+    .action-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.02rem;
+      color: #6b4423;
+    }
+    .action-card p {
+      margin: 0 0 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .btn {
+      display: inline-block;
+      padding: 9px 13px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(70, 42, 21, 0.2);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand-900), var(--brand-700));
+      color: #fff;
+    }
+    .btn-secondary {
+      background: linear-gradient(135deg, #875a34, #b57946);
+      color: #fff;
+    }
+    .btn-muted {
+      background: #f2e4d6;
+      color: #6b4423;
+      border: 1px solid #e0c9b2;
+      box-shadow: none;
+    }
+    .btn-muted:hover {
+      box-shadow: 0 4px 10px rgba(70, 42, 21, 0.13);
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: 0.8rem;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--chip-ink);
+      border: 1px solid #e0c9b2;
+      font-weight: 700;
+    }
+    .badge.pending { background: #fff3cd; color: #8a6d1d; border-color: #ffe69c; }
+    .badge.declined { background: #f8d7da; color: #842029; border-color: #f1b0b7; }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border-bottom: 1px solid #eedfce;
+      padding: 10px 9px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.9rem;
+      overflow-wrap: anywhere;
+    }
+    th {
+      background: #f8efe7;
+      color: #6b4423;
+      font-weight: 700;
+    }
+    tbody tr:nth-child(even) { background: #fffaf5; }
+    tbody tr:hover { background: #fcf4ed; }
+    .status-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .alert {
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      font-size: 0.92rem;
+    }
+    .alert.success { background: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; }
+    .alert.error { background: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid rgba(181, 121, 70, 0.35);
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      header { padding-top: 24px; padding-bottom: 30px; }
+      .container, .page { padding-left: 12px; padding-right: 12px; }
+      h1 { font-size: 1.46rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-row">
+        <h1>Accommodation Owner Hub</h1>
+        <a class="btn btn-muted" href="{% url 'main-page' %}">Back to Main Page</a>
+      </div>
+      <p class="subtitle">Central page for accommodation owners to add businesses and manage rooms after approval.</p>
+    </div>
+  </header>
+
+  <div class="page">
+    {% if messages %}
+      <div class="card">
+      {% for message in messages %}
+        <div class="alert {% if message.tags == 'success' %}success{% else %}error{% endif %}">{{ message }}</div>
+      {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="card">
+      <div class="badge-row" style="margin-bottom:14px;">
+        <span class="badge">Accepted: {{ accepted_count }}</span>
+        <span class="badge pending">Pending: {{ pending_count }}</span>
+        <span class="badge declined">Declined: {{ declined_count }}</span>
+      </div>
+
+      <div class="actions">
+      <div class="action-card">
+        <h3>Register New Accommodation</h3>
+        <p>Add another inn/hotel/resort under your owner account.</p>
+        <a class="btn btn-secondary" href="{% url 'admin_app:accommodation_register' %}">Open Registration</a>
+      </div>
+      <div class="action-card">
+        <h3>Manage Rooms</h3>
+        <p>Pick an accepted accommodation below then click Manage Rooms.</p>
+      </div>
+      <div class="action-card">
+        <h3>My Accommodation Bookings</h3>
+        <p>Monitor pending, confirmed, declined, and cancelled bookings.</p>
+        <a class="btn btn-primary" href="{% url 'admin_app:owner_accommodation_bookings' %}">View Bookings</a>
+      </div>
+      <div class="action-card">
+        <h3>Tour Packages</h3>
+        <p>Tour package creation is currently restricted to admin/employee accounts.</p>
+      </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>My Accommodations</h2>
+      <p class="muted">`Rooms` = number of room units. `Pax Capacity` = total people capacity.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Business</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Reviewed At</th>
+              <th>Available Rooms (Units)</th>
+              <th>Pax Capacity</th>
+              <th>Available Room Names</th>
+              <th>Reason</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in owner_rows %}
+            <tr>
+              <td>{{ row.accommodation.company_name }}</td>
+              <td>{{ row.accommodation.company_type }}</td>
+              <td>{{ row.accommodation.approval_status|title }}</td>
+              <td>{% if row.accommodation.reviewed_at %}{{ row.accommodation.reviewed_at|date:"M d, Y H:i" }}{% else %}-{% endif %}</td>
+              <td>{{ row.available_count }} available / {{ row.total_count }} total</td>
+              <td>{{ row.available_pax }} available / {{ row.total_pax }} total</td>
+              <td>
+                {% if row.available_names %}
+                  {{ row.available_names|join:", " }}
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+              <td>{{ row.accommodation.rejection_reason|default:"-" }}</td>
+              <td>
+                {% if row.accommodation.approval_status == "accepted" %}
+                  <a class="btn btn-primary" href="{% url 'admin_app:owner_manage_rooms' row.accommodation.accom_id %}">Manage Rooms</a>
+                {% elif row.accommodation.approval_status == "pending" %}
+                  <span class="status-note">Waiting for admin approval</span>
+                {% else %}
+                  <a class="btn btn-muted" href="{% url 'admin_app:accommodation_register' %}">Resubmit</a>
+                {% endif %}
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="9">No accommodation records yet. Click "Open Registration" to create one.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {% include 'components/chat_widget.html' with chat_role='owner' %}
+</body>
+</html>

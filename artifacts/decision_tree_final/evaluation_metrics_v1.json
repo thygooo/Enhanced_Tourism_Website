@@ -1,0 +1,118 @@
+{
+  "dataset_csv": "thesis_data_templates\\accommodation_reco_training_final_v1.csv",
+  "total_rows": 2400,
+  "train_rows": 1920,
+  "test_rows": 480,
+  "target_distribution_full": {
+    "relevant": 1735,
+    "not_relevant": 665
+  },
+  "accuracy": 0.75,
+  "precision_macro": 0.7036395473630699,
+  "recall_macro": 0.7343502849342376,
+  "f1_macro": 0.7121784493613958,
+  "precision_weighted": 0.7776778821713016,
+  "recall_weighted": 0.75,
+  "f1_weighted": 0.7586946093422077,
+  "classification_report": {
+    "not_relevant": {
+      "precision": 0.5375722543352601,
+      "recall": 0.6992481203007519,
+      "f1-score": 0.6078431372549019,
+      "support": 133.0
+    },
+    "relevant": {
+      "precision": 0.8697068403908795,
+      "recall": 0.7694524495677233,
+      "f1-score": 0.8165137614678899,
+      "support": 347.0
+    },
+    "accuracy": 0.75,
+    "macro avg": {
+      "precision": 0.7036395473630699,
+      "recall": 0.7343502849342376,
+      "f1-score": 0.7121784493613958,
+      "support": 480.0
+    },
+    "weighted avg": {
+      "precision": 0.7776778821713016,
+      "recall": 0.75,
+      "f1-score": 0.7586946093422077,
+      "support": 480.0
+    }
+  },
+  "classes": [
+    "not_relevant",
+    "relevant"
+  ],
+  "confusion_matrix": [
+    [
+      93,
+      40
+    ],
+    [
+      80,
+      267
+    ]
+  ],
+  "model_params": {
+    "algorithm": "DecisionTreeClassifier",
+    "max_depth": 8,
+    "min_samples_leaf": 5,
+    "class_weight": "balanced",
+    "random_state": 42,
+    "test_size": 0.2
+  },
+  "feature_importance_top10": [
+    {
+      "feature": "num__requested_budget",
+      "importance": 0.3174215639126942
+    },
+    {
+      "feature": "num__room_price_per_night",
+      "importance": 0.25285555729114884
+    },
+    {
+      "feature": "num__requested_guests",
+      "importance": 0.1326110985623355
+    },
+    {
+      "feature": "num__room_capacity",
+      "importance": 0.09970679317647779
+    },
+    {
+      "feature": "num__shown_rank",
+      "importance": 0.04829683804558625
+    },
+    {
+      "feature": "num__nights_requested",
+      "importance": 0.03988038218447455
+    },
+    {
+      "feature": "num__cnn_confidence",
+      "importance": 0.03941204322405025
+    },
+    {
+      "feature": "num__room_available",
+      "importance": 0.02374073740437522
+    },
+    {
+      "feature": "cat__requested_location_suba",
+      "importance": 0.01396754079982792
+    },
+    {
+      "feature": "cat__requested_accommodation_type_hotel",
+      "importance": 0.00904543233252212
+    }
+  ],
+  "outputs": {
+    "pipeline_model": "artifacts\\decision_tree_final\\decision_tree_final.pkl",
+    "model_only": "artifacts\\decision_tree_final\\decision_tree_classifier_v1.pkl",
+    "preprocessor": "artifacts\\decision_tree_final\\decision_tree_preprocessor_v1.pkl",
+    "metrics_json": "artifacts\\decision_tree_final\\evaluation_metrics_v1.json",
+    "confusion_matrix_csv": "artifacts\\decision_tree_final\\confusion_matrix_v1.csv",
+    "confusion_matrix_json": "artifacts\\decision_tree_final\\confusion_matrix_v1.json",
+    "confusion_matrix_image": "artifacts\\decision_tree_final\\confusion_matrix_v1.png",
+    "feature_importance_csv": "artifacts\\decision_tree_final\\feature_importance_v1.csv"
+  }
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "sop_item": "2.1",
+    "requirement": "Chatbot interaction and real-time assistance",
+    "feature_evidence": "Chat endpoint with stateful handling and logging",
+    "code_anchor": "ai_chatbot/views.py:openai_chat + ai_chatbot/models.py:ChatbotLog,SystemMetricLog",
+    "testable_output": "chat logs, response-time logs",
+    "status": "partially_ready",
+    "gap_note": "Needs formal requirement acceptance checklist artifact."
+  },
+  {
+    "sop_item": "2.2",
+    "requirement": "Personalized recommendations using CNN and Decision Trees",
+    "feature_evidence": "Accommodation recommendation path with trace metadata and CNN intent support",
+    "code_anchor": "ai_chatbot/recommenders.py + ai_chatbot/views.py + ai_chatbot/models.py:RecommendationResult",
+    "testable_output": "recommendation result rows, score traces",
+    "status": "partially_ready",
+    "gap_note": "True labeled accuracy evidence still needs locked evaluation protocol."
+  },
+  {
+    "sop_item": "2.3",
+    "requirement": "Automated booking and billing for hotels/inns",
+    "feature_evidence": "Billing and booking endpoints with room-linked records",
+    "code_anchor": "guest_app/views.py:accommodation_billing,accommodation_book + guest_app/models.py:AccommodationBooking",
+    "testable_output": "booking records, bill computations, booking events",
+    "status": "partially_ready",
+    "gap_note": "Need Chapter 4 conversion denominator lock and reporting narrative."
+  },
+  {
+    "sop_item": "2.4",
+    "requirement": "Alignment with records management, promotion, feedback, reports",
+    "feature_evidence": "Owner/admin approvals, room management, tourism publication status, survey reporting",
+    "code_anchor": "admin_app/views.py + admin_app/models.py:TourismInformation + admin_app/views.py:survey_results_api",
+    "testable_output": "approval records, published spots, survey API/export outputs",
+    "status": "partially_ready",
+    "gap_note": "Needs explicit requirement-to-workflow matrix in Chapter 4 appendices."
+  }
+]

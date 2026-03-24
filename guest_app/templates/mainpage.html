@@ -50,6 +50,22 @@
             margin-right: 8px;
             filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
         }
+
+        .logo-fallback {
+            display: none;
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.62rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            color: #fff;
+            background: linear-gradient(135deg, #875a34, #b57946);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+        }
         
         .logo h1 {
             color: white;
@@ -525,6 +541,119 @@
             transform: scale(1.08);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
         }
+
+        /* Owner-signup focus mode (used when coming from admin Register Accommodation) */
+        .modal.owner-signup-mode .modal-content {
+            max-width: 760px;
+            border-radius: 16px;
+            border: 1px solid #e6dccf;
+            box-shadow: 0 20px 60px rgba(24, 24, 24, 0.25);
+            background: linear-gradient(180deg, #fffdf8 0%, #ffffff 100%);
+        }
+
+        .owner-signup-hero {
+            margin: 4px 0 14px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #6f4e37, #b1743f);
+            color: #fff;
+            font-size: 0.95rem;
+            line-height: 1.45;
+        }
+
+        .owner-signup-section {
+            margin: 12px 0;
+            padding: 12px;
+            border: 1px solid #ede7dc;
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .owner-signup-section h4 {
+            margin: 0 0 8px;
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
+            color: #5c3a21;
+            text-transform: uppercase;
+        }
+
+        .owner-signup-actions {
+            margin-top: 14px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .owner-signup-submit {
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #875a34, #b57946);
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            padding: 12px 20px;
+            cursor: pointer;
+            min-width: 220px;
+        }
+
+        .owner-signup-submit:disabled {
+            opacity: 0.75;
+            cursor: not-allowed;
+        }
+
+        .owner-signup-login-cta {
+            margin-top: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .owner-signup-login-cta p {
+            margin: 0;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        .owner-signup-login-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 1px solid #b57946;
+            background: #fff;
+            color: #875a34;
+            text-decoration: none;
+            font-weight: 700;
+            line-height: 1;
+            transition: all 0.2s ease;
+        }
+
+        .owner-signup-login-btn:hover {
+            background: #fff5ec;
+            color: #6f4e37;
+            text-decoration: none;
+        }
+
+        .modal-flash {
+            margin: 8px 0 14px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            line-height: 1.4;
+        }
+        .modal-flash.success {
+            background: #e8f5e9;
+            color: #1b5e20;
+            border: 1px solid #c8e6c9;
+        }
+        .modal-flash.error {
+            background: #ffebee;
+            color: #b71c1c;
+            border: 1px solid #ffcdd2;
+        }
         
         /* Mobile responsiveness */
         @media (max-width: 768px) {
@@ -844,6 +973,150 @@
             margin-bottom: 30px;
             padding-bottom: 15px;
             border-bottom: 1px solid #eee;
+        }
+
+        /* Login modal redesign (sample-inspired, system palette) */
+        #loginModal .modal-content {
+            max-width: 390px;
+            border-radius: 18px;
+            padding: 22px 20px 18px;
+            background: #fffdf9;
+            border: 1px solid #e8d8c8;
+            box-shadow: 0 20px 34px rgba(56, 33, 16, 0.2);
+        }
+
+        #loginModal .close-modal {
+            top: 10px;
+            right: 14px;
+            color: #8a6a52;
+        }
+
+        #loginModal .modal-title {
+            margin-bottom: 14px;
+            padding-bottom: 0;
+            border-bottom: none;
+            text-align: left;
+            color: #6b4423;
+            font-size: 1.45rem;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+        }
+
+        #loginModal #login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        #loginModal .form-group {
+            margin-bottom: 0;
+        }
+
+        #loginModal label {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #3f2f26;
+            margin-bottom: 6px;
+        }
+
+        #loginModal .form-control {
+            width: 100%;
+            height: 48px;
+            border-radius: 12px;
+            border: 1px solid #ddc4ae;
+            background: #fff;
+            color: #3f2f26;
+            font-size: 0.94rem;
+            padding: 10px 12px;
+            box-shadow: inset 0 1px 1px rgba(56, 33, 16, 0.05);
+        }
+
+        #loginModal .form-control:focus {
+            border-color: #b57946;
+            box-shadow: 0 0 0 3px rgba(181, 121, 70, 0.16);
+        }
+
+        #loginModal .password-wrap {
+            position: relative;
+        }
+
+        #loginModal .password-wrap .form-control {
+            padding-right: 42px;
+        }
+
+        #loginModal .password-toggle {
+            position: absolute;
+            right: 9px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #9a7f69;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        #loginModal .password-toggle:hover {
+            background: #f7ede4;
+            color: #6b4423;
+        }
+
+        #loginModal .submit-btn {
+            margin-top: 4px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #875a34, #b57946);
+            box-shadow: none;
+            padding: 12px 18px;
+            font-size: 1rem;
+            font-weight: 700;
+            transform: none;
+        }
+
+        #loginModal .submit-btn:hover {
+            transform: none;
+            box-shadow: none;
+            filter: brightness(0.98);
+        }
+
+        #loginModal .login-link {
+            margin-top: 2px;
+            text-align: center;
+            color: #765b48;
+            font-size: 0.92rem;
+            display: grid;
+            gap: 8px;
+        }
+
+        #loginModal .login-link p {
+            margin: 0;
+        }
+
+        #loginModal .login-link a.signup-outline-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 11px 12px;
+            border-radius: 10px;
+            border: 2px solid #6f4e37;
+            text-decoration: none;
+            color: #3f2f26;
+            font-weight: 700;
+            background: #fff;
+        }
+
+        #loginModal .login-link a.signup-outline-btn:hover {
+            background: #fff7ef;
+            text-decoration: none;
+        }
+
+        #loginModal .error-message {
+            min-height: 14px;
+            margin-top: 4px;
+            margin-bottom: 0;
+            font-size: 0.73rem;
         }
 
         /* Responsive adjustments */
@@ -1350,15 +1623,34 @@
             flex: 1;
             padding: 14px 14px 10px;
             overflow-y: auto;
-            background:
-                radial-gradient(circle at 0% 0%, rgba(16, 76, 186, 0.05), transparent 40%),
-                radial-gradient(circle at 100% 100%, rgba(14, 165, 162, 0.04), transparent 35%),
-                #f4f8fd;
+            overflow-x: hidden;
+            background: #f4f8fd;
+            position: relative;
             display: flex;
             flex-direction: column;
             gap: 10px;
             scrollbar-width: thin;
             scrollbar-color: #b7c9e8 transparent;
+        }
+
+        .chat-messages::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                linear-gradient(180deg, rgba(244, 248, 253, 0.84), rgba(244, 248, 253, 0.84)),
+                url('/static/images/chatbot-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 1;
+            z-index: 0;
+        }
+
+        .chat-messages > * {
+            position: relative;
+            z-index: 1;
         }
 
         .chat-messages::-webkit-scrollbar {
@@ -1395,6 +1687,19 @@
             color: #1e293b;
             border: 1px solid #e5edf8;
             border-bottom-left-radius: 6px;
+        }
+
+        .message.bot.rich-card {
+            max-width: 100%;
+            padding: 8px 9px;
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid #d8e5f5;
+            box-shadow: 0 6px 16px rgba(20, 36, 62, 0.07);
+        }
+
+        .message.bot.rich-card .chat-structured-card {
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .message.bot a {
@@ -1565,7 +1870,8 @@
             {% csrf_token %}
         </div>
         <div class="logo">
-            <img src="/static/images/logo.png" alt="Ibayaw Tour Logo">
+            <img src="/static/images/logo.png" alt="Ibayaw Tour Logo" onerror="this.style.display='none'; var fb=document.getElementById('ibayaw-logo-fallback'); if(fb){fb.style.display='inline-flex';}">
+            <span id="ibayaw-logo-fallback" class="logo-fallback" aria-hidden="true">IT</span>
             <h1>Ibayaw Tour</h1>
         </div>
         <div class="nav-links">
@@ -1606,6 +1912,12 @@
                     <div class="dropdown-divider"></div>
                     <a href="{% url 'my_accommodation_bookings' %}"><i class="fas fa-hotel"></i> My Hotel/Inn Bookings</a>
                     <div class="dropdown-divider"></div>
+                    {% if is_accommodation_owner_user %}
+                    <a href="{% url 'admin_app:owner_hub' %}"><i class="fas fa-columns"></i> Owner Hub</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'owner_accommodation_register' %}"><i class="fas fa-building"></i> Register My Accommodation</a>
+                    <div class="dropdown-divider"></div>
+                    {% endif %}
                     <a href="{% url 'companion' %}"><i class="fas fa-users"></i> Add Companion</a>
                     <div class="dropdown-divider"></div>
                     <a href="{% url 'list_companion_requests' %}" class="request-notification">
@@ -2259,13 +2571,26 @@
     <!-- Chat Modal -->
     <div id="chatModal" class="chat-modal">
         <div class="chat-modal-content">
-            <div class="chat-header" data-chat-subtitle="Hotel | Booking | Billing">
+            <div
+                class="chat-header"
+                data-chat-subtitle="{% if is_accommodation_owner_user %}Owner | Rooms | Bookings{% else %}Hotel | Booking | Billing{% endif %}"
+                data-chat-subtitle-owner="Owner | Rooms | Bookings"
+                data-chat-subtitle-guest="Hotel | Booking | Billing"
+            >
                 <h3>Ibayaw Tour Assistant</h3>
                 <button class="chat-close">&times;</button>
             </div>
             <div class="chat-messages" id="chatMessages">
-                <div class="message bot">
+                <div
+                    class="message bot"
+                    data-chat-welcome-owner="Hello! I'm your Ibayaw Tour assistant for accommodation owners. I can help you review your rooms, availability, and booking status."
+                    data-chat-welcome-guest="Hello! I'm your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City."
+                >
+                    {% if is_accommodation_owner_user %}
+                    Hello! I'm your Ibayaw Tour assistant for accommodation owners. I can help you review your rooms, availability, and booking status.
+                    {% else %}
                     Hello! I'm your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City.
+                    {% endif %}
                 </div>
             </div>
             <div class="chat-input-area">
@@ -2273,33 +2598,6 @@
                 <button id="chatSend" class="chat-send">
                     <i class="fas fa-paper-plane"></i>
                 </button>
-            </div>
-            <div style="padding: 8px 12px; border-top: 1px solid #e7eef8; text-align: right;">
-                <button
-                    id="chatSurveyOpenBtn"
-                    type="button"
-                    style="border: 1px solid #c3d4ea; background: #f3f8ff; color: #1f4f85; border-radius: 999px; padding: 6px 10px; font-size: 0.74rem; font-weight: 700; cursor: pointer;"
-                >
-                    Answer SUS/TAM Survey
-                </button>
-            </div>
-        </div>
-    </div>
-    <div id="chatSurveyModal" class="chat-modal" style="display:none;">
-        <div class="chat-modal-content" style="max-width: 640px;">
-            <div class="chat-header">
-                <h3>Usability & Acceptance Survey</h3>
-                <button id="chatSurveyCloseBtn" class="chat-close">&times;</button>
-            </div>
-            <div style="padding: 12px 14px; max-height: 68vh; overflow-y: auto;">
-                <div style="padding: 8px 10px; border: 1px solid #d6e2f1; border-radius: 8px; background: #f8fbff; color: #355775; font-size: 0.74rem; font-weight: 700; margin-bottom: 10px;">
-                    Likert Scale: 1 = Strongly Disagree, 2 = Disagree, 3 = Neutral, 4 = Agree, 5 = Strongly Agree
-                </div>
-                <div id="chatSurveyQuestions" style="display:grid; gap: 10px;"></div>
-                <textarea id="chatSurveyComment" rows="3" placeholder="Optional comments" style="width:100%; margin-top:10px; border:1px solid #d4dfed; border-radius:8px; padding:8px;"></textarea>
-                <div style="margin-top: 10px; text-align: right;">
-                    <button id="chatSurveySubmitBtn" type="button" style="border: none; background: linear-gradient(135deg, #1f64d6, #179fc4); color: #fff; border-radius: 8px; padding: 8px 12px; font-size: 0.78rem; font-weight: 700; cursor: pointer;">Submit Survey</button>
-                </div>
             </div>
         </div>
     </div>
@@ -2327,6 +2625,7 @@
             const chatSurveyComment = document.getElementById('chatSurveyComment');
             const myAccommodationBookingsUrl = "{% url 'my_accommodation_bookings' %}";
             let hasLoadedInitialHotelSuggestions = false;
+            const isAccommodationOwnerUser = {% if is_accommodation_owner_user %}true{% else %}false{% endif %};
             const surveyQuestionBank = [
                 { code: 'SUS_Q1', label: 'I think that I would like to use this system frequently.' },
                 { code: 'SUS_Q2', label: 'I found the system unnecessarily complex.' },
@@ -2558,7 +2857,7 @@
                     return;
                 }
                 chatModal.style.display = 'block';
-                if (!hasLoadedInitialHotelSuggestions) {
+                if (!isAccommodationOwnerUser && !hasLoadedInitialHotelSuggestions) {
                     hasLoadedInitialHotelSuggestions = true;
                     requestChatbotReply('show default hotel suggestions', { addUserBubble: false, initSuggestions: true });
                 }
@@ -2733,6 +3032,7 @@
                 }
 
                 if (structuredContent) {
+                    messageDiv.classList.add('rich-card');
                     messageDiv.appendChild(structuredContent);
                 } else {
                     messageDiv.textContent = text;
@@ -2799,6 +3099,7 @@
                 const fallbackMode = String(payload?.recommendation_fallback || 'strict').trim().toLowerCase();
 
                 const card = document.createElement('div');
+                card.className = 'chat-structured-card chat-accommodation-card';
                 card.style.display = 'grid';
                 card.style.gap = '12px';
                 card.style.padding = '2px 1px';
@@ -2900,8 +3201,7 @@
 
                     const matchStrengthRaw = String(item?.match_strength || '').trim();
                     const matchStrength = matchStrengthRaw || 'Low';
-                    const scoreValue = Number(item?.ranking_score ?? item?.match_score);
-                    if (Number.isFinite(scoreValue) || matchStrengthRaw) {
+                    if (matchStrengthRaw) {
                         const matchRow = document.createElement('div');
                         matchRow.style.display = 'flex';
                         matchRow.style.alignItems = 'center';
@@ -2929,41 +3229,7 @@
                             strengthBadge.style.color = '#9a2a3a';
                         }
                         matchRow.appendChild(strengthBadge);
-
-                        const scoreLine = document.createElement('div');
-                        scoreLine.style.fontSize = '0.77rem';
-                        scoreLine.style.fontWeight = '700';
-                        scoreLine.style.color = '#355775';
-                        if (Number.isFinite(scoreValue)) {
-                            scoreLine.textContent = `Score: ${scoreValue.toFixed(2)}`;
-                        } else {
-                            scoreLine.textContent = 'Score: N/A';
-                        }
-                        matchRow.appendChild(scoreLine);
                         itemBox.appendChild(matchRow);
-
-                        if (Number.isFinite(scoreValue)) {
-                            const meterTrack = document.createElement('div');
-                            meterTrack.style.height = '6px';
-                            meterTrack.style.width = '100%';
-                            meterTrack.style.borderRadius = '999px';
-                            meterTrack.style.background = '#dce7f4';
-                            meterTrack.style.overflow = 'hidden';
-
-                            const meterFill = document.createElement('div');
-                            meterFill.style.height = '100%';
-                            meterFill.style.width = `${Math.max(0, Math.min(100, scoreValue * 100))}%`;
-                            meterFill.style.borderRadius = '999px';
-                            if (scoreValue >= 0.8) {
-                                meterFill.style.background = 'linear-gradient(90deg, #0f9f67, #2db585)';
-                            } else if (scoreValue >= 0.55) {
-                                meterFill.style.background = 'linear-gradient(90deg, #d89b00, #efb84b)';
-                            } else {
-                                meterFill.style.background = 'linear-gradient(90deg, #bf3f59, #d76a7f)';
-                            }
-                            meterTrack.appendChild(meterFill);
-                            itemBox.appendChild(meterTrack);
-                        }
                     }
 
                     const reasons = Array.isArray(item?.reasons) ? item.reasons : [];
@@ -3546,14 +3812,26 @@
         <div class="modal-content">
             <span class="close-modal" id="close-signup">&times;</span>
             <h2 class="modal-title">Sign Up to Continue</h2>
-            
-            <!-- Success message -->
-            <div id="signup-success" class="success-message" style="display: none; color: #28a745; text-align: center; padding: 15px; margin-bottom: 20px; background-color: #f8fff8; border-radius: 5px; border: 1px solid #d4edda;">
-                Registration successful! Logging you in...
+            {% if not recaptcha_configured %}
+            <div class="modal-flash error" style="display:block;">
+                reCAPTCHA is not fully configured. Please set RECAPTCHA_SITE_KEY and RECAPTCHA_SECRET_KEY before production use.
+            </div>
+            {% endif %}
+            <div id="owner-signup-hero" class="owner-signup-hero" style="display:none;">
+                Accommodation Owner Registration: complete this form and we will bring you straight to accommodation registration.
             </div>
             
-            <form id="signup-form" enctype="multipart/form-data">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags != 'success' %}
+                        <div class="modal-flash error">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+            
+            <form id="signup-form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
                 {% csrf_token %}
+                <input type="hidden" id="signup_next" name="next" value="">
                 
                 <div class="form-row name-row">
                     <div class="form-group" style="flex: 2;">
@@ -3638,6 +3916,11 @@
                     <div class="error-message" id="company_name-error"></div>
                 </div>
                 
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="register_as_accommodation_owner" name="register_as_accommodation_owner" class="form-check-input">
+                    <label for="register_as_accommodation_owner" class="form-check-label">I am signing up as an Accommodation Owner</label>
+                </div>
+                
                 <div class="form-group">
                     <label for="credentials">Credentials (Passport, Valid ID, etc.)</label>
                     <input type="file" id="credentials" name="credentials" class="form-control" multiple accept="image/*">
@@ -3708,13 +3991,14 @@
                     </div>
                 </div>
                 
-                <div class="button-group">
-                    <button type="submit" class="btn btn-primary">Sign Up</button>
+                <div class="button-group owner-signup-actions">
+                    <button type="submit" id="owner-signup-submit" class="btn btn-primary owner-signup-submit">Create Owner Account</button>
                 </div>
             </form>
             
-            <div class="form-link">
-                <p>Already have an account? <a href="#" class="show-login">Log In</a></p>
+            <div class="form-link owner-signup-login-cta">
+                <p>Already have an account?</p>
+                <a href="#" class="show-login owner-signup-login-btn">Log In</a>
             </div>
         </div>
     </div>
@@ -3724,11 +4008,19 @@
         <div class="modal-content">
             <span class="close-modal" id="close-login">&times;</span>
             <h2 class="modal-title">Login to Continue</h2>
-            
-            <!-- Success message -->
-            <div id="login-success" class="success-message" style="display: none; color: #28a745; text-align: center; padding: 15px; margin-bottom: 20px; background-color: #f8fff8; border-radius: 5px; border: 1px solid #d4edda;">
-                Login successful! Redirecting...
+            {% if not recaptcha_configured %}
+            <div class="modal-flash error" style="display:block;">
+                reCAPTCHA is not fully configured. Please set RECAPTCHA_SITE_KEY and RECAPTCHA_SECRET_KEY before production use.
             </div>
+            {% endif %}
+            
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags != 'success' %}
+                        <div class="modal-flash error">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
             
             <form id="login-form">
                 {% csrf_token %}
@@ -3741,18 +4033,43 @@
                 
                 <div class="form-group">
                     <label for="login-password" class="required">Password</label>
-                    <input type="password" id="login-password" name="password" class="form-control" required>
+                    <div class="password-wrap">
+                        <input type="password" id="login-password" name="password" class="form-control" required>
+                        <button type="button" id="toggle-login-password" class="password-toggle" aria-label="Show password">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                     <div class="error-message" id="login-password-error"></div>
                 </div>
                 
                 <button type="submit" class="submit-btn">Log In</button>
                 
                 <div class="login-link">
-                    Don't have an account? <a href="#" id="show-signup">Sign up here</a>
+                    <p>Don't have an account?</p>
+                    <a href="#" id="show-signup" class="signup-outline-btn">Sign up</a>
                 </div>
             </form>
         </div>
     </div>
+    {% if recaptcha_site_key %}
+    <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key|urlencode }}" async defer></script>
+    {% endif %}
+    <script>
+        (function() {
+            const toggleBtn = document.getElementById('toggle-login-password');
+            const passwordField = document.getElementById('login-password');
+            if (!toggleBtn || !passwordField) return;
+
+            toggleBtn.addEventListener('click', function() {
+                const show = passwordField.type === 'password';
+                passwordField.type = show ? 'text' : 'password';
+                this.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+                this.innerHTML = show
+                    ? '<i class="fas fa-eye-slash"></i>'
+                    : '<i class="fas fa-eye"></i>';
+            });
+        })();
+    </script>
 
     <!-- Profile Update Modal -->
     <div id="profileUpdateModal" class="modal">
@@ -3851,6 +4168,10 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const nextUrl = String(urlParams.get('next') || '').trim();
+            const ownerSignupIntent = urlParams.get('owner_signup') === '1';
+
             // Add body attribute for authentication state
             document.body.setAttribute('data-authenticated', '{% if user.is_authenticated %}true{% else %}false{% endif %}');
             
@@ -3860,9 +4181,26 @@
             const closeSignupBtn = document.getElementById("close-signup");
             const closeLoginBtn = document.getElementById("close-login");
             
-            // Automatically show login modal if user is not authenticated
+            // If owner intent is present, prioritize signup modal for first-time owners.
+            if (ownerSignupIntent) {
+                const ownerCheckbox = document.getElementById('register_as_accommodation_owner');
+                if (ownerCheckbox) {
+                    ownerCheckbox.checked = true;
+                }
+            }
+            const signupNextInput = document.getElementById('signup_next');
+            if (signupNextInput && nextUrl) {
+                signupNextInput.value = nextUrl;
+            }
+
+            // Automatically show login/signup modal if user is not authenticated
             if (document.body.getAttribute('data-authenticated') === 'false') {
-                loginModal.style.display = "block";
+                if (ownerSignupIntent) {
+                    loginModal.style.display = "none";
+                    signupModal.style.display = "block";
+                } else {
+                    loginModal.style.display = "block";
+                }
             }
             
             // Login functionality
@@ -4068,6 +4406,9 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            const pageParams = new URLSearchParams(window.location.search);
+            const nextUrl = String(pageParams.get('next') || '').trim();
+
             // Add body attribute for authentication state
             document.body.setAttribute('data-authenticated', '{% if user.is_authenticated %}true{% else %}false{% endif %}');
             
@@ -4162,6 +4503,19 @@
             
             // Store the URL of the clicked card
             let clickedCardUrl = '';
+            const recaptchaSiteKey = '{{ recaptcha_site_key|escapejs }}';
+
+            async function getRecaptchaToken(actionName) {
+                if (!recaptchaSiteKey || typeof grecaptcha === 'undefined') {
+                    return '';
+                }
+                try {
+                    return await grecaptcha.execute(recaptchaSiteKey, { action: actionName || 'submit' });
+                } catch (error) {
+                    console.error('reCAPTCHA token error:', error);
+                    return '';
+                }
+            }
             
             // Add click handlers for package cards
             document.querySelectorAll('.package-card').forEach(card => {
@@ -4181,7 +4535,7 @@
             });
             
             // Handle the login form submission
-            document.getElementById('login-form').addEventListener('submit', function(e) {
+            document.getElementById('login-form').addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
                 // Clear previous error messages
@@ -4191,6 +4545,14 @@
                 
                 // Get form data
                 const formData = new FormData(this);
+                const loginCaptchaToken = await getRecaptchaToken('guest_login');
+                if (recaptchaSiteKey && !loginCaptchaToken) {
+                    document.getElementById('login-email-error').textContent = 'Please complete the reCAPTCHA verification.';
+                    return;
+                }
+                if (loginCaptchaToken) {
+                    formData.append('g_recaptcha_response', loginCaptchaToken);
+                }
                 
                 // Send AJAX request for login
                 const csrfToken = getCookie('csrftoken');
@@ -4207,7 +4569,14 @@
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.json();
+                    const contentType = (response.headers.get('content-type') || '').toLowerCase();
+                    if (contentType.includes('application/json')) {
+                        return response.json();
+                    }
+                    return response.text().then(() => ({
+                        success: true,
+                        redirect_url: response.url || ''
+                    }));
                 })
                 .then(data => {
                     if (data.success) {
@@ -4218,7 +4587,12 @@
                         document.body.setAttribute('data-authenticated', 'true');
                         
                         // Redirect to the original tour page or reload
-                        if (clickedCardUrl) {
+                        const redirectUrl = String(data.redirect_url || '').trim();
+                        if (redirectUrl) {
+                            window.location.href = redirectUrl;
+                        } else if (nextUrl) {
+                            window.location.href = nextUrl;
+                        } else if (clickedCardUrl) {
                             window.location.href = clickedCardUrl;
                         } else {
                             window.location.reload();
@@ -4227,6 +4601,12 @@
                         // Login failed
                         console.error('Login failed:', data.message);
                         document.getElementById('login-email-error').textContent = data.message || 'Invalid email or password';
+                        const ownerRedirectUrl = String(data.redirect_url || '').trim();
+                        if (data.owner_login_only && ownerRedirectUrl) {
+                            setTimeout(() => {
+                                window.location.href = ownerRedirectUrl;
+                            }, 1200);
+                        }
                     }
                 })
                 .catch(error => {
@@ -4236,8 +4616,36 @@
             });
             
             // Handle the signup form submission
-            document.getElementById('signup-form').addEventListener('submit', function(e) {
+            document.getElementById('signup-form').addEventListener('submit', async function(e) {
                 e.preventDefault();
+
+                const signupFormEl = document.getElementById('signup-form');
+                const signupModalContent = document.querySelector('#signupModal .modal-content');
+                let flashEl = document.getElementById('signup-modal-flash');
+                if (!flashEl && signupModalContent) {
+                    flashEl = document.createElement('div');
+                    flashEl.id = 'signup-modal-flash';
+                    flashEl.style.display = 'none';
+                    const modalTitle = signupModalContent.querySelector('.modal-title');
+                    if (modalTitle && modalTitle.nextSibling) {
+                        signupModalContent.insertBefore(flashEl, modalTitle.nextSibling);
+                    } else if (signupFormEl) {
+                        signupModalContent.insertBefore(flashEl, signupFormEl);
+                    }
+                }
+                const setSignupFlash = (message, type = 'error') => {
+                    if (!flashEl) return;
+                    flashEl.className = `modal-flash ${type}`;
+                    flashEl.textContent = message;
+                    flashEl.style.display = 'block';
+                };
+                const clearSignupFlash = () => {
+                    if (!flashEl) return;
+                    flashEl.style.display = 'none';
+                    flashEl.textContent = '';
+                    flashEl.className = 'modal-flash';
+                };
+                clearSignupFlash();
                 
                 // Clear previous error messages
                 document.querySelectorAll('.error-message').forEach(el => {
@@ -4288,17 +4696,20 @@
                 
                 // Profile picture validation
                 const profilePicture = document.getElementById('profile_picture');
+                const pictureError = document.getElementById('picture-error');
                 if (profilePicture.files.length > 0) {
                     const file = profilePicture.files[0];
                     if (!file.type.startsWith('image/')) {
-                        document.getElementById('file-error').textContent = 'Please upload an image file.';
+                        if (pictureError) pictureError.textContent = 'Please upload an image file.';
                         isValid = false;
                     } else if (file.size > 5 * 1024 * 1024) { // 5MB limit
-                        document.getElementById('file-error').textContent = 'File size should be less than 5MB.';
+                        if (pictureError) pictureError.textContent = 'File size should be less than 5MB.';
                         isValid = false;
+                    } else {
+                        if (pictureError) pictureError.textContent = '';
                     }
                 } else {
-                    document.getElementById('file-error').textContent = 'Please upload a profile picture.';
+                    if (pictureError) pictureError.textContent = 'Please upload a profile picture.';
                     isValid = false;
                 }
                 
@@ -4307,8 +4718,23 @@
                 }
                 
                 // Create FormData object for handling file upload
+                if (ownerSignupIntent) {
+                    const ownerCheckbox = document.getElementById('register_as_accommodation_owner');
+                    if (ownerCheckbox) {
+                        ownerCheckbox.checked = true;
+                    }
+                }
                 const formData = new FormData(this);
+                const signupCaptchaToken = await getRecaptchaToken('guest_signup');
+                if (recaptchaSiteKey && !signupCaptchaToken) {
+                    setSignupFlash('Please complete the reCAPTCHA verification.', 'error');
+                    return;
+                }
+                if (signupCaptchaToken) {
+                    formData.append('g_recaptcha_response', signupCaptchaToken);
+                }
                 let signupResponseData = null;
+                let ownerRedirectUrl = '';
                 
                 // Send AJAX request for registration
                 fetch('{% url "register" %}', {
@@ -4328,6 +4754,8 @@
                 .then(data => {
                     signupResponseData = data;
                     if (data.success) {
+                        ownerRedirectUrl = String(data.redirect_url || '').trim();
+                        setSignupFlash('Registration successful. Logging you in...', 'success');
                         // Registration successful, proceed with login immediately
                         console.log('Registration successful, logging in...');
                         
@@ -4337,15 +4765,19 @@
                         loginData.append('email', emailForLogin);
                         loginData.append('password', formData.get('password'));
                         loginData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
-                        
-                        return fetch('{% url "login" %}', {
-                            method: 'POST',
-                            body: loginData,
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest',
-                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        return getRecaptchaToken('guest_login').then((autoLoginCaptchaToken) => {
+                            if (autoLoginCaptchaToken) {
+                                loginData.append('g_recaptcha_response', autoLoginCaptchaToken);
                             }
-                        }).then(response => response.json());
+                            return fetch('{% url "login" %}', {
+                                method: 'POST',
+                                body: loginData,
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                                }
+                            }).then(response => response.json());
+                        });
                     } else {
                         // Show error messages
                         if (data.errors) {
@@ -4382,22 +4814,28 @@
                         
                         // Update authentication state
                         document.body.setAttribute('data-authenticated', 'true');
+
+                        if (ownerRedirectUrl) {
+                            window.location.href = ownerRedirectUrl;
+                            return;
+                        }
                         
                         // Redirect to the original tour page or reload
-                        if (clickedCardUrl) {
+                        if (nextUrl) {
+                            window.location.href = nextUrl;
+                        } else if (clickedCardUrl) {
                             window.location.href = clickedCardUrl;
                         } else {
                             window.location.reload();
                         }
-                    } else {
-                        // Login failed
-                        console.error('Login failed');
-                        alert('Login failed. Please try again.');
-                    }
-                })
+                        } else {
+                            // Login failed
+                            console.error('Login failed');
+                            setSignupFlash('Account created, but auto-login failed. Please log in manually.', 'error');
+                        }
+                    })
                 .catch(error => {
                     console.error('Error:', error);
-                    document.getElementById('signup-form').reset();
                     
                     // Display error messages from the server
                     if (signupResponseData && signupResponseData.errors) {
@@ -4408,17 +4846,19 @@
                                 fieldErrorEl.textContent = signupResponseData.errors[field];
                             }
                         }
+                        setSignupFlash('Please correct the highlighted fields and submit again.', 'error');
                     } else if (signupResponseData && signupResponseData.message) {
                         // Check if message contains information about taken usernames/emails
                         if (signupResponseData.message.includes('email is already registered')) {
                             document.getElementById('email-error').textContent = 'This email is already registered. Please use another or login.';
+                            setSignupFlash('This email is already registered. Please use another email or log in.', 'error');
                         } else {
-                            alert(signupResponseData.message);
+                            setSignupFlash(signupResponseData.message, 'error');
                         }
                     } else {
-                        alert('Registration failed. Please try again.');
+                        setSignupFlash('Registration failed. Please try again.', 'error');
                     }
-                    throw new Error('Registration failed');
+                    return;
                 });
             });
         });
@@ -4504,7 +4944,8 @@
                         profilePictureInput.files = dataTransfer.files;
                         
                         // Clear any previous validation errors
-                        document.getElementById('file-error').textContent = '';
+                    const pictureError = document.getElementById('picture-error');
+                    if (pictureError) pictureError.textContent = '';
                     });
             }
             
@@ -4987,9 +5428,17 @@
             if (chatHeaderTitle) {
                 chatHeaderTitle.textContent = translations['chat_assistant_title'] || 'Ibayaw Tour Assistant';
             }
+            const isOwnerMode = {% if is_accommodation_owner_user %}true{% else %}false{% endif %};
             const chatHeader = document.querySelector('.chat-header');
             if (chatHeader) {
-                chatHeader.setAttribute('data-chat-subtitle', translations['chat_assistant_subtitle'] || 'Hotel | Booking | Billing');
+                const ownerSubtitleFallback = chatHeader.getAttribute('data-chat-subtitle-owner') || 'Owner | Rooms | Bookings';
+                const guestSubtitleFallback = chatHeader.getAttribute('data-chat-subtitle-guest') || 'Hotel | Booking | Billing';
+                chatHeader.setAttribute(
+                    'data-chat-subtitle',
+                    (isOwnerMode
+                        ? (translations['chat_assistant_subtitle_owner'] || ownerSubtitleFallback)
+                        : (translations['chat_assistant_subtitle'] || guestSubtitleFallback))
+                );
             }
             const initialBotMessage = document.querySelector('#chatMessages .message.bot');
             if (
@@ -4997,7 +5446,16 @@
                 initialBotMessage.textContent &&
                 initialBotMessage.textContent.includes('Ibayaw Tour assistant')
             ) {
-                initialBotMessage.textContent = translations['chat_welcome'] || "Hello! I'm your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City.";
+                const ownerWelcomeFallback =
+                    initialBotMessage.getAttribute('data-chat-welcome-owner') ||
+                    "Hello! I'm your Ibayaw Tour assistant for accommodation owners. I can help you review your rooms, availability, and booking status.";
+                const guestWelcomeFallback =
+                    initialBotMessage.getAttribute('data-chat-welcome-guest') ||
+                    "Hello! I'm your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City.";
+                initialBotMessage.textContent =
+                    (isOwnerMode
+                        ? (translations['chat_welcome_owner'] || ownerWelcomeFallback)
+                        : (translations['chat_welcome'] || guestWelcomeFallback));
             }
             const chatInputEl = document.getElementById('chatInput');
             if (chatInputEl) {
@@ -6181,6 +6639,71 @@
     document.addEventListener('DOMContentLoaded', function() {
         setupCameraCapture();
         // Make sure to call loadProfileData() here too if not already called
+    });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const params = new URLSearchParams(window.location.search);
+        const ownerSignupIntent = params.get('owner_signup') === '1';
+        if (!ownerSignupIntent) return;
+
+        const signupModal = document.getElementById('signupModal');
+        const loginModal = document.getElementById('loginModal');
+
+        // Force owner registration path: hide login modal and show signup modal only.
+        if (loginModal) {
+            loginModal.style.display = 'none';
+            loginModal.setAttribute('aria-hidden', 'true');
+        }
+        if (signupModal) {
+            signupModal.style.display = 'block';
+            signupModal.setAttribute('aria-hidden', 'false');
+            signupModal.classList.add('owner-signup-mode');
+        }
+
+        const ownerHero = document.getElementById('owner-signup-hero');
+        if (ownerHero) ownerHero.style.display = 'block';
+
+        const ownerCheckbox = document.getElementById('register_as_accommodation_owner');
+        if (ownerCheckbox) ownerCheckbox.checked = true;
+
+        // Hide links that switch back to login while in owner-signup mode.
+        document.querySelectorAll('.show-login, #show-signup').forEach(function(el) {
+            el.style.display = 'none';
+        });
+
+        const signupForm = document.getElementById('signup-form');
+        const submitBtn = document.getElementById('owner-signup-submit');
+        if (!signupForm) return;
+
+        // In owner mode, bypass fragile AJAX listeners and perform a direct POST.
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            if (ownerCheckbox) ownerCheckbox.checked = true;
+
+            const pw = document.getElementById('password');
+            const cpw = document.getElementById('confirm_password');
+            const cpwError = document.getElementById('confirm-password-error');
+            if (pw && cpw && pw.value !== cpw.value) {
+                if (cpwError) cpwError.textContent = 'Passwords do not match.';
+                cpw.focus();
+                return;
+            }
+
+            if (!signupForm.checkValidity()) {
+                signupForm.reportValidity();
+                return;
+            }
+
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Creating owner account...';
+            }
+            HTMLFormElement.prototype.submit.call(signupForm);
+        }, true);
     });
     </script>
 </body>

@@ -4,19 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Itinerary for {{ tour.tour_name }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
+        body {
+            font-family: "Poppins", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background:
+                radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
+                radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
+                #f8f5f1;
+            color: #3f2f26;
+        }
+        .container {
+            max-width: 1180px;
+        }
+        .container.mt-4 {
+            background: linear-gradient(180deg, #fffefc 0%, #fff9f2 100%);
+            border: 1px solid #ead9c9;
+            border-radius: 18px;
+            box-shadow: 0 14px 28px rgba(56, 33, 16, 0.12);
+            padding: 22px;
+        }
         .day-header {
-            background-color: #f8f9fa;
-            border-left: 4px solid #007BFF;
+            background-color: #fff5e9;
+            border-left: 4px solid #875a34;
             padding: 10px 15px;
             margin-top: 20px;
             margin-bottom: 15px;
             border-radius: 4px;
         }
         .event-card {
-            border-left: 3px solid #28a745;
+            border-left: 3px solid #b77744;
             margin-bottom: 15px;
             padding: 15px;
             background-color: #fff;
@@ -35,7 +54,8 @@
         }
         .nav-tabs .nav-link.active {
             font-weight: bold;
-            border-bottom: 2px solid #007bff;
+            border-bottom: 2px solid #875a34;
+            color: #6d4827;
         }
         /* Styles for scrollable events list */
         .events-container {
@@ -74,6 +94,33 @@
         .event-actions button {
             padding: 2px 8px;
             font-size: 0.85rem;
+        }
+        .card {
+            border: 1px solid #ead9c9;
+            border-radius: 14px;
+        }
+        .card-header.bg-primary {
+            background: linear-gradient(135deg, #875a34, #b77744) !important;
+            border-radius: 14px 14px 0 0;
+        }
+        .card-header.bg-light {
+            background: #f7eee5 !important;
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #875a34, #b77744);
+            border-color: transparent;
+        }
+        .btn-outline-primary {
+            color: #875a34;
+            border-color: #cda987;
+        }
+        .btn-outline-primary:hover {
+            background: #875a34;
+            border-color: #875a34;
+        }
+        .form-control:focus {
+            border-color: #875a34;
+            box-shadow: 0 0 0 0.2rem rgba(137, 90, 52, 0.18);
         }
     </style>
 </head>

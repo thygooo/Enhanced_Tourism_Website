@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils import timezone
 
 # Register your models here.
 from django.contrib import admin
@@ -20,12 +21,21 @@ admin.site.register(EstablishmentForm)
 
 @admin.action(description="Mark selected accommodations as accepted")
 def mark_accepted(modeladmin, request, queryset):
-    queryset.update(approval_status="accepted", status="accepted")
+    queryset.update(
+        approval_status="accepted",
+        status="accepted",
+        reviewed_at=timezone.now(),
+        rejection_reason="",
+    )
 
 
 @admin.action(description="Mark selected accommodations as declined")
 def mark_declined(modeladmin, request, queryset):
-    queryset.update(approval_status="declined", status="declined")
+    queryset.update(
+        approval_status="declined",
+        status="declined",
+        reviewed_at=timezone.now(),
+    )
 
 
 @admin.register(Accomodation)
@@ -37,10 +47,13 @@ class AccomodationAdmin(admin.ModelAdmin):
         "phone_number",
         "owner",
         "approval_status",
+        "submitted_at",
+        "reviewed_at",
+        "reviewed_by",
     )
-    list_filter = ("approval_status", "company_type")
+    list_filter = ("approval_status", "company_type", "is_active")
     search_fields = ("company_name", "email_address", "phone_number")
-    readonly_fields = ("owner",)
+    readonly_fields = ("owner", "submitted_at", "reviewed_at", "reviewed_by")
     actions = [mark_accepted, mark_declined]
 
 

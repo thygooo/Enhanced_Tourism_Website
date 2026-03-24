@@ -1,0 +1,5 @@
+metric_name,locked_formula,denominator_lock,metric_type,interpretation_rule
+book_rate_pct,(book_events / recommendation_view_events) * 100,RecommendationEvent where event_type='view' and item_ref='chat:accommodation_recommendation_request',RQ3 proxy metric,Report as conversion efficiency only.
+true_accuracy_labeled,correct_predictions / total_labeled_samples * 100,labeled relevance evaluation set size,RQ3 true accuracy,Do not substitute online proxies for this metric.
+queries_with_results_rate_pct,queries_with_results / accommodation_queries * 100,accommodation recommendation queries,RQ3 online proxy,Label explicitly as effectiveness proxy.
+ctr_pct,click_events / recommendation_view_events * 100,recommendation view events,RQ3 online proxy,"Engagement indicator, not true accuracy."

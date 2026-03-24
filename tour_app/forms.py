@@ -6,7 +6,7 @@ from datetime import timedelta
 class TourAddForm(forms.ModelForm):
     class Meta:
         model = Tour_Add
-        fields = ('tour_name', 'description', 'image')
+        fields = ('tour_name', 'description', 'image', 'publication_status')
 
 
 class TourScheduleForm(forms.ModelForm):

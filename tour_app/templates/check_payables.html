@@ -5,32 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tour Check Payables</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
     <style>
         :root {
-            /* Brand Colors */
-            --primary-color: #875a34;    /* Main brand color */
-            --primary-light: #e99c59;   /* Lighter version for accents */
-            --primary-dark: #6d4827;    /* Darker version for hover states */
-            --secondary-color: #8c6e5d; /* Secondary brand color */
-            
-            /* Status Colors */
-            --success-color: #34a853;   /* Green for success states */
-            --warning-color: #fbbc05;   /* Yellow for warnings */
-            --error-color: #ea4335;     /* Red for errors */
-            --info-color: #4285f4;      /* Blue for information */
-            
-            /* Neutral Colors */
-            --bg-color: #f4f7fc;        /* Light background */
-            --text-dark: #333;          /* Dark text */
-            --text-medium: #666;        /* Medium text */
-            --text-light: #9e9e9e;      /* Light text */
-            --white: #fff;              /* White */
+            --primary-color: #875a34;
+            --primary-dark: #6d4827;
+            --success-color: #34a853;
+            --warning-color: #c7921a;
+            --error-color: #c84d3a;
+            --text-dark: #3f2f26;
+            --text-medium: #6b523f;
+            --text-light: #8f7a67;
+            --white: #fff;
         }
 
         body {
-            background-color: var(--bg-color);
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background:
+                radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
+                radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
+                #f8f5f1;
+            font-family: "Poppins", 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             color: var(--text-dark);
             margin: 0;
             padding: 0;
@@ -50,43 +45,67 @@
         .container {
             max-width: 1000px;
             margin: 20px auto;
-            padding: 30px;
-            background-color: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 26px;
+            background: linear-gradient(180deg, #fffefc 0%, #fff9f2 100%);
+            border: 1px solid #ead9c9;
+            border-radius: 18px;
+            box-shadow: 0 14px 28px rgba(56, 33, 16, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::after {
+            content: "";
+            position: absolute;
+            right: -100px;
+            top: -110px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(224, 164, 109, 0.26), rgba(224, 164, 109, 0));
+            pointer-events: none;
+        }
+
+        .page-hero {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #efdfcf;
         }
         
         h1 {
             color: var(--text-dark);
-            text-align: center;
-            margin-bottom: 30px;
-            font-weight: 600;
+            margin: 0 0 6px;
+            font-size: clamp(1.4rem, 2.4vw, 1.95rem);
+            font-weight: 700;
         }
 
         .info-text {
             color: var(--text-medium);
-            text-align: center;
-            margin-bottom: 20px;
+            margin: 0;
+            font-size: 0.95rem;
         }
         
-        /* Table styles */
         .payables-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            position: relative;
+            z-index: 1;
         }
         
         .payables-table th {
-            background-color: var(--primary-light);
-            color: var(--white);
+            background-color: #efe1d4;
+            color: #5d4332;
             padding: 12px 15px;
             text-align: left;
-            font-weight: 500;
+            font-weight: 600;
         }
         
         .payables-table td {
             padding: 12px 15px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #e8d7c7;
         }
         
         .payables-table tr:hover {
@@ -96,44 +115,48 @@
         .status-badge {
             display: inline-block;
             padding: 4px 8px;
-            border-radius: 4px;
+            border-radius: 999px;
             font-size: 12px;
-            font-weight: 500;
+            font-weight: 600;
         }
         
         .status-paid {
-            background-color: rgba(52, 168, 83, 0.1);
+            background-color: rgba(52, 168, 83, 0.12);
             color: var(--success-color);
         }
         
         .status-pending {
-            background-color: rgba(251, 188, 5, 0.1);
+            background-color: rgba(199, 146, 26, 0.14);
             color: var(--warning-color);
         }
         
         .status-overdue {
-            background-color: rgba(234, 67, 53, 0.1);
+            background-color: rgba(200, 77, 58, 0.12);
             color: var(--error-color);
         }
         
         .action-btn {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #875a34, #b77744);
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
+            padding: 8px 13px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 14px;
-            transition: background-color 0.3s;
+            font-weight: 600;
+            transition: all 0.2s ease;
         }
         
         .action-btn:hover {
-            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px rgba(122, 79, 45, 0.22);
         }
         
         .empty-state {
             text-align: center;
             padding: 50px 0;
+            position: relative;
+            z-index: 1;
         }
         
         .empty-state i {
@@ -145,23 +168,47 @@
         .search-container {
             display: flex;
             margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
         }
         
         .search-input {
             flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px 0 0 5px;
+            padding: 10px 12px;
+            border: 1px solid #decab7;
+            border-radius: 10px 0 0 10px;
             font-size: 14px;
+            background: #fff;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(137, 90, 52, 0.16);
         }
         
         .search-btn {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #875a34, #b77744);
             color: white;
             border: none;
             padding: 0 15px;
-            border-radius: 0 5px 5px 0;
+            border-radius: 0 10px 10px 0;
             cursor: pointer;
+        }
+
+        @media (max-width: 900px) {
+            .content {
+                padding: 14px;
+            }
+            .container {
+                padding: 16px;
+                border-radius: 14px;
+            }
+            .payables-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -169,12 +216,22 @@
 <body>
 <div class="dashboard-container">
     <div class="navigation">
-        {% include 'components/navigation.html' %}
+        {% if request.session.user_type == 'employee' %}
+            {% if request.session.is_admin %}
+                {% include 'components/navigation.html' %}
+            {% else %}
+                {% include 'components/employee_navigation.html' %}
+            {% endif %}
+        {% else %}
+            {% include 'components/navigation.html' %}
+        {% endif %}
     </div>
     <div class="content">
         <div class="container">
-            <h1>Tour Check Payables</h1>
-            <p class="info-text">Review and manage payment status for all tours.</p>
+            <div class="page-hero">
+                <h1>Tour Check Payables</h1>
+                <p class="info-text">Review and manage payment status for all tours.</p>
+            </div>
             
             <div class="search-container">
                 <input type="text" class="search-input" placeholder="Search by tour name, client, or date...">
@@ -200,7 +257,7 @@
                         <td>{{ payable.id }}</td>
                         <td>{{ payable.tour_name }}</td>
                         <td>{{ payable.client_name }}</td>
-                        <td>₱{{ payable.amount }}</td>
+                        <td>PHP {{ payable.amount }}</td>
                         <td>{{ payable.due_date }}</td>
                         <td>
                             {% if payable.status == 'paid' %}
@@ -231,7 +288,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Search functionality can be implemented here
         const searchInput = document.querySelector('.search-input');
         const searchBtn = document.querySelector('.search-btn');
         
@@ -239,13 +295,10 @@
             searchBtn.addEventListener('click', function() {
                 const query = searchInput.value.trim();
                 if (query) {
-                    // Implement search functionality
                     console.log('Searching for:', query);
-                    // You could redirect to a search results page or filter the current table
                 }
             });
             
-            // Also trigger search on Enter key
             searchInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     searchBtn.click();
@@ -255,4 +308,4 @@
     });
 </script>
 </body>
-</html> 
+</html>

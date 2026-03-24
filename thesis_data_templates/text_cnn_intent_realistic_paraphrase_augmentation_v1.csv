@@ -1,0 +1,153 @@
+aug_id,source_query_id,label_intent,message_text,source
+AUG_0001,BA_001,book_accommodation,book a hotel or inn room in Bayawan for two adults this Saturday.,manual_failure_paraphrase_v1
+AUG_0002,BA_001,book_accommodation,Please process this room reservation request: Book a hotel room in Bayawan for two adults this Saturday.,manual_failure_paraphrase_v1
+AUG_0003,BA_002,book_accommodation,I want to book an inn for 3 guests from April 5 to April 7.,manual_failure_paraphrase_v1
+AUG_0004,BA_002,book_accommodation,Please process this room reservation request: I want to reserve an inn for 3 guests from April 5 to April 7.,manual_failure_paraphrase_v1
+AUG_0005,BA_003,book_accommodation,Please process this room reservation request: Please confirm my accommodation booking for tomorrow night.,manual_failure_paraphrase_v1
+AUG_0006,BA_003,book_accommodation,I need help with this: Please confirm my accommodation booking for tomorrow night.,manual_failure_paraphrase_v1
+AUG_0007,BA_004,book_accommodation,Please process this room reservation request: Can you help me book a room near the city plaza?,manual_failure_paraphrase_v1
+AUG_0008,BA_004,book_accommodation,I need help with this: Can you help me book a room near the city plaza?,manual_failure_paraphrase_v1
+AUG_0009,BA_005,book_accommodation,book one family room for 4 people.,manual_failure_paraphrase_v1
+AUG_0010,BA_005,book_accommodation,Please process this room reservation request: Reserve one family room for 4 people.,manual_failure_paraphrase_v1
+AUG_0011,BA_006,book_accommodation,Please process this room reservation request: Proceed with booking the cheapest available inn room.,manual_failure_paraphrase_v1
+AUG_0012,BA_006,book_accommodation,I need help with this: Proceed with booking the cheapest available inn room.,manual_failure_paraphrase_v1
+AUG_0013,BA_007,book_accommodation,Please process this room reservation request: I need to book lodging for my parents this weekend.,manual_failure_paraphrase_v1
+AUG_0014,BA_007,book_accommodation,I need help with this: I need to book lodging for my parents this weekend.,manual_failure_paraphrase_v1
+AUG_0015,BA_008,book_accommodation,book this hotel or inn option now and save my reservation.,manual_failure_paraphrase_v1
+AUG_0016,BA_008,book_accommodation,Please process this room reservation request: Book this hotel option now and save my reservation.,manual_failure_paraphrase_v1
+AUG_0017,BA_009,book_accommodation,Please process this room reservation request: Set an accommodation booking for check-in on May 12.,manual_failure_paraphrase_v1
+AUG_0018,BA_009,book_accommodation,I need help with this: Set an accommodation booking for check-in on May 12.,manual_failure_paraphrase_v1
+AUG_0019,BA_010,book_accommodation,Please process this room reservation request: Finalize my room reservation in Bayawan City.,manual_failure_paraphrase_v1
+AUG_0020,BA_010,book_accommodation,I need help with this: Finalize my room reservation in Bayawan City.,manual_failure_paraphrase_v1
+AUG_0021,BA_011,book_accommodation,Can we book two rooms for six guests?,manual_failure_paraphrase_v1
+AUG_0022,BA_011,book_accommodation,Please process this room reservation request: Can we reserve two rooms for six guests?,manual_failure_paraphrase_v1
+AUG_0023,BA_012,book_accommodation,I am ready to book the hotel or inn you recommended.,manual_failure_paraphrase_v1
+AUG_0024,BA_012,book_accommodation,Please process this room reservation request: I am ready to book the hotel you recommended.,manual_failure_paraphrase_v1
+AUG_0025,BA_013,book_accommodation,Please process this room reservation request: Please make the inn reservation under my account.,manual_failure_paraphrase_v1
+AUG_0026,BA_013,book_accommodation,I need help with this: Please make the inn reservation under my account.,manual_failure_paraphrase_v1
+AUG_0027,BA_014,book_accommodation,Please process this room reservation request: Secure our accommodation booking before it gets full.,manual_failure_paraphrase_v1
+AUG_0028,BA_014,book_accommodation,I need help with this: Secure our accommodation booking before it gets full.,manual_failure_paraphrase_v1
+AUG_0029,BA_015,book_accommodation,Create a hotel or inn booking for one night and two persons.,manual_failure_paraphrase_v1
+AUG_0030,BA_015,book_accommodation,Please process this room reservation request: Create a hotel booking for one night and two persons.,manual_failure_paraphrase_v1
+AUG_0031,CAB_001,calculate_accommodation_billing,How much is the hotel or inn billing total for 2 guests for 3 nights at 1800 per night?,manual_failure_paraphrase_v1
+AUG_0032,CAB_001,calculate_accommodation_billing,Please compute accommodation billing: How much is the hotel bill for 2 guests for 3 nights at 1800 per night?,manual_failure_paraphrase_v1
+AUG_0033,CAB_002,calculate_accommodation_billing,calculate my accommodation total if room rate is 2500 for 2 nights.,manual_failure_paraphrase_v1
+AUG_0034,CAB_002,calculate_accommodation_billing,Please compute accommodation billing: Compute my accommodation total if room rate is 2500 for 2 nights.,manual_failure_paraphrase_v1
+AUG_0035,CAB_003,calculate_accommodation_billing,Please compute accommodation billing: Calculate inn payment for 4 people staying one night.,manual_failure_paraphrase_v1
+AUG_0036,CAB_003,calculate_accommodation_billing,I need help with this: calculate inn payment for 4 people staying one night.,manual_failure_paraphrase_v1
+AUG_0037,CAB_004,calculate_accommodation_billing,What is my lodging billing total with 12 percent tax and service fee?,manual_failure_paraphrase_v1
+AUG_0038,CAB_004,calculate_accommodation_billing,Please compute accommodation billing: What is my lodging bill with 12 percent tax and service fee?,manual_failure_paraphrase_v1
+AUG_0039,CAB_005,calculate_accommodation_billing,Please compute accommodation billing: Please estimate the room billing from April 10 to April 13.,manual_failure_paraphrase_v1
+AUG_0040,CAB_005,calculate_accommodation_billing,I need help with this: Please estimate the room billing from April 10 to April 13.,manual_failure_paraphrase_v1
+AUG_0041,CAB_006,calculate_accommodation_billing,Please compute accommodation billing: Show the accommodation cost breakdown for 3 nights.,manual_failure_paraphrase_v1
+AUG_0042,CAB_006,calculate_accommodation_billing,I need help with this: Show the accommodation cost breakdown for 3 nights.,manual_failure_paraphrase_v1
+AUG_0043,CAB_007,calculate_accommodation_billing,How much should I pay for this hotel or inn booking?,manual_failure_paraphrase_v1
+AUG_0044,CAB_007,calculate_accommodation_billing,Please compute accommodation billing: How much should I pay for this hotel booking?,manual_failure_paraphrase_v1
+AUG_0045,CAB_008,calculate_accommodation_billing,Can you calculate my total accommodation charges?,manual_failure_paraphrase_v1
+AUG_0046,CAB_008,calculate_accommodation_billing,Please compute accommodation billing: Can you compute my total accommodation charges?,manual_failure_paraphrase_v1
+AUG_0047,CAB_009,calculate_accommodation_billing,calculate hotel or inn billing for one deluxe room for two days.,manual_failure_paraphrase_v1
+AUG_0048,CAB_009,calculate_accommodation_billing,Please compute accommodation billing: Calculate hotel billing for one deluxe room for two days.,manual_failure_paraphrase_v1
+AUG_0049,CAB_010,calculate_accommodation_billing,Give me the expected inn billing total including extra bed fee.,manual_failure_paraphrase_v1
+AUG_0050,CAB_010,calculate_accommodation_billing,Please compute accommodation billing: Give me the expected inn bill including extra bed fee.,manual_failure_paraphrase_v1
+AUG_0051,CAB_011,calculate_accommodation_billing,Please compute accommodation billing: What is the final amount due for my accommodation stay?,manual_failure_paraphrase_v1
+AUG_0052,CAB_011,calculate_accommodation_billing,I need help with this: What is the final amount due for my accommodation stay?,manual_failure_paraphrase_v1
+AUG_0053,CAB_012,calculate_accommodation_billing,Please total my hotel or inn payment before checkout.,manual_failure_paraphrase_v1
+AUG_0054,CAB_012,calculate_accommodation_billing,Please compute accommodation billing: Please total my hotel payment before checkout.,manual_failure_paraphrase_v1
+AUG_0055,CAB_013,calculate_accommodation_billing,calculate the accommodation invoice for my reservation.,manual_failure_paraphrase_v1
+AUG_0056,CAB_013,calculate_accommodation_billing,Please compute accommodation billing: Compute the accommodation invoice for my reservation.,manual_failure_paraphrase_v1
+AUG_0057,CAB_014,calculate_accommodation_billing,Please compute accommodation billing: How much is the lodging fee if we stay 5 nights?,manual_failure_paraphrase_v1
+AUG_0058,CAB_014,calculate_accommodation_billing,I need help with this: How much is the lodging fee if we stay 5 nights?,manual_failure_paraphrase_v1
+AUG_0059,CAB_015,calculate_accommodation_billing,Please compute accommodation billing: Calculate room charges for 3 adults in one family room.,manual_failure_paraphrase_v1
+AUG_0060,CAB_015,calculate_accommodation_billing,I need help with this: calculate room charges for 3 adults in one family room.,manual_failure_paraphrase_v1
+AUG_0061,CB_001,calculate_billing,How much is the total tour billing total for 4 guests at 500 each?,manual_failure_paraphrase_v1
+AUG_0062,CB_001,calculate_billing,Please compute tour billing: How much is the total tour bill for 4 guests at 500 each?,manual_failure_paraphrase_v1
+AUG_0063,CB_003,calculate_billing,Please compute tour billing: Please calculate itinerary billing for tomorrow's city tour.,manual_failure_paraphrase_v1
+AUG_0064,CB_003,calculate_billing,I need help with this: Please calculate itinerary billing for tomorrow's city tour.,manual_failure_paraphrase_v1
+AUG_0065,CB_004,calculate_billing,Please compute tour billing: What is the final tourism package cost for 6 people?,manual_failure_paraphrase_v1
+AUG_0066,CB_004,calculate_billing,I need help with this: What is the final tourism package cost for 6 people?,manual_failure_paraphrase_v1
+AUG_0067,CB_005,calculate_billing,Please compute tour billing: Calculate tour charges with admission fees included.,manual_failure_paraphrase_v1
+AUG_0068,CB_005,calculate_billing,I need help with this: calculate tour charges with admission fees included.,manual_failure_paraphrase_v1
+AUG_0069,CB_006,calculate_billing,Please compute tour billing: Can you estimate our tour expenses for one day trip?,manual_failure_paraphrase_v1
+AUG_0070,CB_006,calculate_billing,I need help with this: Can you estimate our tour expenses for one day trip?,manual_failure_paraphrase_v1
+AUG_0071,CB_007,calculate_billing,Please compute tour billing: How much do we need to pay for the tour reservation?,manual_failure_paraphrase_v1
+AUG_0072,CB_007,calculate_billing,I need help with this: How much do we need to pay for the tour reservation?,manual_failure_paraphrase_v1
+AUG_0073,CB_008,calculate_billing,Please compute tour billing: Show me the billing breakdown for our island hopping tour.,manual_failure_paraphrase_v1
+AUG_0074,CB_008,calculate_billing,I need help with this: Show me the billing breakdown for our island hopping tour.,manual_failure_paraphrase_v1
+AUG_0075,CB_009,calculate_billing,Please compute tour billing: Calculate the total fee for the guided heritage tour.,manual_failure_paraphrase_v1
+AUG_0076,CB_009,calculate_billing,I need help with this: calculate the total fee for the guided heritage tour.,manual_failure_paraphrase_v1
+AUG_0077,CB_010,calculate_billing,Please compute tour billing: What is the amount due for tour booking ID T123?,manual_failure_paraphrase_v1
+AUG_0078,CB_010,calculate_billing,I need help with this: What is the amount due for tour booking ID T123?,manual_failure_paraphrase_v1
+AUG_0079,CB_011,calculate_billing,Please calculate the tourism activity billing for my group.,manual_failure_paraphrase_v1
+AUG_0080,CB_011,calculate_billing,Please compute tour billing: Please compute the tourism activity billing for my group.,manual_failure_paraphrase_v1
+AUG_0081,CB_012,calculate_billing,How much is each person's share for the tour plan?,manual_failure_paraphrase_v1
+AUG_0082,CB_012,calculate_billing,Please compute tour billing: How much is each person's share for the tour package?,manual_failure_paraphrase_v1
+AUG_0083,CB_013,calculate_billing,Recalculate the tour billing total if one guest cancels.,manual_failure_paraphrase_v1
+AUG_0084,CB_013,calculate_billing,Please compute tour billing: Recalculate the tour bill if one guest cancels.,manual_failure_paraphrase_v1
+AUG_0085,CB_014,calculate_billing,Please compute tour billing: Provide total tour payment with transport and entrance fees.,manual_failure_paraphrase_v1
+AUG_0086,CB_014,calculate_billing,I need help with this: Provide total tour payment with transport and entrance fees.,manual_failure_paraphrase_v1
+AUG_0087,CB_015,calculate_billing,"Please compute tour billing: Calculate my tour billing only, not accommodation.",manual_failure_paraphrase_v1
+AUG_0088,CB_015,calculate_billing,"I need help with this: calculate my tour billing only, not accommodation.",manual_failure_paraphrase_v1
+AUG_0089,GAR_001,get_accommodation_recommendation,Please suggest accommodation options: Recommend a budget inn in Bayawan for 2 guests under 2000.,manual_failure_paraphrase_v1
+AUG_0090,GAR_001,get_accommodation_recommendation,I need help with this: recommend a budget inn in Bayawan for 2 guests under 2000.,manual_failure_paraphrase_v1
+AUG_0091,GAR_002,get_accommodation_recommendation,recommend a hotel or inn near the terminal for a family of 4.,manual_failure_paraphrase_v1
+AUG_0092,GAR_002,get_accommodation_recommendation,Please suggest accommodation options: Suggest a hotel near the terminal for a family of 4.,manual_failure_paraphrase_v1
+AUG_0093,GAR_003,get_accommodation_recommendation,Please suggest accommodation options: Any accommodation options around Poblacion with parking?,manual_failure_paraphrase_v1
+AUG_0094,GAR_003,get_accommodation_recommendation,I need help with this: Any accommodation options around Poblacion with parking?,manual_failure_paraphrase_v1
+AUG_0095,GAR_004,get_accommodation_recommendation,Please suggest accommodation options: Find me an inn with affordable rooms and good location.,manual_failure_paraphrase_v1
+AUG_0096,GAR_004,get_accommodation_recommendation,I need help with this: Find me an inn with affordable rooms and good location.,manual_failure_paraphrase_v1
+AUG_0097,GAR_005,get_accommodation_recommendation,Can you recommend a hotel or inn for 3 nights below 3000 per night?,manual_failure_paraphrase_v1
+AUG_0098,GAR_005,get_accommodation_recommendation,Please suggest accommodation options: Can you recommend a hotel for 3 nights below 3000 per night?,manual_failure_paraphrase_v1
+AUG_0099,GAR_007,get_accommodation_recommendation,What hotel or inn or inn do you recommend for one solo traveler?,manual_failure_paraphrase_v1
+AUG_0100,GAR_007,get_accommodation_recommendation,Please suggest accommodation options: What hotel or inn do you recommend for one solo traveler?,manual_failure_paraphrase_v1
+AUG_0101,GAR_008,get_accommodation_recommendation,Please suggest accommodation options: Give me accommodation recommendations with aircon rooms.,manual_failure_paraphrase_v1
+AUG_0102,GAR_008,get_accommodation_recommendation,I need help with this: Give me accommodation recommendations with aircon rooms.,manual_failure_paraphrase_v1
+AUG_0103,GAR_009,get_accommodation_recommendation,recommend nearby lodging that fits 5 guests.,manual_failure_paraphrase_v1
+AUG_0104,GAR_009,get_accommodation_recommendation,Please suggest accommodation options: Suggest nearby lodging that fits 5 guests.,manual_failure_paraphrase_v1
+AUG_0105,GAR_010,get_accommodation_recommendation,Please suggest accommodation options: Recommend the best available inn for tonight.,manual_failure_paraphrase_v1
+AUG_0106,GAR_010,get_accommodation_recommendation,I need help with this: recommend the best available inn for tonight.,manual_failure_paraphrase_v1
+AUG_0107,GAR_011,get_accommodation_recommendation,I need hotel or inn suggestions close to downtown Bayawan.,manual_failure_paraphrase_v1
+AUG_0108,GAR_011,get_accommodation_recommendation,Please suggest accommodation options: I need hotel suggestions close to downtown Bayawan.,manual_failure_paraphrase_v1
+AUG_0109,GAR_012,get_accommodation_recommendation,Please suggest accommodation options: Find accommodation options that are not too expensive.,manual_failure_paraphrase_v1
+AUG_0110,GAR_012,get_accommodation_recommendation,I need help with this: Find accommodation options that are not too expensive.,manual_failure_paraphrase_v1
+AUG_0111,GAR_013,get_accommodation_recommendation,Please suggest accommodation options: Please recommend a room with private bathroom.,manual_failure_paraphrase_v1
+AUG_0112,GAR_013,get_accommodation_recommendation,I need help with this: Please recommend a room with private bathroom.,manual_failure_paraphrase_v1
+AUG_0113,GAR_014,get_accommodation_recommendation,Any hotel or inn recommendations with strong guest ratings?,manual_failure_paraphrase_v1
+AUG_0114,GAR_014,get_accommodation_recommendation,Please suggest accommodation options: Any hotel recommendations with strong guest ratings?,manual_failure_paraphrase_v1
+AUG_0115,GAR_015,get_accommodation_recommendation,Please suggest accommodation options: Help me choose accommodation for a weekend stay.,manual_failure_paraphrase_v1
+AUG_0116,GAR_015,get_accommodation_recommendation,I need help with this: Help me choose accommodation for a weekend stay.,manual_failure_paraphrase_v1
+AUG_0117,GR_001,get_recommendation,recommend tour destinations in Bayawan for first-time visitors.,manual_failure_paraphrase_v1
+AUG_0118,GR_001,get_recommendation,Please suggest tourism recommendations: Recommend tourist spots in Bayawan for first-time visitors.,manual_failure_paraphrase_v1
+AUG_0119,GR_002,get_recommendation,recommend a one-day itinerary for nature lovers.,manual_failure_paraphrase_v1
+AUG_0120,GR_002,get_recommendation,Please suggest tourism recommendations: Suggest a one-day itinerary for nature lovers.,manual_failure_paraphrase_v1
+AUG_0121,GR_003,get_recommendation,Please suggest tourism recommendations: What tours do you recommend for a group of 5?,manual_failure_paraphrase_v1
+AUG_0122,GR_003,get_recommendation,I need help with this: What tours do you recommend for a group of 5?,manual_failure_paraphrase_v1
+AUG_0123,GR_004,get_recommendation,Can you recommend attractions for kids and seniors?,manual_failure_paraphrase_v1
+AUG_0124,GR_004,get_recommendation,Please suggest tourism recommendations: Can you suggest attractions for kids and seniors?,manual_failure_paraphrase_v1
+AUG_0125,GR_005,get_recommendation,Please suggest tourism recommendations: Give me travel recommendations near Bayawan City.,manual_failure_paraphrase_v1
+AUG_0126,GR_005,get_recommendation,I need help with this: Give me travel recommendations near Bayawan City.,manual_failure_paraphrase_v1
+AUG_0127,GR_006,get_recommendation,Please suggest tourism recommendations: Recommend top destinations with low entrance fees.,manual_failure_paraphrase_v1
+AUG_0128,GR_006,get_recommendation,I need help with this: recommend top destinations with low entrance fees.,manual_failure_paraphrase_v1
+AUG_0129,GR_007,get_recommendation,Please suggest tourism recommendations: What places should we visit this weekend in Negros Oriental?,manual_failure_paraphrase_v1
+AUG_0130,GR_007,get_recommendation,I need help with this: What places should we visit this weekend in Negros Oriental?,manual_failure_paraphrase_v1
+AUG_0131,GR_008,get_recommendation,recommend activities for an educational school tour.,manual_failure_paraphrase_v1
+AUG_0132,GR_008,get_recommendation,Please suggest tourism recommendations: Suggest activities for an educational school tour.,manual_failure_paraphrase_v1
+AUG_0133,GR_009,get_recommendation,Please suggest tourism recommendations: Any recommended eco-tourism sites nearby?,manual_failure_paraphrase_v1
+AUG_0134,GR_009,get_recommendation,I need help with this: Any recommended eco-tourism sites nearby?,manual_failure_paraphrase_v1
+AUG_0135,GR_010,get_recommendation,Please suggest tourism recommendations: Please recommend spots with scenic views and short travel time.,manual_failure_paraphrase_v1
+AUG_0136,GR_010,get_recommendation,I need help with this: Please recommend spots with scenic views and short travel time.,manual_failure_paraphrase_v1
+AUG_0137,GR_011,get_recommendation,Please suggest tourism recommendations: Help me pick attractions based on our budget.,manual_failure_paraphrase_v1
+AUG_0138,GR_011,get_recommendation,I need help with this: Help me pick attractions based on our budget.,manual_failure_paraphrase_v1
+AUG_0139,GR_012,get_recommendation,recommend a tour plan good for two adults.,manual_failure_paraphrase_v1
+AUG_0140,GR_012,get_recommendation,Please suggest tourism recommendations: Recommend a tour package good for two adults.,manual_failure_paraphrase_v1
+AUG_0141,GR_014,get_recommendation,recommend cultural attractions and local heritage spots.,manual_failure_paraphrase_v1
+AUG_0142,GR_014,get_recommendation,Please suggest tourism recommendations: Suggest cultural attractions and local heritage spots.,manual_failure_paraphrase_v1
+AUG_0143,GR_015,get_recommendation,Please suggest tourism recommendations: Can you recommend where to go in Bayawan this Sunday?,manual_failure_paraphrase_v1
+AUG_0144,GR_015,get_recommendation,I need help with this: Can you recommend where to go in Bayawan this Sunday?,manual_failure_paraphrase_v1
+AUG_0145,GTI_005,get_tourism_information,Please provide tourism information: What is the entrance fee for the marine sanctuary?,manual_failure_paraphrase_v1
+AUG_0146,GTI_005,get_tourism_information,I need help with this: What is the entrance fee for the marine sanctuary?,manual_failure_paraphrase_v1
+AUG_0147,GTI_006,get_tourism_information,Please provide tourism information: Please provide details about transportation to this tourist site.,manual_failure_paraphrase_v1
+AUG_0148,GTI_006,get_tourism_information,I need help with this: Please provide details about transportation to this tourist site.,manual_failure_paraphrase_v1
+AUG_0149,GTI_008,get_tourism_information,Please provide tourism information: Share basic facts about the local mangrove park.,manual_failure_paraphrase_v1
+AUG_0150,GTI_008,get_tourism_information,I need help with this: Share basic facts about the local mangrove park.,manual_failure_paraphrase_v1
+AUG_0151,GTI_014,get_tourism_information,Tell me the latest posted details for Bayawan tour destinations.,manual_failure_paraphrase_v1
+AUG_0152,GTI_014,get_tourism_information,Please provide tourism information: Tell me the latest posted details for Bayawan tourist spots.,manual_failure_paraphrase_v1

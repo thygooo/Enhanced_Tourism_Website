@@ -26,11 +26,19 @@
             margin-bottom: 25px;
         }
         .messages {
-            background-color: #ffebee;
-            color: #d32f2f;
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 15px;
+        }
+        .messages.success {
+            background-color: #e8f5e9;
+            color: #1b5e20;
+            border: 1px solid #c8e6c9;
+        }
+        .messages.error {
+            background-color: #ffebee;
+            color: #d32f2f;
+            border: 1px solid #ffcdd2;
         }
         .messages ul {
             margin: 0;
@@ -91,13 +99,13 @@
         <h2>Registration Form</h2>
 
         {% if messages %}
-            <div class="messages">
-                <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
+            {% for message in messages %}
+                {% if message.tags != 'success' %}
+                    <div class="messages error">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
         {% endif %}
 
         <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data" id="registration-form">
@@ -183,6 +191,16 @@
                 <input type="text" id="company_name" name="company_name" value="{{ request.POST.company_name }}">
                 {% if form.company_name.errors %}
                     <div class="form-error">{{ form.company_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="register_as_accommodation_owner">
+                    <input type="checkbox" id="register_as_accommodation_owner" name="register_as_accommodation_owner" {% if request.POST.register_as_accommodation_owner %}checked{% endif %}>
+                    Register as Accommodation Owner
+                </label>
+                {% if form.register_as_accommodation_owner.errors %}
+                    <div class="form-error">{{ form.register_as_accommodation_owner.errors.0 }}</div>
                 {% endif %}
             </div>
 
@@ -290,10 +308,10 @@
                 }
                 
                 // Profile picture validation
-                const profilePicture = document.getElementById('profile_picture');
+                const profilePicture = document.getElementById('picture');
                 const fileError = document.getElementById('file-error');
                 
-                if (profilePicture.files.length > 0) {
+                if (profilePicture && profilePicture.files.length > 0) {
                     const file = profilePicture.files[0];
                     if (!file.type.startsWith('image/')) {
                         fileError.textContent = 'Please upload an image file.';

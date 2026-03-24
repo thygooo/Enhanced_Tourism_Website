@@ -4,150 +4,317 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Room</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Basic styling for better appearance */
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f4f7fc;
+        * { box-sizing: border-box; }
+
+        :root {
+            --bg: #f8f5f1;
+            --panel: #fffdf9;
+            --panel-alt: #fff7ef;
+            --ink: #3f2f26;
+            --muted: #765b48;
+            --line: #e6d7c8;
+            --brand-900: #6f4e37;
+            --brand-700: #b1743f;
+            --brand-500: #d09b6c;
+            --success-700: #0f5132;
+            --danger-700: #842029;
         }
-        h1 {
-            color: #333;
+
+        body {
+            font-family: "Poppins", "Segoe UI", Tahoma, Arial, sans-serif;
+            margin: 0;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
+                radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
+                var(--bg);
+        }
+        .page {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 18px;
+            box-sizing: border-box;
+        }
+        .page-header {
+            background: linear-gradient(135deg, var(--brand-900), var(--brand-700));
+            color: #fff;
+            border-radius: 16px;
+            padding: 22px 20px;
+            box-shadow: 0 10px 26px rgba(56, 33, 16, 0.16);
+            margin-bottom: 14px;
+            position: relative;
+            overflow: hidden;
+        }
+        .page-header::after {
+            content: "";
+            position: absolute;
+            right: -90px;
+            top: -80px;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.18), rgba(255,255,255,0));
+            pointer-events: none;
+        }
+        .page-header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            letter-spacing: 0.01em;
+        }
+        .page-header p {
+            margin: 8px 0 0;
+            color: rgba(255,255,255,0.92);
+            font-size: 0.94rem;
+        }
+        .panel {
+            background: var(--panel);
+            border: 1px solid rgba(111, 78, 55, 0.12);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 10px 24px rgba(56, 33, 16, 0.08);
         }
         ul {
             list-style-type: none;
             padding: 0;
+            margin: 0;
         }
-        li {
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
+        #roomsList li {
+            padding: 12px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: linear-gradient(180deg, var(--panel-alt), #ffffff);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(56, 33, 16, 0.06);
+            transition: transform 120ms ease, box-shadow 120ms ease;
+        }
+        #roomsList li:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 7px 18px rgba(56, 33, 16, 0.1);
+        }
+        .room-summary {
+            color: #5f3e2a;
+            font-size: 0.92rem;
         }
         .no-rooms {
-            color: #666;
+            color: var(--muted);
             font-style: italic;
+            border: 1px dashed #d6bba4;
+            border-radius: 10px;
+            padding: 12px;
+            background: #fff8f2;
         }
         .register-btn {
-            padding: 5px 10px;
-            background-color: #28a745;
+            padding: 7px 11px;
+            background: linear-gradient(135deg, #1f7a47, #2f9e61);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 9px;
             cursor: pointer;
             margin-right: 5px;
+            font-weight: 600;
         }
         .register-btn:hover {
-            background-color: #218838;
+            filter: brightness(0.96);
         }
-        .delete-btn {
-            padding: 5px 10px;
-            background-color: #dc3545;
+        .edit-btn {
+            padding: 7px 11px;
+            background: linear-gradient(135deg, #875a34, #b57946);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 9px;
             cursor: pointer;
+            margin-right: 5px;
+            font-weight: 600;
+        }
+        .delete-btn {
+            padding: 7px 11px;
+            background: linear-gradient(135deg, #8f1f1f, #c43131);
+            color: white;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 600;
         }
         .delete-btn:hover {
-            background-color: #c82333;
+            filter: brightness(0.96);
         }
-        /* Modal styles for guest registration */
         .modal {
             display: none; 
             position: fixed; 
-            z-index: 2; 
+            z-index: 1000; 
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgba(6, 24, 38, 0.5);
         }
         .modal-content {
-            background-color: #fefefe;
+            background: #fff;
             margin: 10% auto;
             padding: 20px;
-            border: 1px solid #888;
-            width: 350px;
-            border-radius: 8px;
+            border: 1px solid #c6d7e3;
+            width: min(92vw, 460px);
+            border-radius: 14px;
             position: relative;
             text-align: left;
+            box-shadow: 0 20px 40px rgba(56, 33, 16, 0.22);
         }
         .close-button {
             position: absolute;
             top: 10px;
             right: 15px;
-            color: #aaa;
-            font-size: 28px;
+            color: #647b8f;
+            font-size: 30px;
             font-weight: bold;
             cursor: pointer;
         }
         .close-button:hover {
-            color: black;
+            color: #233e55;
         }
         .add-room-btn {
             margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007BFF;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, var(--brand-900), var(--brand-700));
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             cursor: pointer;
             display: block;
+            font-weight: 700;
+            transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
         }
         .add-room-btn:hover {
-            background-color: #0056b3;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(70, 42, 21, 0.2);
         }
         input[type="date"],
         input[type="number"],
         input[type="text"] {
-            width: 95%;
+            width: 100%;
             padding: 8px;
             margin: 8px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 1px solid #dfc4ac;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-family: inherit;
+            background: #fff;
+        }
+        select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #dfc4ac;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-family: inherit;
+            background: #fff;
+        }
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #b57946;
+            box-shadow: 0 0 0 3px rgba(181, 121, 70, 0.18);
         }
         label {
-            font-weight: bold;
+            font-weight: 700;
+            color: #6b4423;
         }
         .back-btn {
-            padding: 8px 15px;
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 4px;
+            display: inline-block;
+            padding: 9px 13px;
+            background: #f2e4d6;
+            color: #6b4423;
+            border: 1px solid #e0c9b2;
+            border-radius: 999px;
             cursor: pointer;
             margin-bottom: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
         .back-btn:hover {
-            background-color: #5a6268;
+            background: #fcf0e3;
         }
         .error-message {
-            color: #dc3545;
-            font-size: 14px;
+            color: var(--danger-700);
+            font-size: 0.84rem;
             margin-top: 5px;
             display: none;
         }
         .date-error {
             border-color: #dc3545 !important;
         }
+        .action-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            color: #6b4423;
+        }
+        #entriesCounter {
+            color: var(--success-700) !important;
+            background: #d1e7dd;
+            border: 1px solid #badbcc;
+            border-radius: 10px;
+            padding: 8px 10px;
+        }
+        @media (max-width: 680px) {
+            .page {
+                padding: 12px;
+            }
+            .page-header h1 {
+                font-size: 1.3rem;
+            }
+        }
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible {
+            outline: 3px solid rgba(181, 121, 70, 0.35);
+            outline-offset: 2px;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
     </style>
 </head>
 <body>
-       <!-- Back Button -->
-       <a href="{% url 'admin_app:accommodation_dashboard' %}">
-        <button class="back-btn">Back</button>
-    </a>
-    <h1>Registered Rooms</h1>
+    <div class="page">
+    <div class="page-header">
+        <h1>Registered Rooms</h1>
+        <p>Manage room inventory, pricing, and room guest registration entries.</p>
+    </div>
+    <div class="panel">
+    <div class="action-row">
+        <a class="back-btn" href="{% url 'admin_app:accommodation_dashboard' %}">Back</a>
+    </div>
     {% if hotel_rooms %}
         <ul id="roomsList">
             {% for room in hotel_rooms %}
-                <li>
-                    <span>Room: {{ room.room_name }} - Capacity: {{ room.person_limit }} - Available: {{ room.current_availability }}</span>
+                <li data-room-id="{{ room.room_id }}">
+                    <span class="room-summary">Room: {{ room.room_name }} - Capacity: {{ room.person_limit }} - Available: {{ room.current_availability }}</span>
                     <div>
                         <!-- Register button with a data attribute holding the room id -->
                         <button class="register-btn" data-room-id="{{ room.room_id }}">Register</button>
+                        <!-- Edit button -->
+                        <button class="edit-btn" data-room-id="{{ room.room_id }}">Edit</button>
                         <!-- Delete button -->
                         <button class="delete-btn" data-room-id="{{ room.room_id }}">Delete</button>
                     </div>
@@ -160,6 +327,8 @@
 
     <!-- Button to open the "Add Room" modal (existing functionality) -->
     <button class="add-room-btn" id="openAddRoomModalBtn">Add Room</button>
+    </div>
+    </div>
     <!-- Add Room Modal (existing) -->
     <div id="addRoomModal" class="modal">
         <div class="modal-content">
@@ -169,6 +338,15 @@
                 {% csrf_token %}
                 <label for="roomName">Room Name:</label><br>
                 <input type="text" id="roomName" name="room_name" placeholder="Enter room name" required>
+                <br>
+                <label for="personLimit">Person Limit:</label><br>
+                <input type="number" id="personLimit" name="person_limit" placeholder="Max number of people allowed" min="0" value="0" required>
+                <br>
+                <label for="pricePerNight">Price per Night (PHP):</label><br>
+                <input type="number" id="pricePerNight" name="price_per_night" placeholder="0.00" min="0" step="0.01" value="0.00" required>
+                <br>
+                <label for="roomAmenities">Amenities (comma-separated):</label><br>
+                <input type="text" id="roomAmenities" name="amenities" placeholder="WiFi, Aircon, Parking">
                 <br>
                 <button type="submit" class="add-room-btn">Add Room</button>
             </form>
@@ -200,6 +378,7 @@
 
                 <label for="numGuests">Number of Guests:</label>
                 <input type="number" id="numGuests" name="num_guests" placeholder="Enter number of guests" required>
+                <div id="numGuestsError" class="error-message">Number of guests must be at least 1</div>
                 
                 <label for="regMonth">Month:</label>
                 <select id="regMonth" name="month" required>
@@ -282,36 +461,149 @@
         $("#addRoomForm").submit(function(e) {
             e.preventDefault();
             var roomName = $("#roomName").val();
+            var personLimit = $("#personLimit").val();
+            var pricePerNight = $("#pricePerNight").val();
+            var amenities = $("#roomAmenities").val();
             $.ajax({
                 type: "POST",
                 url: "{% url 'accom_app:add_room_ajax' %}",
                 data: {
                     csrfmiddlewaretoken: "{{ csrf_token }}",
-                    room_name: roomName
+                    room_name: roomName,
+                    person_limit: personLimit,
+                    price_per_night: pricePerNight,
+                    amenities: amenities
                 },
                 success: function(response) {
                     if(response.status === "success") {
-                        var newRoomHTML = "<li>" +
-                            "<span>Room: " + response.room_name + " - Capacity: " + response.person_limit + " - Available: " + response.person_limit + "</span>" +
+                        var room = response.room || {};
+                        var roomId = room.room_id || room.id || "";
+                        var roomNameText = room.room_name || room.name || room.room_type || "Unnamed Room";
+                        var capacity = room.person_limit || room.capacity || 0;
+                        var available = room.current_availability || room.availability || capacity;
+
+                        var newRoomHTML = "<li data-room-id='" + roomId + "'>" +
+                            "<span class='room-summary'>Room: " + roomNameText + " - Capacity: " + capacity + " - Available: " + available + "</span>" +
                             "<div>" +
-                            "<button class='register-btn' data-room-id='" + response.room_id + "'>Register</button> " +
-                            "<button class='delete-btn' data-room-id='" + response.room_id + "'>Delete</button>" +
+                            "<button class='register-btn' data-room-id='" + roomId + "'>Register</button> " +
+                            "<button class='edit-btn' data-room-id='" + roomId + "'>Edit</button> " +
+                            "<button class='delete-btn' data-room-id='" + roomId + "'>Delete</button>" +
                             "</div>" +
                             "</li>";
                         if($("#roomsList").length) {
                             $("#roomsList").append(newRoomHTML);
                         } else {
                             $("#noRoomsMsg").remove();
-                            $("body").append("<ul id='roomsList'>" + newRoomHTML + "</ul>");
+                            $("#openAddRoomModalBtn").before("<ul id='roomsList'>" + newRoomHTML + "</ul>");
                         }
                         addRoomModal.style.display = "none";
                         $("#roomName").val(""); // Clear input field
+                        $("#personLimit").val("0");
+                        $("#pricePerNight").val("0.00");
+                        $("#roomAmenities").val("");
                     } else {
                         alert("Error: " + response.message);
                     }
                 },
                 error: function(xhr, status, error) {
                     alert("An error occurred: " + error);
+                }
+            });
+        });
+
+        // Handle room edit via AJAX
+        $(document).on("click", ".edit-btn", function() {
+            var roomId = $(this).data("room-id");
+            $.ajax({
+                url: "{% url 'accom_app:get_rooms_json' %}",
+                type: "GET",
+                success: function(response) {
+                    if (response.status !== "success" || !response.rooms) {
+                        alert("Unable to load room details.");
+                        return;
+                    }
+
+                    var room = response.rooms.find(function(r) {
+                        return String(r.id || r.room_id) === String(roomId);
+                    });
+                    if (!room) {
+                        alert("Room not found.");
+                        return;
+                    }
+
+                    var roomName = prompt("Room name:", room.room_name || room.name || "");
+                    if (roomName === null) return;
+                    roomName = String(roomName).trim();
+                    if (!roomName) {
+                        alert("Room name is required.");
+                        return;
+                    }
+
+                    var capacity = prompt("Capacity (pax):", String(room.person_limit || room.capacity || 0));
+                    if (capacity === null) return;
+
+                    var price = prompt("Price per night:", String(room.price_per_night || "0.00"));
+                    if (price === null) return;
+
+                    var status = prompt(
+                        "Status (AVAILABLE/OCCUPIED/UNAVAILABLE):",
+                        String(room.availability_status || room.status || "AVAILABLE")
+                    );
+                    if (status === null) return;
+
+                    var currentAvailability = prompt(
+                        "Current available units:",
+                        String(room.current_availability || room.availability || 0)
+                    );
+                    if (currentAvailability === null) return;
+
+                    var amenities = prompt(
+                        "Amenities (comma-separated):",
+                        Array.isArray(room.amenities) ? room.amenities.join(", ") : ""
+                    );
+                    if (amenities === null) return;
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'accom_app:update_room_ajax' %}",
+                        data: {
+                            room_id: roomId,
+                            room_name: roomName,
+                            room_type: roomName,
+                            person_limit: capacity,
+                            price_per_night: price,
+                            availability_status: status,
+                            current_availability: currentAvailability,
+                            amenities: amenities
+                        },
+                        success: function(updateResp) {
+                            if (updateResp.status !== "success" || !updateResp.room) {
+                                alert("Error: " + (updateResp.message || "Unable to update room."));
+                                return;
+                            }
+
+                            var updated = updateResp.room;
+                            var updatedName = updated.room_name || updated.name || roomName;
+                            var updatedCap = updated.person_limit || updated.capacity || capacity;
+                            var updatedAvail = updated.current_availability || updated.availability || currentAvailability;
+                            var $li = $("#roomsList li[data-room-id='" + roomId + "']");
+                            $li.find(".room-summary").text(
+                                "Room: " + updatedName + " - Capacity: " + updatedCap + " - Available: " + updatedAvail
+                            );
+                            alert("Room updated successfully.");
+                        },
+                        error: function(xhr, status, error) {
+                            try {
+                                var payload = JSON.parse(xhr.responseText || "{}");
+                                alert("Error: " + (payload.message || error));
+                            } catch (e) {
+                                alert("An error occurred: " + error);
+                            }
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    alert("Unable to load rooms for editing: " + error);
                 }
             });
         });

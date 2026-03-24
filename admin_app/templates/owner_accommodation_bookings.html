@@ -1,0 +1,251 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Accommodation Bookings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --bg: #f8f5f1;
+      --panel: #fffdf9;
+      --panel-alt: #fff7ef;
+      --ink: #3f2f26;
+      --muted: #765b48;
+      --line: #e6d7c8;
+      --brand-900: #6f4e37;
+      --brand-700: #b1743f;
+      --brand-500: #d09b6c;
+      --chip: #f2e4d6;
+      --chip-ink: #6b4423;
+    }
+
+    body {
+      font-family: "Poppins", "Segoe UI", Tahoma, Arial, sans-serif;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
+        radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
+        var(--bg);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--brand-900), var(--brand-700));
+      color: #fff;
+      padding: 30px 16px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      top: -80px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.18), rgba(255,255,255,0));
+      pointer-events: none;
+    }
+    .container { max-width: 1150px; margin: 0 auto; padding: 18px; box-sizing: border-box; }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      color: #fff;
+      letter-spacing: 0.01em;
+    }
+    .muted {
+      color: var(--muted);
+      margin: 6px 0 0;
+      font-size: 0.95rem;
+    }
+    .page {
+      max-width: 1150px;
+      margin: 0 auto 18px;
+      padding: 0 18px 18px;
+      box-sizing: border-box;
+    }
+    .card {
+      background: var(--panel);
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid rgba(111, 78, 55, 0.12);
+      box-shadow: 0 10px 24px rgba(56, 33, 16, 0.08);
+      margin-bottom: 16px;
+    }
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: 0.8rem;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--chip-ink);
+      border: 1px solid #e0c9b2;
+      font-weight: 700;
+    }
+    .badge.pending { background: #fff3cd; color: #8a6d1d; border-color: #ffe69c; }
+    .badge.confirmed { background: #d1e7dd; color: #0f5132; border-color: #badbcc; }
+    .badge.declined { background: #f8d7da; color: #842029; border-color: #f1b0b7; }
+    .badge.cancelled { background: #e9ecef; color: #495057; border-color: #dde1e5; }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      margin-top: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border-bottom: 1px solid #eedfce;
+      padding: 10px 9px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.89rem;
+      overflow-wrap: anywhere;
+    }
+    th {
+      background: #f8efe7;
+      color: #6b4423;
+      font-weight: 700;
+    }
+    tbody tr:nth-child(even) { background: #fffaf5; }
+    tbody tr:hover { background: #fcf4ed; }
+    .status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: capitalize;
+      letter-spacing: 0.01em;
+    }
+    .status.pending { background: #fff3cd; color: #8a6d1d; }
+    .status.confirmed { background: #d1e7dd; color: #0f5132; }
+    .status.declined { background: #f8d7da; color: #842029; }
+    .status.cancelled { background: #e9ecef; color: #495057; }
+    .btn {
+      display: inline-block;
+      padding: 9px 13px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(70, 42, 21, 0.2);
+    }
+    .btn.primary {
+      background: linear-gradient(135deg, var(--brand-900), var(--brand-700));
+      color: #fff;
+    }
+    .btn.secondary {
+      background: #f2e4d6;
+      color: #6b4423;
+      border: 1px solid #e0c9b2;
+      box-shadow: none;
+    }
+    .btn.secondary:hover {
+      box-shadow: 0 4px 10px rgba(70, 42, 21, 0.13);
+    }
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid rgba(181, 121, 70, 0.35);
+      outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+    @media (max-width: 640px) {
+      header { padding-top: 24px; padding-bottom: 30px; }
+      .container, .page { padding-left: 12px; padding-right: 12px; }
+      h1 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="topbar">
+        <h1>My Accommodation Bookings</h1>
+        <a class="btn secondary" href="{% url 'admin_app:owner_hub' %}">Back to Owner Hub</a>
+      </div>
+      <p class="muted" style="color: rgba(255,255,255,0.9);">Read-only monitoring page for bookings across your accommodations.</p>
+    </div>
+  </header>
+
+  <div class="page">
+    <div class="card">
+      <div class="badge-row">
+        <span class="badge pending">Pending: {{ pending_count }}</span>
+        <span class="badge confirmed">Confirmed: {{ confirmed_count }}</span>
+        <span class="badge declined">Declined: {{ declined_count }}</span>
+        <span class="badge cancelled">Cancelled: {{ cancelled_count }}</span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Date</th>
+              <th>Accommodation</th>
+              <th>Room</th>
+              <th>Guest</th>
+              <th>Stay</th>
+              <th>Guests</th>
+              <th>Total</th>
+              <th>Payment</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for booking in bookings %}
+              <tr>
+                <td>#{{ booking.booking_id }}</td>
+                <td>{{ booking.booking_date|date:"M d, Y H:i" }}</td>
+                <td>{{ booking.accommodation.company_name }}</td>
+                <td>{% if booking.room %}{{ booking.room.room_name }}{% else %}-{% endif %}</td>
+                <td>{{ booking.guest.username }}</td>
+                <td>{{ booking.check_in }} to {{ booking.check_out }}</td>
+                <td>{{ booking.num_guests }}</td>
+                <td>PHP {{ booking.total_amount }}</td>
+                <td>{{ booking.payment_status|title }}</td>
+                <td><span class="status {{ booking.status }}">{{ booking.status }}</span></td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="10">No bookings found yet for your accommodations.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

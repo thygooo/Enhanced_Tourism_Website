@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Accommodations</title>
+  <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+  <style>
+    body { margin: 0; font-family: 'Poppins', 'Segoe UI', Tahoma, Arial, sans-serif; background: #f2f5fa; }
+    .dashboard-container { display: flex; min-height: 100vh; }
+    .content { flex: 1; padding: 24px; }
+    .panel {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #dfe6f1;
+      box-shadow: 0 8px 24px rgba(14, 28, 56, 0.08);
+      padding: 20px;
+    }
+    .title { margin: 0 0 6px; color: #1f3554; }
+    .muted { margin: 0 0 16px; color: #5d6f86; font-size: 14px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .chip {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #1f3554;
+      background: #eaf2ff;
+      border: 1px solid #c9ddff;
+      text-decoration: none;
+    }
+    .chip.active { background: #1f6fe5; color: #fff; border-color: #1f6fe5; }
+    .table-wrap { overflow-x: auto; border: 1px solid #dde6f2; border-radius: 12px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; border-bottom: 1px solid #edf2f8; text-align: left; font-size: 14px; vertical-align: top; }
+    th { background: #f6f9ff; color: #1e3556; font-weight: 600; }
+    tr:hover td { background: #fafcff; }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="navigation">
+      {% include 'components/employee_navigation.html' %}
+    </div>
+    <div class="content">
+      <div class="panel">
+        <h1 class="title">Accommodations</h1>
+        <p class="muted">Employee view of accepted accommodation records for monitoring and operations.</p>
+
+        <div class="chips">
+          <a class="chip {% if not company_type_filter %}active{% endif %}" href="{% url 'admin_app:employee_accommodations' %}">All</a>
+          <a class="chip {% if company_type_filter == 'hotel' %}active{% endif %}" href="{% url 'admin_app:employee_accommodations' %}?company_type=hotel">Hotel</a>
+          <a class="chip {% if company_type_filter == 'attraction' %}active{% endif %}" href="{% url 'admin_app:employee_accommodations' %}?company_type=attraction">Attractions</a>
+          <a class="chip {% if company_type_filter == 'mie' %}active{% endif %}" href="{% url 'admin_app:employee_accommodations' %}?company_type=mie">MIE</a>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Business Name</th>
+                <th>Type</th>
+                <th>Location</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in accommodations %}
+              <tr>
+                <td>{{ item.company_name }}</td>
+                <td>{{ item.company_type|default:"-" }}</td>
+                <td>{{ item.location|default:"-" }}</td>
+                <td>{{ item.email_address|default:"-" }}</td>
+                <td>{{ item.phone_number|default:"-" }}</td>
+                <td>{{ item.approval_status|title }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="6">No accommodations found for this filter.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

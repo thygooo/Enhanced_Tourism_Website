@@ -14,15 +14,12 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
+# Load environment variables from project-level .env file reliably.
+load_dotenv(dotenv_path=BASE_DIR / ".env", override=True)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -212,4 +209,8 @@ AUTH_USER_MODEL = 'guest_app.Guest'  # Replace 'guest_app' with your app name
 # External payment/billing page used by chatbot booking responses.
 # Set in .env for production, e.g. TOURISM_OFFICE_BILLING_URL=https://billing.example.com/pay
 TOURISM_OFFICE_BILLING_URL = os.environ.get('TOURISM_OFFICE_BILLING_URL', '')
+
+# Security keys
+RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY', '')
+RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY', '')
 

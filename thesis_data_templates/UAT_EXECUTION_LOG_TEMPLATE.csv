@@ -1,0 +1,3 @@
+run_date,tester,test_id,result,defect_id,severity,evidence_path,remarks
+YYYY-MM-DD,Name,UAT-G-001,Pass,,,, 
+YYYY-MM-DD,Name,UAT-G-002,Fail,BUG-001,High,screenshots/bug001.png,Sample row only

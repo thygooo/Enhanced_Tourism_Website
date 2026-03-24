@@ -3,11 +3,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.shortcuts import redirect
+from admin_app import views as admin_views
 
 urlpatterns = ([
     path('admin/', admin.site.urls),
     path('tour_app/', include('tour_app.urls')),
     path('guest_app/', include('guest_app.urls')),
+    path('owner/accommodations/register/', admin_views.accommodation_register, name='owner_accommodation_register'),
     path('admin_app/', include('admin_app.urls')),
     path('accom_app/', include('accom_app.urls')),
     path('request_app/', include('request_app.urls')),

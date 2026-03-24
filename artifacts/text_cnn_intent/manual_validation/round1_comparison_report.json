@@ -1,0 +1,87 @@
+{
+  "benchmark": {
+    "old_accuracy": 0.9696969696969697,
+    "new_accuracy": 0.9797979797979798,
+    "delta_accuracy": 0.010101010101010055,
+    "old_f1_macro": 0.9679656106905897,
+    "new_f1_macro": 0.9752747252747254,
+    "delta_f1_macro": 0.007309114584135634
+  },
+  "manual_raw": {
+    "old_accuracy": 0.15555555555555556,
+    "new_accuracy": 0.3111111111111111,
+    "delta_accuracy": 0.15555555555555556,
+    "old_per_intent": {
+      "book_accommodation": {
+        "samples": 15,
+        "accuracy": 0.0,
+        "errors": 15
+      },
+      "calculate_accommodation_billing": {
+        "samples": 15,
+        "accuracy": 0.0,
+        "errors": 15
+      },
+      "calculate_billing": {
+        "samples": 15,
+        "accuracy": 0.06666666666666667,
+        "errors": 14
+      },
+      "get_accommodation_recommendation": {
+        "samples": 15,
+        "accuracy": 0.06666666666666667,
+        "errors": 14
+      },
+      "get_recommendation": {
+        "samples": 15,
+        "accuracy": 0.06666666666666667,
+        "errors": 14
+      },
+      "get_tourism_information": {
+        "samples": 15,
+        "accuracy": 0.7333333333333333,
+        "errors": 4
+      }
+    },
+    "new_per_intent": {
+      "book_accommodation": {
+        "samples": 15,
+        "accuracy": 0.0,
+        "errors": 15
+      },
+      "calculate_accommodation_billing": {
+        "samples": 15,
+        "accuracy": 0.0,
+        "errors": 15
+      },
+      "calculate_billing": {
+        "samples": 15,
+        "accuracy": 0.0,
+        "errors": 15
+      },
+      "get_accommodation_recommendation": {
+        "samples": 15,
+        "accuracy": 0.8666666666666667,
+        "errors": 2
+      },
+      "get_recommendation": {
+        "samples": 15,
+        "accuracy": 0.0,
+        "errors": 15
+      },
+      "get_tourism_information": {
+        "samples": 15,
+        "accuracy": 1.0,
+        "errors": 0
+      }
+    }
+  },
+  "manual_with_fallback": {
+    "old_final_accuracy": 0.6888888888888889,
+    "new_final_accuracy": 0.5222222222222223,
+    "delta_final_accuracy": -0.16666666666666663,
+    "old_fallback_used": 90,
+    "new_fallback_used": 59
+  },
+  "verdict": "manual_raw_improved_but_not_deployment_ready"
+}

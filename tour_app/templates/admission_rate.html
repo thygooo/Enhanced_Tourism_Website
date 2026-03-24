@@ -4,35 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tour Check Payables</title>
+    <title>Admission Rates</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
     <style>
         :root {
-            /* Brand Colors */
-            --primary-color: #875a34;    /* Main brand color */
-            --primary-light: #e99c59;   /* Lighter version for accents */
-            --primary-dark: #6d4827;    /* Darker version for hover states */
-            --secondary-color: #8c6e5d; /* Secondary brand color */
-            
-            /* Status Colors */
-            --success-color: #34a853;   /* Green for success states */
-            --warning-color: #fbbc05;   /* Yellow for warnings */
-            --error-color: #ea4335;     /* Red for errors */
-            --info-color: #4285f4;      /* Blue for information */
-            
-            /* Neutral Colors */
-            --bg-color: #f4f7fc;        /* Light background */
-            --text-dark: #333;          /* Dark text */
-            --text-medium: #666;        /* Medium text */
-            --text-light: #9e9e9e;      /* Light text */
-            --white: #fff;              /* White */
+            --primary-color: #875a34;
+            --primary-dark: #6d4827;
+            --primary-soft: #f6eee6;
+            --error-color: #c84d3a;
+            --info-color: #1f75cc;
+            --text-dark: #3f2f26;
+            --text-medium: #6b523f;
+            --white: #fff;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg-color);
+            font-family: "Poppins", 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background:
+                radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
+                radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
+                #f8f5f1;
             margin: 0;
             padding: 0;
+            color: var(--text-dark);
         }
         
         .dashboard-container {
@@ -48,31 +43,71 @@
         
         .container {
             max-width: 1000px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            background: linear-gradient(180deg, #fffefc 0%, #fff9f2 100%);
+            border: 1px solid #ead9c9;
+            padding: 26px;
+            border-radius: 18px;
+            box-shadow: 0 14px 28px rgba(56, 33, 16, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::after {
+            content: "";
+            position: absolute;
+            right: -100px;
+            top: -110px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(224, 164, 109, 0.26), rgba(224, 164, 109, 0));
+            pointer-events: none;
+        }
+
+        .page-hero {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #efdfcf;
         }
         
         h1, h2 {
             color: var(--text-dark);
-            margin-top: 20px;
-            margin-bottom: 20px;
+            margin: 0 0 12px;
         }
-        
+
+        .page-hero h1 {
+            font-size: clamp(1.4rem, 2.4vw, 1.95rem);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .page-hero p {
+            margin: 0;
+            color: var(--text-medium);
+            font-size: 0.95rem;
+        }
+
         h2 {
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
+            margin-top: 22px;
+            border-bottom: 1px solid #efdfcf;
+            padding-bottom: 8px;
+            font-size: 1.15rem;
+            position: relative;
+            z-index: 1;
         }
         
         form {
             max-width: 600px;
-            margin: 20px auto;
+            margin: 20px auto 28px;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #fff;
+            border: 1px solid #ead9c9;
+            border-radius: 14px;
+            background: #fffdfa;
+            position: relative;
+            z-index: 1;
         }
         
         label, input, select {
@@ -81,27 +116,32 @@
             margin-bottom: 15px;
             padding: 10px;
             box-sizing: border-box;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            border: 1px solid #decab7;
+            border-radius: 10px;
+            color: var(--text-dark);
+            background: #fff;
         }
         
         input:focus, select:focus {
             border-color: var(--primary-color);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(137, 90, 52, 0.16);
         }
         
         button {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #875a34, #b77744);
             color: white;
             padding: 10px 15px;
             border: none;
-            border-radius: 4px;
+            border-radius: 11px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
+            transition: all 0.2s ease;
         }
         
         button:hover {
-            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px rgba(122, 79, 45, 0.22);
         }
         
         table {
@@ -109,24 +149,26 @@
             margin: 20px 0;
             border-collapse: collapse;
             background: #fff;
-            border-radius: 4px;
+            border-radius: 12px;
             overflow: hidden;
+            position: relative;
+            z-index: 1;
         }
         
         th, td {
-            border: 1px solid #ddd;
+            border: 1px solid #e8d7c7;
             padding: 12px;
             text-align: left;
         }
         
         th {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 500;
+            background: #efe1d4;
+            color: #5d4332;
+            font-weight: 600;
         }
         
         tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color: #fff9f2;
         }
         
         /* Style for action buttons */
@@ -149,20 +191,48 @@
         
         /* Delete button */
         button[value="delete"] {
-            background-color: var(--error-color);
+            background: #f5d8d3;
+            color: #8a2f25;
+            border: 1px solid #e6b9b1;
+            box-shadow: none;
         }
         
         button[value="delete"]:hover {
-            background-color: #d32f2f;
+            background: #efc7be;
+            transform: none;
         }
         
         /* Update button */
         .update-btn {
-            background-color: var(--info-color);
+            background: #e3effc;
+            color: #155da4;
+            border: 1px solid #b8d6f6;
+            box-shadow: none;
         }
         
         .update-btn:hover {
-            background-color: #1a73e8;
+            background: #d2e6fb;
+            transform: none;
+        }
+
+        @media (max-width: 900px) {
+            .content {
+                padding: 14px;
+            }
+            .container {
+                padding: 16px;
+                border-radius: 14px;
+            }
+            form {
+                margin: 14px 0 20px;
+                padding: 14px;
+            }
+            .action-container {
+                flex-direction: column;
+            }
+            td button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -181,7 +251,10 @@
     </div>
     <div class="content">
         <div class="container">
-            <h1>Tour Check Payables</h1>
+            <div class="page-hero">
+                <h1>Admission Rates</h1>
+                <p>Manage payables and pricing used when building tour schedules.</p>
+            </div>
             
             <form method="POST" action="{% url 'tour_app:admission_rate' %}">
                 {% csrf_token %}
@@ -221,7 +294,7 @@
                         <td>{{ rate.rate_id }}</td>
                         <td>{{ rate.tour_id.tour_name|default:"N/A" }}</td>
                         <td>{{ rate.payables }}</td>
-                        <td>${{ rate.price }}</td>
+                        <td>PHP {{ rate.price }}</td>
                         <td class="action-column">
                             <div class="action-container">
                                 <button class="update-btn" onclick="populateUpdateForm('{{ rate.rate_id }}', '{% if rate.tour_id %}{{ rate.tour_id.tour_id }}{% else %}{% endif %}', '{{ rate.payables }}', '{{ rate.price }}')">Update</button>

@@ -1,9 +1,14 @@
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login as auth_login, authenticate
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from django.contrib import messages
-from .forms import EmployeeRegistrationForm, AccommodationRegistrationForm
-from .models import AdminInfo, Accomodation, Employee, UserActivity, AccommodationCertification
+from .forms import (
+    EmployeeRegistrationForm,
+    AccommodationRegistrationForm,
+    AdminAccommodationEncodeForm,
+)
+from .models import AdminInfo, Accomodation, Employee, UserActivity
 from accom_app.forms import OtherEstabForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -27,6 +32,8 @@ from django.db import transaction
 from django.db.models import Q, Count, Avg
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import timezone
+from urllib.parse import quote
+import requests
 import datetime as dt
 from tour_app.models import Tour_Add, Tour_Schedule, Tour_Event
 from guest_app.models import Guest, Pending, AccommodationBooking
@@ -36,6 +43,37 @@ from ai_chatbot.models import UsabilitySurveyResponse
 
 
 PASSWORD_RESET_SALT = "admin_app.password_reset"
+
+def _verify_recaptcha_response(request):
+    """
+    Verify Google reCAPTCHA token if RECAPTCHA_SECRET_KEY is configured.
+    Returns (is_valid, error_message).
+    """
+    recaptcha_secret = str(getattr(settings, "RECAPTCHA_SECRET_KEY", "") or "").strip()
+    if not recaptcha_secret:
+        # Safe fallback for local/dev when secret is not configured.
+        return True, ""
+
+    recaptcha_response = (
+        request.POST.get("g-recaptcha-response")
+        or request.POST.get("g_recaptcha_response")
+        or ""
+    ).strip()
+    if not recaptcha_response:
+        return False, "Please complete the reCAPTCHA verification."
+
+    try:
+        recaptcha_result = requests.post(
+            "https://www.google.com/recaptcha/api/siteverify",
+            data={"secret": recaptcha_secret, "response": recaptcha_response},
+            timeout=15,
+        ).json()
+    except Exception:
+        return False, "reCAPTCHA verification is temporarily unavailable. Please try again."
+
+    if not recaptcha_result.get("success", False):
+        return False, "reCAPTCHA verification failed. Please try again."
+    return True, ""
 
 
 def _build_password_reset_token(account_type, account_id, email):
@@ -195,8 +233,20 @@ def accomodation_required(view_func):
     """
     @wraps(view_func)
     def wrapped_view(request, *args, **kwargs):
-        if request.session.get('user_type') != 'accomodation' or not request.session.get('accom_id'):
+        user = getattr(request, "user", None)
+        if not user or not getattr(user, "is_authenticated", False):
             return redirect('admin_app:login')
+        if not is_accommodation_owner(user):
+            return redirect('admin_app:login')
+        owned_accommodation = (
+            Accomodation.objects.filter(owner=user, approval_status="accepted")
+            .order_by("accom_id")
+            .first()
+        )
+        if owned_accommodation is None:
+            messages.error(request, "No approved accommodation is linked to your owner account.")
+            return redirect('admin_app:login')
+        request.current_accommodation = owned_accommodation
         return view_func(request, *args, **kwargs)
     return wrapped_view
 
@@ -268,6 +318,11 @@ def login(request):
     request.session.flush()
 
     if request.method == 'POST':
+        recaptcha_ok, recaptcha_error = _verify_recaptcha_response(request)
+        if not recaptcha_ok:
+            messages.error(request, recaptcha_error)
+            return redirect('admin_app:login')
+
         username_or_email = request.POST.get('username')  # could be an email
         password = request.POST.get('password')
 
@@ -317,13 +372,74 @@ def login(request):
             else:
                 messages.error(request, "Invalid username or password")
         else:
-            # Not found in Employee table; try Accomodation.
+            # Not found in Employee table; try Accommodation Owner account (Guest model).
+            owner_candidate = Guest.objects.filter(email__iexact=username_or_email).first()
+            if owner_candidate and is_accommodation_owner(owner_candidate):
+                auth_user = authenticate(
+                    request,
+                    username=owner_candidate.username,
+                    password=password,
+                )
+                if auth_user is None:
+                    messages.error(request, "Invalid username or password")
+                    return redirect('admin_app:login')
+
+                pending_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+                approved_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+                declined_group, _ = Group.objects.get_or_create(name="accommodation_owner_declined")
+
+                if auth_user.groups.filter(id=declined_group.id).exists():
+                    messages.error(request, "Your accommodation owner account was declined. Please contact admin.")
+                    return redirect('admin_app:login')
+                if auth_user.groups.filter(id=pending_group.id).exists() and not auth_user.groups.filter(id=approved_group.id).exists():
+                    messages.error(request, "Your accommodation owner account is pending admin approval.")
+                    return redirect('admin_app:login')
+                if not auth_user.groups.filter(id=approved_group.id).exists():
+                    messages.error(request, "Accommodation owner access is not approved yet.")
+                    return redirect('admin_app:login')
+
+                auth_login(request, auth_user)
+                request.session['user_type'] = 'accomodation'
+                request.session['company_name'] = (
+                    f"{auth_user.first_name} {auth_user.last_name}".strip() or auth_user.username
+                )
+
+                owned_accom = (
+                    Accomodation.objects.filter(owner=auth_user, approval_status="accepted")
+                    .order_by("accom_id")
+                    .first()
+                )
+                if owned_accom is not None:
+                    request.session['accom_id'] = owned_accom.accom_id
+                    request.session['company_name'] = owned_accom.company_name
+                    request.session['company_type'] = owned_accom.company_type
+
+                return redirect('admin_app:owner_hub')
+
+            # Fallback compatibility: legacy accommodation account credential login.
             try:
                 accom = Accomodation.objects.get(email_address=username_or_email)
                 if check_password(password, accom.password):
                     if (accom.approval_status or "").lower() != "accepted":
                         messages.error(request, "Your accommodation account is not approved yet.")
                         return redirect('admin_app:login')
+
+                    owner_user = getattr(accom, "owner", None)
+                    if owner_user is None:
+                        messages.error(
+                            request,
+                            "This accommodation is not linked to an owner user account. "
+                            "Please ask admin to link an owner first.",
+                        )
+                        return redirect('admin_app:login')
+                    if not owner_user.groups.filter(name__iexact="accommodation_owner").exists():
+                        messages.error(
+                            request,
+                            "Owner account is not approved for accommodation access yet.",
+                        )
+                        return redirect('admin_app:login')
+
+                    auth_login(request, owner_user)
 
                     # Set session info for accommodation accounts.
                     # Check company type to determine if it's an establishment account
@@ -343,14 +459,24 @@ def login(request):
                         request.session['company_name'] = accom.company_name if hasattr(accom, 'company_name') else accom.email_address
                         request.session['company_type'] = accom.company_type
 
-                        # Redirect to the accommodation dashboard.
-                        return redirect('admin_app:accommodation_dashboard')
+                        # Redirect to owner hub for a cleaner owner workflow.
+                        return redirect('admin_app:owner_hub')
                 else:
                     messages.error(request, "Invalid username or password")
             except Accomodation.DoesNotExist:
                 messages.error(request, "Invalid username or password")
 
-    return render(request, 'login.html')
+    return render(
+        request,
+        'login.html',
+        {
+            'recaptcha_site_key': str(getattr(settings, 'RECAPTCHA_SITE_KEY', '') or '').strip(),
+            'recaptcha_configured': bool(
+                str(getattr(settings, 'RECAPTCHA_SITE_KEY', '') or '').strip()
+                and str(getattr(settings, 'RECAPTCHA_SECRET_KEY', '') or '').strip()
+            ),
+        },
+    )
 
 def admin_logout(request):
     # Log the logout activity before clearing the session
@@ -383,57 +509,304 @@ def admin_logout(request):
 def accommodation_register(request):
     if not request.user.is_authenticated:
         messages.error(request, "Please log in first to register your accommodation.")
-        return redirect('/guest_app/login/')
-    if not is_accommodation_owner(request.user):
-        return HttpResponseForbidden("Only accommodation owners can register accommodations.")
+        next_url = quote(request.get_full_path(), safe="")
+        return redirect(f"{reverse('main-page')}?owner_signup=1&next={next_url}")
+    pending_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+    approved_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+    declined_group, _ = Group.objects.get_or_create(name="accommodation_owner_declined")
+
+    if request.user.groups.filter(id=declined_group.id).exists():
+        messages.error(request, "Your accommodation owner account was declined. Please contact admin.")
+        return redirect("main-page")
+    if request.user.groups.filter(id=pending_group.id).exists() and not request.user.groups.filter(id=approved_group.id).exists():
+        messages.error(request, "Your accommodation owner account is pending admin approval.")
+        return redirect("main-page")
+    if not request.user.groups.filter(id=approved_group.id).exists():
+        messages.error(request, "Please sign up as an accommodation owner first.")
+        next_url = quote(request.get_full_path(), safe="")
+        return redirect(f"{reverse('main-page')}?owner_signup=1&next={next_url}")
+
+    existing_pending_registration = Accomodation.objects.filter(
+        owner=request.user,
+        approval_status="pending",
+    ).first()
 
     if request.method == 'POST':
-        form = AccommodationRegistrationForm(request.POST, request.FILES)
+        if existing_pending_registration:
+            messages.error(
+                request,
+                "You already have a pending accommodation registration. Please wait for admin review.",
+            )
+            return redirect(request.path)
+
+        form = AccommodationRegistrationForm(request.POST, request.FILES, owner=request.user)
         if form.is_valid():
-            accommodation = form.save(commit=False)
-            accommodation.owner = request.user
-            accommodation.approval_status = "pending"
-            accommodation.status = "pending"
-            accommodation.save()
-            
-            # Process individual certification files
-            for key, file in request.FILES.items():
-                if key.startswith('certification_'):
-                    AccommodationCertification.objects.create(
-                        accommodation=accommodation,
-                        image=file
-                    )
-                    
+            accommodation = form.save()
             messages.success(request, "Accommodation submitted successfully. Await admin approval.")
-            return redirect('accommodation_page')
+            return redirect("admin_app:accommodation_register")
         else:
             messages.error(request, "Please correct the errors below.")
     else:
-        form = AccommodationRegistrationForm()
+        form = AccommodationRegistrationForm(owner=request.user)
 
     # Add request object to context for template conditional rendering
+    owner_accommodations = Accomodation.objects.filter(owner=request.user).order_by("-submitted_at")
     context = {
         'form': form,
         'request': request,
+        'owner_accommodations': owner_accommodations,
     }
     return render(request, 'accommodation.html', context)
 
+
+@login_required
+def owner_hub(request):
+    pending_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+    approved_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+    declined_group, _ = Group.objects.get_or_create(name="accommodation_owner_declined")
+
+    if request.user.groups.filter(id=declined_group.id).exists():
+        messages.error(request, "Your accommodation owner account was declined. Please contact admin.")
+        return redirect("main-page")
+    if request.user.groups.filter(id=pending_group.id).exists() and not request.user.groups.filter(id=approved_group.id).exists():
+        messages.error(request, "Your accommodation owner account is pending admin approval.")
+        return redirect("main-page")
+    if not request.user.groups.filter(id=approved_group.id).exists():
+        messages.error(request, "Please sign up as an accommodation owner first.")
+        return redirect("main-page")
+
+    owner_accommodations = list(
+        Accomodation.objects.filter(owner=request.user).order_by("-submitted_at")
+    )
+
+    from admin_app.models import Room
+    room_map = {}
+    for room in Room.objects.filter(accommodation__owner=request.user).order_by("room_name"):
+        meta = room_map.setdefault(
+            room.accommodation_id,
+            {
+                "total_count": 0,
+                "available_count": 0,
+                "total_pax": 0,
+                "available_pax": 0,
+                "available_names": [],
+            },
+        )
+        room_pax = int(getattr(room, "person_limit", 0) or 0)
+        meta["total_count"] += 1
+        meta["total_pax"] += room_pax
+        if str(room.status or "").upper() == "AVAILABLE":
+            meta["available_count"] += 1
+            meta["available_pax"] += room_pax
+            if room.room_name:
+                meta["available_names"].append(room.room_name)
+
+    owner_rows = []
+    accepted_count = 0
+    pending_count = 0
+    declined_count = 0
+
+    for accom in owner_accommodations:
+        status = str(accom.approval_status or "").lower()
+        if status == "accepted":
+            accepted_count += 1
+        elif status == "pending":
+            pending_count += 1
+        elif status == "declined":
+            declined_count += 1
+
+        meta = room_map.get(
+            accom.accom_id,
+            {
+                "total_count": 0,
+                "available_count": 0,
+                "total_pax": 0,
+                "available_pax": 0,
+                "available_names": [],
+            },
+        )
+        owner_rows.append(
+            {
+                "accommodation": accom,
+                "total_count": meta["total_count"],
+                "available_count": meta["available_count"],
+                "total_pax": meta["total_pax"],
+                "available_pax": meta["available_pax"],
+                "available_names": meta["available_names"],
+            }
+        )
+
+    context = {
+        "owner_rows": owner_rows,
+        "accepted_count": accepted_count,
+        "pending_count": pending_count,
+        "declined_count": declined_count,
+    }
+    return render(request, "owner_hub.html", context)
+
+
+@login_required
+def owner_accommodation_bookings(request):
+    pending_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+    approved_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+    declined_group, _ = Group.objects.get_or_create(name="accommodation_owner_declined")
+
+    if request.user.groups.filter(id=declined_group.id).exists():
+        messages.error(request, "Your accommodation owner account was declined. Please contact admin.")
+        return redirect("main-page")
+    if request.user.groups.filter(id=pending_group.id).exists() and not request.user.groups.filter(id=approved_group.id).exists():
+        messages.error(request, "Your accommodation owner account is pending admin approval.")
+        return redirect("main-page")
+    if not request.user.groups.filter(id=approved_group.id).exists():
+        messages.error(request, "Please sign up as an accommodation owner first.")
+        return redirect("main-page")
+
+    bookings = (
+        AccommodationBooking.objects.select_related("guest", "accommodation", "room")
+        .filter(accommodation__owner=request.user)
+        .order_by("-booking_date")
+    )
+
+    context = {
+        "bookings": bookings,
+        "pending_count": bookings.filter(status="pending").count(),
+        "confirmed_count": bookings.filter(status="confirmed").count(),
+        "declined_count": bookings.filter(status="declined").count(),
+        "cancelled_count": bookings.filter(status="cancelled").count(),
+    }
+    return render(request, "owner_accommodation_bookings.html", context)
+
+
+@login_required
+def owner_manage_rooms(request, accom_id):
+    pending_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+    approved_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+
+    if request.user.groups.filter(id=pending_group.id).exists() and not request.user.groups.filter(id=approved_group.id).exists():
+        messages.error(request, "Your accommodation owner account is pending admin approval.")
+        return redirect("admin_app:accommodation_register")
+    if not request.user.groups.filter(id=approved_group.id).exists():
+        messages.error(request, "Only approved accommodation owners can manage rooms.")
+        return redirect("admin_app:accommodation_register")
+
+    accommodation = get_object_or_404(
+        Accomodation,
+        accom_id=accom_id,
+        owner=request.user,
+        approval_status="accepted",
+    )
+    request.session["accom_id"] = accommodation.accom_id
+    return redirect("accom_app:register_room")
+
 @admin_required
 def create_accommodation(request):
-    accommodations = Accomodation.objects.all()
-    return render(request, 'accommodation.html', {'accommodations': accommodations})
+    reviewer = None
+    employee_id = request.session.get("employee_id")
+    if employee_id:
+        reviewer = Employee.objects.filter(emp_id=employee_id).first()
+
+    if request.method == "POST":
+        form = AdminAccommodationEncodeForm(
+            request.POST,
+            request.FILES,
+            reviewer=reviewer,
+        )
+        if form.is_valid():
+            accommodation = form.save()
+            messages.success(
+                request,
+                f'Accommodation "{accommodation.company_name}" was encoded successfully.',
+            )
+            return redirect("admin_app:create_accommodation")
+        messages.error(request, "Please correct the highlighted fields.")
+    else:
+        form = AdminAccommodationEncodeForm(reviewer=reviewer)
+
+    recent_accommodations = (
+        Accomodation.objects.select_related("owner", "reviewed_by")
+        .all()
+        .order_by("-submitted_at")[:15]
+    )
+    return render(
+        request,
+        "accommodation_admin_create.html",
+        {
+            "form": form,
+            "recent_accommodations": recent_accommodations,
+        },
+    )
 
 @admin_required
 def pending_accommodation(request):
-    pending_accommodations = Accomodation.objects.select_related("owner").filter(approval_status="pending")
-    accepted_accommodations = Accomodation.objects.select_related("owner").filter(approval_status="accepted")
-    declined_accommodations = Accomodation.objects.select_related("owner").filter(approval_status="declined")
+    pending_accommodations = (
+        Accomodation.objects.select_related("owner", "reviewed_by")
+        .filter(approval_status="pending")
+        .order_by("-submitted_at")
+    )
+    accepted_accommodations = (
+        Accomodation.objects.select_related("owner", "reviewed_by")
+        .filter(approval_status="accepted")
+        .order_by("-reviewed_at", "-submitted_at")
+    )
+    declined_accommodations = (
+        Accomodation.objects.select_related("owner", "reviewed_by")
+        .filter(approval_status="declined")
+        .order_by("-reviewed_at", "-submitted_at")
+    )
     context = {
         'pending_accommodations': pending_accommodations,
         'accepted_accommodations': accepted_accommodations,
         'declined_accommodations': declined_accommodations,
     }
     return render(request, 'pending_accommodation.html', context)
+
+
+@admin_required
+def pending_accommodation_owners(request):
+    pending_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+    approved_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+    declined_group, _ = Group.objects.get_or_create(name="accommodation_owner_declined")
+
+    pending_owners = Guest.objects.filter(groups=pending_group).order_by("-date_joined")
+    approved_owners = Guest.objects.filter(groups=approved_group).order_by("-date_joined")
+    declined_owners = Guest.objects.filter(groups=declined_group).order_by("-date_joined")
+
+    context = {
+        "pending_owners": pending_owners,
+        "approved_owners": approved_owners,
+        "declined_owners": declined_owners,
+    }
+    return render(request, "pending_accommodation_owners.html", context)
+
+
+@admin_required
+@require_POST
+def accommodation_owner_update(request, user_id):
+    owner_user = get_object_or_404(Guest, pk=user_id)
+    action = str(request.POST.get("action") or "").strip().lower()
+
+    pending_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+    approved_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+    declined_group, _ = Group.objects.get_or_create(name="accommodation_owner_declined")
+
+    if action == "accept":
+        owner_user.groups.remove(pending_group, declined_group)
+        owner_user.groups.add(approved_group)
+        messages.success(request, f"Approved accommodation owner account: {owner_user.email}")
+    elif action == "decline":
+        owner_user.groups.remove(pending_group, approved_group)
+        owner_user.groups.add(declined_group)
+        Accomodation.objects.filter(owner=owner_user, approval_status="pending").update(
+            approval_status="declined",
+            status="declined",
+            rejection_reason="Owner account was declined by admin.",
+            reviewed_at=timezone.now(),
+        )
+        messages.success(request, f"Declined accommodation owner account: {owner_user.email}")
+    else:
+        messages.error(request, "Invalid owner approval action.")
+
+    return redirect("admin_app:pending_accommodation_owners")
 
 
 @admin_required
@@ -499,12 +872,31 @@ def accommodation_update(request, pk):
         return redirect('admin_app:pending_accommodation')
 
     if request.method == 'POST':
-        new_status = request.POST.get('status')
+        new_status = str(request.POST.get('status') or "").strip().lower()
+        rejection_reason = str(request.POST.get("rejection_reason") or "").strip()
+        reviewer = None
+        employee_id = request.session.get("employee_id")
+        if employee_id:
+            reviewer = Employee.objects.filter(emp_id=employee_id).first()
         # Directly store the lowercase status values.
         if new_status in ['accepted', 'declined']:
-            accom.approval_status = new_status
-            accom.status = new_status
-            accom.save(update_fields=['approval_status', 'status'])
+            if new_status == "declined" and not rejection_reason:
+                rejection_reason = "Declined by admin."
+
+            accom.mark_reviewed(
+                status_value=new_status,
+                reviewer=reviewer,
+                rejection_reason=rejection_reason,
+            )
+            accom.save(
+                update_fields=[
+                    "approval_status",
+                    "status",
+                    "reviewed_at",
+                    "reviewed_by",
+                    "rejection_reason",
+                ]
+            )
             messages.success(request, "Status updated successfully.")
         else:
             messages.error(request, "Invalid status selected.")
@@ -644,7 +1036,23 @@ def employee_accommodations(request):
         return redirect('admin_app:login')
     
     # Get accommodations (hotels, attractions, etc.)
-    accommodations = Accomodation.objects.filter(approval_status="accepted")
+    accommodations = Accomodation.objects.filter(approval_status="accepted", is_active=True).order_by("company_name")
+    company_type_filter = str(request.GET.get("company_type", "") or "").strip().lower()
+    if company_type_filter == "hotel":
+        accommodations = accommodations.filter(company_type__icontains="hotel")
+    elif company_type_filter == "attraction":
+        accommodations = accommodations.filter(
+            Q(company_type__icontains="attraction")
+            | Q(company_type__icontains="tourist")
+            | Q(company_type__icontains="spot")
+        )
+    elif company_type_filter == "mie":
+        accommodations = accommodations.filter(
+            Q(company_type__icontains="mie")
+            | Q(company_type__icontains="meeting")
+            | Q(company_type__icontains="event")
+            | Q(company_type__icontains="incentive")
+        )
     
     # Log the activity
     log_activity(request, employee, 'view_page', description='Viewed accommodations')
@@ -652,6 +1060,7 @@ def employee_accommodations(request):
     context = {
         'employee': employee,
         'accommodations': accommodations,
+        'company_type_filter': company_type_filter,
     }
     
     return render(request, 'employee/accommodations.html', context)
@@ -746,13 +1155,8 @@ def admin_dashboard(request):
 
 @accomodation_required
 def accommodation_dashboard(request):
-    if 'accom_id' not in request.session:
-        return redirect('admin_app:login')
-    
-    from admin_app.models import Accomodation
-    try:
-        accom = Accomodation.objects.get(accom_id=request.session.get('accom_id'))
-    except Accomodation.DoesNotExist:
+    accom = getattr(request, "current_accommodation", None)
+    if accom is None:
         return redirect('admin_app:login')
     
     username = getattr(accom, 'name', accom.email_address)
@@ -763,15 +1167,17 @@ def accommodation_dashboard(request):
         'username': username,
         'is_hotel': is_hotel,
     }
-    
-    # If this is a hotel account, get available rooms
-    if is_hotel:
-        from admin_app.models import Room
-        available_rooms = Room.objects.filter(
-            accommodation=accom,
-            status='AVAILABLE'
-        )
-        context['available_rooms'] = available_rooms
+
+    from admin_app.models import Room
+    available_rooms = Room.objects.filter(
+        accommodation=accom,
+        status='AVAILABLE'
+    )
+    hotel_rooms = Room.objects.filter(
+        accommodation=accom
+    ).order_by("room_name")
+    context['available_rooms'] = available_rooms
+    context['hotel_rooms'] = hotel_rooms
     
     return render(request, 'accommodation_dashboard.html', context)
 

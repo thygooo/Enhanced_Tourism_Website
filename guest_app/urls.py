@@ -71,9 +71,6 @@ urlpatterns = [
     path('companion/requests/decline/<int:request_id>/', views.decline_companion_request, name='decline_companion_request'),
     path('companion/requests/debug/', views.debug_companion_requests, name='debug_companion_requests'),
     path('companion/requests/fix/', views.fix_companion_request, name='fix_companion_request'),
-    path('companion/group/debug/', views.companion_group_debug, name='companion_group_debug'),
-    path('friendship/debug/', views.friendship_debug, name='friendship_debug'),
-    path('get_companions/', views.get_companions, name='get_companions'),
     path('companion/qrcode/', views.send_companion_qr_code, name='companion_qr_code'),
     path('debug/guest_model/', views.debug_guest_model, name='debug_guest_model'),
 ]

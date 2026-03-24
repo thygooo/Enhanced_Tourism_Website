@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pending Tours</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
     <style>
         :root {
@@ -29,8 +30,11 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background:
+                radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
+                radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
+                #f8f5f1;
+            font-family: "Poppins", 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             color: var(--text-dark);
             margin: 0;
             padding: 0;
@@ -51,22 +55,45 @@
             max-width: 1000px;
             margin: 20px auto;
             padding: 30px;
-            background-color: var(--white);
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(180deg, #fffefc 0%, #fff9f2 100%);
+            border: 1px solid #ead9c9;
+            border-radius: 16px;
+            box-shadow: 0 14px 28px rgba(56, 33, 16, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::after {
+            content: "";
+            position: absolute;
+            right: -100px;
+            top: -110px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(224, 164, 109, 0.26), rgba(224, 164, 109, 0));
+            pointer-events: none;
         }
         
-        h1 {
-            color: var(--text-dark);
-            text-align: center;
-            margin-bottom: 30px;
-            font-weight: 600;
+        .page-hero {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #efdfcf;
+        }
+
+        .page-hero h1 {
+            color: #3f2f26;
+            margin: 0 0 6px;
+            font-weight: 700;
+            font-size: clamp(1.4rem, 2.3vw, 1.9rem);
         }
 
         .info-text {
-            color: var(--text-medium);
-            text-align: center;
-            margin-bottom: 20px;
+            color: #6b523f;
+            margin-bottom: 0;
+            font-size: 0.95rem;
         }
         
         .tours-grid {
@@ -77,16 +104,17 @@
         }
         
         .tour-card {
-            background-color: var(--white);
-            border-radius: 8px;
+            background-color: #fffdf9;
+            border: 1px solid #ead9c9;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(56, 33, 16, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
         .tour-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 14px 24px rgba(56, 33, 16, 0.14);
         }
         
         .tour-image {
@@ -111,7 +139,7 @@
             font-size: 12px;
             font-weight: 500;
             color: white;
-            background-color: var(--warning-color);
+            background: linear-gradient(135deg, #b87d42, #d19a5f);
         }
         
         .tour-content {
@@ -147,29 +175,43 @@
         .approve-btn, .reject-btn, .view-btn {
             padding: 8px 12px;
             border: none;
-            border-radius: 4px;
+            border-radius: 10px;
             font-size: 14px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-weight: 600;
+            transition: all 0.2s ease;
         }
         
         .approve-btn {
-            background-color: var(--success-color);
-            color: white;
+            background-color: #e4f3e9;
+            color: #2f7f4d;
+            border: 1px solid #c8e6d0;
         }
-        
+
+        .approve-btn:hover {
+            background-color: #d5ecdd;
+            transform: translateY(-1px);
+        }
+
         .reject-btn {
-            background-color: var(--error-color);
-            color: white;
+            background-color: #f5d8d3;
+            color: #8a2f25;
+            border: 1px solid #e6b9b1;
         }
-        
+
+        .reject-btn:hover {
+            background-color: #efc7be;
+            transform: translateY(-1px);
+        }
+
         .view-btn {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #875a34, #b77744);
             color: white;
         }
-        
-        .approve-btn:hover, .reject-btn:hover, .view-btn:hover {
-            opacity: 0.9;
+
+        .view-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px rgba(122, 79, 45, 0.22);
         }
         
         .filters {
@@ -177,33 +219,44 @@
             gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
         }
         
         .filter-btn {
-            background-color: var(--white);
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
+            background-color: #fff;
+            border: 1px solid #d8bba1;
+            color: #6d4827;
             padding: 8px 15px;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
             font-size: 14px;
+            font-weight: 600;
         }
         
         .filter-btn:hover, .filter-btn.active {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #875a34, #b77744);
             color: white;
+            border-color: transparent;
         }
         
         .empty-state {
             text-align: center;
             padding: 50px 0;
+            position: relative;
+            z-index: 1;
         }
         
         .empty-state i {
             font-size: 48px;
             color: var(--text-light);
             margin-bottom: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .content { padding: 14px; }
+            .container { padding: 14px; border-radius: 14px; }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -215,8 +268,10 @@
     </div>
     <div class="content">
         <div class="container">
-            <h1>Pending Tours</h1>
-            <p class="info-text">Review and manage tour requests awaiting approval.</p>
+            <div class="page-hero">
+                <h1>Pending Tours</h1>
+                <p class="info-text">Review and manage tour requests awaiting approval.</p>
+            </div>
             
             <div class="filters">
                 <button class="filter-btn active">All Pending</button>

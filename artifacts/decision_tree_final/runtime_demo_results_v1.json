@@ -1,0 +1,113 @@
+[
+  {
+    "sample": "strong_match_hotel",
+    "input": {
+      "requested_guests": 2,
+      "requested_budget": 2800,
+      "requested_location": "Bayawan City",
+      "requested_accommodation_type": "hotel",
+      "room_price_per_night": 2400,
+      "room_capacity": 3,
+      "room_available": 2,
+      "accom_location": "Bayawan City",
+      "company_type": "hotel",
+      "nights_requested": 2,
+      "cnn_confidence": 0.92,
+      "shown_rank": 1
+    },
+    "prediction": {
+      "score": 1.0,
+      "predicted_label": "relevant",
+      "source": "model:final_default",
+      "error": "",
+      "normalized_features": {
+        "requested_guests": 2,
+        "requested_budget": 2800.0,
+        "requested_location": "bayawan city",
+        "requested_accommodation_type": "hotel",
+        "room_price_per_night": 2400.0,
+        "room_capacity": 3,
+        "room_available": 2,
+        "accom_location": "bayawan city",
+        "company_type": "hotel",
+        "nights_requested": 2,
+        "cnn_confidence": 0.92,
+        "shown_rank": 1
+      }
+    }
+  },
+  {
+    "sample": "budget_mismatch",
+    "input": {
+      "requested_guests": 2,
+      "requested_budget": 1200,
+      "requested_location": "Poblacion",
+      "requested_accommodation_type": "inn",
+      "room_price_per_night": 2600,
+      "room_capacity": 2,
+      "room_available": 1,
+      "accom_location": "Poblacion",
+      "company_type": "inn",
+      "nights_requested": 1,
+      "cnn_confidence": 0.88,
+      "shown_rank": 2
+    },
+    "prediction": {
+      "score": 1.0,
+      "predicted_label": "relevant",
+      "source": "model:final_default",
+      "error": "",
+      "normalized_features": {
+        "requested_guests": 2,
+        "requested_budget": 1200.0,
+        "requested_location": "poblacion",
+        "requested_accommodation_type": "inn",
+        "room_price_per_night": 2600.0,
+        "room_capacity": 2,
+        "room_available": 1,
+        "accom_location": "poblacion",
+        "company_type": "inn",
+        "nights_requested": 1,
+        "cnn_confidence": 0.88,
+        "shown_rank": 2
+      }
+    }
+  },
+  {
+    "sample": "incomplete_input_defaults",
+    "input": {
+      "requested_guests": "",
+      "requested_budget": "",
+      "requested_location": "Bayawan City",
+      "requested_accommodation_type": "",
+      "room_price_per_night": 1700,
+      "room_capacity": 2,
+      "room_available": 1,
+      "accom_location": "Banga",
+      "company_type": "hotel",
+      "nights_requested": "",
+      "cnn_confidence": "",
+      "shown_rank": ""
+    },
+    "prediction": {
+      "score": 0.08744247205785668,
+      "predicted_label": "not_relevant",
+      "source": "model:final_default",
+      "error": "",
+      "normalized_features": {
+        "requested_guests": 1,
+        "requested_budget": 0.0,
+        "requested_location": "bayawan city",
+        "requested_accommodation_type": "either",
+        "room_price_per_night": 1700.0,
+        "room_capacity": 2,
+        "room_available": 1,
+        "accom_location": "banga",
+        "company_type": "hotel",
+        "nights_requested": 1,
+        "cnn_confidence": 0.0,
+        "shown_rank": 1
+      }
+    }
+  }
+]

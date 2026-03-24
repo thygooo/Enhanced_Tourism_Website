@@ -575,6 +575,7 @@
     <div class="dashboard-header">
         <h1>Welcome {{ request.session.company_name }} to Accommodation Dashboard</h1>
         <p>Manage your accommodations and guest assignments below.</p>
+        <a href="{% url 'accom_app:register_room' %}" class="button">Manage Rooms</a>
         <button id="createSampleRoomsBtn" class="button" style="background-color: var(--info-color);">Create Sample Rooms</button>
         
         <!-- Hidden form with CSRF token for AJAX requests -->
@@ -591,7 +592,7 @@
                 <h2 class="availability-header">Availability</h2>
             </div>
             
-            <div class="room-list" id="roomListContainer">
+            <div class="room-list" id="dashboardRoomListContainer">
                 <!-- Room items will be loaded here via JavaScript -->
             </div>
             
@@ -634,7 +635,7 @@
     <div class="modal-content">
       <span class="close">&times;</span>
       <h1>Registered Rooms</h1>
-      <div id="roomListContainer">
+      <div id="adminRoomListContainer">
           {% if hotel_rooms %}
               <ul id="roomsList">
                   {% for room in hotel_rooms %}
@@ -669,6 +670,12 @@
               <br>
               <label for="personLimit">Person Limit:</label><br>
               <input type="number" id="personLimit" name="person_limit" placeholder="Max number of people allowed" min="0" value="0" required>
+              <br>
+              <label for="pricePerNight">Price per Night (PHP):</label><br>
+              <input type="number" id="pricePerNight" name="price_per_night" placeholder="0.00" min="0" step="0.01" value="0.00" required>
+              <br>
+              <label for="roomAmenities">Amenities (comma-separated):</label><br>
+              <input type="text" id="roomAmenities" name="amenities" placeholder="WiFi, Aircon, Parking">
               <br>
               <button type="submit" class="add-room-btn">Add Room</button>
           </form>
@@ -961,7 +968,7 @@
         if (!roomsData || roomsData.length === 0) {
             // No rooms - show empty state
             console.log("No rooms found, showing empty state");
-            $('#roomListContainer').html('<div class="empty-state">' +
+            $('#dashboardRoomListContainer').html('<div class="empty-state">' +
                 '<p>No rooms have been registered yet.</p>' +
                 '<p>Use the Rooms button in the navigation bar to add rooms.</p>' +
                 '</div>');
@@ -998,7 +1005,7 @@
             `;
         });
         
-        $('#roomListContainer').html(roomListHtml);
+        $('#dashboardRoomListContainer').html(roomListHtml);
         console.log("Room list HTML updated");
         
         // Add click handlers for room items
@@ -1080,17 +1087,17 @@
                     roomListHtml += '</ul>';
                     
                     // Set the room list HTML for the admin modal
-                    $('.modal-content #roomListContainer').html(roomListHtml);
+                    $('#adminRoomListContainer').html(roomListHtml);
                     
                     // Direct owner-side assignment is intentionally disabled in revised flow.
-                    $('.modal-content .delete-btn').on('click', function() {
+                    $('#adminRoomListContainer .delete-btn').on('click', function() {
                         var roomId = $(this).data('room-id');
                         if(confirm("Are you sure you want to delete this room? This will also delete all guest registrations for this room.")) {
                             deleteRoom(roomId);
                         }
                     });
 
-                    $('.modal-content .edit-btn').on('click', function() {
+                    $('#adminRoomListContainer .edit-btn').on('click', function() {
                         var roomId = $(this).data('room-id');
                         var room = roomsData.find(function(r) { return String(r.id) === String(roomId); });
                         if (!room) {
@@ -1156,13 +1163,15 @@
                     });
                 } else {
                     console.log("No rooms found for admin modal");
-                    $('.modal-content #roomListContainer').html('<p class="no-rooms" id="noRoomsMsg">No rooms have been registered yet.</p>');
+                    $('#adminRoomListContainer').html('<p class="no-rooms" id="noRoomsMsg">No rooms have been registered yet.</p>');
                 }
             },
             error: function(xhr, status, error) {
                 console.error("Error loading admin room data:", error);
                 console.error("Response:", xhr.responseText);
-                $('.modal-content #roomListContainer').html('<p class="no-rooms">Error loading rooms. Please try again.</p>');
+                if ($('#adminRoomListContainer #roomsList').length === 0) {
+                    $('#adminRoomListContainer').html('<p class="no-rooms">Error loading rooms. Please try again.</p>');
+                }
             }
         });
     }
@@ -1422,8 +1431,10 @@
         e.preventDefault();
         var roomName = $("#roomName").val();
         var personLimit = $("#personLimit").val();
+        var pricePerNight = $("#pricePerNight").val();
+        var amenities = $("#roomAmenities").val();
         
-        console.log("Adding room:", roomName, "with capacity:", personLimit);
+        console.log("Adding room:", roomName, "with capacity:", personLimit, "price:", pricePerNight);
         
         // Show loading indicator or message
         $(this).find('button[type="submit"]').text("Adding...").prop('disabled', true);
@@ -1434,6 +1445,8 @@
             data: {
                 room_name: roomName,
                 person_limit: personLimit,
+                price_per_night: pricePerNight,
+                amenities: amenities,
                 // The CSRF token is already included via the ajaxSetup
             },
             success: function(response) {
@@ -1445,6 +1458,8 @@
                 addRoomModal.style.display = "none";
                 $("#roomName").val(""); // Clear input field
                 $("#personLimit").val("0"); // Reset to default value
+                $("#pricePerNight").val("0.00");
+                $("#roomAmenities").val("");
                 alert("Room added successfully!");
             },
             error: function(xhr, status, error) {

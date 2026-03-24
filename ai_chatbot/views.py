@@ -10,6 +10,7 @@ from pathlib import Path
 from urllib.parse import urlencode
 
 from django.conf import settings
+from django.contrib.auth.models import Group
 from django.db import transaction
 from django.db.models import F, Q, Sum
 from django.http import JsonResponse
@@ -32,13 +33,17 @@ except ModuleNotFoundError:
     tf = None
 
 from tour_app.models import Admission_Rates, Tour_Schedule
-from admin_app.models import Room, TourismInformation
+from admin_app.models import Accomodation, Employee, Room, TourismInformation
 from guest_app.models import AccommodationBooking
 from guest_app.booking_integrity import create_accommodation_booking_with_integrity
 from .recommenders import (
     recommend_tours,
     recommend_accommodations_with_diagnostics,
     calculate_accommodation_billing,
+)
+from .llm_translation import (
+    translate_to_english,
+    translate_to_user_language,
 )
 from .models import (
     ChatbotLog,
@@ -162,11 +167,37 @@ def _default_label_map_path_for_model(model_path):
     return path.parent / "label_map.json"
 
 
+def _default_vocab_path_candidates_for_model(model_path):
+    path = Path(model_path)
+    return [
+        path.parent / "text_cnn_intent_vocab.json",
+        path.parent / f"{path.stem}_vocab.json",
+        path.parent / "text_cnn_vocab.json",
+    ]
+
+
+def _load_saved_vectorizer_vocab(model_path):
+    for vocab_path in _default_vocab_path_candidates_for_model(model_path):
+        if not vocab_path.exists():
+            continue
+        try:
+            payload = json.loads(vocab_path.read_text(encoding="utf-8"))
+            if isinstance(payload, list) and payload:
+                return [str(token) for token in payload], str(vocab_path)
+        except Exception:
+            continue
+    return None, ""
+
+
 def _default_text_cnn_repair_dataset_path():
     configured = str(os.getenv("CHATBOT_TEXT_CNN_REPAIR_DATASET", "")).strip()
     if configured:
         return Path(configured)
-    return Path(__file__).resolve().parent.parent / "thesis_data_templates" / "text_cnn_messages_final_merged.csv"
+    root = Path(__file__).resolve().parent.parent / "thesis_data_templates"
+    preferred = root / "text_cnn_messages_final_expanded_v3_clean.csv"
+    if preferred.exists():
+        return preferred
+    return root / "text_cnn_messages_final_merged.csv"
 
 
 def _load_repair_corpus(dataset_path):
@@ -195,7 +226,7 @@ def _load_repair_corpus(dataset_path):
     return corpus, ""
 
 
-def _repair_text_vectorization_table(loaded_model):
+def _repair_text_vectorization_table(loaded_model, model_path=None):
     if tf is None:
         return None, "tensorflow_not_installed"
 
@@ -232,10 +263,6 @@ def _repair_text_vectorization_table(loaded_model):
         max_tokens = int(vec_cfg.get("max_tokens") or vocab_size)
         standardize = vec_cfg.get("standardize") or "lower_and_strip_punctuation"
 
-        corpus, corpus_err = _load_repair_corpus(_default_text_cnn_repair_dataset_path())
-        if not corpus:
-            return None, corpus_err
-
         text_input = tf.keras.Input(shape=(1,), dtype=tf.string, name="text")
         vectorizer = tf.keras.layers.TextVectorization(
             max_tokens=max_tokens,
@@ -269,7 +296,14 @@ def _repair_text_vectorization_table(loaded_model):
             metrics=["accuracy"],
         )
 
-        vectorizer.adapt(tf.data.Dataset.from_tensor_slices(corpus).batch(32))
+        saved_vocab, _saved_vocab_path = _load_saved_vectorizer_vocab(model_path) if model_path else (None, "")
+        if saved_vocab:
+            vectorizer.set_vocabulary(saved_vocab)
+        else:
+            corpus, corpus_err = _load_repair_corpus(_default_text_cnn_repair_dataset_path())
+            if not corpus:
+                return None, corpus_err
+            vectorizer.adapt(tf.data.Dataset.from_tensor_slices(corpus).batch(32))
         repaired_model.get_layer("embedding").set_weights(emb_weights)
         repaired_model.get_layer("conv1d").set_weights(conv_weights)
         repaired_model.get_layer("class_probs").set_weights(dense_weights)
@@ -300,7 +334,10 @@ def _load_text_cnn_model(model_path=None):
         except Exception as predict_exc:
             lowered = str(predict_exc).lower()
             if "table not initialized" in lowered:
-                repaired, repair_err = _repair_text_vectorization_table(loaded)
+                repaired, repair_err = _repair_text_vectorization_table(
+                    loaded,
+                    model_path=resolved_path,
+                )
                 if repaired is None:
                     return None, f"model_predict_error:{predict_exc}|{repair_err}"
                 loaded = repaired
@@ -889,13 +926,55 @@ def _next_accommodation_clarifying_question(params):
             return "stay_details", "Please share check-in/check-out dates (YYYY-MM-DD) or tell me the number of nights."
 
     if len(missing_fields) > 1:
-        checklist = "\n".join(f"- {label}" for _, label in missing_fields)
+        acknowledged_parts = []
+        if company_type in ("hotel", "inn", "either"):
+            if company_type == "either":
+                acknowledged_parts.append("accommodation type: hotel or inn")
+            else:
+                acknowledged_parts.append(f"accommodation type: {company_type}")
+        if location:
+            acknowledged_parts.append(f"location: {location}")
+        if budget > 0:
+            acknowledged_parts.append(f"budget: PHP {budget}")
+        if guests > 0:
+            acknowledged_parts.append(f"guests: {guests}")
+        if _has_stay_details(params):
+            acknowledged_parts.append("stay details received")
+
+        missing_prompts = []
+        for field, _label in missing_fields:
+            if field == "company_type":
+                missing_prompts.append("Do you prefer a hotel, an inn, or either?")
+            elif field == "location":
+                missing_prompts.append("Which area in Bayawan should I prioritize?")
+            elif field == "budget":
+                missing_prompts.append("What is your budget per night in PHP?")
+            elif field == "guests":
+                missing_prompts.append("How many guests will stay?")
+            elif field == "stay_details":
+                missing_prompts.append(
+                    "Please share check-in/check-out dates (YYYY-MM-DD) or tell me number of nights."
+                )
+
+        prefix = "I can proceed once I get a few more details."
+        if acknowledged_parts:
+            prefix = (
+                "I understood: " + "; ".join(acknowledged_parts) + ". "
+                "I just need a few more details."
+            )
+
+        if len(missing_prompts) <= 2:
+            follow_up = " ".join(missing_prompts)
+        else:
+            follow_up = "\n".join(f"- {item}" for item in missing_prompts)
+
         return (
             "accommodation_details",
             (
-                "To recommend the best hotel/inn and prepare your booking, please send all missing details in one reply:\n"
-                f"{checklist}\n\n"
-                "Example: hotel in bayawan, budget 1500, 2 guests, 2026-03-10 to 2026-03-12"
+                f"{prefix}\n"
+                f"{follow_up}\n\n"
+                "You can send them in one message, for example:\n"
+                "hotel in bayawan, budget 1500, 2 guests, 2026-03-10 to 2026-03-12"
             ),
         )
 
@@ -1127,9 +1206,21 @@ def _resolve_guests(params):
 def _get_recommendations(params):
     results = recommend_tours(params, limit=3)
     if not results:
+        guests = _resolve_guests(params)
+        budget = _to_int(params.get("budget"), default=0)
+        pref_type = str(params.get("tour_type") or params.get("preferred_type") or "").strip()
+        known_bits = []
+        if guests > 0:
+            known_bits.append(f"guests: {guests}")
+        if budget > 0:
+            known_bits.append(f"budget: PHP {budget}")
+        if pref_type:
+            known_bits.append(f"tour type: {pref_type}")
+        known_text = f"I understood: {'; '.join(known_bits)}.\n" if known_bits else ""
         return (
-            "I couldn't find a matching tour right now. "
-            "Try increasing budget or changing preferred tour type."
+            f"{known_text}"
+            "I couldn’t find a strong tour match yet. "
+            "Try increasing budget, changing tour type, or sharing preferred destination."
         ), []
 
     lines = ["Top recommendations for you (CNN + Decision Tree):"]
@@ -1155,10 +1246,22 @@ def _get_accommodation_recommendations(params):
         suggested_budget_min = diagnostics.get("suggested_budget_min")
         location = str(params.get("location") or "").strip()
         budget = _to_decimal(params.get("budget"), default=Decimal("0"))
+        guests = _to_int(params.get("guests"), default=0)
+        company_type = str(params.get("company_type") or "").strip().lower()
+
+        known_bits = []
+        if company_type in ("hotel", "inn", "either"):
+            known_bits.append(f"type: {company_type}")
+        if location:
+            known_bits.append(f"location: {location}")
+        if budget > 0:
+            known_bits.append(f"budget: PHP {budget:.2f}")
+        if guests > 0:
+            known_bits.append(f"guests: {guests}")
+        known_text = f"I understood: {'; '.join(known_bits)}.\n" if known_bits else ""
 
         lines = [
-            "I couldn't find a matching hotel or inn right now. "
-            "Try adjusting budget, guests, or location."
+            f"{known_text}I couldn’t find a strong hotel/inn match yet."
         ]
         quick_replies = []
         if "budget_too_low" in no_match_reasons and suggested_budget_min:
@@ -1552,15 +1655,19 @@ def _book_accommodation_from_chat(request, params, *, commit=True):
             int(str(room_id_raw).strip())
         except (TypeError, ValueError):
             return {
-                "reply": "Invalid room ID. Please provide a numeric room ID (example: room 12).",
+                "reply": (
+                    f"I received room ID '{room_id_raw}', but it should be numeric. "
+                    "Please send a number like: room 12."
+                ),
                 "room_id": None,
                 "accom_id": None,
             }
     elif not accom_name_raw:
         return {
             "reply": (
-                "Please provide a valid room ID to continue booking "
-                "(example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12)."
+                "I can proceed with booking once you provide a room reference.\n"
+                "Send either a room ID or a clearer room/hotel detail.\n"
+                "Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12."
             ),
             "room_id": None,
             "accom_id": None,
@@ -1570,8 +1677,9 @@ def _book_accommodation_from_chat(request, params, *, commit=True):
     if room is None:
         return {
             "reply": (
-                "I couldn't prepare a hotel booking yet. Please provide a room ID or clearer hotel details "
-                "(example: 'book room 12 for 2 guests from 2026-03-10 to 2026-03-12')."
+                "I couldn’t map that booking request to a valid room yet.\n"
+                "Please provide a room ID or clearer hotel details.\n"
+                "Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12."
             ),
             "room_id": None,
             "accom_id": None,
@@ -1582,11 +1690,30 @@ def _book_accommodation_from_chat(request, params, *, commit=True):
     num_guests = max(_resolve_guests(params), 1)
 
     if not check_in or not check_out:
+        known_bits = [
+            f"room: {room.accommodation.company_name} - {room.room_name} (Room {room.room_id})",
+            f"guests: {num_guests}",
+        ]
+        if check_in and not check_out:
+            ask_line = (
+                f"I already have your check-in date ({check_in}). "
+                "Please provide your check-out date in YYYY-MM-DD format."
+            )
+        elif check_out and not check_in:
+            ask_line = (
+                f"I already have your check-out date ({check_out}). "
+                "Please provide your check-in date in YYYY-MM-DD format."
+            )
+        else:
+            ask_line = (
+                "Please provide both check-in and check-out dates in YYYY-MM-DD format "
+                "(example: 2026-03-10 to 2026-03-12)."
+            )
         return {
             "reply": (
-                "I found a room match, but I still need your dates to book it.\n"
-                f"Matched room: {room.accommodation.company_name} - {room.room_name} (Room {room.room_id})\n"
-                "Please send your check-in and check-out dates in YYYY-MM-DD format."
+                "I can prepare your booking now. I just need the missing stay date details.\n"
+                f"I understood: {'; '.join(known_bits)}.\n"
+                f"{ask_line}"
             ),
             "room_id": room.room_id,
             "accom_id": getattr(room.accommodation, "accom_id", None),
@@ -1597,14 +1724,21 @@ def _book_accommodation_from_chat(request, params, *, commit=True):
         check_out_dt = datetime.strptime(check_out, "%Y-%m-%d").date()
     except Exception:
         return {
-            "reply": "Invalid dates. Please use YYYY-MM-DD for check-in and check-out.",
+            "reply": (
+                "I couldn’t read the dates you sent.\n"
+                "Please use YYYY-MM-DD format for both check-in and check-out "
+                "(example: 2026-03-10 to 2026-03-12)."
+            ),
             "room_id": room.room_id,
             "accom_id": getattr(room.accommodation, "accom_id", None),
         }
 
     if check_out_dt <= check_in_dt:
         return {
-            "reply": "Check-out must be after check-in.",
+            "reply": (
+                f"I received check-in {check_in_dt.isoformat()} and check-out {check_out_dt.isoformat()}.\n"
+                "Check-out must be later than check-in. Please send updated dates."
+            ),
             "room_id": room.room_id,
             "accom_id": getattr(room.accommodation, "accom_id", None),
         }
@@ -1612,7 +1746,8 @@ def _book_accommodation_from_chat(request, params, *, commit=True):
     if room.person_limit and num_guests > room.person_limit:
         return {
             "reply": (
-                f"This room only allows up to {room.person_limit} guest(s). "
+                f"I found a capacity mismatch: you requested {num_guests} guest(s), "
+                f"but this room allows up to {room.person_limit}.\n"
                 "Please reduce guests or choose another room."
             ),
             "room_id": room.room_id,
@@ -1644,14 +1779,18 @@ def _book_accommodation_from_chat(request, params, *, commit=True):
 
     if booking_error == "room_unavailable":
         return {
-            "reply": "That room is no longer available or accepted. Please choose another room.",
+            "reply": (
+                "This room is no longer available for booking right now "
+                "(status/approval/availability changed).\n"
+                "Please choose another room."
+            ),
             "room_id": getattr(room, "room_id", None),
             "accom_id": getattr(getattr(room, "accommodation", None), "accom_id", None),
         }
     if booking_error == "date_overlap":
         return {
             "reply": (
-                "That room is already booked for the selected dates. "
+                "That room already has a booking overlap for the dates you selected.\n"
                 "Please choose different dates or another room."
             ),
             "room_id": getattr(room, "room_id", None),
@@ -2198,6 +2337,17 @@ def _normalize_intent_label(raw_label):
     return normalized if normalized in _ALLOWED_INTENTS else ""
 
 
+def _intent_confidence_threshold():
+    raw = str(os.getenv("CHATBOT_INTENT_CNN_CONFIDENCE_THRESHOLD", "")).strip()
+    if not raw:
+        return 0.60
+    try:
+        value = float(raw)
+    except (TypeError, ValueError):
+        return 0.60
+    return max(0.0, min(1.0, value))
+
+
 def _classify_intent_with_text_cnn(message):
     model_path, artifact_source = _resolve_intent_text_cnn_model_path()
     label_map_path = _default_label_map_path_for_model(model_path)
@@ -2233,10 +2383,21 @@ def _classify_intent_with_text_cnn(message):
         )
 
     if normalized_intent:
+        confidence = float(prediction.get("confidence", 0.0) or 0.0)
+        threshold = _intent_confidence_threshold()
+        if confidence < threshold:
+            return {
+                "intent": "",
+                "source": "text_cnn_low_confidence",
+                "confidence": confidence,
+                "top_3": normalized_top3,
+                "error": f"low_confidence:{confidence:.4f}<threshold:{threshold:.4f}",
+                "artifact_source": artifact_source,
+            }
         return {
             "intent": normalized_intent,
             "source": "text_cnn_intent",
-            "confidence": float(prediction.get("confidence", 0.0) or 0.0),
+            "confidence": confidence,
             "top_3": normalized_top3,
             "error": "",
             "artifact_source": artifact_source,
@@ -2287,6 +2448,13 @@ def _classify_intent_and_extract_params(message):
 def _is_my_accommodation_booking_status_command(message):
     text = (message or "").strip().lower()
     my_accommodation_booking_phrases = [
+        "show my bookings",
+        "view my bookings",
+        "check my bookings",
+        "my bookings",
+        "show bookings",
+        "booking status",
+        "my booking status",
         "show my hotel bookings",
         "show my inn bookings",
         "show my accommodation bookings",
@@ -2306,6 +2474,569 @@ def _is_my_accommodation_booking_status_command(message):
         "accommodation booking status",
     ]
     return any(phrase in text for phrase in my_accommodation_booking_phrases)
+
+
+def _is_accommodation_bookings_page_command(message):
+    text = str(message or "").strip().lower()
+    if not text:
+        return False
+    strong_phrases = (
+        "accommodation bookings",
+        "hotel bookings",
+        "inn bookings",
+        "room bookings",
+        "booking status for hotel",
+        "pending accommodation bookings",
+    )
+    if any(phrase in text for phrase in strong_phrases):
+        return True
+    return bool(
+        re.search(r"\b(accommodation|hotel|inn|room)\b.*\bbooking", text)
+        or re.search(r"\bbooking.*\b(accommodation|hotel|inn|room)\b", text)
+    )
+
+
+def _is_accommodation_owner_user(user, request=None):
+    if not user or not getattr(user, "is_authenticated", False):
+        return False
+    try:
+        if user.groups.filter(name__iexact="accommodation_owner").exists():
+            return True
+    except Exception:
+        pass
+
+    role_value = str(getattr(user, "role", "") or "").strip().lower()
+    if role_value in {"accommodation_owner", "accommodation owner", "owner"}:
+        return True
+
+    if request is not None:
+        try:
+            session_user_type = str(request.session.get("user_type") or "").strip().lower()
+            if session_user_type in {"accomodation", "accommodation", "establishment"}:
+                return True
+        except Exception:
+            pass
+
+    try:
+        if hasattr(user, "owned_accommodations") and user.owned_accommodations.exists():
+            return True
+    except Exception:
+        pass
+
+    return False
+
+
+def _resolve_chat_actor(request):
+    user = getattr(request, "user", None)
+    if user and getattr(user, "is_authenticated", False):
+        if _is_accommodation_owner_user(user, request=request):
+            return {
+                "is_allowed": True,
+                "role": "owner",
+                "user": user,
+                "employee": None,
+                "display_name": str(getattr(user, "first_name", "") or getattr(user, "username", "") or "Owner").strip(),
+            }
+        return {
+            "is_allowed": True,
+            "role": "guest",
+            "user": user,
+            "employee": None,
+            "display_name": str(getattr(user, "first_name", "") or getattr(user, "username", "") or "Guest").strip(),
+        }
+
+    try:
+        session_user_type = str(request.session.get("user_type") or "").strip().lower()
+        employee_id = request.session.get("employee_id")
+    except Exception:
+        session_user_type = ""
+        employee_id = None
+
+    if session_user_type == "employee" and employee_id:
+        employee = Employee.objects.filter(emp_id=employee_id).first()
+        if employee and str(getattr(employee, "status", "") or "").strip().lower() == "accepted":
+            is_admin = bool(request.session.get("is_admin")) or str(getattr(employee, "role", "")).strip().lower() == "admin"
+            return {
+                "is_allowed": True,
+                "role": "admin" if is_admin else "employee",
+                "user": None,
+                "employee": employee,
+                "display_name": str(getattr(employee, "first_name", "") or "Staff").strip(),
+            }
+
+    return {
+        "is_allowed": False,
+        "role": "anonymous",
+        "user": None,
+        "employee": None,
+        "display_name": "User",
+    }
+
+
+def _is_help_or_greeting_command(message):
+    text = str(message or "").strip().lower()
+    if not text:
+        return False
+    quick = {
+        "help",
+        "menu",
+        "commands",
+        "start",
+        "hello",
+        "hi",
+        "hey",
+    }
+    if text in quick:
+        return True
+    return any(
+        phrase in text
+        for phrase in (
+            "what can you do",
+            "how can you help",
+            "assist me",
+            "show commands",
+            "show menu",
+        )
+    )
+
+
+def _contains_any_phrase(message, phrases):
+    text = str(message or "").strip().lower()
+    if not text:
+        return False
+    return any(str(phrase).strip().lower() in text for phrase in phrases)
+
+
+def _build_role_help_payload(actor):
+    role = str(actor.get("role") or "").strip().lower()
+    if role == "owner":
+        return {
+            "fulfillmentText": (
+                "Owner assistant mode is active. I can help you check your business side.\n"
+                "- Show my accommodations\n"
+                "- Show my rooms\n"
+                "- Show my bookings\n"
+                "- Open Owner Hub\n"
+                "- Show tourism information about <place>\n\n"
+                "For registration/edits, use Owner Hub."
+            ),
+            "quick_replies": [
+                "Show my accommodations",
+                "Show my rooms",
+                "Show my bookings",
+                "Open Owner Hub",
+            ],
+        }
+    if role == "admin":
+        return {
+            "fulfillmentText": (
+                "Admin assistant mode is active.\n"
+                "I can answer tourism information, show moderation summaries, and help with quick navigation.\n"
+                "Use the Admin Dashboard for approvals, encoding, and reports."
+            ),
+            "quick_replies": [
+                "Open dashboard",
+                "Show pending accommodations",
+                "Show pending owner accounts",
+                "Open accommodation bookings",
+            ],
+        }
+    if role == "employee":
+        return {
+            "fulfillmentText": (
+                "Employee assistant mode is active.\n"
+                "I can answer tourism information and guide role-based navigation.\n"
+                "Use the Employee Dashboard for operational tasks."
+            ),
+            "quick_replies": [
+                "Open dashboard",
+                "Open assigned tours",
+                "Open tour calendar",
+                "Open profile",
+            ],
+        }
+    return {
+        "fulfillmentText": (
+            "Guest assistant mode is active. I can help you find and book hotels/inns in Bayawan.\n"
+            "Try: recommend a hotel in Bayawan for 2 guests under 2000."
+        ),
+        "quick_replies": [
+            "Recommend a hotel in Bayawan for 2 guests under 2000",
+            "Show tourism information in Bayawan",
+            "Show my bookings",
+        ],
+    }
+
+
+def _is_open_dashboard_command(message):
+    text = str(message or "").strip().lower()
+    if not text:
+        return False
+    return any(
+        phrase in text
+        for phrase in ("open dashboard", "go to dashboard", "dashboard")
+    )
+
+
+def _is_owner_room_overview_command(message):
+    text = str(message or "").strip().lower()
+    if not text:
+        return False
+    phrases = (
+        "show my rooms",
+        "view my rooms",
+        "list my rooms",
+        "check my rooms",
+        "my rooms",
+        "show rooms",
+        "room list",
+        "room status",
+    )
+    if any(phrase in text for phrase in phrases):
+        return True
+    return bool(
+        re.search(r"\b(show|view|list|check)\b.*\b(my\s+)?rooms?\b", text)
+    )
+
+
+def _is_owner_accommodation_overview_command(message):
+    text = str(message or "").strip().lower()
+    if not text:
+        return False
+    phrases = (
+        "show my accommodations",
+        "view my accommodations",
+        "list my accommodations",
+        "my accommodations",
+        "my accommodation",
+        "show my inns",
+        "show my hotels",
+        "show my businesses",
+    )
+    if any(phrase in text for phrase in phrases):
+        return True
+    return bool(
+        re.search(r"\b(show|view|list|check)\b.*\b(my\s+)?(accommodation|accommodations|hotel|inn|business)\b", text)
+    )
+
+
+def _is_owner_hub_command(message):
+    return _contains_any_phrase(
+        message,
+        (
+            "open owner hub",
+            "go to owner hub",
+            "owner hub",
+            "owner dashboard",
+            "open accommodation owner hub",
+        ),
+    )
+
+
+def _is_owner_register_accommodation_command(message):
+    return _contains_any_phrase(
+        message,
+        (
+            "register accommodation",
+            "add accommodation",
+            "create accommodation",
+            "open accommodation registration",
+        ),
+    )
+
+
+def _build_owner_accommodations_summary(user, *, max_rows=8):
+    owner_accommodations = list(
+        Accomodation.objects.filter(owner=user, is_active=True).order_by("-submitted_at", "company_name")
+    )
+    if not owner_accommodations:
+        return (
+            "You don't have any accommodation record yet. "
+            "Open Owner Hub and click Register New Accommodation."
+        )
+
+    status_counts = Counter(
+        str(status or "").strip().lower()
+        for status in Accomodation.objects.filter(owner=user, is_active=True).values_list("approval_status", flat=True)
+    )
+    lines = [
+        (
+            f"You currently have {len(owner_accommodations)} accommodation(s): "
+            f"Accepted {status_counts.get('accepted', 0)}, "
+            f"Pending {status_counts.get('pending', 0)}, "
+            f"Declined {status_counts.get('declined', 0)}."
+        ),
+        "Your accommodations:",
+    ]
+
+    shown = 0
+    for accom in owner_accommodations:
+        if shown >= max_rows:
+            break
+        room_count = Room.objects.filter(accommodation=accom).count()
+        status = str(getattr(accom, "approval_status", "") or "").strip().title() or "Unknown"
+        company_type = str(getattr(accom, "company_type", "") or "Accommodation").strip().title()
+        lines.append(
+            f"- {accom.company_name} ({company_type}) | Status: {status} | Rooms: {room_count}"
+        )
+        shown += 1
+
+    if len(owner_accommodations) > shown:
+        lines.append(f"...and {len(owner_accommodations) - shown} more accommodation(s).")
+
+    lines.append("Tip: Use Owner Hub to manage rooms and submit additional accommodations.")
+    return "\n".join(lines)
+
+
+def _build_owner_rooms_summary(user, *, max_rows=12):
+    accepted_accommodations = list(
+        Accomodation.objects.filter(owner=user, approval_status="accepted", is_active=True).order_by("company_name")
+    )
+    if not accepted_accommodations:
+        return (
+            "You don't have any accepted accommodation yet. "
+            "Please wait for admin approval, then add rooms in Owner Hub."
+        )
+
+    rooms_qs = (
+        Room.objects.select_related("accommodation")
+        .filter(accommodation__in=accepted_accommodations)
+        .order_by("accommodation__company_name", "room_name", "room_id")
+    )
+    total_rooms = rooms_qs.count()
+    if total_rooms <= 0:
+        return (
+            "Your accepted accommodation is ready, but no rooms are registered yet. "
+            "Open Owner Hub and click Manage Rooms to add your first room."
+        )
+
+    available_slots = rooms_qs.aggregate(total=Sum("current_availability")).get("total") or 0
+    lines = [
+        (
+            f"You currently have {total_rooms} room(s) across "
+            f"{len(accepted_accommodations)} accepted accommodation(s). "
+            f"Total available slots: {available_slots}."
+        ),
+        "Your rooms:",
+    ]
+
+    shown = 0
+    for room in rooms_qs:
+        if shown >= max_rows:
+            break
+        accom = getattr(room, "accommodation", None)
+        accom_name = str(getattr(accom, "company_name", "") or "Accommodation").strip()
+        room_name = str(getattr(room, "room_name", "") or f"Room {room.room_id}").strip()
+        price = _to_decimal(getattr(room, "price_per_night", 0), default=Decimal("0"))
+        capacity = _to_int(getattr(room, "person_limit", 0), default=0)
+        current = _to_int(getattr(room, "current_availability", 0), default=0)
+        status = str(getattr(room, "status", "") or "").strip().title() or "Unknown"
+        lines.append(
+            (
+                f"- {accom_name} | {room_name} (Room {room.room_id}) | "
+                f"PHP {price:.2f}/night | Capacity: {capacity} pax | "
+                f"Available: {current} | Status: {status}"
+            )
+        )
+        shown += 1
+
+    if total_rooms > shown:
+        lines.append(f"...and {total_rooms - shown} more room(s).")
+
+    lines.append("Tip: Open Owner Hub > Manage Rooms to edit prices, pax, and availability.")
+    return "\n".join(lines)
+
+
+def _is_booking_count_command(message):
+    text = str(message or "").strip().lower()
+    if "booking" not in text:
+        return False
+    if any(token in text for token in ("how many", "count", "total", "number of", "pila", "ilan")):
+        return True
+    return bool(re.search(r"\bbookings?\b.*\b(today|this month|monthly|daily|now)\b", text))
+
+
+def _is_admin_pending_accommodations_command(message):
+    return _contains_any_phrase(
+        message,
+        (
+            "pending accommodations",
+            "pending accommodation",
+            "show pending hotels",
+            "show pending inns",
+            "accommodation approvals",
+        ),
+    )
+
+
+def _is_admin_pending_owner_accounts_command(message):
+    return _contains_any_phrase(
+        message,
+        (
+            "pending owner accounts",
+            "pending owners",
+            "owner account approvals",
+            "pending accommodation owners",
+            "accommodation owner approvals",
+        ),
+    )
+
+
+def _is_admin_accommodation_bookings_command(message):
+    return _contains_any_phrase(
+        message,
+        (
+            "open accommodation bookings",
+            "show accommodation bookings",
+            "hotel bookings",
+            "inn bookings",
+            "room bookings",
+            "accommodation booking list",
+        ),
+    )
+
+
+def _is_admin_tourism_manage_command(message):
+    return _contains_any_phrase(
+        message,
+        (
+            "open tourism information",
+            "tourism information manage",
+            "manage tourism information",
+            "tourism management",
+        ),
+    )
+
+
+def _is_admin_survey_results_command(message):
+    return _contains_any_phrase(
+        message,
+        (
+            "survey results",
+            "open survey results",
+            "show survey results",
+            "sus results",
+            "tam results",
+        ),
+    )
+
+
+def _is_employee_assigned_tours_command(message):
+    return _contains_any_phrase(
+        message,
+        (
+            "open assigned tours",
+            "my assigned tours",
+            "assigned tours",
+        ),
+    )
+
+
+def _is_employee_tour_calendar_command(message):
+    return _contains_any_phrase(
+        message,
+        (
+            "open tour calendar",
+            "my tour calendar",
+            "tour calendar",
+        ),
+    )
+
+
+def _is_employee_accommodations_command(message):
+    return _contains_any_phrase(
+        message,
+        (
+            "open accommodations",
+            "employee accommodations",
+            "accommodation list",
+        ),
+    )
+
+
+def _is_employee_profile_command(message):
+    return _contains_any_phrase(
+        message,
+        (
+            "open profile",
+            "my profile",
+            "employee profile",
+        ),
+    )
+
+
+def _build_link_payload(request, *, text, route_name, label):
+    link = reverse(route_name)
+    if hasattr(request, "build_absolute_uri"):
+        link = request.build_absolute_uri(link)
+    return {
+        "fulfillmentText": text,
+        "billing_link": link,
+        "billing_link_label": label,
+        "open_in_new_tab": True,
+    }
+
+
+def _build_admin_pending_accommodations_summary():
+    qs = Accomodation.objects.filter(is_active=True)
+    pending = qs.filter(approval_status="pending")
+    accepted = qs.filter(approval_status="accepted").count()
+    declined = qs.filter(approval_status="declined").count()
+    lines = [
+        (
+            f"Accommodation moderation summary: Pending {pending.count()}, "
+            f"Accepted {accepted}, Declined {declined}."
+        )
+    ]
+    sample = list(pending.order_by("-submitted_at", "company_name")[:6])
+    if sample:
+        lines.append("Latest pending accommodations:")
+        for accom in sample:
+            lines.append(f"- {accom.company_name} | {accom.company_type} | {accom.location}")
+    return "\n".join(lines)
+
+
+def _build_admin_pending_owner_accounts_summary():
+    pending_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+    approved_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+    declined_group, _ = Group.objects.get_or_create(name="accommodation_owner_declined")
+    pending_count = pending_group.user_set.count()
+    approved_count = approved_group.user_set.count()
+    declined_count = declined_group.user_set.count()
+    return (
+        "Accommodation owner account review summary: "
+        f"Pending {pending_count}, Approved {approved_count}, Declined {declined_count}."
+    )
+
+
+def _build_booking_count_summary(actor, *, user=None, message=""):
+    role = str(actor.get("role") or "").strip().lower()
+    text = str(message or "").strip().lower()
+    today = timezone.localdate()
+    qs = AccommodationBooking.objects.all()
+    period_label = "all time"
+
+    if "today" in text:
+        qs = qs.filter(booking_date__date=today)
+        period_label = f"today ({today.isoformat()})"
+    elif "this month" in text or "monthly" in text:
+        qs = qs.filter(booking_date__year=today.year, booking_date__month=today.month)
+        period_label = f"this month ({today.year}-{today.month:02d})"
+
+    if role == "guest" and user is not None:
+        qs = qs.filter(guest=user)
+    elif role == "owner" and user is not None:
+        qs = qs.filter(accommodation__owner=user)
+
+    total = qs.count()
+    status_counts = Counter(str(s or "").strip().lower() for s in qs.values_list("status", flat=True))
+    return (
+        f"Booking summary for {period_label}: Total {total}, "
+        f"Pending {status_counts.get('pending', 0)}, "
+        f"Confirmed {status_counts.get('confirmed', 0)}, "
+        f"Declined {status_counts.get('declined', 0)}, "
+        f"Cancelled {status_counts.get('cancelled', 0)}."
+    )
 
 
 def _is_default_accommodation_suggestions_command(message):
@@ -2406,8 +3137,9 @@ def openai_chat(request):
             error_message="invalid_json_payload",
         )
 
-    user = getattr(request, "user", None)
-    if not user or not getattr(user, "is_authenticated", False):
+    actor = _resolve_chat_actor(request)
+    user = actor.get("user")
+    if not actor.get("is_allowed"):
         return _chat_json_response(
             request,
             start_time,
@@ -2419,7 +3151,9 @@ def openai_chat(request):
             error_message="chat_requires_login",
         )
 
-    message = str(payload.get("message", "")).strip()
+    raw_message = str(payload.get("message", "")).strip()
+    translated_message, detected_language = translate_to_english(raw_message)
+    message = str(translated_message or raw_message).strip()
     init_suggestions = bool(payload.get("init_suggestions"))
     if not message:
         return _chat_json_response(
@@ -2430,14 +3164,225 @@ def openai_chat(request):
             error_message="missing_message",
         )
     request._chatbot_log_context = {
-        "user_message": message,
+        "user_message": raw_message,
         "resolved_intent": "",
         "resolved_params": {},
         "intent_classifier": {},
         "response_nlg_source": "",
         "fallback_used": False,
-        "provenance": {},
+        "provenance": {"chat_role": actor.get("role", "")},
     }
+
+    if _is_help_or_greeting_command(message):
+        request._chatbot_log_context["resolved_intent"] = "role_help"
+        help_payload = _build_role_help_payload(actor)
+        return _chat_json_response(request, start_time, help_payload)
+
+    if actor.get("role") in {"admin", "employee"} and _is_open_dashboard_command(message):
+        request._chatbot_log_context["resolved_intent"] = "open_dashboard"
+        target_name = "admin_app:admin_dashboard" if actor.get("role") == "admin" else "admin_app:employee_dashboard"
+        target_url = reverse(target_name)
+        if hasattr(request, "build_absolute_uri"):
+            target_url = request.build_absolute_uri(target_url)
+        return _chat_json_response(
+            request,
+            start_time,
+            {
+                "fulfillmentText": "Opening your dashboard now.",
+                "redirect_url": target_url,
+            },
+        )
+
+    if _is_booking_count_command(message):
+        request._chatbot_log_context["resolved_intent"] = "booking_count_summary"
+        summary = _build_booking_count_summary(actor, user=user, message=message)
+        payload = {"fulfillmentText": summary}
+        role = str(actor.get("role") or "").strip().lower()
+        if role == "owner":
+            payload.update(
+                _build_link_payload(
+                    request,
+                    text=summary,
+                    route_name="admin_app:owner_accommodation_bookings",
+                    label="View Owner Accommodation Bookings",
+                )
+            )
+        elif role == "guest":
+            payload.update(
+                _build_link_payload(
+                    request,
+                    text=summary,
+                    route_name="my_accommodation_bookings",
+                    label="View My Hotel/Inn Bookings",
+                )
+            )
+        elif role == "admin":
+            payload.update(
+                _build_link_payload(
+                    request,
+                    text=summary,
+                    route_name="admin_app:accommodation_bookings",
+                    label="Open Accommodation Bookings",
+                )
+            )
+        return _chat_json_response(request, start_time, payload)
+
+    if actor.get("role") == "owner" and _is_owner_hub_command(message):
+        request._chatbot_log_context["resolved_intent"] = "open_owner_hub"
+        return _chat_json_response(
+            request,
+            start_time,
+            _build_link_payload(
+                request,
+                text="I found your Owner Hub. Click the button below to open it in a new tab.",
+                route_name="admin_app:owner_hub",
+                label="Open Owner Hub",
+            ),
+        )
+
+    if actor.get("role") == "owner" and _is_owner_register_accommodation_command(message):
+        request._chatbot_log_context["resolved_intent"] = "open_owner_accommodation_register"
+        return _chat_json_response(
+            request,
+            start_time,
+            _build_link_payload(
+                request,
+                text="I found the accommodation registration page. Click the button below to open it in a new tab.",
+                route_name="admin_app:accommodation_register",
+                label="Register New Accommodation",
+            ),
+        )
+
+    if actor.get("role") == "owner" and _is_owner_accommodation_overview_command(message):
+        request._chatbot_log_context["resolved_intent"] = "owner_accommodation_overview"
+        owner_accom_reply = _build_owner_accommodations_summary(user)
+        return _chat_json_response(
+            request,
+            start_time,
+            {
+                "fulfillmentText": owner_accom_reply,
+                "quick_replies": ["Show my rooms", "Show my bookings", "Open Owner Hub"],
+            },
+        )
+
+    if actor.get("role") == "admin" and _is_admin_pending_accommodations_command(message):
+        request._chatbot_log_context["resolved_intent"] = "admin_pending_accommodations"
+        summary = _build_admin_pending_accommodations_summary()
+        return _chat_json_response(
+            request,
+            start_time,
+            _build_link_payload(
+                request,
+                text=summary,
+                route_name="admin_app:pending_accommodation",
+                label="Open Pending Accommodations",
+            ),
+        )
+
+    if actor.get("role") == "admin" and _is_admin_pending_owner_accounts_command(message):
+        request._chatbot_log_context["resolved_intent"] = "admin_pending_owner_accounts"
+        summary = _build_admin_pending_owner_accounts_summary()
+        return _chat_json_response(
+            request,
+            start_time,
+            _build_link_payload(
+                request,
+                text=summary,
+                route_name="admin_app:pending_accommodation_owners",
+                label="Open Pending Owner Accounts",
+            ),
+        )
+
+    if actor.get("role") == "admin" and _is_admin_accommodation_bookings_command(message):
+        request._chatbot_log_context["resolved_intent"] = "admin_accommodation_bookings"
+        return _chat_json_response(
+            request,
+            start_time,
+            _build_link_payload(
+                request,
+                text="I found the Accommodation Bookings page. Click the button below to open it in a new tab.",
+                route_name="admin_app:accommodation_bookings",
+                label="Open Accommodation Bookings",
+            ),
+        )
+
+    if actor.get("role") == "admin" and _is_admin_tourism_manage_command(message):
+        request._chatbot_log_context["resolved_intent"] = "admin_tourism_information_manage"
+        return _chat_json_response(
+            request,
+            start_time,
+            _build_link_payload(
+                request,
+                text="I found the Tourism Information management page. Click the button below to open it in a new tab.",
+                route_name="admin_app:tourism_information_manage",
+                label="Open Tourism Information",
+            ),
+        )
+
+    if actor.get("role") == "admin" and _is_admin_survey_results_command(message):
+        request._chatbot_log_context["resolved_intent"] = "admin_survey_results"
+        return _chat_json_response(
+            request,
+            start_time,
+            _build_link_payload(
+                request,
+                text="I found the survey results dashboard. Click the button below to open it in a new tab.",
+                route_name="admin_app:survey_results_dashboard",
+                label="Open Survey Results",
+            ),
+        )
+
+    if actor.get("role") == "employee" and _is_employee_assigned_tours_command(message):
+        request._chatbot_log_context["resolved_intent"] = "employee_assigned_tours"
+        return _chat_json_response(
+            request,
+            start_time,
+            _build_link_payload(
+                request,
+                text="I found your assigned tours page. Click the button below to open it in a new tab.",
+                route_name="admin_app:employee_assigned_tours",
+                label="Open Assigned Tours",
+            ),
+        )
+
+    if actor.get("role") == "employee" and _is_employee_tour_calendar_command(message):
+        request._chatbot_log_context["resolved_intent"] = "employee_tour_calendar"
+        return _chat_json_response(
+            request,
+            start_time,
+            _build_link_payload(
+                request,
+                text="I found your tour calendar. Click the button below to open it in a new tab.",
+                route_name="admin_app:employee_tour_calendar",
+                label="Open Tour Calendar",
+            ),
+        )
+
+    if actor.get("role") == "employee" and _is_employee_accommodations_command(message):
+        request._chatbot_log_context["resolved_intent"] = "employee_accommodations"
+        return _chat_json_response(
+            request,
+            start_time,
+            _build_link_payload(
+                request,
+                text="I found the accommodations page for employee view. Click the button below to open it in a new tab.",
+                route_name="admin_app:employee_accommodations",
+                label="Open Accommodations",
+            ),
+        )
+
+    if actor.get("role") == "employee" and _is_employee_profile_command(message):
+        request._chatbot_log_context["resolved_intent"] = "employee_profile"
+        return _chat_json_response(
+            request,
+            start_time,
+            _build_link_payload(
+                request,
+                text="I found your profile page. Click the button below to open it in a new tab.",
+                route_name="admin_app:employee_profile",
+                label="Open Profile",
+            ),
+        )
 
     if _is_reset_command(message):
         _clear_chat_state(request)
@@ -2454,6 +3399,9 @@ def openai_chat(request):
 
     if _is_default_accommodation_suggestions_command(message):
         request._chatbot_log_context["resolved_intent"] = "get_accommodation_recommendation_init"
+        if actor.get("role") != "guest":
+            help_payload = _build_role_help_payload(actor)
+            return _chat_json_response(request, start_time, help_payload)
         suggestions_payload = _get_default_accommodation_suggestions(limit=3)
         default_reply = None
         recommendation_trace = []
@@ -2478,30 +3426,49 @@ def openai_chat(request):
 
     if _is_my_accommodation_booking_status_command(message):
         request._chatbot_log_context["resolved_intent"] = "view_my_accommodation_bookings"
-        user = getattr(request, "user", None)
-        if not user or not getattr(user, "is_authenticated", False):
-            return _chat_json_response(
-                request,
-                start_time,
-                {
-                    "fulfillmentText": (
-                        "Please log in first so I can open your hotel/inn booking status page."
-                    )
-                },
-            )
-
-        my_bookings_url = reverse("my_accommodation_bookings")
+        response_payload = {}
+        if actor.get("role") == "owner":
+            my_bookings_url = reverse("admin_app:owner_accommodation_bookings")
+            booking_label = "View My Accommodation Bookings (Owner)"
+            booking_reply = "I found your accommodation-owner bookings page. Click the button below to open it in a new tab."
+        elif actor.get("role") == "admin":
+            if _is_accommodation_bookings_page_command(message):
+                my_bookings_url = reverse("admin_app:accommodation_bookings")
+                booking_label = "Open Accommodation Bookings"
+                booking_reply = "I found the Accommodation Bookings page. Click the button below to open it in a new tab."
+            else:
+                my_bookings_url = reverse("admin_app:admin_dashboard")
+                booking_label = "Open Admin Dashboard"
+                booking_reply = "I found your admin dashboard. Click the button below to open it in a new tab."
+        elif actor.get("role") == "employee":
+            my_bookings_url = reverse("admin_app:employee_dashboard")
+            booking_label = "Open Employee Dashboard"
+            booking_reply = "I found your employee dashboard. Click the button below to open it in a new tab."
+        else:
+            my_bookings_url = reverse("my_accommodation_bookings")
+            booking_label = "View My Hotel/Inn Bookings"
+            booking_reply = "I found your hotel/inn bookings page. Click the button below to open it in a new tab."
         if hasattr(request, "build_absolute_uri"):
             my_bookings_url = request.build_absolute_uri(my_bookings_url)
+        response_payload = {
+            "fulfillmentText": booking_reply,
+            "billing_link": my_bookings_url,
+            "billing_link_label": booking_label,
+            "open_in_new_tab": True,
+        }
         return _chat_json_response(
             request,
             start_time,
-            {
-                "fulfillmentText": "Opening your hotel/inn booking status page now.",
-                "billing_link": my_bookings_url,
-                "billing_link_label": "View My Hotel/Inn Bookings",
-                "redirect_url": my_bookings_url,
-            },
+            response_payload,
+        )
+
+    if actor.get("role") == "owner" and _is_owner_room_overview_command(message):
+        request._chatbot_log_context["resolved_intent"] = "owner_room_overview"
+        owner_room_reply = _build_owner_rooms_summary(user)
+        return _chat_json_response(
+            request,
+            start_time,
+            {"fulfillmentText": owner_room_reply},
         )
 
     chat_state = _load_chat_state(request)
@@ -2731,6 +3698,7 @@ def openai_chat(request):
     request._chatbot_log_context["fallback_used"] = str(parsed.get("source") or "") in (
         "heuristic_intent_fallback",
         "text_cnn_unavailable",
+        "text_cnn_low_confidence",
         "text_cnn_incompatible_label_space",
     )
     state_intent = str(chat_state.get("pending_intent") or "").strip().lower()
@@ -2872,6 +3840,10 @@ def openai_chat(request):
     billing_actions = {}
 
     if init_suggestions:
+        if actor.get("role") != "guest":
+            request._chatbot_log_context["resolved_intent"] = "role_help_init"
+            help_payload = _build_role_help_payload(actor)
+            return _chat_json_response(request, start_time, help_payload)
         suggestions_payload = _get_default_accommodation_suggestions(limit=3)
         default_reply = None
         recommendation_trace = []
@@ -2885,171 +3857,202 @@ def openai_chat(request):
         return _chat_json_response(request, start_time, response)
 
     if intent in ("get_recommendation", "gettourrecommendation"):
-        _clear_chat_state(request)
-        _safe_log_recommendation_event(request, intent)
-        reply, logged_recommended_items = _get_recommendations(params)
+        if actor.get("role") in {"owner", "admin", "employee"}:
+            _clear_chat_state(request)
+            role_help = _build_role_help_payload(actor)
+            reply = (
+                "Tour package recommendations are currently guest-focused. "
+                + str(role_help.get("fulfillmentText") or "")
+            )
+            logged_recommended_items = []
+        else:
+            _clear_chat_state(request)
+            _safe_log_recommendation_event(request, intent)
+            reply, logged_recommended_items = _get_recommendations(params)
     elif intent in ("get_tourism_information",):
         _clear_chat_state(request)
         reply = _get_tourism_information(params, message)
     elif intent in ("calculate_billing", "calculatetourbilling"):
-        _clear_chat_state(request)
-        reply = _calculate_billing(params)
+        if actor.get("role") in {"owner", "admin", "employee"}:
+            _clear_chat_state(request)
+            reply = "Tour billing computation in chat is for guest bookings. Please use dashboard records for staff workflows."
+        else:
+            _clear_chat_state(request)
+            reply = _calculate_billing(params)
     elif intent in ("get_accommodation_recommendation", "gethotelrecommendation"):
-        missing_slot, question = _next_accommodation_clarifying_question(params)
-        if missing_slot:
-            baseline = _infer_user_accommodation_baseline(user)
-            defaults = _build_personalization_defaults(params, baseline)
-            personalization_prompt = _build_personalization_offer_text(defaults, baseline)
-            if defaults and personalization_prompt:
+        if actor.get("role") in {"owner", "admin", "employee"}:
+            _clear_chat_state(request)
+            role_help = _build_role_help_payload(actor)
+            reply = (
+                "Accommodation recommendation cards are shown for guest booking flow only. "
+                + str(role_help.get("fulfillmentText") or "")
+            )
+            logged_recommended_items = []
+            accommodation_meta = None
+        else:
+            missing_slot, question = _next_accommodation_clarifying_question(params)
+            if missing_slot:
+                baseline = _infer_user_accommodation_baseline(user)
+                defaults = _build_personalization_defaults(params, baseline)
+                personalization_prompt = _build_personalization_offer_text(defaults, baseline)
+                if defaults and personalization_prompt:
+                    _save_chat_state(
+                        request,
+                        {
+                            "pending_intent": "get_accommodation_recommendation",
+                            "params": params,
+                            "missing_slot": missing_slot,
+                            "default_offer": {
+                                "defaults": defaults,
+                                "prompt": personalization_prompt,
+                            },
+                        },
+                    )
+                    return _chat_json_response(
+                        request,
+                        start_time,
+                        {
+                            "fulfillmentText": personalization_prompt,
+                        },
+                    )
+
+                company_type = str(params.get("company_type") or "").strip().lower()
+                location = str(params.get("location") or "").strip()
+                preview_key = f"{company_type}|{location.lower()}"
+                if (
+                    missing_slot in ("budget", "accommodation_details")
+                    and company_type in ("hotel", "inn", "either")
+                    and location
+                    and str(chat_state.get("location_preview_for") or "") != preview_key
+                ):
+                    preview_params = dict(params)
+                    preview_params.setdefault("guests", 1)
+                    preview_reply, preview_items, preview_meta = _get_accommodation_recommendations(preview_params)
+                    if (
+                        "top hotel/inn recommendations" not in str(preview_reply or "").lower()
+                        and company_type in ("hotel", "inn")
+                    ):
+                        preview_any_type_params = dict(preview_params)
+                        preview_any_type_params["company_type"] = "either"
+                        preview_reply, preview_items, preview_meta = _get_accommodation_recommendations(preview_any_type_params)
+                    if "top hotel/inn recommendations" in str(preview_reply or "").lower():
+                        next_missing_slot, _ = _next_accommodation_clarifying_question(params)
+                        next_state = {
+                            "pending_intent": "get_accommodation_recommendation",
+                            "params": params,
+                            "missing_slot": next_missing_slot or "budget",
+                            "location_preview_for": preview_key,
+                        }
+                        _save_chat_state(request, next_state)
+                        missing_prompts = []
+                        if _to_int(params.get("budget"), default=0) <= 0:
+                            missing_prompts.append("budget per night in PHP")
+                        if _to_int(params.get("guests"), default=0) <= 0:
+                            missing_prompts.append("number of guests")
+                        if not _has_stay_details(params):
+                            missing_prompts.append("check-in/check-out dates or number of nights")
+                        prompt_suffix = (
+                            "To continue booking, please share your "
+                            + ", ".join(missing_prompts)
+                            + "."
+                        ) if missing_prompts else "Tell me if you want to proceed with booking any room above."
+                        response = {
+                            "fulfillmentText": f"{preview_reply}\n\n{prompt_suffix}"
+                        }
+                        if preview_items:
+                            response["recommendation_trace"] = preview_items
+                        if isinstance(preview_meta, dict) and preview_meta.get("fallback_applied"):
+                            response["recommendation_fallback"] = str(preview_meta.get("fallback_applied"))
+                        return _chat_json_response(request, start_time, response)
+
                 _save_chat_state(
                     request,
                     {
                         "pending_intent": "get_accommodation_recommendation",
                         "params": params,
                         "missing_slot": missing_slot,
-                        "default_offer": {
-                            "defaults": defaults,
-                            "prompt": personalization_prompt,
-                        },
+                        "location_preview_for": chat_state.get("location_preview_for", ""),
                     },
                 )
                 return _chat_json_response(
                     request,
                     start_time,
-                    {
-                        "fulfillmentText": personalization_prompt,
-                    },
+                    {"fulfillmentText": question},
                 )
-
-            company_type = str(params.get("company_type") or "").strip().lower()
-            location = str(params.get("location") or "").strip()
-            preview_key = f"{company_type}|{location.lower()}"
+            _safe_log_recommendation_event(request, intent)
+            cnn_prediction, cnn_error = _predict_accommodation_class_from_text(message)
+            if cnn_prediction and isinstance(params, dict):
+                # Allow the recommender (or future logic) to use the predicted class.
+                params.setdefault("predicted_accommodation_type", cnn_prediction["predicted_class"])
+                params.setdefault("predicted_accommodation_confidence", float(cnn_prediction.get("confidence", 0.0)))
+            reply, logged_recommended_items, accommodation_meta = _get_accommodation_recommendations(params)
+            next_state = {
+                "pending_intent": "get_accommodation_recommendation",
+                "params": params,
+                "missing_slot": "",
+            }
             if (
-                missing_slot in ("budget", "accommodation_details")
-                and company_type in ("hotel", "inn", "either")
-                and location
-                and str(chat_state.get("location_preview_for") or "") != preview_key
+                isinstance(accommodation_meta, dict)
+                and "budget_too_low" in (accommodation_meta.get("no_match_reasons") or [])
+                and _to_int(accommodation_meta.get("suggested_budget_min"), default=0) > 0
             ):
-                preview_params = dict(params)
-                preview_params.setdefault("guests", 1)
-                preview_reply, preview_items, preview_meta = _get_accommodation_recommendations(preview_params)
-                if (
-                    "top hotel/inn recommendations" not in str(preview_reply or "").lower()
-                    and company_type in ("hotel", "inn")
-                ):
-                    preview_any_type_params = dict(preview_params)
-                    preview_any_type_params["company_type"] = "either"
-                    preview_reply, preview_items, preview_meta = _get_accommodation_recommendations(preview_any_type_params)
-                if "top hotel/inn recommendations" in str(preview_reply or "").lower():
-                    next_missing_slot, _ = _next_accommodation_clarifying_question(params)
-                    next_state = {
-                        "pending_intent": "get_accommodation_recommendation",
-                        "params": params,
-                        "missing_slot": next_missing_slot or "budget",
-                        "location_preview_for": preview_key,
-                    }
-                    _save_chat_state(request, next_state)
-                    missing_prompts = []
-                    if _to_int(params.get("budget"), default=0) <= 0:
-                        missing_prompts.append("budget per night in PHP")
-                    if _to_int(params.get("guests"), default=0) <= 0:
-                        missing_prompts.append("number of guests")
-                    if not _has_stay_details(params):
-                        missing_prompts.append("check-in/check-out dates or number of nights")
-                    prompt_suffix = (
-                        "To continue booking, please share your "
-                        + ", ".join(missing_prompts)
-                        + "."
-                    ) if missing_prompts else "Tell me if you want to proceed with booking any room above."
-                    response = {
-                        "fulfillmentText": f"{preview_reply}\n\n{prompt_suffix}"
-                    }
-                    if preview_items:
-                        response["recommendation_trace"] = preview_items
-                    if isinstance(preview_meta, dict) and preview_meta.get("fallback_applied"):
-                        response["recommendation_fallback"] = str(preview_meta.get("fallback_applied"))
-                    return _chat_json_response(request, start_time, response)
-
-            _save_chat_state(
-                request,
-                {
-                    "pending_intent": "get_accommodation_recommendation",
-                    "params": params,
-                    "missing_slot": missing_slot,
-                    "location_preview_for": chat_state.get("location_preview_for", ""),
-                },
+                next_state["pending_budget_offer"] = {
+                    "suggested_budget": _to_int(accommodation_meta.get("suggested_budget_min"), default=0)
+                }
+            _save_chat_state(request, next_state)
+            show_cnn_debug_in_chat = str(os.getenv("CHATBOT_SHOW_CNN_DEBUG", "0")).strip().lower() in (
+                "1",
+                "true",
+                "yes",
+                "on",
             )
-            return _chat_json_response(
-                request,
-                start_time,
-                {"fulfillmentText": question},
-            )
-        _safe_log_recommendation_event(request, intent)
-        cnn_prediction, cnn_error = _predict_accommodation_class_from_text(message)
-        if cnn_prediction and isinstance(params, dict):
-            # Allow the recommender (or future logic) to use the predicted class.
-            params.setdefault("predicted_accommodation_type", cnn_prediction["predicted_class"])
-            params.setdefault("predicted_accommodation_confidence", float(cnn_prediction.get("confidence", 0.0)))
-        reply, logged_recommended_items, accommodation_meta = _get_accommodation_recommendations(params)
-        next_state = {
-            "pending_intent": "get_accommodation_recommendation",
-            "params": params,
-            "missing_slot": "",
-        }
-        if (
-            isinstance(accommodation_meta, dict)
-            and "budget_too_low" in (accommodation_meta.get("no_match_reasons") or [])
-            and _to_int(accommodation_meta.get("suggested_budget_min"), default=0) > 0
-        ):
-            next_state["pending_budget_offer"] = {
-                "suggested_budget": _to_int(accommodation_meta.get("suggested_budget_min"), default=0)
-            }
-        _save_chat_state(request, next_state)
-        show_cnn_debug_in_chat = str(os.getenv("CHATBOT_SHOW_CNN_DEBUG", "0")).strip().lower() in (
-            "1",
-            "true",
-            "yes",
-            "on",
-        )
-        if (
-            show_cnn_debug_in_chat
-            and cnn_prediction
-            and reply.startswith("I couldn't find a matching hotel or inn right now.")
-        ):
-            reply = f"{reply}\n\n{_format_cnn_prediction_for_chat(cnn_prediction)}"
+            if (
+                show_cnn_debug_in_chat
+                and cnn_prediction
+                and reply.startswith("I couldn't find a matching hotel or inn right now.")
+            ):
+                reply = f"{reply}\n\n{_format_cnn_prediction_for_chat(cnn_prediction)}"
     elif intent in ("calculate_accommodation_billing", "calculatehotelbilling"):
-        _clear_chat_state(request)
-        reply = _calculate_accommodation_billing(params)
-        room = _find_accommodation_room(params)
-        if room is not None:
-            billing_actions["quick_replies"] = [
-                {
-                    "label": "Continue to Book",
-                    "value": _build_book_from_billing_prompt(room, params),
-                },
-                {
-                    "label": "Find Another Hotel",
-                    "value": _build_find_another_accommodation_prompt(params),
-                },
-            ]
+        if actor.get("role") in {"owner", "admin", "employee"}:
+            _clear_chat_state(request)
+            reply = "Accommodation billing in chat is for guest booking flow only."
+        else:
+            _clear_chat_state(request)
+            reply = _calculate_accommodation_billing(params)
+            room = _find_accommodation_room(params)
+            if room is not None:
+                billing_actions["quick_replies"] = [
+                    {
+                        "label": "Continue to Book",
+                        "value": _build_book_from_billing_prompt(room, params),
+                    },
+                    {
+                        "label": "Find Another Hotel",
+                        "value": _build_find_another_accommodation_prompt(params),
+                    },
+                ]
     elif intent in ("book_accommodation", "bookhotel", "book_hotel", "reserve_accommodation"):
-        next_state = dict(chat_state)
-        next_state.pop("pending_booking", None)
-        _save_chat_state(request, next_state)
-        booking_result = _book_accommodation_from_chat(request, params, commit=False)
-        reply = booking_result["reply"]
-        if booking_result.get("requires_confirmation"):
-            latest_state = _load_chat_state(request)
-            latest_state["pending_booking"] = {
-                "params": {
-                    "room_id": booking_result.get("prepared_params", {}).get("room_id"),
-                    "check_in": booking_result.get("prepared_params", {}).get("check_in"),
-                    "check_out": booking_result.get("prepared_params", {}).get("check_out"),
-                    "guests": booking_result.get("prepared_params", {}).get("guests"),
-                },
-                "created_at": int(time.time()),
-            }
-            _save_chat_state(request, latest_state)
+        if actor.get("role") in {"owner", "admin", "employee"}:
+            _clear_chat_state(request)
+            reply = "Room booking via chatbot is available for guest accounts. Use your role dashboard for management tasks."
+        else:
+            next_state = dict(chat_state)
+            next_state.pop("pending_booking", None)
+            _save_chat_state(request, next_state)
+            booking_result = _book_accommodation_from_chat(request, params, commit=False)
+            reply = booking_result["reply"]
+            if booking_result.get("requires_confirmation"):
+                latest_state = _load_chat_state(request)
+                latest_state["pending_booking"] = {
+                    "params": {
+                        "room_id": booking_result.get("prepared_params", {}).get("room_id"),
+                        "check_in": booking_result.get("prepared_params", {}).get("check_in"),
+                        "check_out": booking_result.get("prepared_params", {}).get("check_out"),
+                        "guests": booking_result.get("prepared_params", {}).get("guests"),
+                    },
+                    "created_at": int(time.time()),
+                }
+                _save_chat_state(request, latest_state)
     else:
         if intent not in continuation_intents:
             _clear_chat_state(request)
@@ -3065,9 +4068,17 @@ def openai_chat(request):
     final_reply, nlg_source = _openai_generate_final_response(
         request=request,
         intent=intent,
-        user_message=message,
+        user_message=raw_message,
         backend_reply=reply,
     )
+    translated_back = False
+    if detected_language not in ("en", "english"):
+        translated_final_reply = translate_to_user_language(final_reply, detected_language)
+        if str(translated_final_reply or "").strip():
+            final_reply = str(translated_final_reply).strip()
+            translated_back = True
+            nlg_source = f"{nlg_source}|gemini_back_translate"
+
     request._chatbot_log_context["response_nlg_source"] = nlg_source
     response = {"fulfillmentText": final_reply}
     if 'booking_result' in locals():
@@ -3135,6 +4146,11 @@ def openai_chat(request):
         "recommendation_fallback": response.get("recommendation_fallback", ""),
         "has_recommendation_trace": bool(response.get("recommendation_trace")),
         "status_code": 200,
+        "detected_language": detected_language,
+        "input_translated_to_english": bool(
+            str(raw_message or "").strip() and str(message or "").strip() and str(raw_message).strip() != str(message).strip()
+        ),
+        "response_translated_to_user_language": translated_back,
     }
     return _chat_json_response(request, start_time, response)
 

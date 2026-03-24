@@ -4,6 +4,7 @@ from decimal import Decimal
 
 from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
@@ -506,3 +507,41 @@ class AccommodationRoomAvailabilityLifecycleTests(TestCase):
         self.room.refresh_from_db()
         self.assertEqual(booking.status, "cancelled")
         self.assertEqual(self.room.current_availability, self.room.person_limit)
+
+
+class AccommodationOwnerSignupFromGuestRegisterTests(TestCase):
+    def test_ajax_signup_as_owner_assigns_group_and_redirect_url(self):
+        image_bytes = (
+            b"\x47\x49\x46\x38\x39\x61\x01\x00\x01\x00\x80\x00\x00"
+            b"\x00\x00\x00\xff\xff\xff\x21\xf9\x04\x01\x00\x00\x00\x00"
+            b"\x2c\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02\x44\x01"
+            b"\x00\x3b"
+        )
+        response = self.client.post(
+            reverse("register"),
+            data={
+                "first_name": "Owner",
+                "middle_initial": "A",
+                "last_name": "Signup",
+                "age": "26",
+                "country_of_origin": "Philippines",
+                "city": "Bayawan",
+                "phone_number": "09991112222",
+                "email": "owner-signup-flow@example.com",
+                "company_name": "Owner Demo Stay",
+                "sex": "F",
+                "password": "owner-pass-123",
+                "confirm_password": "owner-pass-123",
+                "register_as_accommodation_owner": "on",
+                "picture": SimpleUploadedFile("owner.gif", image_bytes, content_type="image/gif"),
+            },
+            HTTP_X_REQUESTED_WITH="XMLHttpRequest",
+        )
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertTrue(payload.get("success"))
+        self.assertEqual(payload.get("redirect_url"), reverse("main-page"))
+
+        user_model = get_user_model()
+        owner_user = user_model.objects.get(email="owner-signup-flow@example.com")
+        self.assertTrue(owner_user.groups.filter(name__iexact="accommodation_owner_pending").exists())

@@ -1,0 +1,16 @@
+{
+  "input_error_rows": 76,
+  "generated_rows": 152,
+  "distribution_by_intent": {
+    "book_accommodation": 30,
+    "calculate_accommodation_billing": 30,
+    "calculate_billing": 28,
+    "get_accommodation_recommendation": 28,
+    "get_recommendation": 28,
+    "get_tourism_information": 8
+  },
+  "outputs": {
+    "augmentation_csv": "thesis_data_templates\\text_cnn_intent_realistic_paraphrase_augmentation_v1.csv",
+    "summary_json": "artifacts/text_cnn_intent/manual_validation/paraphrase_augmentation_summary_v1.json"
+  }
+}

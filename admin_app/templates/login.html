@@ -250,6 +250,17 @@
           text-align: center;
           border: 1px solid #f5c2c7;
       }
+
+      .warn-message {
+          background-color: #fff3cd;
+          color: #664d03;
+          padding: 10px;
+          border-radius: var(--border-radius);
+          margin-bottom: 15px;
+          text-align: center;
+          border: 1px solid #ffecb5;
+          font-size: 13px;
+      }
       
       @media (max-width: 768px) {
           .logo-text {
@@ -316,16 +327,25 @@
           </div>
           
           <div class="form-body">
+              {% if not recaptcha_configured %}
+              <div class="warn-message">
+                  reCAPTCHA is not fully configured. Set <strong>RECAPTCHA_SITE_KEY</strong> and
+                  <strong>RECAPTCHA_SECRET_KEY</strong> in environment before production.
+              </div>
+              {% endif %}
               {% if messages %}
                   {% for message in messages %}
+                      {% if message.tags != 'success' %}
                       <div class="error-message">
                           <i class="fas fa-exclamation-circle"></i> {{ message }}
                       </div>
+                      {% endif %}
                   {% endfor %}
               {% endif %}
               
               <form method="post" action="{% url 'admin_app:login' %}">
                   {% csrf_token %}
+                  <input type="hidden" name="g_recaptcha_response" id="admin-login-recaptcha-response">
                   
                   <div class="form-group">
                       <label for="username">Username or Email</label>
@@ -354,11 +374,37 @@
               
               <div class="register-links">
                   <p>Don't have an account? <a href="{% url 'admin_app:employee-register' %}">Register as Employee</a></p>
-                  <p>Register as an Establishment? <a href="{% url 'admin_app:accommodation_register' %}">Register Accommodation</a></p>
+                  <p>Own an accommodation? <strong>Log in as Accommodation Owner</strong> using your email and password above.</p>
+                  <p>No owner account yet? <a href="{% url 'main-page' %}?owner_signup=1&next={% url 'owner_accommodation_register' %}">Sign up as Accommodation Owner</a></p>
                   <p>Guest access? <a href="{% url 'login' %}">Log in as Guest</a></p>
               </div>
           </div>
       </div>
   </div>
+  {% if recaptcha_site_key %}
+  <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key|urlencode }}" async defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.querySelector('form[action="{% url 'admin_app:login' %}"]');
+      const tokenInput = document.getElementById('admin-login-recaptcha-response');
+      const siteKey = '{{ recaptcha_site_key|escapejs }}';
+      if (!form || !tokenInput || !siteKey) return;
+
+      form.addEventListener('submit', function (event) {
+        if (tokenInput.value) return;
+        event.preventDefault();
+        if (typeof grecaptcha === 'undefined') {
+          return;
+        }
+        grecaptcha.ready(function () {
+          grecaptcha.execute(siteKey, { action: 'admin_login' }).then(function (token) {
+            tokenInput.value = token || '';
+            form.submit();
+          });
+        });
+      });
+    });
+  </script>
+  {% endif %}
 </body>
 </html>

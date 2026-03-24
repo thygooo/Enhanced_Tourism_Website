@@ -1,0 +1,20 @@
+{
+  "seed": 42,
+  "total_rows": 2400,
+  "class_distribution": {
+    "relevant": 1735,
+    "not_relevant": 665
+  },
+  "schema_version": "decision_tree_accommodation_schema_v1",
+  "assumptions": [
+    "Each row is one candidate accommodation item for one request context.",
+    "Relevance is driven mainly by budget fit, capacity fit, location fit, type fit, and availability.",
+    "CNN confidence and shown rank contribute as secondary ranking signals.",
+    "Small random noise is added to avoid deterministic labels and support realistic variation.",
+    "Location vocabulary is constrained to Bayawan-localized example areas for thesis simulation."
+  ],
+  "outputs": {
+    "dataset_csv": "thesis_data_templates\\accommodation_reco_training_final_v1.csv",
+    "summary_json": "artifacts/decision_tree_final/dataset_generation_summary_v1.json"
+  }
+}

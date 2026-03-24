@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Employees</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Bootstrap JS dependencies (needed for modal) -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -35,11 +36,14 @@
     }
 
     body {
-      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background-color: var(--bg-color);
+      font-family: "Poppins", 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background:
+        radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
+        radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
+        #f8f5f1;
       margin: 0;
       padding: 0;
-      color: var(--text-dark);
+      color: #3f2f26;
       line-height: 1.5;
     }
     
@@ -56,69 +60,107 @@
     
     .container {
       max-width: 1100px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin: 18px auto;
+      background: linear-gradient(180deg, #fffefc 0%, #fff9f2 100%);
+      padding: 24px;
+      border-radius: 18px;
+      border: 1px solid #ead9c9;
+      box-shadow: 0 14px 28px rgba(56, 33, 16, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .container::after {
+      content: "";
+      position: absolute;
+      right: -110px;
+      top: -120px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(224, 164, 109, 0.26), rgba(224, 164, 109, 0));
+      pointer-events: none;
+    }
+
+    .page-hero {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #efdfcf;
     }
     
     h1, h2 {
-      color: var(--text-dark);
-      margin-top: 20px;
-      margin-bottom: 20px;
+      color: #3f2f26;
+      margin: 0;
     }
     
     h2 {
-      border-bottom: 2px solid var(--primary-color);
-      padding-bottom: 10px;
+      border-bottom: none;
+      padding-bottom: 0;
+      font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+      font-weight: 700;
     }
     
     /* Table Styles */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid #e8d7c7;
+      border-radius: 12px;
+      background: #fff;
+      position: relative;
+      z-index: 1;
+      margin-top: 16px;
+    }
+
     .employee-table {
       width: 100%;
+      min-width: 760px;
       border-collapse: collapse;
-      margin-top: 20px;
-      border-radius: 4px;
-      overflow: hidden;
+      margin-top: 0;
+      position: relative;
+      z-index: 1;
     }
     
     .employee-table th, 
     .employee-table td {
       padding: 12px;
-      border: 1px solid #ddd;
+      border: 1px solid #e8d7c7;
       text-align: left;
+      vertical-align: middle;
     }
     
     .employee-table th {
-      background-color: var(--primary-color);
-      color: #fff;
-      font-weight: 500;
+      background-color: #efe1d4;
+      color: #5d4332;
+      font-weight: 600;
     }
     
     .employee-table tr:nth-child(even) {
-      background-color: #f9f9f9;
+      background-color: #fff9f2;
     }
     
     .employee-table tr:hover {
-      background-color: #f1f1f1;
+      background-color: #fcf0e3;
     }
     
     /* Button Styles */
     .action-btn {
-      background-color: var(--info-color);
+      background: linear-gradient(135deg, #875a34, #b77744);
       color: white;
       border: none;
       padding: 8px 12px;
-      border-radius: 4px;
+      border-radius: 10px;
       cursor: pointer;
       font-size: 14px;
-      font-weight: 500;
-      transition: background-color 0.3s;
+      font-weight: 600;
+      transition: all 0.2s ease;
     }
     
     .action-btn:hover {
-      background-color: #1a73e8;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(122, 79, 45, 0.22);
     }
     
     /* Status Badge */
@@ -132,23 +174,24 @@
     }
     
     .status-accepted {
-      background-color: var(--success-color);
-      color: white;
+      background-color: rgba(46, 139, 87, 0.14);
+      color: #236642;
     }
     
     .status-declined {
-      background-color: var(--error-color);
-      color: white;
+      background-color: rgba(200, 77, 58, 0.14);
+      color: #8a2f25;
     }
     
     /* Form improvements */
     .modal-content {
-      border-radius: 8px;
+      border-radius: 14px;
       overflow: hidden;
+      border: 1px solid #ead9c9;
     }
     
     .modal-header {
-      background-color: var(--primary-color);
+      background: linear-gradient(135deg, #875a34, #b77744);
       color: white;
       border-bottom: none;
     }
@@ -173,13 +216,13 @@
     }
     
     .btn-primary {
-      background-color: var(--primary-color);
-      border-color: var(--primary-color);
+      background: linear-gradient(135deg, #875a34, #b77744);
+      border-color: transparent;
     }
     
     .btn-primary:hover {
-      background-color: var(--primary-dark);
-      border-color: var(--primary-dark);
+      background: linear-gradient(135deg, #774d2d, #a96f3f);
+      border-color: transparent;
     }
     
     .form-control:focus {
@@ -192,6 +235,19 @@
       border-radius: 4px;
       margin-top: 8px;
     }
+
+    @media (max-width: 900px) {
+      .content {
+        padding: 14px;
+      }
+      .container {
+        padding: 16px;
+        border-radius: 14px;
+      }
+      .employee-table {
+        min-width: 700px;
+      }
+    }
   </style>
 
 </head>
@@ -202,49 +258,53 @@
     </div>
     <div class="content">
         <div class="container">
-          <h2>Employees</h2>
-          <table class="employee-table">
-            <thead>
-              <tr>
-                <th>Emp ID</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for employee in employees %}
-              <tr>
-                <td>{{ employee.emp_id }}</td>
-                <td>{{ employee.first_name }} {{ employee.last_name }}</td>
-                <td>{{ employee.role }}</td>
-                <td>
-                  <span class="status-badge status-{{ employee.status|lower }}">
-                    {{ employee.status }}
-                  </span>
-                </td>
-                <td>
-                  <button type="button" class="action-btn update-btn"
-                    data-toggle="modal" data-target="#employeeModal"
-                    data-id="{{ employee.emp_id }}"
-                    data-first-name="{{ employee.first_name }}"
-                    data-last-name="{{ employee.last_name }}"
-                    data-middle-name="{{ employee.middle_name }}"
-                    data-phone="{{ employee.phone_number }}"
-                    data-email="{{ employee.email }}"
-                    data-age="{{ employee.age }}"
-                    data-sex="{{ employee.sex }}"
-                    data-role="{{ employee.role }}"
-                    data-status="{{ employee.status }}"
-                    data-profile="{% if employee.profile_picture %}{{ employee.profile_picture.url }}{% endif %}">
-                    Update
-                  </button>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+          <div class="page-hero">
+            <h2>Employees</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="employee-table">
+              <thead>
+                <tr>
+                  <th>Emp ID</th>
+                  <th>Name</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for employee in employees %}
+                <tr>
+                  <td>{{ employee.emp_id }}</td>
+                  <td>{{ employee.first_name }} {{ employee.last_name }}</td>
+                  <td>{{ employee.role }}</td>
+                  <td>
+                    <span class="status-badge status-{{ employee.status|lower }}">
+                      {{ employee.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <button type="button" class="action-btn update-btn"
+                      data-toggle="modal" data-target="#employeeModal"
+                      data-id="{{ employee.emp_id }}"
+                      data-first-name="{{ employee.first_name }}"
+                      data-last-name="{{ employee.last_name }}"
+                      data-middle-name="{{ employee.middle_name }}"
+                      data-phone="{{ employee.phone_number }}"
+                      data-email="{{ employee.email }}"
+                      data-age="{{ employee.age }}"
+                      data-sex="{{ employee.sex }}"
+                      data-role="{{ employee.role }}"
+                      data-status="{{ employee.status }}"
+                      data-profile="{% if employee.profile_picture %}{{ employee.profile_picture.url }}{% endif %}">
+                      Update
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- Modal for updating employee details -->

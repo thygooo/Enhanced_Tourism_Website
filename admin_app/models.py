@@ -97,11 +97,12 @@ class Accomodation(models.Model):
         null=True,
         blank=True,
     )
-    company_name = models.CharField(max_length=200)
+    company_name = models.CharField(max_length=200, db_index=True)
     email_address = models.EmailField(unique=True)
-    location = models.CharField(max_length=300)
-    company_type = models.CharField(max_length=100)
+    location = models.CharField(max_length=300, db_index=True)
+    company_type = models.CharField(max_length=100, db_index=True)
     description = models.TextField(blank=True, default="")
+    accommodation_amenities = models.TextField(blank=True, default="")
     password = models.CharField(max_length=128)
     phone_number = models.CharField(max_length=20)
     status = models.CharField(max_length=50, null=True, blank=True, default="Pending")
@@ -111,6 +112,30 @@ class Accomodation(models.Model):
         default="pending",
     )
     profile_picture = models.ImageField(upload_to='accommodation_profiles/', blank=True, null=True)
+    rejection_reason = models.TextField(blank=True, default="")
+    submitted_at = models.DateTimeField(default=timezone.now, editable=False)
+    reviewed_at = models.DateTimeField(null=True, blank=True)
+    reviewed_by = models.ForeignKey(
+        "admin_app.Employee",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="reviewed_accommodations",
+    )
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["-submitted_at", "company_name"]
+
+    def mark_reviewed(self, *, status_value, reviewer=None, rejection_reason=""):
+        normalized = str(status_value or "").strip().lower()
+        if normalized not in {"accepted", "declined", "pending"}:
+            raise ValueError("Invalid approval status.")
+        self.approval_status = normalized
+        self.status = normalized
+        self.reviewed_at = timezone.now()
+        self.reviewed_by = reviewer
+        self.rejection_reason = str(rejection_reason or "").strip()
 
     def save(self, *args, **kwargs):
         # If the password is not already hashed, hash it.
@@ -122,6 +147,8 @@ class Accomodation(models.Model):
             self.status = self.approval_status
         elif self.status:
             self.approval_status = self.status.strip().lower()
+        if self.approval_status == "accepted" and self.rejection_reason:
+            self.rejection_reason = ""
         super().save(*args, **kwargs)
 
     def __str__(self):

@@ -1,0 +1,88 @@
+{
+  "input_csv": "thesis_data_templates\\text_cnn_intent_manual_validation_queries_v1.csv",
+  "runtime_model_path": "artifacts\\text_cnn_intent_robust_round1\\text_cnn_intent.h5",
+  "runtime_model_source": "configured_env",
+  "runtime_label_map_path": "artifacts\\text_cnn_intent_robust_round1\\label_map.json",
+  "runtime_model_exists": true,
+  "runtime_label_map_exists": true,
+  "total_samples": 90,
+  "overall_accuracy": 0.3111111111111111,
+  "per_intent": {
+    "book_accommodation": {
+      "samples": 15,
+      "accuracy": 0.0,
+      "errors": 15
+    },
+    "calculate_accommodation_billing": {
+      "samples": 15,
+      "accuracy": 0.0,
+      "errors": 15
+    },
+    "calculate_billing": {
+      "samples": 15,
+      "accuracy": 0.0,
+      "errors": 15
+    },
+    "get_accommodation_recommendation": {
+      "samples": 15,
+      "accuracy": 0.8666666666666667,
+      "errors": 2
+    },
+    "get_recommendation": {
+      "samples": 15,
+      "accuracy": 0.0,
+      "errors": 15
+    },
+    "get_tourism_information": {
+      "samples": 15,
+      "accuracy": 1.0,
+      "errors": 0
+    }
+  },
+  "top_confusions": [
+    {
+      "expected_intent": "calculate_accommodation_billing",
+      "predicted_intent": "get_accommodation_recommendation",
+      "count": 15
+    },
+    {
+      "expected_intent": "get_recommendation",
+      "predicted_intent": "get_accommodation_recommendation",
+      "count": 12
+    },
+    {
+      "expected_intent": "book_accommodation",
+      "predicted_intent": "calculate_accommodation_billing",
+      "count": 9
+    },
+    {
+      "expected_intent": "calculate_billing",
+      "predicted_intent": "get_accommodation_recommendation",
+      "count": 8
+    },
+    {
+      "expected_intent": "calculate_billing",
+      "predicted_intent": "get_tourism_information",
+      "count": 7
+    },
+    {
+      "expected_intent": "book_accommodation",
+      "predicted_intent": "get_accommodation_recommendation",
+      "count": 6
+    },
+    {
+      "expected_intent": "get_recommendation",
+      "predicted_intent": "get_tourism_information",
+      "count": 3
+    },
+    {
+      "expected_intent": "get_accommodation_recommendation",
+      "predicted_intent": "get_recommendation",
+      "count": 2
+    }
+  ],
+  "outputs": {
+    "predictions_csv": "artifacts\\text_cnn_intent\\manual_validation\\manual_validation_predictions_round1.csv",
+    "summary_json": "artifacts\\text_cnn_intent\\manual_validation\\manual_validation_summary_round1.json"
+  }
+}

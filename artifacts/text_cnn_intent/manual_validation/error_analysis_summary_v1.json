@@ -1,0 +1,76 @@
+{
+  "input_predictions_csv": "artifacts\\text_cnn_intent\\manual_validation\\manual_validation_predictions_v1.csv",
+  "input_summary_json": "artifacts\\text_cnn_intent\\manual_validation\\manual_validation_summary_v1.json",
+  "error_rows": 76,
+  "error_rate": 0.8444444444444444,
+  "low_confidence_errors_below_0_60": 76,
+  "failing_intents_by_error_count": {
+    "book_accommodation": 15,
+    "calculate_accommodation_billing": 15,
+    "calculate_billing": 14,
+    "get_accommodation_recommendation": 14,
+    "get_recommendation": 14,
+    "get_tourism_information": 4
+  },
+  "top_confusions": [
+    {
+      "expected_intent": "get_accommodation_recommendation",
+      "predicted_intent": "get_tourism_information",
+      "count": 12
+    },
+    {
+      "expected_intent": "get_recommendation",
+      "predicted_intent": "get_tourism_information",
+      "count": 11
+    },
+    {
+      "expected_intent": "book_accommodation",
+      "predicted_intent": "get_tourism_information",
+      "count": 9
+    },
+    {
+      "expected_intent": "calculate_billing",
+      "predicted_intent": "book_accommodation",
+      "count": 7
+    },
+    {
+      "expected_intent": "calculate_accommodation_billing",
+      "predicted_intent": "calculate_billing",
+      "count": 7
+    },
+    {
+      "expected_intent": "calculate_billing",
+      "predicted_intent": "get_tourism_information",
+      "count": 6
+    },
+    {
+      "expected_intent": "calculate_accommodation_billing",
+      "predicted_intent": "get_tourism_information",
+      "count": 6
+    },
+    {
+      "expected_intent": "book_accommodation",
+      "predicted_intent": "get_accommodation_recommendation",
+      "count": 3
+    },
+    {
+      "expected_intent": "book_accommodation",
+      "predicted_intent": "get_recommendation",
+      "count": 2
+    },
+    {
+      "expected_intent": "get_tourism_information",
+      "predicted_intent": "get_recommendation",
+      "count": 2
+    }
+  ],
+  "cause_distribution": {
+    "low_confidence_distribution_shift": 73,
+    "recommendation_vs_information_question_style_overlap": 2,
+    "booking_vs_recommendation_action_overlap": 1
+  },
+  "outputs": {
+    "error_rows_csv": "artifacts\\text_cnn_intent\\manual_validation\\error_analysis_rows_v1.csv",
+    "error_summary_json": "artifacts\\text_cnn_intent\\manual_validation\\error_analysis_summary_v1.json"
+  }
+}

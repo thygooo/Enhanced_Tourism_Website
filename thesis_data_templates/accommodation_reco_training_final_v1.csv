@@ -1,0 +1,2401 @@
+requested_guests,requested_budget,requested_location,requested_accommodation_type,room_price_per_night,room_capacity,room_available,accom_location,company_type,nights_requested,cnn_confidence,shown_rank,relevance_label
+1,1056.0,Banga,inn,3018.0,1,0,Banga,inn,1,0.8029,9,not_relevant
+3,1353.0,Villareal,inn,2331.0,1,1,Villareal,inn,4,0.568,6,not_relevant
+2,1922.0,Banga,hotel,3801.0,5,2,Suba,hotel,2,0.7914,6,relevant
+4,2738.0,Banga,hotel,5114.0,5,2,Poblacion,hotel,1,0.687,6,relevant
+1,1369.0,Bayawan City,inn,2493.0,2,4,Bayawan City,inn,2,0.6232,9,relevant
+2,1988.0,Bayawan City,inn,1470.0,2,2,Suba,inn,1,0.5871,8,relevant
+5,2182.0,Nangka,inn,1498.0,4,1,Nangka,inn,2,0.9247,1,relevant
+2,3767.0,Suba,hotel,3459.0,5,3,Suba,hotel,1,0.8404,2,relevant
+1,4557.0,Bayawan City,hotel,3557.0,2,2,Bayawan City,hotel,2,0.9291,2,relevant
+1,2027.0,Poblacion,inn,3176.0,1,1,Poblacion,inn,5,0.6325,5,not_relevant
+1,1225.0,Nangka,inn,2546.0,2,1,Nangka,inn,2,0.7189,10,relevant
+6,2494.0,Poblacion,inn,2719.0,3,1,Suba,inn,1,0.6789,2,not_relevant
+2,5121.0,Bayawan City,hotel,4106.0,2,0,Poblacion,hotel,1,0.6207,8,relevant
+2,1779.0,Villareal,either,1306.0,4,1,Villareal,inn,2,0.8365,1,relevant
+2,3796.0,Banga,hotel,5075.0,3,1,Bayawan City,hotel,1,0.6374,8,relevant
+3,1982.0,Suba,hotel,1916.0,1,1,Suba,inn,3,0.5974,1,relevant
+3,2234.0,Villareal,hotel,1377.0,4,4,Villareal,inn,2,0.5487,9,relevant
+5,5087.0,Suba,hotel,3056.0,2,2,Suba,hotel,1,0.9626,2,relevant
+3,1768.0,Bayawan City,inn,1436.0,3,1,Bayawan City,inn,1,0.8357,3,relevant
+3,1900.0,Bayawan City,hotel,3037.0,1,1,Bayawan City,inn,1,0.9333,2,not_relevant
+6,4335.0,Nangka,hotel,2871.0,1,2,Nangka,inn,4,0.6443,3,relevant
+3,1781.0,Banga,inn,2670.0,2,3,Banga,inn,3,0.8181,2,not_relevant
+2,3859.0,Poblacion,hotel,4903.0,5,1,Poblacion,hotel,4,0.7764,3,relevant
+2,2165.0,Poblacion,inn,1460.0,1,2,Poblacion,inn,1,0.9355,9,relevant
+4,1434.0,Poblacion,inn,1960.0,1,2,Banga,inn,2,0.6454,4,not_relevant
+4,3032.0,Villareal,hotel,1850.0,4,3,Villareal,inn,1,0.7073,4,relevant
+2,1713.0,Banga,hotel,1072.0,3,1,Banga,inn,2,0.538,5,relevant
+2,3961.0,Villareal,hotel,1378.0,4,2,Villareal,inn,1,0.8428,9,relevant
+3,1985.0,Villareal,inn,1110.0,3,1,Villareal,inn,1,0.6733,7,relevant
+3,2363.0,Nangka,inn,2844.0,3,3,Poblacion,inn,1,0.722,4,relevant
+2,1047.0,Villareal,inn,1762.0,2,2,Villareal,inn,1,0.8362,4,relevant
+4,3465.0,Poblacion,hotel,4795.0,2,3,Nangka,hotel,2,0.7524,7,not_relevant
+1,905.0,Bayawan City,inn,2883.0,4,1,Banga,inn,3,0.5827,8,not_relevant
+3,2526.0,Banga,inn,1251.0,4,2,Suba,inn,2,0.8733,5,relevant
+2,4522.0,Villareal,hotel,2041.0,1,1,Villareal,inn,2,0.5909,3,relevant
+2,1855.0,Villareal,hotel,3094.0,5,1,Villareal,hotel,3,0.9227,1,relevant
+2,3804.0,Banga,hotel,3206.0,5,1,Banga,hotel,2,0.678,7,relevant
+2,4024.0,Villareal,hotel,1622.0,5,1,Nangka,hotel,2,0.6054,8,relevant
+2,2633.0,Banga,hotel,2070.0,5,1,Suba,hotel,3,0.99,1,relevant
+1,1516.0,Nangka,inn,1566.0,3,1,Nangka,hotel,2,0.7851,2,relevant
+5,1370.0,Poblacion,inn,4061.0,2,3,Poblacion,hotel,2,0.7064,7,not_relevant
+3,5082.0,Nangka,hotel,2391.0,4,2,Nangka,hotel,1,0.7213,9,relevant
+2,2583.0,Villareal,inn,1226.0,3,1,Bayawan City,inn,3,0.8095,5,relevant
+2,1054.0,Nangka,inn,1742.0,2,1,Nangka,inn,2,0.834,10,relevant
+4,1845.0,Villareal,inn,3041.0,3,1,Villareal,inn,1,0.5602,4,not_relevant
+3,770.0,Nangka,inn,2162.0,5,1,Nangka,hotel,1,0.6934,10,not_relevant
+3,2855.0,Suba,hotel,2098.0,3,1,Suba,inn,1,0.9669,9,relevant
+3,5010.0,Banga,hotel,2990.0,2,1,Nangka,hotel,1,0.5266,5,relevant
+5,2020.0,Suba,hotel,650.0,4,1,Suba,inn,2,0.9738,3,relevant
+1,1621.0,Bayawan City,either,2622.0,2,3,Bayawan City,hotel,1,0.5757,4,relevant
+2,1917.0,Poblacion,inn,4912.0,5,1,Suba,hotel,2,0.9713,10,not_relevant
+1,1007.0,Banga,inn,1571.0,2,2,Banga,inn,2,0.6288,1,relevant
+2,2441.0,Nangka,inn,1070.0,2,2,Nangka,inn,4,0.5536,3,relevant
+1,4466.0,Suba,hotel,4697.0,4,3,Villareal,hotel,2,0.7257,8,relevant
+1,4132.0,Suba,either,1703.0,1,2,Suba,inn,1,0.8262,9,relevant
+2,2965.0,Nangka,hotel,4030.0,5,2,Bayawan City,hotel,3,0.7135,6,not_relevant
+1,2024.0,Suba,inn,1074.0,3,1,Suba,inn,2,0.8291,1,relevant
+2,4712.0,Banga,hotel,2203.0,5,1,Banga,hotel,1,0.5771,8,relevant
+1,1081.0,Poblacion,inn,1520.0,4,3,Poblacion,inn,2,0.8244,2,relevant
+4,1998.0,Nangka,either,5141.0,5,1,Nangka,hotel,4,0.8708,9,not_relevant
+4,4960.0,Villareal,hotel,610.0,3,1,Villareal,inn,2,0.9267,8,relevant
+5,1678.0,Suba,inn,2942.0,2,3,Suba,inn,2,0.87,6,not_relevant
+2,1517.0,Nangka,either,5514.0,2,4,Poblacion,hotel,1,0.9309,2,relevant
+4,1006.0,Nangka,inn,2523.0,2,1,Nangka,inn,2,0.8254,7,not_relevant
+4,3529.0,Villareal,either,880.0,1,1,Suba,inn,2,0.9888,5,relevant
+2,1718.0,Nangka,hotel,1776.0,4,1,Bayawan City,hotel,1,0.6962,6,relevant
+1,1686.0,Poblacion,inn,2638.0,4,1,Poblacion,inn,2,0.736,5,relevant
+1,2415.0,Banga,either,3850.0,5,1,Banga,hotel,1,0.6136,5,relevant
+2,789.0,Suba,inn,2221.0,3,2,Suba,inn,2,0.948,1,relevant
+2,3543.0,Poblacion,either,1626.0,2,2,Poblacion,inn,2,0.8153,3,relevant
+2,1069.0,Villareal,inn,1808.0,2,1,Villareal,inn,1,0.9319,9,relevant
+4,1908.0,Poblacion,inn,1987.0,4,1,Poblacion,inn,1,0.9243,4,relevant
+4,2083.0,Suba,either,3085.0,1,2,Suba,inn,2,0.6991,10,not_relevant
+4,2943.0,Villareal,hotel,3213.0,6,2,Villareal,hotel,2,0.8251,5,relevant
+2,2155.0,Villareal,hotel,4583.0,6,2,Villareal,hotel,3,0.717,9,relevant
+2,1734.0,Bayawan City,hotel,4435.0,4,1,Nangka,hotel,2,0.9221,4,not_relevant
+2,1200.0,Nangka,inn,2670.0,2,2,Nangka,inn,2,0.5438,1,relevant
+4,3401.0,Poblacion,either,1484.0,2,1,Poblacion,inn,3,0.5213,10,relevant
+3,2139.0,Banga,hotel,1521.0,2,1,Bayawan City,hotel,3,0.6722,10,not_relevant
+1,4786.0,Suba,hotel,4365.0,5,1,Suba,hotel,2,0.5404,10,relevant
+1,2645.0,Villareal,either,4892.0,5,1,Villareal,hotel,4,0.9427,2,relevant
+2,3160.0,Suba,hotel,3815.0,4,2,Suba,hotel,1,0.9208,2,relevant
+4,2088.0,Poblacion,inn,2457.0,4,2,Poblacion,inn,1,0.8326,6,relevant
+1,1995.0,Bayawan City,hotel,2126.0,4,1,Bayawan City,inn,2,0.784,9,relevant
+5,3040.0,Villareal,hotel,1024.0,3,2,Bayawan City,inn,1,0.6254,8,not_relevant
+4,4143.0,Banga,either,1615.0,6,2,Banga,hotel,2,0.6048,1,relevant
+1,1885.0,Bayawan City,hotel,2562.0,5,4,Bayawan City,hotel,1,0.6211,9,relevant
+5,1947.0,Nangka,hotel,2316.0,6,2,Nangka,hotel,2,0.7283,5,relevant
+2,1860.0,Poblacion,inn,3029.0,1,1,Bayawan City,inn,2,0.6236,1,not_relevant
+2,1631.0,Poblacion,hotel,5474.0,2,2,Villareal,hotel,1,0.7703,7,not_relevant
+4,2486.0,Banga,inn,676.0,1,0,Banga,inn,1,0.7895,7,relevant
+4,3484.0,Bayawan City,hotel,4364.0,6,1,Banga,hotel,3,0.7248,4,relevant
+2,1912.0,Nangka,hotel,2690.0,2,1,Nangka,inn,1,0.685,6,relevant
+1,1008.0,Bayawan City,inn,1325.0,2,2,Bayawan City,inn,2,0.8771,10,relevant
+4,1618.0,Nangka,either,2401.0,3,0,Banga,inn,2,0.8943,5,not_relevant
+1,1914.0,Villareal,hotel,2139.0,4,1,Villareal,hotel,2,0.9685,9,relevant
+2,3653.0,Suba,hotel,1217.0,4,1,Suba,inn,3,0.9817,6,relevant
+2,2190.0,Nangka,inn,2127.0,2,1,Nangka,inn,3,0.5446,10,relevant
+2,5176.0,Suba,hotel,2631.0,6,2,Suba,hotel,1,0.6658,6,relevant
+3,1223.0,Nangka,inn,2756.0,3,1,Banga,inn,2,0.6901,9,not_relevant
+6,1916.0,Villareal,hotel,3823.0,3,1,Villareal,hotel,3,0.5377,9,not_relevant
+1,2492.0,Villareal,inn,778.0,2,2,Villareal,inn,1,0.807,8,relevant
+4,1494.0,Poblacion,inn,2106.0,4,2,Poblacion,inn,2,0.8857,5,relevant
+4,4226.0,Poblacion,hotel,5336.0,2,3,Banga,hotel,2,0.8544,2,not_relevant
+5,5003.0,Poblacion,hotel,5549.0,3,1,Poblacion,hotel,2,0.9573,6,not_relevant
+2,2005.0,Villareal,hotel,4146.0,4,2,Banga,hotel,1,0.9512,5,relevant
+1,1077.0,Villareal,either,1824.0,1,1,Villareal,inn,3,0.7189,9,relevant
+4,1857.0,Poblacion,hotel,2308.0,5,1,Poblacion,hotel,2,0.7903,9,relevant
+2,3744.0,Banga,hotel,4723.0,2,1,Banga,hotel,3,0.7805,9,relevant
+1,2112.0,Banga,inn,1587.0,1,2,Banga,inn,3,0.5827,6,relevant
+3,4923.0,Nangka,hotel,3001.0,3,3,Nangka,hotel,1,0.5406,4,relevant
+4,2637.0,Suba,hotel,749.0,4,1,Suba,inn,1,0.9269,1,relevant
+2,3632.0,Villareal,hotel,5475.0,3,1,Suba,hotel,3,0.8965,5,relevant
+2,2943.0,Poblacion,hotel,3821.0,2,2,Poblacion,hotel,2,0.6852,8,not_relevant
+6,1307.0,Villareal,either,4727.0,2,2,Villareal,hotel,2,0.5871,1,not_relevant
+3,2268.0,Bayawan City,inn,3101.0,3,2,Bayawan City,inn,4,0.7287,6,not_relevant
+2,1706.0,Banga,hotel,2924.0,2,1,Banga,hotel,2,0.8842,5,relevant
+1,5093.0,Nangka,hotel,2006.0,3,1,Villareal,hotel,4,0.9887,8,relevant
+1,2228.0,Nangka,either,1245.0,3,3,Nangka,inn,2,0.7591,6,relevant
+3,3514.0,Villareal,hotel,2463.0,4,1,Villareal,hotel,1,0.7671,8,relevant
+2,2411.0,Banga,either,2451.0,6,2,Banga,hotel,2,0.8809,3,relevant
+2,2021.0,Bayawan City,inn,3247.0,3,3,Bayawan City,hotel,4,0.6378,2,not_relevant
+1,1331.0,Banga,inn,1301.0,2,2,Banga,inn,2,0.5394,10,relevant
+1,4131.0,Suba,hotel,724.0,4,2,Suba,inn,1,0.747,5,relevant
+2,2602.0,Bayawan City,inn,1435.0,4,1,Banga,inn,1,0.8651,6,relevant
+1,2910.0,Banga,either,2403.0,3,1,Banga,hotel,1,0.9643,5,relevant
+3,4725.0,Poblacion,hotel,1252.0,2,1,Nangka,inn,2,0.9332,8,not_relevant
+3,1807.0,Villareal,hotel,3704.0,2,1,Poblacion,hotel,4,0.6543,8,not_relevant
+2,1809.0,Banga,hotel,2994.0,5,1,Suba,hotel,1,0.757,7,relevant
+1,3213.0,Nangka,hotel,2128.0,1,1,Nangka,inn,4,0.6136,3,relevant
+2,1272.0,Poblacion,inn,1943.0,2,3,Suba,inn,1,0.9856,7,relevant
+3,3545.0,Suba,hotel,1536.0,4,2,Suba,hotel,5,0.6646,10,relevant
+5,3954.0,Suba,either,810.0,2,1,Suba,inn,2,0.8841,10,relevant
+1,2284.0,Suba,either,4830.0,5,1,Bayawan City,hotel,2,0.7559,7,relevant
+1,2031.0,Nangka,inn,5318.0,3,1,Nangka,hotel,1,0.6809,9,not_relevant
+3,1709.0,Nangka,inn,1742.0,2,1,Banga,inn,1,0.8825,5,not_relevant
+5,1878.0,Villareal,inn,1099.0,3,1,Villareal,inn,4,0.9046,7,relevant
+2,3686.0,Banga,either,3500.0,5,2,Bayawan City,hotel,1,0.6474,9,relevant
+2,2524.0,Nangka,hotel,3618.0,6,1,Nangka,hotel,2,0.5224,3,relevant
+1,2315.0,Villareal,either,3738.0,4,3,Villareal,hotel,1,0.6291,10,relevant
+4,2626.0,Poblacion,either,5941.0,2,4,Poblacion,hotel,4,0.5244,1,not_relevant
+3,2149.0,Banga,hotel,2665.0,4,1,Banga,inn,1,0.8636,3,relevant
+3,1418.0,Banga,inn,3102.0,2,3,Nangka,inn,4,0.7622,7,not_relevant
+5,1768.0,Poblacion,inn,2656.0,1,1,Poblacion,inn,1,0.8598,10,not_relevant
+2,2360.0,Bayawan City,inn,2658.0,2,3,Bayawan City,inn,3,0.8202,2,relevant
+2,3130.0,Poblacion,hotel,4806.0,6,3,Poblacion,hotel,3,0.8781,4,relevant
+3,1159.0,Suba,inn,1905.0,2,3,Suba,hotel,1,0.5904,9,not_relevant
+1,927.0,Poblacion,inn,2457.0,4,1,Suba,inn,2,0.5471,10,not_relevant
+1,3368.0,Villareal,either,1175.0,2,2,Villareal,inn,2,0.9593,1,relevant
+1,2533.0,Villareal,either,4533.0,5,3,Villareal,hotel,1,0.8409,2,relevant
+6,1221.0,Banga,inn,1512.0,4,2,Banga,inn,5,0.8365,8,not_relevant
+1,1162.0,Poblacion,inn,1663.0,3,1,Poblacion,hotel,3,0.6331,1,not_relevant
+2,2347.0,Nangka,inn,2397.0,1,1,Bayawan City,inn,1,0.5859,1,relevant
+3,2570.0,Suba,hotel,1836.0,3,4,Suba,inn,2,0.6612,7,relevant
+2,1192.0,Poblacion,either,2010.0,4,2,Poblacion,inn,3,0.8473,6,relevant
+4,5112.0,Suba,hotel,2582.0,4,3,Suba,hotel,2,0.7819,7,relevant
+2,1978.0,Nangka,hotel,3253.0,4,2,Nangka,hotel,2,0.6084,2,relevant
+5,762.0,Villareal,inn,1467.0,3,4,Villareal,inn,1,0.9498,8,not_relevant
+4,2609.0,Poblacion,inn,2785.0,4,1,Poblacion,inn,1,0.739,8,relevant
+2,1606.0,Banga,inn,2595.0,2,0,Villareal,hotel,2,0.7922,10,not_relevant
+2,4281.0,Villareal,hotel,4165.0,6,2,Villareal,hotel,5,0.7366,8,relevant
+5,4228.0,Suba,hotel,1881.0,6,3,Suba,hotel,1,0.8792,1,relevant
+1,2528.0,Nangka,either,1895.0,5,2,Nangka,hotel,2,0.8299,8,relevant
+2,770.0,Bayawan City,inn,2657.0,3,2,Bayawan City,inn,3,0.5703,3,relevant
+2,1923.0,Suba,hotel,4456.0,5,1,Suba,hotel,1,0.661,4,relevant
+2,3863.0,Nangka,hotel,2549.0,4,0,Bayawan City,inn,1,0.5589,3,relevant
+2,1810.0,Bayawan City,inn,790.0,4,3,Poblacion,inn,2,0.9427,5,relevant
+1,4681.0,Banga,hotel,2231.0,2,1,Banga,inn,2,0.9123,10,relevant
+6,3051.0,Nangka,either,4556.0,2,1,Nangka,hotel,1,0.8814,10,not_relevant
+4,3609.0,Bayawan City,hotel,1534.0,4,3,Bayawan City,inn,2,0.8305,10,relevant
+2,1331.0,Nangka,inn,4591.0,5,1,Nangka,hotel,1,0.729,5,relevant
+3,2023.0,Villareal,hotel,1998.0,5,1,Villareal,hotel,2,0.9259,6,relevant
+3,4407.0,Nangka,hotel,2159.0,2,1,Poblacion,inn,1,0.7518,5,not_relevant
+2,4552.0,Villareal,hotel,5461.0,3,2,Banga,hotel,1,0.5837,2,not_relevant
+2,4940.0,Villareal,hotel,3034.0,4,1,Banga,inn,1,0.7451,4,relevant
+5,2934.0,Nangka,hotel,4480.0,3,1,Villareal,hotel,3,0.5735,6,not_relevant
+5,1558.0,Nangka,inn,2395.0,4,2,Bayawan City,inn,3,0.9049,2,not_relevant
+2,4529.0,Nangka,hotel,4866.0,3,0,Nangka,hotel,5,0.7937,8,relevant
+4,3873.0,Villareal,either,2799.0,3,3,Villareal,inn,1,0.8291,4,relevant
+2,2463.0,Nangka,inn,1265.0,3,1,Nangka,inn,3,0.7928,9,relevant
+2,1700.0,Nangka,hotel,5666.0,4,3,Nangka,hotel,1,0.6837,3,relevant
+2,2006.0,Banga,inn,875.0,4,2,Banga,inn,1,0.8245,6,relevant
+3,3893.0,Poblacion,hotel,2346.0,3,1,Poblacion,inn,2,0.6076,3,relevant
+2,4486.0,Poblacion,hotel,3644.0,2,2,Poblacion,hotel,3,0.5678,10,relevant
+3,3761.0,Villareal,hotel,3967.0,5,2,Villareal,hotel,2,0.6854,6,relevant
+1,2882.0,Banga,hotel,2365.0,3,1,Nangka,hotel,1,0.8459,6,relevant
+2,4440.0,Villareal,hotel,2819.0,6,1,Villareal,hotel,1,0.9157,6,relevant
+4,2675.0,Villareal,either,2614.0,4,3,Villareal,inn,2,0.7857,2,relevant
+1,3916.0,Poblacion,hotel,5457.0,5,1,Poblacion,hotel,1,0.9069,9,relevant
+1,1419.0,Nangka,either,3427.0,5,4,Nangka,hotel,2,0.9252,6,relevant
+4,3911.0,Poblacion,either,5078.0,4,2,Poblacion,hotel,3,0.7879,1,relevant
+3,1255.0,Nangka,inn,2285.0,1,4,Nangka,inn,3,0.8497,3,not_relevant
+2,4190.0,Poblacion,hotel,3601.0,6,2,Suba,hotel,1,0.8178,2,relevant
+2,2940.0,Banga,hotel,1420.0,5,3,Villareal,hotel,3,0.8635,2,relevant
+1,1567.0,Bayawan City,inn,2626.0,4,1,Suba,inn,3,0.7772,6,not_relevant
+1,1066.0,Nangka,either,1108.0,4,3,Bayawan City,inn,1,0.5203,8,relevant
+1,1982.0,Poblacion,hotel,4352.0,4,1,Villareal,hotel,1,0.5443,3,relevant
+3,1574.0,Villareal,inn,5709.0,2,1,Villareal,hotel,2,0.5238,1,not_relevant
+1,1965.0,Nangka,hotel,1307.0,4,3,Nangka,inn,1,0.8215,3,relevant
+2,4172.0,Suba,hotel,2640.0,3,2,Suba,hotel,2,0.5607,4,relevant
+2,1714.0,Villareal,inn,1734.0,2,1,Villareal,inn,2,0.6539,10,relevant
+3,4663.0,Banga,hotel,2204.0,2,0,Banga,inn,4,0.7526,4,not_relevant
+6,1240.0,Suba,inn,2184.0,3,3,Bayawan City,inn,2,0.7768,6,not_relevant
+1,1583.0,Bayawan City,inn,1726.0,4,3,Bayawan City,hotel,1,0.8154,5,relevant
+2,2736.0,Bayawan City,hotel,2084.0,3,1,Bayawan City,hotel,1,0.7721,3,relevant
+2,1677.0,Nangka,inn,2447.0,5,1,Nangka,hotel,2,0.5459,10,not_relevant
+1,1761.0,Bayawan City,inn,1283.0,3,1,Poblacion,inn,3,0.8645,5,relevant
+1,3570.0,Villareal,either,2031.0,6,1,Villareal,hotel,1,0.5984,10,relevant
+4,880.0,Nangka,inn,1500.0,2,1,Poblacion,hotel,2,0.9525,7,not_relevant
+2,2704.0,Nangka,either,4020.0,3,1,Villareal,hotel,1,0.5761,6,relevant
+1,5147.0,Suba,hotel,3712.0,5,2,Villareal,hotel,1,0.78,2,relevant
+2,3620.0,Banga,hotel,3000.0,6,2,Poblacion,hotel,2,0.5908,4,relevant
+5,4708.0,Nangka,hotel,4482.0,2,3,Bayawan City,hotel,3,0.6164,2,relevant
+1,5063.0,Poblacion,hotel,2728.0,2,1,Bayawan City,inn,4,0.978,8,relevant
+3,4313.0,Villareal,hotel,2703.0,5,3,Villareal,hotel,4,0.8493,7,relevant
+4,2046.0,Bayawan City,hotel,2673.0,6,1,Banga,hotel,2,0.7111,6,relevant
+4,1645.0,Banga,either,3892.0,2,2,Banga,hotel,1,0.5897,6,not_relevant
+2,1127.0,Bayawan City,either,4712.0,3,1,Bayawan City,hotel,2,0.7372,2,relevant
+4,4411.0,Poblacion,hotel,2088.0,4,1,Poblacion,hotel,3,0.9887,1,relevant
+1,907.0,Bayawan City,inn,2776.0,5,3,Villareal,hotel,2,0.7532,7,not_relevant
+2,1741.0,Poblacion,hotel,3413.0,3,1,Poblacion,hotel,4,0.5487,8,not_relevant
+6,4855.0,Suba,hotel,1559.0,6,2,Suba,hotel,1,0.8873,9,relevant
+2,820.0,Banga,inn,2091.0,2,1,Banga,inn,3,0.9778,4,relevant
+6,2290.0,Nangka,inn,2053.0,2,4,Nangka,inn,1,0.7985,4,relevant
+5,1282.0,Bayawan City,inn,2942.0,6,3,Villareal,hotel,3,0.7748,8,not_relevant
+2,2958.0,Suba,hotel,3050.0,2,1,Suba,hotel,1,0.548,6,relevant
+5,2320.0,Bayawan City,inn,3000.0,3,1,Villareal,inn,1,0.9787,3,not_relevant
+1,4440.0,Villareal,hotel,4724.0,6,2,Villareal,hotel,1,0.5799,5,relevant
+1,3504.0,Villareal,either,1504.0,3,2,Nangka,inn,1,0.5861,8,relevant
+5,3429.0,Poblacion,hotel,646.0,3,1,Poblacion,inn,1,0.8899,5,relevant
+2,3038.0,Villareal,hotel,4474.0,5,1,Suba,hotel,2,0.826,10,not_relevant
+2,1903.0,Bayawan City,hotel,4492.0,2,1,Bayawan City,hotel,1,0.6788,2,relevant
+3,1643.0,Villareal,either,819.0,4,1,Poblacion,inn,1,0.7124,4,relevant
+2,2609.0,Nangka,either,5705.0,2,0,Nangka,hotel,1,0.7458,10,not_relevant
+1,3528.0,Bayawan City,hotel,5406.0,5,1,Bayawan City,hotel,2,0.6069,7,relevant
+2,3911.0,Banga,hotel,2360.0,4,2,Banga,hotel,1,0.8998,6,relevant
+2,1665.0,Bayawan City,inn,2550.0,4,1,Nangka,inn,1,0.756,1,relevant
+5,1708.0,Suba,either,1284.0,4,2,Suba,inn,1,0.5568,7,relevant
+2,1956.0,Poblacion,hotel,2189.0,1,1,Villareal,inn,2,0.7643,5,not_relevant
+2,2212.0,Suba,hotel,2614.0,5,2,Suba,hotel,5,0.9547,2,relevant
+2,3943.0,Suba,hotel,5275.0,5,0,Villareal,hotel,1,0.8106,3,not_relevant
+4,3125.0,Banga,hotel,1565.0,4,1,Bayawan City,hotel,3,0.6518,5,relevant
+6,2014.0,Poblacion,inn,1703.0,4,2,Poblacion,inn,1,0.6194,8,relevant
+4,1974.0,Banga,inn,5551.0,2,1,Nangka,hotel,3,0.9333,9,not_relevant
+2,4486.0,Bayawan City,hotel,1415.0,3,2,Bayawan City,inn,2,0.8402,2,relevant
+2,1759.0,Villareal,inn,970.0,2,1,Villareal,inn,1,0.8865,10,relevant
+2,5141.0,Poblacion,hotel,1472.0,2,1,Poblacion,hotel,1,0.6252,1,relevant
+2,2428.0,Nangka,either,2480.0,4,1,Nangka,inn,2,0.7067,10,relevant
+3,1922.0,Banga,inn,1042.0,3,1,Banga,inn,1,0.9249,6,relevant
+2,932.0,Banga,inn,4710.0,3,2,Banga,hotel,3,0.9888,8,not_relevant
+6,3005.0,Bayawan City,hotel,3221.0,3,2,Bayawan City,hotel,2,0.7584,6,relevant
+2,3970.0,Poblacion,either,2889.0,3,1,Poblacion,inn,2,0.8276,6,relevant
+2,3499.0,Villareal,hotel,1082.0,3,1,Banga,inn,3,0.7927,10,relevant
+2,921.0,Bayawan City,inn,1217.0,4,1,Suba,inn,1,0.984,7,relevant
+1,3584.0,Nangka,either,2848.0,4,0,Nangka,hotel,2,0.8778,4,relevant
+2,2352.0,Bayawan City,inn,2357.0,4,1,Bayawan City,inn,1,0.8634,4,relevant
+3,1926.0,Suba,either,2010.0,2,1,Suba,inn,2,0.5985,5,relevant
+2,4413.0,Nangka,hotel,2496.0,5,3,Nangka,hotel,1,0.5975,4,relevant
+1,3415.0,Poblacion,either,5533.0,2,1,Banga,hotel,1,0.6963,1,relevant
+3,897.0,Suba,inn,1074.0,1,1,Bayawan City,inn,1,0.6388,9,not_relevant
+3,2705.0,Bayawan City,hotel,2523.0,6,3,Bayawan City,hotel,2,0.5753,10,relevant
+6,4481.0,Poblacion,hotel,4756.0,4,1,Nangka,hotel,1,0.9479,8,not_relevant
+5,1310.0,Bayawan City,inn,968.0,4,0,Bayawan City,inn,3,0.8228,5,relevant
+1,2190.0,Bayawan City,either,4350.0,2,1,Bayawan City,hotel,3,0.9201,2,relevant
+2,4146.0,Nangka,hotel,3597.0,5,1,Nangka,hotel,3,0.5735,3,relevant
+3,1163.0,Nangka,inn,2485.0,3,2,Villareal,hotel,1,0.5687,3,not_relevant
+2,818.0,Villareal,inn,1135.0,3,1,Villareal,inn,4,0.5416,8,not_relevant
+4,2517.0,Nangka,hotel,4171.0,6,2,Nangka,hotel,2,0.831,7,relevant
+4,1823.0,Villareal,hotel,1495.0,6,1,Villareal,hotel,3,0.9286,8,relevant
+2,2351.0,Banga,inn,1889.0,4,2,Banga,inn,2,0.7301,8,relevant
+1,1072.0,Bayawan City,inn,3074.0,1,2,Bayawan City,inn,4,0.6172,9,not_relevant
+2,3457.0,Bayawan City,either,5275.0,6,2,Suba,hotel,1,0.5736,8,relevant
+2,4475.0,Nangka,hotel,2270.0,4,0,Banga,hotel,1,0.9063,3,relevant
+5,2483.0,Poblacion,hotel,5144.0,5,1,Poblacion,hotel,1,0.5419,7,relevant
+3,2743.0,Villareal,inn,617.0,2,0,Villareal,inn,4,0.747,10,not_relevant
+4,2586.0,Suba,either,4036.0,2,1,Suba,hotel,5,0.6486,4,not_relevant
+3,2224.0,Poblacion,either,3971.0,6,3,Poblacion,hotel,2,0.6186,4,relevant
+2,1172.0,Poblacion,inn,4285.0,4,2,Banga,hotel,2,0.8369,7,not_relevant
+1,1295.0,Villareal,inn,1834.0,5,2,Nangka,hotel,1,0.9823,3,not_relevant
+2,4934.0,Banga,hotel,5651.0,4,2,Banga,hotel,2,0.8689,4,relevant
+3,3187.0,Nangka,hotel,2306.0,4,4,Nangka,inn,1,0.5453,9,relevant
+4,4779.0,Villareal,hotel,1392.0,2,1,Banga,inn,1,0.6079,2,not_relevant
+2,1744.0,Villareal,inn,623.0,2,2,Villareal,inn,1,0.9565,3,relevant
+4,998.0,Nangka,inn,1901.0,3,4,Nangka,inn,2,0.5949,9,not_relevant
+2,2494.0,Poblacion,hotel,5290.0,4,2,Poblacion,hotel,5,0.5739,1,relevant
+1,3162.0,Suba,hotel,2328.0,4,1,Suba,hotel,1,0.9064,9,relevant
+3,3104.0,Bayawan City,either,2074.0,4,1,Bayawan City,hotel,4,0.7706,9,relevant
+4,3802.0,Poblacion,hotel,4965.0,3,2,Suba,hotel,4,0.5312,3,not_relevant
+1,2659.0,Poblacion,hotel,4739.0,3,1,Nangka,hotel,2,0.6687,7,not_relevant
+4,1786.0,Nangka,hotel,1994.0,6,1,Nangka,hotel,1,0.8051,5,relevant
+1,1558.0,Nangka,either,4603.0,3,3,Nangka,hotel,1,0.6601,3,relevant
+5,1504.0,Nangka,either,1176.0,2,1,Nangka,inn,2,0.6632,2,relevant
+1,1904.0,Villareal,either,3470.0,3,1,Nangka,hotel,1,0.9206,10,relevant
+1,2026.0,Villareal,either,1399.0,1,1,Villareal,inn,1,0.8355,3,relevant
+2,4300.0,Poblacion,hotel,3904.0,6,1,Poblacion,hotel,2,0.9706,6,relevant
+2,2150.0,Nangka,hotel,1958.0,3,3,Villareal,inn,2,0.8841,6,relevant
+5,2678.0,Bayawan City,hotel,2026.0,3,2,Banga,hotel,4,0.8169,9,not_relevant
+2,2633.0,Poblacion,inn,2617.0,6,1,Nangka,hotel,1,0.8646,10,relevant
+1,1379.0,Villareal,inn,2886.0,2,1,Villareal,inn,4,0.8659,3,relevant
+2,1775.0,Villareal,hotel,3093.0,3,2,Villareal,hotel,1,0.9343,8,relevant
+2,1412.0,Suba,inn,2142.0,3,1,Suba,inn,2,0.7628,2,relevant
+2,3474.0,Banga,either,1454.0,5,1,Villareal,hotel,1,0.6281,3,relevant
+3,4307.0,Poblacion,hotel,3286.0,2,1,Poblacion,hotel,1,0.7451,8,relevant
+3,1251.0,Poblacion,inn,3178.0,2,3,Poblacion,inn,1,0.6414,3,not_relevant
+4,1351.0,Suba,either,1487.0,3,4,Suba,inn,3,0.6231,3,not_relevant
+2,4566.0,Poblacion,hotel,4207.0,3,2,Poblacion,hotel,1,0.7012,7,relevant
+3,3549.0,Suba,hotel,3118.0,2,2,Poblacion,inn,4,0.7566,9,not_relevant
+1,2423.0,Suba,inn,2117.0,4,2,Suba,inn,2,0.8911,8,relevant
+2,2654.0,Nangka,inn,1552.0,3,1,Nangka,inn,2,0.7121,9,relevant
+2,1541.0,Suba,inn,3987.0,5,1,Suba,hotel,2,0.6392,10,not_relevant
+4,3861.0,Banga,hotel,5352.0,5,1,Suba,hotel,2,0.6393,8,not_relevant
+4,4663.0,Nangka,hotel,3282.0,2,2,Nangka,hotel,1,0.7589,4,relevant
+2,1373.0,Nangka,either,1195.0,1,1,Poblacion,inn,2,0.5501,2,relevant
+3,2773.0,Villareal,hotel,1870.0,6,3,Suba,hotel,3,0.7263,8,relevant
+4,1648.0,Banga,inn,2788.0,6,1,Banga,hotel,2,0.5608,3,not_relevant
+2,1969.0,Villareal,hotel,3730.0,2,1,Villareal,hotel,2,0.9727,6,relevant
+2,2773.0,Villareal,inn,1036.0,4,1,Villareal,inn,1,0.8974,2,relevant
+2,3306.0,Suba,either,2580.0,4,2,Suba,inn,5,0.8403,8,relevant
+3,3772.0,Banga,either,3283.0,3,1,Banga,hotel,1,0.5246,9,relevant
+1,3551.0,Nangka,hotel,3971.0,3,1,Banga,hotel,4,0.6059,5,relevant
+4,1846.0,Nangka,either,3504.0,4,3,Nangka,hotel,1,0.5763,2,relevant
+5,2520.0,Bayawan City,either,3983.0,5,1,Nangka,hotel,5,0.9283,10,not_relevant
+4,1221.0,Banga,either,2753.0,2,1,Banga,inn,2,0.6832,9,not_relevant
+2,748.0,Bayawan City,inn,1463.0,1,1,Suba,inn,1,0.808,6,not_relevant
+2,2436.0,Villareal,inn,1462.0,4,1,Banga,inn,3,0.9215,6,relevant
+3,3874.0,Suba,hotel,4940.0,3,3,Bayawan City,hotel,1,0.7423,3,not_relevant
+3,2828.0,Nangka,hotel,3455.0,5,2,Nangka,hotel,1,0.5482,3,relevant
+2,2109.0,Villareal,inn,681.0,3,1,Banga,inn,1,0.6135,10,relevant
+3,2530.0,Banga,inn,921.0,4,1,Banga,inn,2,0.9281,3,relevant
+4,1324.0,Suba,either,2727.0,2,1,Suba,hotel,2,0.8045,5,not_relevant
+5,1685.0,Banga,either,1353.0,4,3,Nangka,inn,1,0.8312,4,relevant
+1,920.0,Poblacion,inn,707.0,4,1,Poblacion,inn,5,0.6434,2,relevant
+4,1217.0,Banga,inn,2475.0,5,1,Banga,hotel,1,0.9244,6,not_relevant
+2,1425.0,Suba,inn,5140.0,6,2,Nangka,hotel,2,0.7244,10,not_relevant
+4,1961.0,Villareal,inn,4396.0,5,1,Villareal,hotel,1,0.9032,9,relevant
+5,2827.0,Bayawan City,hotel,1474.0,5,2,Suba,hotel,3,0.6287,10,relevant
+2,4993.0,Suba,hotel,4639.0,5,1,Suba,hotel,1,0.8996,10,relevant
+4,2159.0,Banga,hotel,4105.0,3,2,Banga,hotel,1,0.7512,10,not_relevant
+1,2112.0,Bayawan City,hotel,2395.0,3,1,Bayawan City,inn,1,0.6221,8,relevant
+4,1028.0,Banga,inn,1695.0,3,1,Banga,inn,2,0.6103,3,not_relevant
+2,2012.0,Bayawan City,either,737.0,4,1,Banga,inn,3,0.7649,2,relevant
+3,1200.0,Banga,inn,1637.0,1,1,Poblacion,inn,1,0.9371,6,not_relevant
+1,3994.0,Nangka,hotel,2380.0,4,1,Nangka,hotel,5,0.8882,10,relevant
+2,945.0,Bayawan City,inn,844.0,3,1,Bayawan City,inn,2,0.5791,2,relevant
+4,3823.0,Banga,either,2147.0,1,1,Suba,inn,1,0.7481,1,relevant
+2,4599.0,Poblacion,hotel,5237.0,4,3,Poblacion,hotel,4,0.5954,9,relevant
+1,4605.0,Suba,hotel,1359.0,4,2,Suba,inn,1,0.6322,10,relevant
+3,1859.0,Villareal,inn,1921.0,2,1,Villareal,inn,1,0.5406,2,relevant
+1,4228.0,Bayawan City,hotel,4583.0,6,1,Bayawan City,hotel,3,0.5431,5,relevant
+5,2617.0,Poblacion,inn,848.0,1,2,Poblacion,inn,4,0.8933,6,relevant
+2,1097.0,Nangka,inn,1014.0,2,1,Nangka,inn,1,0.8287,9,relevant
+1,3762.0,Suba,either,2478.0,3,1,Suba,inn,1,0.7785,3,relevant
+2,2029.0,Suba,inn,2122.0,3,2,Suba,inn,3,0.806,6,relevant
+5,3226.0,Nangka,hotel,600.0,4,4,Nangka,inn,2,0.5835,9,relevant
+4,3867.0,Poblacion,hotel,2694.0,3,1,Bayawan City,inn,4,0.5643,3,not_relevant
+2,1976.0,Suba,hotel,4675.0,4,1,Suba,hotel,1,0.8927,6,relevant
+3,1153.0,Suba,either,2960.0,3,1,Bayawan City,inn,3,0.6835,6,relevant
+5,1821.0,Poblacion,hotel,1848.0,4,1,Nangka,inn,1,0.5903,10,not_relevant
+4,3667.0,Nangka,hotel,2137.0,6,1,Villareal,hotel,1,0.5896,7,relevant
+1,1234.0,Suba,inn,1152.0,4,1,Suba,inn,1,0.6122,10,relevant
+2,1160.0,Bayawan City,inn,2294.0,1,1,Bayawan City,inn,1,0.828,10,not_relevant
+2,2417.0,Villareal,hotel,4934.0,3,3,Villareal,hotel,1,0.6342,1,relevant
+3,2849.0,Banga,hotel,2443.0,1,1,Banga,inn,3,0.6158,4,relevant
+2,1778.0,Nangka,hotel,3492.0,6,1,Bayawan City,hotel,1,0.6475,10,not_relevant
+4,1441.0,Nangka,either,1556.0,4,3,Nangka,hotel,1,0.759,7,relevant
+1,2875.0,Suba,either,2148.0,6,1,Suba,hotel,1,0.8699,7,relevant
+6,953.0,Banga,inn,3163.0,3,1,Banga,inn,5,0.9637,1,not_relevant
+1,3732.0,Villareal,hotel,3263.0,5,2,Villareal,hotel,2,0.9476,5,relevant
+3,1265.0,Poblacion,inn,1865.0,2,3,Poblacion,inn,4,0.988,7,not_relevant
+3,2354.0,Poblacion,hotel,1900.0,1,1,Poblacion,inn,1,0.9337,6,relevant
+1,2037.0,Nangka,hotel,2477.0,3,1,Banga,hotel,3,0.81,10,not_relevant
+1,1249.0,Poblacion,inn,2657.0,4,3,Villareal,inn,2,0.6065,6,not_relevant
+4,1805.0,Poblacion,inn,2734.0,1,4,Poblacion,inn,3,0.6032,2,not_relevant
+2,3351.0,Nangka,hotel,4716.0,3,2,Nangka,hotel,3,0.7053,6,relevant
+2,2571.0,Nangka,inn,773.0,4,3,Bayawan City,inn,1,0.7059,9,relevant
+2,1947.0,Nangka,inn,1771.0,4,1,Poblacion,inn,2,0.9519,10,relevant
+3,1736.0,Nangka,either,2508.0,2,1,Nangka,hotel,1,0.7974,8,not_relevant
+3,4542.0,Banga,hotel,2873.0,3,1,Banga,hotel,1,0.8524,9,relevant
+2,2372.0,Poblacion,either,2916.0,2,3,Poblacion,inn,1,0.6041,3,relevant
+1,2430.0,Villareal,hotel,1428.0,3,1,Villareal,hotel,2,0.7754,8,relevant
+2,1325.0,Suba,either,1833.0,5,1,Suba,hotel,2,0.543,4,relevant
+4,2056.0,Bayawan City,inn,1272.0,3,4,Bayawan City,inn,1,0.8072,5,relevant
+2,1081.0,Poblacion,inn,3851.0,2,1,Nangka,hotel,4,0.8765,2,not_relevant
+2,3748.0,Bayawan City,hotel,3119.0,5,2,Villareal,hotel,2,0.7885,2,relevant
+2,1763.0,Nangka,inn,2752.0,3,2,Banga,inn,2,0.8087,3,relevant
+3,706.0,Poblacion,inn,1084.0,2,0,Banga,inn,2,0.8666,2,not_relevant
+3,746.0,Bayawan City,inn,1424.0,2,1,Bayawan City,inn,1,0.7581,5,not_relevant
+3,5008.0,Banga,hotel,3364.0,2,1,Banga,hotel,2,0.8947,8,relevant
+4,929.0,Suba,inn,2734.0,4,1,Villareal,inn,3,0.7809,6,not_relevant
+1,2089.0,Banga,inn,2136.0,1,3,Banga,inn,2,0.6081,7,relevant
+2,1673.0,Banga,inn,2122.0,4,1,Villareal,inn,4,0.7668,4,not_relevant
+2,3648.0,Poblacion,hotel,2662.0,5,1,Suba,hotel,4,0.6659,9,relevant
+1,2581.0,Suba,inn,2187.0,1,1,Suba,inn,1,0.8429,1,relevant
+4,1692.0,Bayawan City,hotel,3957.0,4,1,Bayawan City,hotel,1,0.65,5,relevant
+1,3892.0,Poblacion,hotel,2517.0,6,1,Poblacion,hotel,1,0.7898,5,relevant
+1,4366.0,Suba,hotel,933.0,4,1,Suba,inn,1,0.9389,10,relevant
+4,2607.0,Banga,inn,3441.0,1,2,Banga,inn,2,0.7341,2,not_relevant
+4,2188.0,Poblacion,inn,2205.0,3,1,Banga,inn,4,0.8907,6,not_relevant
+2,1856.0,Villareal,inn,2027.0,2,1,Villareal,inn,1,0.6732,2,relevant
+2,1351.0,Villareal,inn,2575.0,2,1,Villareal,inn,3,0.7226,10,relevant
+3,2693.0,Nangka,inn,1068.0,1,1,Nangka,inn,2,0.6028,8,relevant
+2,1970.0,Suba,hotel,3182.0,2,2,Villareal,hotel,4,0.8758,1,relevant
+1,1927.0,Suba,inn,2935.0,3,2,Suba,inn,4,0.8574,7,relevant
+4,1255.0,Suba,either,2112.0,3,3,Villareal,inn,5,0.8506,1,not_relevant
+3,4160.0,Bayawan City,hotel,1903.0,4,1,Bayawan City,inn,2,0.8314,4,relevant
+2,2150.0,Banga,hotel,1495.0,3,0,Poblacion,hotel,1,0.8292,8,relevant
+5,2336.0,Villareal,hotel,5122.0,6,1,Nangka,hotel,2,0.7008,8,not_relevant
+3,3282.0,Villareal,hotel,4406.0,4,0,Poblacion,hotel,1,0.8513,8,not_relevant
+6,2604.0,Poblacion,inn,2717.0,3,0,Nangka,inn,4,0.6353,2,not_relevant
+4,916.0,Nangka,inn,2007.0,3,0,Nangka,inn,2,0.7898,8,not_relevant
+1,4577.0,Banga,hotel,2908.0,3,2,Banga,inn,2,0.5443,10,relevant
+1,2138.0,Banga,either,1875.0,1,1,Banga,inn,1,0.8038,2,relevant
+4,2686.0,Banga,inn,1340.0,2,2,Villareal,inn,3,0.9825,6,relevant
+4,2502.0,Villareal,inn,2770.0,3,1,Suba,hotel,3,0.5455,6,not_relevant
+2,1957.0,Villareal,either,4511.0,6,1,Villareal,hotel,1,0.929,9,relevant
+2,1398.0,Nangka,either,4298.0,2,1,Nangka,hotel,4,0.6774,5,not_relevant
+3,4607.0,Villareal,hotel,2996.0,3,2,Villareal,hotel,5,0.7774,6,relevant
+3,1898.0,Bayawan City,either,3720.0,4,0,Bayawan City,hotel,2,0.9611,1,relevant
+5,3476.0,Nangka,either,1132.0,1,2,Nangka,inn,2,0.9411,3,relevant
+5,4751.0,Bayawan City,hotel,4897.0,4,2,Bayawan City,hotel,3,0.5961,5,not_relevant
+5,1428.0,Banga,inn,2404.0,3,0,Villareal,inn,5,0.8068,4,not_relevant
+3,1760.0,Villareal,inn,1159.0,4,2,Villareal,inn,1,0.5288,8,relevant
+2,2302.0,Bayawan City,inn,3415.0,3,3,Bayawan City,inn,2,0.7098,7,relevant
+5,1496.0,Poblacion,either,4340.0,5,1,Poblacion,hotel,1,0.6917,2,relevant
+1,3173.0,Banga,hotel,1382.0,1,1,Banga,inn,1,0.7487,6,relevant
+3,2576.0,Bayawan City,hotel,5407.0,6,2,Bayawan City,hotel,2,0.771,8,relevant
+2,3260.0,Bayawan City,hotel,1518.0,1,2,Bayawan City,inn,2,0.59,9,relevant
+1,1187.0,Poblacion,either,3388.0,6,1,Poblacion,hotel,1,0.9452,1,relevant
+4,3636.0,Suba,hotel,3409.0,2,1,Suba,hotel,3,0.6724,7,relevant
+1,1194.0,Poblacion,inn,1721.0,1,1,Nangka,inn,2,0.7801,6,not_relevant
+2,1064.0,Bayawan City,either,5389.0,3,1,Nangka,hotel,1,0.8522,2,relevant
+1,3742.0,Villareal,hotel,5089.0,4,1,Poblacion,hotel,4,0.8451,10,not_relevant
+4,2415.0,Bayawan City,inn,618.0,3,1,Bayawan City,inn,5,0.8109,2,relevant
+2,1461.0,Villareal,either,2622.0,3,2,Poblacion,hotel,5,0.7538,8,not_relevant
+2,3526.0,Banga,either,5591.0,4,0,Banga,hotel,2,0.8892,3,relevant
+3,2414.0,Nangka,hotel,2090.0,4,1,Nangka,inn,1,0.9288,7,relevant
+2,4096.0,Villareal,hotel,5418.0,3,1,Villareal,hotel,3,0.9785,6,relevant
+1,3478.0,Bayawan City,hotel,5101.0,5,1,Bayawan City,hotel,1,0.8911,3,relevant
+2,1586.0,Suba,inn,3023.0,4,1,Bayawan City,inn,2,0.8631,1,relevant
+5,3949.0,Suba,hotel,1441.0,3,0,Suba,hotel,5,0.5358,9,not_relevant
+2,750.0,Bayawan City,inn,4731.0,6,1,Bayawan City,hotel,1,0.5275,2,relevant
+6,4761.0,Suba,hotel,2535.0,5,3,Bayawan City,hotel,2,0.8146,6,relevant
+2,3344.0,Villareal,hotel,3610.0,4,2,Banga,hotel,2,0.8934,10,relevant
+5,1811.0,Nangka,hotel,1054.0,3,1,Suba,inn,2,0.6918,1,not_relevant
+6,1165.0,Nangka,inn,2559.0,2,2,Poblacion,inn,3,0.874,4,not_relevant
+1,3014.0,Suba,hotel,2453.0,3,1,Banga,inn,2,0.741,2,relevant
+4,1771.0,Villareal,either,2775.0,1,3,Villareal,inn,1,0.5714,2,not_relevant
+3,2406.0,Poblacion,inn,2817.0,3,1,Poblacion,inn,2,0.657,1,relevant
+2,3685.0,Suba,either,4073.0,4,2,Suba,hotel,2,0.7293,9,relevant
+2,4752.0,Poblacion,hotel,793.0,3,1,Banga,inn,1,0.8108,3,relevant
+1,868.0,Poblacion,inn,1896.0,1,2,Banga,inn,2,0.6067,6,not_relevant
+2,3785.0,Banga,hotel,3982.0,3,1,Banga,hotel,2,0.9655,3,relevant
+3,3541.0,Suba,hotel,1787.0,3,4,Banga,inn,3,0.8334,10,relevant
+5,1178.0,Banga,inn,3923.0,3,0,Suba,hotel,2,0.7296,4,not_relevant
+4,2401.0,Suba,hotel,2118.0,4,1,Suba,hotel,2,0.9786,2,relevant
+2,2214.0,Suba,inn,2181.0,4,1,Banga,inn,1,0.6648,6,relevant
+4,1370.0,Villareal,inn,2336.0,3,2,Suba,inn,2,0.801,10,not_relevant
+5,1962.0,Suba,hotel,627.0,4,1,Bayawan City,inn,4,0.6022,7,not_relevant
+2,2709.0,Poblacion,inn,1745.0,6,1,Poblacion,hotel,2,0.7829,8,relevant
+3,2108.0,Banga,hotel,3756.0,5,1,Banga,hotel,2,0.5334,4,relevant
+2,1756.0,Suba,inn,5299.0,5,4,Nangka,hotel,3,0.7609,6,not_relevant
+2,2463.0,Bayawan City,either,3021.0,3,1,Bayawan City,hotel,4,0.5429,6,not_relevant
+4,2021.0,Poblacion,inn,1895.0,2,2,Banga,inn,2,0.6476,5,relevant
+1,3127.0,Banga,hotel,5372.0,4,1,Bayawan City,hotel,4,0.5681,3,not_relevant
+4,5065.0,Suba,hotel,2333.0,6,3,Suba,hotel,1,0.954,3,relevant
+2,2305.0,Villareal,hotel,3895.0,4,0,Nangka,hotel,3,0.5805,4,not_relevant
+1,1018.0,Poblacion,inn,677.0,1,2,Poblacion,inn,1,0.5354,2,relevant
+2,1095.0,Banga,inn,1107.0,1,1,Banga,inn,4,0.8352,3,not_relevant
+2,4798.0,Banga,hotel,3381.0,6,1,Villareal,hotel,1,0.8787,10,relevant
+1,1576.0,Poblacion,inn,5530.0,2,3,Nangka,hotel,2,0.607,10,not_relevant
+2,2062.0,Villareal,hotel,2043.0,4,1,Villareal,inn,2,0.8512,6,relevant
+2,4414.0,Bayawan City,hotel,5344.0,4,1,Bayawan City,hotel,3,0.9227,4,relevant
+6,3752.0,Banga,either,1030.0,4,1,Banga,inn,2,0.5874,2,relevant
+6,1520.0,Poblacion,inn,3036.0,3,1,Poblacion,inn,1,0.8608,7,not_relevant
+2,2684.0,Banga,inn,2694.0,4,1,Suba,inn,3,0.5774,2,relevant
+1,3640.0,Bayawan City,hotel,709.0,1,1,Bayawan City,inn,2,0.6623,3,relevant
+1,2708.0,Suba,inn,2667.0,4,1,Villareal,inn,1,0.7769,9,relevant
+2,3412.0,Bayawan City,hotel,5355.0,5,1,Bayawan City,hotel,3,0.9358,5,relevant
+1,4303.0,Villareal,hotel,5248.0,5,3,Villareal,hotel,2,0.6438,7,relevant
+1,2125.0,Banga,hotel,4401.0,2,2,Banga,hotel,1,0.6989,6,relevant
+2,3427.0,Bayawan City,either,2095.0,4,0,Bayawan City,hotel,1,0.5998,6,relevant
+5,1683.0,Villareal,hotel,5247.0,4,4,Villareal,hotel,1,0.6715,7,not_relevant
+2,1382.0,Poblacion,inn,3118.0,3,4,Poblacion,inn,1,0.915,2,relevant
+2,4539.0,Suba,hotel,2176.0,2,1,Suba,hotel,2,0.7434,9,relevant
+2,1519.0,Banga,inn,2297.0,3,2,Banga,inn,2,0.6049,9,not_relevant
+3,1797.0,Suba,inn,4953.0,5,2,Suba,hotel,1,0.6912,4,not_relevant
+2,4196.0,Banga,hotel,3067.0,2,3,Suba,hotel,1,0.8236,5,relevant
+1,2601.0,Bayawan City,inn,2588.0,3,1,Bayawan City,inn,2,0.6149,1,relevant
+1,4559.0,Banga,hotel,2590.0,1,0,Banga,inn,4,0.8028,6,relevant
+4,3966.0,Banga,either,2943.0,5,2,Banga,hotel,4,0.8322,9,relevant
+3,2048.0,Villareal,inn,2993.0,3,2,Poblacion,inn,3,0.9597,4,relevant
+2,1829.0,Banga,hotel,5417.0,6,2,Banga,hotel,1,0.7192,9,relevant
+3,1086.0,Poblacion,either,3559.0,3,2,Poblacion,inn,4,0.6389,4,relevant
+4,2291.0,Nangka,inn,632.0,4,1,Nangka,inn,5,0.6614,5,relevant
+4,838.0,Poblacion,inn,1722.0,4,3,Villareal,inn,3,0.7414,8,not_relevant
+2,2723.0,Bayawan City,either,3066.0,3,2,Villareal,inn,2,0.733,6,relevant
+3,3241.0,Nangka,hotel,3039.0,2,1,Nangka,hotel,1,0.6373,3,relevant
+4,2549.0,Poblacion,inn,2559.0,3,3,Suba,inn,1,0.8431,3,not_relevant
+2,1619.0,Villareal,inn,684.0,4,3,Villareal,inn,2,0.9462,4,relevant
+3,2665.0,Poblacion,hotel,2910.0,6,1,Poblacion,hotel,2,0.8577,1,relevant
+2,1780.0,Nangka,either,3580.0,3,1,Nangka,hotel,1,0.802,4,relevant
+4,2788.0,Villareal,hotel,3874.0,2,3,Villareal,hotel,1,0.5603,8,not_relevant
+3,1299.0,Villareal,either,990.0,3,1,Suba,inn,1,0.7413,4,relevant
+1,1939.0,Suba,inn,2216.0,4,2,Bayawan City,inn,1,0.5393,9,relevant
+1,3373.0,Banga,hotel,2561.0,6,1,Poblacion,hotel,1,0.7546,3,relevant
+4,4997.0,Villareal,hotel,3560.0,6,1,Villareal,hotel,1,0.8789,8,relevant
+1,1750.0,Villareal,either,746.0,2,1,Villareal,inn,2,0.9877,2,relevant
+2,5064.0,Nangka,hotel,2759.0,2,1,Nangka,hotel,1,0.8725,3,relevant
+6,2405.0,Poblacion,inn,1269.0,2,2,Poblacion,inn,4,0.6536,1,relevant
+1,5002.0,Bayawan City,hotel,5330.0,5,1,Banga,hotel,4,0.8293,10,not_relevant
+4,2129.0,Villareal,hotel,3131.0,6,2,Villareal,hotel,1,0.8696,1,relevant
+5,1065.0,Banga,inn,684.0,4,1,Banga,inn,3,0.8242,5,relevant
+5,2137.0,Villareal,hotel,4341.0,6,2,Banga,hotel,3,0.6139,9,not_relevant
+4,4114.0,Suba,hotel,2926.0,4,1,Suba,hotel,1,0.9774,6,relevant
+3,1890.0,Villareal,inn,2517.0,1,3,Villareal,inn,2,0.9826,3,not_relevant
+1,1784.0,Villareal,hotel,2281.0,2,1,Villareal,hotel,2,0.902,10,relevant
+3,1446.0,Bayawan City,inn,4932.0,3,3,Bayawan City,hotel,1,0.8603,10,not_relevant
+1,4659.0,Banga,hotel,3074.0,1,1,Poblacion,inn,2,0.7712,7,relevant
+2,4573.0,Villareal,hotel,5387.0,6,2,Villareal,hotel,2,0.8982,7,relevant
+4,3570.0,Bayawan City,hotel,2589.0,3,2,Banga,hotel,2,0.6097,9,not_relevant
+5,2686.0,Bayawan City,inn,2861.0,4,2,Bayawan City,inn,1,0.9098,10,not_relevant
+2,4619.0,Nangka,hotel,4086.0,5,1,Nangka,hotel,2,0.9596,10,relevant
+2,3266.0,Bayawan City,either,1920.0,4,2,Bayawan City,hotel,4,0.7526,2,relevant
+3,3008.0,Bayawan City,hotel,5201.0,5,2,Bayawan City,hotel,2,0.9211,10,relevant
+4,2634.0,Nangka,inn,2727.0,4,2,Villareal,hotel,1,0.8335,2,relevant
+2,3880.0,Bayawan City,hotel,1785.0,3,4,Suba,hotel,1,0.6878,5,relevant
+2,1494.0,Bayawan City,either,2901.0,2,1,Villareal,inn,1,0.8889,6,relevant
+3,906.0,Poblacion,inn,2393.0,1,2,Nangka,inn,5,0.9781,2,not_relevant
+2,1183.0,Bayawan City,inn,3082.0,3,3,Poblacion,hotel,1,0.8528,5,not_relevant
+2,1203.0,Poblacion,inn,3053.0,3,1,Poblacion,hotel,3,0.9124,4,relevant
+4,4178.0,Banga,hotel,3895.0,4,1,Banga,hotel,3,0.8968,3,relevant
+5,2196.0,Suba,hotel,1481.0,5,2,Banga,hotel,2,0.5598,2,relevant
+1,3353.0,Bayawan City,either,1873.0,3,4,Bayawan City,hotel,3,0.9772,9,relevant
+5,2145.0,Banga,either,2761.0,1,2,Villareal,inn,1,0.7297,7,not_relevant
+2,1508.0,Nangka,inn,4245.0,5,1,Nangka,hotel,3,0.7646,3,relevant
+4,1695.0,Banga,hotel,1628.0,3,1,Banga,hotel,1,0.8615,5,relevant
+2,1795.0,Banga,hotel,2421.0,2,2,Banga,hotel,1,0.982,6,relevant
+4,2434.0,Nangka,either,1825.0,2,2,Nangka,inn,3,0.8557,3,relevant
+4,2001.0,Suba,hotel,2600.0,5,2,Suba,hotel,1,0.7197,1,relevant
+3,4790.0,Nangka,hotel,4634.0,6,2,Nangka,hotel,2,0.8438,8,relevant
+1,1229.0,Poblacion,inn,2702.0,4,1,Poblacion,inn,1,0.5353,8,relevant
+2,2213.0,Bayawan City,inn,3950.0,2,1,Bayawan City,hotel,1,0.6625,6,not_relevant
+5,1861.0,Suba,inn,1961.0,3,1,Suba,inn,1,0.5518,6,not_relevant
+2,1267.0,Villareal,inn,2667.0,2,2,Suba,inn,3,0.59,8,not_relevant
+2,2988.0,Suba,hotel,1775.0,5,3,Suba,hotel,3,0.927,2,relevant
+3,1048.0,Nangka,inn,2976.0,6,1,Nangka,hotel,3,0.7652,10,not_relevant
+5,1542.0,Nangka,inn,1604.0,3,2,Poblacion,inn,3,0.7288,10,not_relevant
+5,2490.0,Bayawan City,inn,1339.0,3,3,Bayawan City,inn,1,0.5628,5,relevant
+1,2368.0,Poblacion,inn,1885.0,3,1,Poblacion,inn,1,0.6601,1,relevant
+4,1812.0,Banga,hotel,1834.0,1,2,Banga,inn,2,0.701,9,not_relevant
+1,1676.0,Villareal,hotel,3604.0,3,2,Villareal,hotel,1,0.8262,9,relevant
+4,2229.0,Nangka,inn,2813.0,2,2,Nangka,inn,2,0.9718,7,not_relevant
+6,1846.0,Suba,hotel,2575.0,1,1,Suba,inn,2,0.9159,6,not_relevant
+1,2619.0,Poblacion,either,2407.0,2,3,Nangka,hotel,3,0.9328,5,relevant
+6,1818.0,Nangka,inn,3414.0,5,2,Banga,hotel,1,0.7361,4,not_relevant
+2,4355.0,Nangka,hotel,2821.0,2,1,Suba,hotel,4,0.8784,8,relevant
+5,1205.0,Bayawan City,inn,2045.0,4,1,Bayawan City,inn,2,0.6033,7,not_relevant
+1,1607.0,Villareal,inn,681.0,1,2,Villareal,inn,3,0.5623,4,relevant
+1,4483.0,Poblacion,hotel,3112.0,5,0,Villareal,hotel,5,0.5721,7,relevant
+3,967.0,Poblacion,inn,3142.0,2,1,Poblacion,inn,4,0.9341,4,not_relevant
+3,1608.0,Bayawan City,hotel,2349.0,4,2,Nangka,inn,4,0.9213,1,not_relevant
+2,4108.0,Bayawan City,either,1756.0,6,3,Suba,hotel,1,0.9516,5,relevant
+3,4620.0,Banga,hotel,3248.0,2,1,Banga,hotel,1,0.6125,4,relevant
+4,4865.0,Bayawan City,hotel,4138.0,6,1,Bayawan City,hotel,2,0.9113,6,relevant
+2,2528.0,Bayawan City,inn,2971.0,1,1,Nangka,inn,5,0.6974,1,not_relevant
+1,2468.0,Bayawan City,inn,1938.0,6,1,Suba,hotel,1,0.6586,1,relevant
+1,3501.0,Poblacion,hotel,2353.0,4,3,Nangka,inn,2,0.8259,6,relevant
+1,4521.0,Suba,hotel,1953.0,6,3,Suba,hotel,4,0.8196,3,relevant
+1,1847.0,Villareal,hotel,2445.0,2,1,Villareal,hotel,4,0.6663,6,relevant
+2,1292.0,Banga,inn,1353.0,1,3,Banga,inn,3,0.6816,7,relevant
+3,2056.0,Bayawan City,inn,2969.0,4,1,Bayawan City,inn,1,0.5963,6,relevant
+3,1573.0,Poblacion,inn,1579.0,4,1,Banga,inn,3,0.8994,6,relevant
+1,3872.0,Bayawan City,hotel,1396.0,1,1,Bayawan City,inn,2,0.5406,6,relevant
+4,2331.0,Banga,hotel,3005.0,3,0,Villareal,hotel,3,0.5299,2,not_relevant
+1,2583.0,Bayawan City,hotel,2114.0,4,2,Bayawan City,inn,4,0.9344,10,relevant
+2,2902.0,Poblacion,hotel,4918.0,4,4,Banga,hotel,1,0.8786,1,relevant
+1,1517.0,Poblacion,either,5563.0,4,3,Poblacion,hotel,1,0.8888,2,relevant
+2,1433.0,Villareal,inn,1918.0,4,2,Nangka,inn,2,0.8564,8,not_relevant
+1,3451.0,Suba,hotel,3320.0,3,1,Suba,hotel,4,0.5939,10,relevant
+2,3991.0,Bayawan City,hotel,1737.0,3,2,Bayawan City,hotel,2,0.7233,8,relevant
+2,2170.0,Bayawan City,inn,937.0,1,1,Bayawan City,inn,2,0.8894,2,relevant
+2,2624.0,Bayawan City,hotel,3879.0,4,2,Bayawan City,hotel,3,0.8517,4,relevant
+2,2154.0,Nangka,either,2019.0,3,1,Nangka,inn,2,0.8762,10,relevant
+2,2643.0,Poblacion,inn,3314.0,3,1,Banga,hotel,3,0.8596,8,not_relevant
+5,1558.0,Poblacion,inn,2396.0,4,1,Poblacion,inn,1,0.9307,10,not_relevant
+2,2352.0,Nangka,inn,2802.0,4,1,Banga,inn,2,0.8891,10,relevant
+4,3161.0,Banga,hotel,1436.0,4,0,Banga,inn,1,0.5711,8,relevant
+3,831.0,Bayawan City,inn,5603.0,3,0,Bayawan City,hotel,5,0.6168,5,not_relevant
+1,2301.0,Banga,inn,1243.0,4,1,Banga,inn,2,0.7028,2,relevant
+3,2250.0,Banga,hotel,3072.0,4,1,Banga,inn,1,0.6495,8,not_relevant
+2,3931.0,Villareal,hotel,5421.0,4,2,Villareal,hotel,3,0.8238,5,relevant
+4,3300.0,Banga,hotel,2036.0,2,2,Banga,inn,2,0.8483,3,relevant
+3,973.0,Poblacion,inn,1489.0,3,1,Poblacion,inn,3,0.9878,2,relevant
+1,3672.0,Banga,hotel,782.0,2,0,Banga,inn,2,0.6991,8,relevant
+3,2339.0,Bayawan City,either,5203.0,3,0,Bayawan City,hotel,2,0.8554,4,relevant
+1,1425.0,Poblacion,inn,2283.0,1,1,Poblacion,inn,1,0.8384,1,relevant
+1,5026.0,Bayawan City,hotel,2242.0,2,1,Nangka,hotel,1,0.8012,1,relevant
+2,1665.0,Poblacion,hotel,4961.0,2,1,Poblacion,hotel,1,0.6237,2,relevant
+2,2039.0,Poblacion,inn,4043.0,2,2,Bayawan City,hotel,1,0.9591,4,not_relevant
+1,4278.0,Bayawan City,hotel,4198.0,5,1,Bayawan City,hotel,1,0.8255,5,relevant
+6,4518.0,Banga,hotel,2804.0,2,1,Suba,hotel,1,0.9813,6,relevant
+1,2674.0,Nangka,inn,1953.0,4,2,Nangka,hotel,2,0.7602,7,relevant
+3,1965.0,Bayawan City,inn,1568.0,1,2,Bayawan City,inn,2,0.5847,1,relevant
+5,3417.0,Nangka,hotel,4354.0,6,2,Nangka,hotel,3,0.8921,9,relevant
+2,3209.0,Poblacion,either,821.0,2,3,Villareal,inn,2,0.8967,4,relevant
+2,1864.0,Suba,hotel,2811.0,1,0,Suba,inn,5,0.579,4,not_relevant
+1,1975.0,Poblacion,inn,2744.0,5,1,Poblacion,hotel,1,0.6625,4,relevant
+6,2547.0,Villareal,either,2774.0,5,1,Villareal,hotel,2,0.8774,7,relevant
+1,1325.0,Villareal,inn,2864.0,3,1,Villareal,inn,2,0.6531,8,relevant
+1,717.0,Nangka,inn,652.0,2,2,Nangka,inn,1,0.9551,7,relevant
+6,2674.0,Villareal,either,1718.0,2,1,Villareal,hotel,4,0.6113,3,relevant
+3,4452.0,Nangka,hotel,836.0,3,3,Nangka,inn,3,0.7445,4,relevant
+2,4389.0,Bayawan City,hotel,2607.0,5,1,Banga,hotel,2,0.5258,3,relevant
+2,2432.0,Villareal,inn,2758.0,3,2,Bayawan City,hotel,1,0.7553,5,relevant
+4,1447.0,Nangka,either,2945.0,1,1,Nangka,inn,1,0.9571,4,not_relevant
+1,3750.0,Villareal,hotel,2307.0,4,2,Villareal,inn,1,0.6076,6,relevant
+4,1523.0,Bayawan City,inn,841.0,2,2,Bayawan City,inn,1,0.7271,7,relevant
+2,1863.0,Bayawan City,hotel,4422.0,4,1,Bayawan City,hotel,2,0.5245,2,relevant
+2,2538.0,Bayawan City,either,3069.0,1,4,Bayawan City,inn,1,0.7424,8,not_relevant
+5,3150.0,Banga,hotel,1868.0,5,4,Poblacion,hotel,4,0.5214,2,relevant
+1,4464.0,Poblacion,hotel,1618.0,3,2,Poblacion,inn,2,0.762,8,relevant
+2,4907.0,Banga,hotel,4066.0,2,1,Banga,hotel,2,0.8932,10,relevant
+4,3486.0,Villareal,either,1399.0,3,2,Bayawan City,inn,3,0.8889,10,relevant
+3,5183.0,Bayawan City,hotel,5552.0,6,4,Bayawan City,hotel,2,0.6332,9,relevant
+6,1356.0,Bayawan City,inn,1937.0,1,2,Bayawan City,inn,1,0.833,5,not_relevant
+2,1616.0,Suba,inn,2959.0,3,2,Suba,inn,2,0.9478,7,relevant
+4,1761.0,Suba,inn,1073.0,2,1,Villareal,inn,1,0.8681,6,relevant
+2,706.0,Banga,inn,2247.0,4,1,Banga,inn,1,0.6702,7,relevant
+3,2319.0,Suba,inn,1475.0,2,1,Suba,hotel,1,0.9135,5,relevant
+3,2757.0,Poblacion,inn,1105.0,3,1,Bayawan City,inn,3,0.7448,10,relevant
+4,1562.0,Villareal,inn,1521.0,2,0,Villareal,inn,3,0.9227,3,relevant
+2,4376.0,Poblacion,hotel,2539.0,4,4,Nangka,inn,3,0.5538,7,relevant
+1,4681.0,Nangka,hotel,2977.0,3,3,Villareal,inn,1,0.735,5,relevant
+1,4611.0,Banga,hotel,1474.0,3,1,Poblacion,hotel,3,0.8388,2,relevant
+1,1993.0,Villareal,hotel,2056.0,1,1,Villareal,inn,1,0.8255,9,relevant
+1,3001.0,Villareal,either,1839.0,4,4,Villareal,inn,2,0.8846,7,relevant
+2,2204.0,Villareal,inn,647.0,4,1,Suba,inn,1,0.8215,8,relevant
+3,4853.0,Suba,hotel,2883.0,2,4,Suba,hotel,3,0.7886,5,relevant
+4,3212.0,Suba,hotel,2877.0,1,2,Suba,inn,2,0.7639,2,relevant
+5,1440.0,Bayawan City,inn,2874.0,2,0,Banga,hotel,2,0.5778,6,not_relevant
+4,2110.0,Suba,hotel,5546.0,2,4,Suba,hotel,1,0.6367,1,not_relevant
+2,3847.0,Banga,either,1881.0,4,4,Banga,inn,1,0.76,9,relevant
+2,1249.0,Bayawan City,inn,3066.0,2,2,Bayawan City,inn,1,0.7183,10,relevant
+1,4371.0,Poblacion,hotel,4884.0,4,1,Poblacion,hotel,1,0.9878,5,relevant
+2,3319.0,Nangka,hotel,2657.0,3,2,Nangka,hotel,1,0.6363,10,relevant
+3,2066.0,Villareal,inn,2227.0,3,1,Villareal,inn,1,0.9804,7,relevant
+3,3411.0,Bayawan City,either,2883.0,3,2,Bayawan City,inn,3,0.6474,9,relevant
+4,3859.0,Villareal,hotel,4698.0,6,1,Villareal,hotel,1,0.8552,9,relevant
+3,4497.0,Banga,hotel,3440.0,4,1,Banga,hotel,2,0.9835,8,relevant
+3,1950.0,Villareal,inn,956.0,2,1,Villareal,inn,1,0.8183,2,relevant
+4,3618.0,Suba,hotel,1487.0,6,1,Suba,hotel,2,0.7454,3,relevant
+1,4055.0,Nangka,either,629.0,2,2,Nangka,inn,3,0.9873,4,relevant
+3,3762.0,Suba,either,2744.0,2,3,Bayawan City,inn,1,0.9145,6,relevant
+5,3781.0,Villareal,either,3446.0,4,3,Villareal,hotel,3,0.6606,5,relevant
+5,4982.0,Suba,hotel,1690.0,6,3,Suba,hotel,3,0.6872,1,relevant
+3,3052.0,Bayawan City,hotel,1823.0,5,1,Bayawan City,hotel,2,0.713,3,relevant
+2,3092.0,Banga,hotel,2354.0,3,1,Banga,inn,1,0.8285,8,relevant
+4,2053.0,Bayawan City,hotel,2952.0,3,1,Bayawan City,hotel,2,0.9435,6,not_relevant
+2,3629.0,Nangka,hotel,2443.0,6,1,Bayawan City,hotel,3,0.7559,7,relevant
+1,3048.0,Bayawan City,either,1511.0,4,2,Poblacion,hotel,1,0.7219,6,relevant
+4,4129.0,Banga,hotel,2649.0,3,1,Banga,hotel,1,0.9262,2,relevant
+4,4471.0,Poblacion,hotel,2657.0,1,1,Poblacion,inn,3,0.6278,3,relevant
+3,5140.0,Poblacion,hotel,808.0,1,1,Poblacion,inn,3,0.6242,4,relevant
+2,3037.0,Bayawan City,hotel,5382.0,4,0,Bayawan City,hotel,1,0.8304,1,relevant
+1,3089.0,Suba,hotel,4138.0,5,1,Suba,hotel,1,0.8821,9,relevant
+3,4263.0,Nangka,hotel,1730.0,2,1,Suba,inn,1,0.5813,2,relevant
+3,1906.0,Nangka,hotel,4209.0,2,1,Poblacion,hotel,2,0.7708,4,not_relevant
+4,3022.0,Nangka,hotel,4398.0,6,2,Nangka,hotel,4,0.7469,2,relevant
+3,2186.0,Poblacion,either,786.0,2,0,Poblacion,inn,5,0.8681,4,not_relevant
+4,2298.0,Bayawan City,inn,4683.0,5,1,Bayawan City,hotel,1,0.6224,10,not_relevant
+3,2242.0,Villareal,either,1502.0,3,1,Villareal,inn,1,0.5414,4,relevant
+4,4231.0,Banga,hotel,3439.0,2,4,Villareal,hotel,1,0.5207,2,relevant
+2,2372.0,Bayawan City,inn,3104.0,2,1,Nangka,inn,5,0.9072,1,not_relevant
+6,1435.0,Bayawan City,either,4529.0,6,1,Bayawan City,hotel,2,0.7789,10,relevant
+4,2237.0,Suba,hotel,5525.0,5,1,Suba,hotel,1,0.564,8,relevant
+5,4252.0,Poblacion,hotel,1938.0,2,3,Poblacion,inn,3,0.6083,10,not_relevant
+3,4576.0,Nangka,hotel,1496.0,3,2,Bayawan City,hotel,1,0.5717,1,relevant
+1,3569.0,Poblacion,either,3650.0,2,0,Poblacion,inn,3,0.866,9,relevant
+4,2058.0,Villareal,inn,2561.0,3,1,Suba,inn,1,0.8149,5,not_relevant
+4,1580.0,Banga,either,1409.0,5,0,Banga,hotel,2,0.6861,3,relevant
+2,1919.0,Nangka,either,1016.0,1,4,Bayawan City,inn,1,0.8094,2,relevant
+1,3456.0,Bayawan City,either,1342.0,3,1,Bayawan City,inn,2,0.8136,5,relevant
+5,1008.0,Villareal,either,2617.0,2,1,Villareal,hotel,1,0.859,8,not_relevant
+3,1070.0,Suba,inn,1923.0,2,1,Suba,inn,1,0.7523,6,not_relevant
+4,2569.0,Nangka,either,2314.0,2,1,Nangka,inn,2,0.9061,9,relevant
+3,2181.0,Suba,inn,611.0,2,1,Poblacion,inn,3,0.7824,6,relevant
+4,2207.0,Banga,either,5707.0,3,1,Banga,hotel,4,0.634,7,not_relevant
+4,3122.0,Nangka,hotel,1843.0,5,2,Villareal,hotel,2,0.7441,2,relevant
+1,5004.0,Poblacion,hotel,5004.0,6,1,Poblacion,hotel,1,0.8483,9,relevant
+1,4231.0,Nangka,hotel,1663.0,2,2,Banga,hotel,1,0.5251,3,relevant
+5,1953.0,Suba,inn,3262.0,6,1,Banga,hotel,1,0.7651,2,relevant
+2,4078.0,Suba,hotel,2032.0,6,1,Suba,hotel,1,0.9088,7,relevant
+1,3470.0,Poblacion,either,2218.0,3,1,Poblacion,inn,1,0.8006,4,relevant
+2,3913.0,Nangka,hotel,1767.0,6,2,Poblacion,hotel,3,0.5426,1,relevant
+1,4572.0,Banga,hotel,2057.0,4,4,Nangka,inn,3,0.6757,2,relevant
+4,853.0,Poblacion,inn,2237.0,4,1,Poblacion,inn,4,0.9678,2,relevant
+6,3714.0,Poblacion,hotel,4196.0,6,1,Banga,hotel,1,0.6893,5,relevant
+1,2224.0,Nangka,hotel,2922.0,1,1,Nangka,inn,3,0.8802,3,relevant
+2,2210.0,Bayawan City,either,1656.0,2,1,Bayawan City,inn,1,0.854,3,relevant
+1,3329.0,Villareal,either,3138.0,1,1,Villareal,inn,2,0.9511,10,relevant
+3,2676.0,Banga,hotel,774.0,4,2,Banga,inn,3,0.8489,4,relevant
+2,2513.0,Villareal,hotel,4580.0,2,2,Villareal,hotel,1,0.822,8,relevant
+5,2474.0,Nangka,inn,1417.0,4,0,Nangka,inn,1,0.7486,10,relevant
+5,1574.0,Bayawan City,inn,1911.0,2,4,Bayawan City,inn,3,0.9601,1,not_relevant
+1,2705.0,Bayawan City,hotel,3464.0,5,1,Bayawan City,hotel,1,0.5584,7,relevant
+2,1078.0,Poblacion,inn,2355.0,1,2,Poblacion,inn,1,0.9627,6,not_relevant
+5,2293.0,Nangka,inn,1481.0,6,3,Nangka,hotel,1,0.8098,10,relevant
+1,1604.0,Nangka,either,2645.0,4,3,Banga,inn,1,0.6435,7,relevant
+3,1149.0,Poblacion,either,1495.0,1,1,Poblacion,inn,2,0.8024,3,not_relevant
+1,1666.0,Nangka,hotel,3873.0,4,1,Nangka,hotel,3,0.825,8,relevant
+6,2064.0,Suba,hotel,2840.0,4,1,Suba,hotel,2,0.7751,3,not_relevant
+3,1358.0,Villareal,either,1133.0,1,2,Villareal,inn,2,0.8725,8,relevant
+1,2422.0,Suba,inn,1799.0,3,1,Suba,inn,1,0.9668,8,relevant
+1,1617.0,Nangka,inn,2678.0,3,1,Villareal,inn,4,0.6645,5,not_relevant
+1,1628.0,Bayawan City,either,2133.0,1,3,Suba,inn,2,0.6692,10,not_relevant
+3,911.0,Suba,inn,2966.0,4,1,Poblacion,inn,4,0.9794,7,not_relevant
+3,3065.0,Villareal,either,2369.0,3,2,Villareal,hotel,3,0.9135,5,relevant
+3,2226.0,Bayawan City,hotel,1627.0,6,1,Bayawan City,hotel,5,0.6997,10,relevant
+2,2816.0,Nangka,hotel,2987.0,3,1,Poblacion,hotel,1,0.8821,7,relevant
+6,2054.0,Nangka,hotel,2480.0,1,1,Nangka,inn,1,0.9405,5,not_relevant
+2,2394.0,Poblacion,inn,901.0,1,2,Poblacion,inn,1,0.6964,7,relevant
+5,1480.0,Poblacion,either,2004.0,1,1,Poblacion,inn,2,0.5224,9,not_relevant
+1,4716.0,Suba,hotel,2934.0,6,1,Suba,hotel,1,0.5851,6,relevant
+5,1905.0,Banga,inn,2513.0,3,1,Banga,inn,2,0.9535,7,not_relevant
+2,2278.0,Nangka,hotel,1443.0,3,1,Nangka,inn,4,0.8003,7,relevant
+3,4191.0,Villareal,hotel,1926.0,4,3,Villareal,hotel,4,0.7958,5,relevant
+1,2321.0,Suba,either,2358.0,2,1,Suba,inn,1,0.6948,6,relevant
+2,2552.0,Bayawan City,hotel,1942.0,4,1,Banga,hotel,2,0.6222,9,relevant
+5,2482.0,Nangka,inn,4003.0,5,1,Nangka,hotel,1,0.7544,8,relevant
+3,3960.0,Poblacion,hotel,1574.0,3,2,Poblacion,hotel,3,0.9485,1,relevant
+2,1284.0,Suba,either,5249.0,2,1,Bayawan City,hotel,3,0.6491,5,relevant
+1,4452.0,Banga,hotel,5123.0,4,2,Banga,hotel,4,0.9607,6,not_relevant
+2,2527.0,Poblacion,hotel,1767.0,4,3,Poblacion,inn,1,0.9851,9,relevant
+5,2080.0,Bayawan City,either,4097.0,2,2,Bayawan City,hotel,1,0.9547,3,not_relevant
+3,3737.0,Poblacion,hotel,3370.0,2,2,Suba,hotel,2,0.6713,5,relevant
+3,4301.0,Banga,hotel,3086.0,3,2,Villareal,hotel,1,0.5483,8,relevant
+2,4714.0,Poblacion,hotel,1877.0,3,2,Poblacion,inn,3,0.9496,2,relevant
+4,1881.0,Suba,hotel,1738.0,2,2,Suba,inn,4,0.8247,10,not_relevant
+2,1117.0,Poblacion,either,2550.0,3,1,Poblacion,inn,1,0.5595,9,relevant
+2,2000.0,Suba,hotel,1802.0,4,2,Suba,hotel,2,0.609,5,relevant
+3,2054.0,Suba,hotel,3756.0,3,0,Suba,hotel,1,0.7701,2,relevant
+1,3028.0,Villareal,either,1646.0,3,1,Villareal,inn,1,0.6553,10,relevant
+2,2297.0,Suba,hotel,1890.0,2,1,Suba,inn,1,0.5867,8,relevant
+1,2142.0,Poblacion,inn,2540.0,1,2,Bayawan City,inn,2,0.7421,4,not_relevant
+2,4775.0,Banga,hotel,2169.0,3,1,Nangka,hotel,3,0.7327,6,relevant
+2,2233.0,Villareal,either,4133.0,4,2,Villareal,hotel,3,0.7476,10,relevant
+3,2163.0,Poblacion,inn,2639.0,2,0,Banga,inn,2,0.6889,7,not_relevant
+2,5188.0,Nangka,hotel,3324.0,4,2,Nangka,inn,4,0.7969,7,relevant
+2,2103.0,Suba,hotel,4950.0,6,2,Suba,hotel,3,0.6556,6,relevant
+5,1943.0,Villareal,inn,2594.0,2,1,Nangka,inn,3,0.7333,1,not_relevant
+2,1204.0,Villareal,either,4008.0,2,1,Villareal,hotel,3,0.5929,9,not_relevant
+5,2496.0,Poblacion,hotel,731.0,3,1,Poblacion,inn,3,0.7186,7,relevant
+1,4380.0,Banga,hotel,4041.0,5,1,Banga,hotel,3,0.5838,5,relevant
+2,4804.0,Suba,hotel,4979.0,5,1,Villareal,hotel,2,0.7568,6,relevant
+2,3889.0,Villareal,hotel,1616.0,2,1,Villareal,hotel,3,0.9462,10,relevant
+3,919.0,Suba,inn,2651.0,3,0,Suba,inn,3,0.7363,9,not_relevant
+3,3916.0,Nangka,hotel,2572.0,3,3,Nangka,inn,1,0.837,10,relevant
+5,2515.0,Poblacion,hotel,2667.0,3,1,Poblacion,hotel,5,0.8986,1,not_relevant
+1,2612.0,Poblacion,hotel,3185.0,2,3,Poblacion,hotel,2,0.9552,1,relevant
+2,1204.0,Poblacion,inn,2370.0,4,1,Nangka,inn,1,0.9047,3,relevant
+2,4334.0,Suba,hotel,2219.0,4,1,Suba,hotel,2,0.7013,7,relevant
+2,2295.0,Poblacion,inn,1490.0,6,0,Poblacion,hotel,2,0.7289,10,relevant
+1,3065.0,Nangka,hotel,5501.0,3,1,Nangka,hotel,1,0.7036,9,not_relevant
+2,1840.0,Nangka,inn,1840.0,2,0,Nangka,inn,3,0.697,8,relevant
+2,2125.0,Suba,inn,2994.0,3,2,Nangka,inn,2,0.5339,1,relevant
+2,4761.0,Villareal,hotel,3338.0,3,1,Suba,hotel,4,0.8752,7,relevant
+4,4726.0,Bayawan City,hotel,4466.0,5,3,Bayawan City,hotel,4,0.5706,6,relevant
+2,4380.0,Suba,hotel,4222.0,5,1,Suba,hotel,3,0.5604,4,relevant
+2,3327.0,Bayawan City,either,1989.0,5,1,Poblacion,hotel,2,0.7532,9,relevant
+5,975.0,Banga,inn,2397.0,2,1,Banga,inn,1,0.5798,2,not_relevant
+2,4964.0,Bayawan City,hotel,3774.0,3,1,Bayawan City,hotel,3,0.93,2,relevant
+2,4133.0,Poblacion,hotel,1864.0,5,1,Nangka,hotel,4,0.7414,10,relevant
+1,2170.0,Banga,hotel,3073.0,2,2,Banga,hotel,4,0.6307,1,relevant
+2,2704.0,Nangka,either,3050.0,1,2,Bayawan City,inn,4,0.745,9,not_relevant
+3,2656.0,Villareal,inn,1842.0,4,3,Villareal,inn,1,0.5324,1,relevant
+3,3185.0,Villareal,hotel,4490.0,2,2,Bayawan City,hotel,2,0.7783,7,not_relevant
+2,2575.0,Banga,hotel,3405.0,2,1,Banga,hotel,3,0.787,9,relevant
+1,2757.0,Bayawan City,hotel,1758.0,3,2,Bayawan City,hotel,4,0.581,5,relevant
+2,2162.0,Bayawan City,inn,1502.0,4,1,Bayawan City,inn,1,0.6576,9,relevant
+1,2382.0,Nangka,inn,3147.0,3,0,Nangka,inn,4,0.6284,9,not_relevant
+2,4262.0,Poblacion,hotel,5117.0,5,0,Poblacion,hotel,3,0.6506,5,not_relevant
+2,2575.0,Banga,either,5037.0,5,0,Suba,hotel,1,0.8302,3,not_relevant
+4,1775.0,Banga,inn,3020.0,3,1,Nangka,inn,1,0.724,10,not_relevant
+2,2598.0,Bayawan City,inn,2336.0,3,2,Nangka,inn,2,0.6422,9,relevant
+1,1050.0,Poblacion,inn,3447.0,4,1,Poblacion,hotel,2,0.8093,1,relevant
+2,1783.0,Suba,inn,2864.0,4,0,Suba,hotel,1,0.974,1,not_relevant
+1,3258.0,Bayawan City,either,3972.0,6,1,Bayawan City,hotel,1,0.642,5,relevant
+2,2354.0,Suba,hotel,5551.0,2,2,Suba,hotel,1,0.5486,4,relevant
+2,4059.0,Nangka,hotel,3322.0,2,1,Banga,hotel,1,0.5732,8,relevant
+3,2186.0,Nangka,hotel,1602.0,4,2,Nangka,hotel,1,0.9418,7,relevant
+1,3421.0,Bayawan City,either,1817.0,3,2,Bayawan City,hotel,2,0.8882,9,relevant
+3,4123.0,Suba,either,2042.0,5,4,Suba,hotel,5,0.7566,10,relevant
+4,2634.0,Nangka,inn,2748.0,1,1,Nangka,inn,1,0.6577,10,not_relevant
+2,4438.0,Banga,hotel,1587.0,1,4,Banga,inn,2,0.6854,2,relevant
+4,3332.0,Suba,either,1113.0,2,1,Suba,inn,4,0.833,10,relevant
+2,2724.0,Bayawan City,inn,3191.0,2,1,Bayawan City,inn,1,0.5273,8,not_relevant
+4,1698.0,Villareal,hotel,2767.0,5,4,Poblacion,hotel,1,0.9518,9,relevant
+2,4978.0,Suba,hotel,4157.0,4,2,Suba,hotel,5,0.5547,1,relevant
+4,4103.0,Nangka,either,2554.0,3,2,Nangka,inn,3,0.9507,10,relevant
+3,3153.0,Suba,hotel,1912.0,4,1,Suba,inn,2,0.6292,2,relevant
+4,2768.0,Suba,hotel,4044.0,5,2,Suba,hotel,4,0.9026,1,relevant
+4,1407.0,Suba,either,4245.0,4,1,Suba,hotel,1,0.6251,8,relevant
+3,1393.0,Suba,either,3094.0,3,1,Poblacion,hotel,2,0.5329,3,relevant
+4,2513.0,Poblacion,either,3064.0,2,3,Poblacion,hotel,2,0.7648,8,not_relevant
+2,3620.0,Nangka,hotel,3554.0,5,1,Bayawan City,hotel,1,0.8639,5,relevant
+1,2730.0,Poblacion,hotel,5114.0,4,2,Villareal,hotel,2,0.8522,2,relevant
+1,3707.0,Nangka,either,1691.0,6,3,Banga,hotel,2,0.5843,4,relevant
+2,4004.0,Banga,either,2634.0,2,1,Banga,inn,4,0.9229,9,relevant
+3,3312.0,Suba,hotel,3555.0,2,2,Suba,hotel,1,0.7476,6,relevant
+2,4048.0,Poblacion,hotel,4325.0,5,1,Suba,hotel,1,0.5728,4,relevant
+3,1421.0,Villareal,inn,2503.0,1,2,Villareal,inn,1,0.8513,7,not_relevant
+3,1891.0,Villareal,inn,3594.0,2,3,Villareal,hotel,3,0.7843,1,not_relevant
+2,1799.0,Villareal,inn,2588.0,1,1,Villareal,inn,3,0.7304,5,not_relevant
+5,2350.0,Nangka,either,2458.0,6,0,Nangka,hotel,3,0.5624,7,relevant
+1,2483.0,Suba,either,2973.0,2,3,Suba,inn,1,0.6564,4,relevant
+1,4692.0,Suba,hotel,2239.0,2,1,Bayawan City,hotel,3,0.5938,1,relevant
+4,4284.0,Poblacion,hotel,2720.0,4,3,Poblacion,inn,3,0.5547,2,relevant
+3,1091.0,Bayawan City,inn,3009.0,2,2,Nangka,inn,1,0.9239,10,not_relevant
+1,4287.0,Banga,hotel,5261.0,4,1,Banga,hotel,1,0.7837,7,relevant
+6,2526.0,Poblacion,either,2287.0,5,2,Poblacion,hotel,1,0.7301,4,relevant
+1,2450.0,Poblacion,hotel,5412.0,3,2,Bayawan City,hotel,1,0.8097,7,not_relevant
+2,1975.0,Poblacion,inn,1983.0,4,0,Poblacion,inn,2,0.7111,10,not_relevant
+2,2018.0,Villareal,inn,5179.0,3,1,Villareal,hotel,3,0.953,2,relevant
+4,2408.0,Bayawan City,hotel,4984.0,3,1,Bayawan City,hotel,4,0.6002,8,not_relevant
+1,2483.0,Suba,inn,1805.0,1,3,Suba,inn,1,0.8091,6,relevant
+5,1729.0,Suba,inn,2533.0,3,1,Nangka,inn,4,0.5972,3,not_relevant
+1,1977.0,Poblacion,inn,1516.0,1,1,Poblacion,inn,1,0.8137,1,relevant
+1,2724.0,Poblacion,hotel,3728.0,3,3,Poblacion,hotel,2,0.6926,5,relevant
+1,1421.0,Nangka,either,1486.0,2,1,Nangka,inn,1,0.796,9,relevant
+5,2457.0,Suba,hotel,1506.0,4,4,Suba,inn,1,0.5889,10,not_relevant
+4,3723.0,Bayawan City,either,5264.0,5,1,Bayawan City,hotel,1,0.7048,9,relevant
+1,1380.0,Suba,inn,3195.0,2,2,Suba,inn,3,0.7276,9,relevant
+1,5103.0,Villareal,hotel,5218.0,4,1,Villareal,hotel,2,0.7831,10,relevant
+1,3154.0,Poblacion,either,2996.0,4,0,Bayawan City,hotel,1,0.9482,2,relevant
+2,2331.0,Banga,inn,779.0,4,2,Banga,inn,1,0.9764,1,relevant
+2,4071.0,Suba,either,2834.0,4,0,Suba,inn,1,0.8517,3,relevant
+3,2287.0,Bayawan City,either,2198.0,2,1,Bayawan City,hotel,3,0.8666,10,relevant
+6,758.0,Nangka,inn,4702.0,4,2,Nangka,hotel,1,0.9078,4,not_relevant
+3,1408.0,Villareal,inn,613.0,4,2,Villareal,inn,1,0.787,8,relevant
+3,2000.0,Bayawan City,inn,3021.0,2,2,Banga,inn,1,0.8907,3,not_relevant
+4,4661.0,Nangka,hotel,2487.0,3,1,Banga,hotel,1,0.6037,5,not_relevant
+1,2662.0,Poblacion,hotel,5001.0,4,1,Poblacion,hotel,2,0.883,6,relevant
+4,1637.0,Poblacion,either,2803.0,4,4,Poblacion,inn,2,0.6175,5,relevant
+4,1593.0,Banga,inn,5231.0,4,3,Banga,hotel,2,0.7433,3,relevant
+1,4178.0,Nangka,hotel,4339.0,2,0,Nangka,hotel,2,0.6782,6,relevant
+1,3398.0,Poblacion,hotel,5139.0,2,2,Poblacion,hotel,3,0.912,8,relevant
+1,4725.0,Nangka,hotel,5871.0,3,2,Nangka,hotel,4,0.7987,7,not_relevant
+1,4679.0,Suba,hotel,2543.0,6,1,Nangka,hotel,1,0.9761,1,relevant
+2,1520.0,Villareal,inn,2809.0,3,1,Villareal,hotel,1,0.7252,4,relevant
+1,3528.0,Banga,hotel,4628.0,2,3,Banga,hotel,2,0.8519,8,relevant
+2,4957.0,Poblacion,hotel,4878.0,4,1,Poblacion,hotel,1,0.5326,10,relevant
+4,4054.0,Banga,hotel,4661.0,6,2,Banga,hotel,1,0.5408,4,relevant
+2,4365.0,Poblacion,hotel,5927.0,5,4,Poblacion,hotel,1,0.8407,7,relevant
+4,1358.0,Nangka,inn,1906.0,1,1,Villareal,inn,2,0.5254,8,not_relevant
+2,2544.0,Bayawan City,inn,2656.0,1,1,Bayawan City,inn,1,0.9767,9,not_relevant
+1,4498.0,Villareal,hotel,3512.0,4,1,Bayawan City,hotel,3,0.7244,8,relevant
+4,2633.0,Villareal,hotel,2343.0,3,1,Villareal,inn,3,0.6456,9,not_relevant
+3,4597.0,Banga,hotel,1699.0,4,1,Banga,hotel,1,0.5644,9,relevant
+2,2577.0,Banga,inn,1056.0,2,0,Banga,inn,2,0.6995,2,relevant
+2,4658.0,Nangka,hotel,1652.0,2,2,Nangka,inn,1,0.9736,7,relevant
+4,900.0,Suba,inn,4465.0,3,1,Suba,hotel,4,0.871,5,not_relevant
+1,2716.0,Suba,hotel,1441.0,4,0,Suba,hotel,2,0.6491,3,relevant
+1,1605.0,Bayawan City,inn,861.0,3,2,Bayawan City,inn,2,0.7963,8,relevant
+2,4969.0,Suba,hotel,5577.0,4,2,Suba,hotel,1,0.8363,3,relevant
+3,1940.0,Bayawan City,hotel,1450.0,3,1,Bayawan City,inn,1,0.7322,6,relevant
+2,4677.0,Suba,hotel,3725.0,2,1,Suba,hotel,1,0.5819,9,relevant
+1,1731.0,Poblacion,either,2703.0,4,4,Poblacion,hotel,5,0.712,9,relevant
+3,3657.0,Banga,hotel,4612.0,4,1,Bayawan City,hotel,2,0.6546,8,relevant
+2,4724.0,Villareal,hotel,2500.0,3,2,Villareal,inn,1,0.827,10,relevant
+3,1929.0,Suba,hotel,4748.0,6,1,Suba,hotel,1,0.814,10,relevant
+3,1661.0,Suba,either,5150.0,3,1,Villareal,hotel,4,0.7419,3,not_relevant
+3,2603.0,Bayawan City,hotel,5034.0,5,4,Banga,hotel,3,0.7551,8,not_relevant
+3,728.0,Poblacion,inn,732.0,1,1,Poblacion,inn,2,0.9252,8,not_relevant
+3,4250.0,Nangka,hotel,1594.0,6,2,Nangka,hotel,1,0.9093,7,relevant
+2,2024.0,Suba,hotel,2595.0,2,2,Suba,hotel,2,0.8593,2,relevant
+2,1003.0,Poblacion,inn,2476.0,3,3,Banga,inn,2,0.8758,4,relevant
+2,1273.0,Villareal,inn,1206.0,1,1,Nangka,inn,1,0.7849,6,relevant
+2,4357.0,Suba,hotel,4327.0,5,2,Suba,hotel,1,0.9238,5,relevant
+3,3091.0,Suba,hotel,2683.0,3,4,Suba,inn,2,0.943,10,relevant
+2,1392.0,Suba,inn,2751.0,4,1,Suba,inn,1,0.6809,2,relevant
+2,3932.0,Nangka,hotel,1499.0,5,3,Poblacion,hotel,3,0.9421,9,relevant
+2,2711.0,Nangka,hotel,2050.0,2,0,Nangka,hotel,2,0.635,4,relevant
+3,1764.0,Poblacion,hotel,3095.0,2,1,Poblacion,inn,3,0.9459,2,not_relevant
+3,2002.0,Poblacion,hotel,1818.0,5,2,Poblacion,hotel,1,0.7277,2,relevant
+3,3360.0,Suba,hotel,2313.0,6,1,Suba,hotel,2,0.8987,10,relevant
+2,2046.0,Villareal,inn,2677.0,2,1,Villareal,inn,2,0.9276,5,relevant
+1,3597.0,Banga,hotel,1453.0,3,4,Banga,hotel,2,0.604,3,relevant
+3,1492.0,Villareal,inn,1045.0,2,1,Villareal,inn,2,0.8802,6,relevant
+1,1486.0,Poblacion,inn,4645.0,3,3,Poblacion,hotel,2,0.6731,3,relevant
+2,2633.0,Villareal,inn,1843.0,3,1,Banga,inn,1,0.9097,6,relevant
+5,3274.0,Villareal,hotel,4296.0,2,1,Villareal,hotel,2,0.5292,5,not_relevant
+2,2934.0,Banga,hotel,3033.0,5,2,Bayawan City,hotel,2,0.9225,8,relevant
+2,4799.0,Villareal,hotel,4595.0,2,2,Nangka,hotel,4,0.6374,8,relevant
+2,2494.0,Bayawan City,inn,1932.0,3,3,Bayawan City,inn,1,0.9074,7,relevant
+2,1893.0,Suba,inn,1183.0,3,0,Suba,inn,3,0.9699,6,relevant
+2,2183.0,Poblacion,inn,2561.0,4,2,Poblacion,inn,1,0.5859,1,relevant
+5,1666.0,Bayawan City,hotel,2917.0,3,1,Poblacion,inn,1,0.9303,9,not_relevant
+4,1160.0,Banga,inn,3140.0,1,3,Banga,inn,1,0.8067,8,not_relevant
+2,2053.0,Villareal,inn,1998.0,3,1,Suba,hotel,2,0.768,8,relevant
+2,2597.0,Bayawan City,either,1819.0,6,1,Bayawan City,hotel,1,0.7947,4,relevant
+5,1473.0,Poblacion,inn,1207.0,2,1,Nangka,inn,1,0.7707,1,relevant
+4,4295.0,Banga,hotel,3110.0,3,1,Villareal,hotel,1,0.6295,5,relevant
+5,2518.0,Villareal,inn,1454.0,1,1,Villareal,inn,1,0.8824,4,relevant
+1,2092.0,Suba,hotel,2603.0,2,2,Nangka,inn,1,0.7151,6,not_relevant
+1,1666.0,Villareal,hotel,1459.0,5,1,Villareal,hotel,5,0.6867,2,relevant
+6,3664.0,Nangka,either,4592.0,2,0,Nangka,hotel,5,0.5413,6,not_relevant
+3,1850.0,Suba,hotel,3118.0,2,2,Suba,hotel,1,0.9069,7,not_relevant
+2,4821.0,Poblacion,hotel,2730.0,2,0,Banga,hotel,1,0.8139,7,relevant
+4,4610.0,Bayawan City,hotel,2582.0,2,0,Bayawan City,hotel,1,0.8596,10,not_relevant
+6,3548.0,Poblacion,hotel,5204.0,2,3,Poblacion,hotel,2,0.9228,3,not_relevant
+3,4113.0,Banga,hotel,2189.0,4,2,Banga,hotel,3,0.5791,4,relevant
+1,2156.0,Nangka,either,2490.0,5,1,Nangka,hotel,2,0.8539,6,relevant
+2,1294.0,Banga,inn,2973.0,3,2,Poblacion,inn,3,0.817,7,relevant
+4,2625.0,Nangka,either,4388.0,3,1,Nangka,hotel,1,0.7107,10,not_relevant
+2,2081.0,Villareal,inn,1363.0,3,2,Villareal,inn,2,0.7345,9,relevant
+2,3225.0,Banga,either,1716.0,1,1,Banga,inn,1,0.855,9,relevant
+5,2347.0,Suba,hotel,4656.0,6,2,Bayawan City,hotel,4,0.6116,9,not_relevant
+3,3905.0,Nangka,hotel,1784.0,3,2,Suba,hotel,1,0.846,4,relevant
+3,2526.0,Nangka,hotel,2645.0,6,4,Nangka,hotel,2,0.6509,4,relevant
+2,3955.0,Suba,either,3857.0,3,0,Villareal,hotel,1,0.834,9,relevant
+2,2669.0,Bayawan City,inn,1256.0,2,2,Bayawan City,inn,4,0.7039,4,relevant
+2,2175.0,Poblacion,hotel,4688.0,4,1,Bayawan City,hotel,3,0.6167,3,not_relevant
+2,4760.0,Nangka,hotel,5583.0,2,1,Nangka,hotel,1,0.7336,10,not_relevant
+2,1462.0,Banga,either,3167.0,3,1,Bayawan City,inn,2,0.8765,8,not_relevant
+2,5027.0,Suba,hotel,2371.0,4,1,Banga,inn,2,0.9159,5,relevant
+4,1340.0,Banga,either,1164.0,3,1,Banga,inn,2,0.7978,4,relevant
+3,4084.0,Nangka,hotel,2725.0,4,2,Nangka,inn,1,0.7975,2,relevant
+2,2612.0,Bayawan City,either,763.0,4,1,Banga,inn,3,0.7895,8,relevant
+3,1884.0,Nangka,either,2922.0,1,1,Villareal,inn,2,0.5664,6,not_relevant
+3,2018.0,Banga,either,1733.0,3,0,Banga,inn,2,0.8812,5,relevant
+2,1404.0,Nangka,inn,5494.0,4,1,Nangka,hotel,2,0.6688,4,not_relevant
+2,4098.0,Villareal,either,5073.0,3,2,Villareal,hotel,1,0.941,8,relevant
+2,3868.0,Bayawan City,either,3826.0,6,1,Bayawan City,hotel,1,0.6134,2,relevant
+3,2149.0,Villareal,inn,4650.0,6,1,Poblacion,hotel,1,0.8083,5,not_relevant
+1,1707.0,Bayawan City,hotel,5905.0,4,4,Bayawan City,hotel,1,0.727,4,relevant
+4,3878.0,Bayawan City,hotel,2974.0,5,1,Suba,hotel,3,0.7078,10,relevant
+4,2766.0,Banga,either,4432.0,4,1,Villareal,hotel,4,0.6705,4,not_relevant
+2,1395.0,Nangka,either,5557.0,3,1,Nangka,hotel,1,0.6271,10,relevant
+3,2585.0,Poblacion,inn,4987.0,2,1,Poblacion,hotel,4,0.5304,3,not_relevant
+1,967.0,Villareal,inn,3661.0,4,2,Poblacion,hotel,4,0.8554,1,not_relevant
+2,1947.0,Villareal,inn,4615.0,6,3,Villareal,hotel,4,0.8802,3,relevant
+4,1190.0,Suba,inn,1981.0,6,1,Suba,hotel,3,0.6369,4,relevant
+5,2059.0,Poblacion,inn,1270.0,1,2,Poblacion,inn,4,0.8983,7,relevant
+2,1732.0,Poblacion,inn,5726.0,5,1,Poblacion,hotel,1,0.6797,2,relevant
+3,1091.0,Suba,inn,1660.0,3,0,Suba,inn,1,0.533,5,relevant
+3,1594.0,Poblacion,inn,4677.0,3,3,Poblacion,hotel,2,0.6032,10,not_relevant
+4,3548.0,Suba,either,758.0,1,3,Suba,inn,3,0.8994,2,relevant
+1,3638.0,Poblacion,hotel,2982.0,2,4,Poblacion,hotel,4,0.9564,8,relevant
+1,3097.0,Bayawan City,hotel,3076.0,3,1,Bayawan City,hotel,3,0.6884,1,relevant
+1,3717.0,Nangka,either,1912.0,1,3,Suba,inn,2,0.7652,9,relevant
+1,2355.0,Poblacion,inn,2382.0,4,1,Poblacion,inn,2,0.7838,6,relevant
+2,2370.0,Banga,hotel,965.0,1,1,Bayawan City,inn,2,0.7751,10,not_relevant
+1,2476.0,Bayawan City,inn,2682.0,1,1,Suba,inn,1,0.8401,6,relevant
+1,3628.0,Poblacion,hotel,3093.0,3,2,Villareal,hotel,2,0.9534,1,relevant
+6,1635.0,Bayawan City,inn,4445.0,5,3,Villareal,hotel,2,0.5866,3,not_relevant
+1,2376.0,Villareal,inn,1483.0,4,1,Banga,hotel,2,0.916,5,relevant
+2,1227.0,Bayawan City,inn,1671.0,4,1,Bayawan City,inn,4,0.5513,8,not_relevant
+2,2766.0,Nangka,hotel,3542.0,4,1,Villareal,hotel,1,0.9666,4,relevant
+1,855.0,Bayawan City,inn,2679.0,2,2,Bayawan City,inn,1,0.8092,7,relevant
+2,4747.0,Bayawan City,hotel,3123.0,3,0,Bayawan City,hotel,1,0.6804,3,relevant
+2,2195.0,Poblacion,either,5541.0,3,0,Bayawan City,hotel,1,0.6779,4,not_relevant
+2,2187.0,Poblacion,hotel,4451.0,3,0,Poblacion,hotel,2,0.8107,1,relevant
+1,3304.0,Poblacion,either,1878.0,2,2,Banga,hotel,3,0.9228,2,relevant
+5,4241.0,Bayawan City,hotel,4562.0,6,2,Bayawan City,hotel,2,0.841,4,relevant
+5,3797.0,Villareal,hotel,2321.0,4,2,Villareal,inn,1,0.9896,7,relevant
+2,5088.0,Banga,hotel,3259.0,6,1,Banga,hotel,2,0.9627,4,relevant
+2,4325.0,Villareal,hotel,4667.0,4,1,Suba,hotel,2,0.622,4,relevant
+5,3135.0,Nangka,hotel,1857.0,4,1,Banga,inn,1,0.7751,2,not_relevant
+1,3259.0,Suba,either,1241.0,3,3,Suba,inn,2,0.5312,8,relevant
+3,1317.0,Nangka,inn,2284.0,2,1,Poblacion,inn,1,0.8784,3,not_relevant
+3,1051.0,Suba,inn,1575.0,2,0,Bayawan City,hotel,3,0.6758,1,not_relevant
+1,2486.0,Nangka,either,3984.0,2,2,Nangka,hotel,2,0.6562,3,relevant
+1,2378.0,Poblacion,inn,2696.0,6,2,Poblacion,hotel,2,0.8443,5,relevant
+4,2560.0,Poblacion,either,2536.0,2,1,Bayawan City,inn,1,0.7955,1,relevant
+5,4351.0,Suba,hotel,4216.0,5,4,Suba,hotel,4,0.6033,2,relevant
+5,1897.0,Bayawan City,inn,2080.0,4,1,Banga,hotel,5,0.5275,8,not_relevant
+2,1696.0,Banga,hotel,5410.0,6,1,Banga,hotel,2,0.6437,5,relevant
+1,1728.0,Nangka,hotel,2470.0,6,3,Nangka,hotel,1,0.529,10,relevant
+3,2502.0,Bayawan City,either,5599.0,4,3,Villareal,hotel,3,0.8524,7,not_relevant
+2,4351.0,Poblacion,hotel,2094.0,5,3,Poblacion,hotel,3,0.5308,2,relevant
+1,1057.0,Poblacion,inn,1014.0,2,2,Poblacion,inn,1,0.5531,10,relevant
+3,3884.0,Nangka,either,1168.0,1,1,Bayawan City,inn,3,0.6072,2,relevant
+1,3184.0,Nangka,hotel,4024.0,2,1,Nangka,hotel,3,0.8046,8,relevant
+2,2320.0,Bayawan City,hotel,3019.0,2,3,Bayawan City,hotel,2,0.849,4,relevant
+1,2815.0,Banga,hotel,4777.0,6,1,Poblacion,hotel,1,0.6379,7,not_relevant
+4,1852.0,Nangka,hotel,1914.0,2,3,Nangka,hotel,1,0.5576,7,not_relevant
+2,969.0,Nangka,inn,2931.0,3,3,Nangka,inn,2,0.6941,8,relevant
+3,2145.0,Nangka,inn,2278.0,1,1,Nangka,inn,4,0.7379,7,not_relevant
+1,1997.0,Villareal,inn,2162.0,2,2,Villareal,inn,1,0.7242,1,relevant
+1,1613.0,Poblacion,either,3619.0,5,0,Poblacion,hotel,1,0.91,5,relevant
+2,3596.0,Suba,hotel,1889.0,3,1,Villareal,hotel,1,0.8518,6,relevant
+2,4186.0,Villareal,hotel,2699.0,4,1,Suba,hotel,1,0.7216,10,relevant
+3,3113.0,Nangka,hotel,5607.0,3,1,Nangka,hotel,1,0.8435,6,relevant
+2,3860.0,Villareal,either,1396.0,3,3,Nangka,inn,5,0.9764,10,relevant
+2,1983.0,Poblacion,inn,2692.0,1,1,Poblacion,inn,1,0.5582,6,not_relevant
+2,1831.0,Nangka,inn,2572.0,3,2,Nangka,hotel,2,0.8175,4,not_relevant
+2,3477.0,Poblacion,either,3038.0,4,2,Villareal,hotel,2,0.8044,10,relevant
+2,3332.0,Suba,hotel,644.0,4,1,Banga,inn,1,0.5319,5,relevant
+2,1342.0,Villareal,inn,3032.0,4,1,Poblacion,inn,1,0.7343,5,not_relevant
+5,914.0,Suba,inn,1937.0,1,1,Suba,inn,1,0.7786,7,not_relevant
+4,2027.0,Banga,inn,2916.0,3,0,Banga,inn,2,0.7534,3,not_relevant
+1,3062.0,Poblacion,hotel,4170.0,4,1,Banga,hotel,1,0.7515,2,relevant
+4,2537.0,Villareal,inn,1251.0,2,1,Nangka,inn,4,0.6269,5,not_relevant
+2,1597.0,Nangka,inn,1552.0,1,3,Poblacion,inn,4,0.7553,3,not_relevant
+2,2399.0,Bayawan City,inn,3054.0,1,2,Bayawan City,inn,1,0.751,10,not_relevant
+2,3796.0,Suba,hotel,630.0,2,3,Poblacion,inn,3,0.6449,5,relevant
+1,3208.0,Suba,hotel,1088.0,3,1,Suba,inn,2,0.8819,9,relevant
+1,4613.0,Bayawan City,hotel,3846.0,6,3,Banga,hotel,2,0.9044,10,relevant
+1,2869.0,Suba,hotel,1501.0,2,1,Banga,hotel,1,0.617,6,relevant
+1,3566.0,Villareal,hotel,3737.0,5,2,Villareal,hotel,4,0.8097,2,relevant
+2,3984.0,Bayawan City,either,2926.0,4,4,Poblacion,inn,1,0.6212,6,relevant
+3,4755.0,Bayawan City,hotel,743.0,3,1,Bayawan City,inn,1,0.5766,4,relevant
+1,2864.0,Villareal,either,2974.0,2,1,Villareal,inn,1,0.7455,10,relevant
+1,5001.0,Nangka,hotel,5215.0,5,4,Nangka,hotel,2,0.8286,1,relevant
+4,3749.0,Nangka,either,1713.0,1,1,Nangka,inn,2,0.988,1,relevant
+4,1873.0,Suba,inn,4382.0,2,1,Villareal,hotel,1,0.776,8,not_relevant
+4,2667.0,Suba,either,1312.0,3,1,Suba,inn,5,0.5894,5,relevant
+2,1563.0,Villareal,either,1963.0,3,2,Villareal,inn,2,0.925,9,relevant
+2,5086.0,Nangka,hotel,2542.0,3,2,Nangka,hotel,3,0.5584,7,relevant
+3,3854.0,Bayawan City,hotel,2749.0,4,2,Bayawan City,hotel,3,0.575,8,relevant
+4,2138.0,Villareal,inn,2271.0,2,4,Villareal,inn,1,0.5932,8,not_relevant
+1,1955.0,Suba,inn,1590.0,1,2,Villareal,inn,1,0.7747,4,relevant
+1,1274.0,Bayawan City,either,3476.0,2,1,Bayawan City,hotel,4,0.525,7,relevant
+3,4201.0,Banga,hotel,1743.0,5,4,Banga,hotel,2,0.5346,6,relevant
+3,2437.0,Suba,either,5416.0,6,4,Villareal,hotel,1,0.8768,8,not_relevant
+2,2588.0,Poblacion,hotel,5244.0,4,0,Bayawan City,hotel,1,0.6218,8,not_relevant
+2,2342.0,Nangka,hotel,5194.0,6,1,Suba,hotel,2,0.8272,9,not_relevant
+2,863.0,Villareal,inn,1789.0,2,1,Villareal,inn,2,0.6136,2,relevant
+1,2515.0,Nangka,hotel,1992.0,2,3,Villareal,inn,2,0.6275,8,relevant
+1,796.0,Bayawan City,inn,4988.0,6,2,Bayawan City,hotel,2,0.9419,9,not_relevant
+3,974.0,Bayawan City,inn,1415.0,4,3,Bayawan City,inn,1,0.7583,7,relevant
+3,2827.0,Bayawan City,either,4458.0,3,1,Bayawan City,hotel,5,0.7936,3,not_relevant
+3,3123.0,Banga,hotel,1891.0,2,0,Banga,hotel,2,0.7952,5,not_relevant
+1,2959.0,Poblacion,either,5321.0,5,1,Banga,hotel,1,0.8177,9,not_relevant
+4,2956.0,Poblacion,either,1994.0,2,2,Banga,hotel,1,0.9147,7,relevant
+4,1713.0,Bayawan City,hotel,2977.0,5,2,Poblacion,hotel,4,0.7314,7,not_relevant
+4,4246.0,Villareal,hotel,1610.0,4,1,Villareal,inn,3,0.8019,7,relevant
+2,1850.0,Poblacion,inn,2502.0,4,2,Bayawan City,inn,5,0.6626,6,not_relevant
+2,4447.0,Villareal,hotel,2524.0,6,1,Villareal,hotel,2,0.7704,6,relevant
+2,2927.0,Banga,hotel,3361.0,4,2,Nangka,hotel,1,0.6102,5,relevant
+3,1908.0,Suba,inn,1378.0,2,1,Suba,inn,2,0.6161,6,relevant
+1,1449.0,Nangka,inn,2635.0,3,1,Poblacion,inn,1,0.9583,5,relevant
+5,3210.0,Bayawan City,hotel,1941.0,6,3,Bayawan City,hotel,4,0.9593,8,relevant
+1,3572.0,Villareal,either,5410.0,5,1,Villareal,hotel,1,0.5857,2,relevant
+1,1799.0,Bayawan City,inn,2443.0,6,2,Villareal,hotel,4,0.6163,7,not_relevant
+2,1644.0,Banga,inn,1502.0,2,2,Villareal,inn,2,0.9561,5,relevant
+1,2432.0,Suba,hotel,1542.0,5,1,Suba,hotel,3,0.9005,5,relevant
+1,2502.0,Poblacion,hotel,3911.0,3,2,Poblacion,hotel,2,0.9193,10,relevant
+1,5084.0,Villareal,hotel,3119.0,4,2,Suba,inn,1,0.6164,5,relevant
+2,5033.0,Banga,hotel,2411.0,4,1,Banga,inn,3,0.9134,10,relevant
+2,4528.0,Poblacion,hotel,3781.0,3,1,Poblacion,hotel,4,0.8427,1,relevant
+3,2260.0,Nangka,inn,683.0,3,1,Villareal,inn,3,0.562,7,relevant
+1,4241.0,Banga,hotel,3003.0,6,4,Banga,hotel,1,0.5623,4,relevant
+2,3455.0,Bayawan City,hotel,2620.0,4,3,Bayawan City,hotel,1,0.6277,3,relevant
+3,1880.0,Bayawan City,inn,2844.0,2,1,Bayawan City,inn,1,0.8996,1,not_relevant
+4,2594.0,Bayawan City,inn,2866.0,1,2,Bayawan City,inn,1,0.6355,3,not_relevant
+2,2613.0,Suba,either,1152.0,1,1,Nangka,inn,2,0.6337,3,relevant
+1,4522.0,Villareal,hotel,2026.0,1,2,Villareal,inn,1,0.5839,7,relevant
+3,2149.0,Villareal,inn,3080.0,4,3,Villareal,inn,2,0.766,5,relevant
+3,1922.0,Bayawan City,inn,1073.0,3,1,Bayawan City,inn,1,0.5312,6,relevant
+4,1936.0,Nangka,inn,2223.0,2,1,Villareal,inn,1,0.9447,4,not_relevant
+1,2605.0,Banga,hotel,2592.0,2,3,Suba,hotel,4,0.6958,5,relevant
+2,1165.0,Villareal,either,2832.0,4,1,Villareal,inn,4,0.5252,3,not_relevant
+1,798.0,Bayawan City,inn,2436.0,3,2,Bayawan City,inn,2,0.6735,10,relevant
+4,3729.0,Villareal,either,2844.0,1,2,Suba,inn,2,0.9894,2,relevant
+3,1589.0,Nangka,either,2564.0,4,1,Nangka,hotel,2,0.7054,5,relevant
+1,3348.0,Poblacion,hotel,2840.0,2,4,Poblacion,inn,1,0.5968,2,relevant
+6,1167.0,Poblacion,inn,2055.0,5,2,Poblacion,hotel,1,0.9198,6,not_relevant
+3,2237.0,Nangka,hotel,3685.0,6,2,Nangka,hotel,1,0.7239,1,relevant
+5,2055.0,Nangka,either,2272.0,4,2,Bayawan City,hotel,2,0.934,4,not_relevant
+2,2717.0,Nangka,either,2920.0,4,1,Nangka,inn,1,0.9658,8,relevant
+4,2396.0,Bayawan City,inn,5276.0,3,1,Bayawan City,hotel,1,0.6308,5,not_relevant
+2,1873.0,Suba,inn,3392.0,3,1,Suba,hotel,1,0.7989,6,relevant
+2,1978.0,Nangka,hotel,2644.0,5,0,Nangka,hotel,1,0.657,3,relevant
+3,1376.0,Nangka,inn,3937.0,2,0,Nangka,hotel,2,0.8088,1,not_relevant
+1,2793.0,Villareal,hotel,1987.0,6,3,Suba,hotel,1,0.7373,2,relevant
+3,1731.0,Suba,hotel,2211.0,3,2,Suba,inn,2,0.6886,8,not_relevant
+5,4328.0,Villareal,hotel,4411.0,4,1,Villareal,hotel,1,0.5476,2,relevant
+1,4416.0,Poblacion,hotel,1910.0,3,2,Poblacion,inn,2,0.957,2,relevant
+5,2191.0,Banga,inn,1241.0,1,1,Poblacion,inn,1,0.5347,1,relevant
+5,3441.0,Villareal,hotel,2488.0,4,2,Villareal,hotel,3,0.9703,6,relevant
+1,1606.0,Poblacion,either,1744.0,4,3,Suba,hotel,1,0.7528,10,relevant
+3,3127.0,Bayawan City,hotel,4162.0,6,0,Villareal,hotel,2,0.6148,9,not_relevant
+2,1505.0,Nangka,inn,4963.0,6,2,Nangka,hotel,1,0.7771,10,not_relevant
+3,2643.0,Banga,inn,2309.0,1,3,Banga,inn,2,0.9539,4,relevant
+3,2640.0,Nangka,hotel,4634.0,6,1,Poblacion,hotel,2,0.6242,1,relevant
+2,3307.0,Bayawan City,hotel,1533.0,6,1,Villareal,hotel,4,0.8814,5,relevant
+2,1661.0,Suba,inn,2193.0,1,1,Suba,inn,2,0.5267,4,not_relevant
+1,2292.0,Villareal,hotel,3794.0,4,1,Villareal,hotel,4,0.8627,4,relevant
+1,1197.0,Suba,inn,613.0,2,4,Bayawan City,inn,1,0.9736,5,relevant
+1,1041.0,Suba,inn,2059.0,3,1,Suba,inn,1,0.7763,4,relevant
+1,3738.0,Bayawan City,hotel,2790.0,2,1,Banga,inn,5,0.534,6,relevant
+1,2680.0,Suba,inn,3001.0,2,2,Villareal,inn,1,0.9122,4,relevant
+3,871.0,Villareal,inn,749.0,2,0,Villareal,inn,1,0.8249,6,relevant
+4,3428.0,Villareal,either,1156.0,1,1,Villareal,inn,2,0.5763,6,relevant
+4,859.0,Poblacion,inn,1289.0,3,2,Poblacion,inn,5,0.9034,5,not_relevant
+1,4625.0,Bayawan City,hotel,1828.0,3,1,Villareal,inn,1,0.674,5,relevant
+1,1389.0,Suba,either,1682.0,1,1,Suba,inn,1,0.6198,10,relevant
+4,3964.0,Suba,hotel,3834.0,6,3,Bayawan City,hotel,2,0.9408,2,relevant
+2,2160.0,Villareal,hotel,1464.0,1,2,Villareal,inn,1,0.54,8,relevant
+3,1935.0,Poblacion,hotel,4568.0,3,3,Poblacion,hotel,3,0.8165,2,relevant
+2,1621.0,Poblacion,hotel,3638.0,5,2,Nangka,hotel,3,0.7515,4,not_relevant
+2,2157.0,Villareal,hotel,4713.0,4,1,Villareal,hotel,2,0.637,5,relevant
+1,3261.0,Nangka,hotel,2966.0,2,2,Nangka,hotel,2,0.5764,10,relevant
+3,2493.0,Poblacion,hotel,3665.0,3,4,Bayawan City,hotel,2,0.8571,4,relevant
+1,5158.0,Poblacion,hotel,4420.0,2,1,Poblacion,hotel,2,0.7284,5,relevant
+3,2706.0,Banga,inn,2602.0,2,1,Banga,inn,1,0.7379,7,relevant
+1,2176.0,Villareal,either,2552.0,2,1,Villareal,hotel,3,0.8893,8,relevant
+1,2653.0,Nangka,inn,2199.0,3,1,Nangka,inn,2,0.5281,3,relevant
+5,1796.0,Suba,inn,2118.0,1,2,Suba,inn,1,0.8957,9,not_relevant
+2,4703.0,Bayawan City,hotel,2898.0,3,4,Bayawan City,hotel,1,0.6739,1,relevant
+1,2440.0,Bayawan City,inn,1628.0,3,1,Bayawan City,inn,1,0.8348,7,relevant
+1,2030.0,Villareal,inn,787.0,2,1,Villareal,inn,3,0.6767,9,relevant
+5,2682.0,Bayawan City,either,2070.0,3,1,Bayawan City,hotel,3,0.8401,2,relevant
+2,2650.0,Nangka,hotel,1495.0,2,1,Nangka,hotel,5,0.9382,10,relevant
+4,1780.0,Suba,hotel,2549.0,2,1,Suba,inn,2,0.9553,1,not_relevant
+2,3357.0,Banga,either,2193.0,2,1,Banga,inn,1,0.7815,8,relevant
+2,1342.0,Suba,inn,3318.0,3,2,Suba,hotel,1,0.6129,4,not_relevant
+1,3101.0,Suba,hotel,3854.0,3,1,Suba,hotel,2,0.7427,3,relevant
+1,2467.0,Nangka,hotel,1999.0,3,1,Villareal,hotel,1,0.8489,4,relevant
+5,2555.0,Nangka,inn,1244.0,3,2,Nangka,inn,2,0.9682,4,relevant
+3,1503.0,Banga,inn,4724.0,2,2,Banga,hotel,2,0.9311,2,not_relevant
+5,2663.0,Poblacion,inn,4632.0,2,3,Nangka,hotel,2,0.5448,3,not_relevant
+4,1989.0,Poblacion,either,2807.0,1,1,Nangka,inn,1,0.564,9,not_relevant
+4,1272.0,Bayawan City,inn,3206.0,3,1,Bayawan City,hotel,1,0.5536,8,not_relevant
+3,822.0,Banga,inn,735.0,3,2,Banga,inn,3,0.9256,1,relevant
+1,3569.0,Nangka,hotel,2204.0,3,1,Suba,hotel,4,0.5469,6,relevant
+2,3064.0,Poblacion,either,3774.0,2,2,Villareal,hotel,1,0.7765,2,not_relevant
+5,1316.0,Banga,inn,1319.0,1,1,Banga,inn,2,0.6676,1,relevant
+1,1706.0,Bayawan City,inn,2147.0,3,1,Bayawan City,inn,1,0.6493,9,not_relevant
+2,2917.0,Villareal,hotel,4427.0,3,1,Villareal,hotel,3,0.6964,10,not_relevant
+2,2154.0,Bayawan City,inn,669.0,4,2,Bayawan City,inn,4,0.6068,9,relevant
+4,3876.0,Bayawan City,hotel,1440.0,2,1,Villareal,hotel,3,0.7773,3,relevant
+4,3653.0,Poblacion,either,1925.0,6,1,Poblacion,hotel,2,0.8474,3,relevant
+3,3269.0,Suba,hotel,4061.0,4,3,Suba,hotel,3,0.6931,3,relevant
+1,2298.0,Banga,inn,1794.0,1,3,Villareal,inn,2,0.6867,3,relevant
+4,2092.0,Bayawan City,inn,2931.0,4,4,Bayawan City,hotel,4,0.8343,1,not_relevant
+5,4762.0,Banga,hotel,1525.0,1,1,Banga,inn,2,0.7638,9,relevant
+4,4359.0,Poblacion,hotel,4635.0,2,2,Poblacion,hotel,5,0.6322,5,not_relevant
+2,4503.0,Banga,hotel,1100.0,3,1,Banga,inn,1,0.5623,2,relevant
+3,1687.0,Bayawan City,inn,3477.0,2,1,Bayawan City,inn,1,0.8227,7,not_relevant
+5,4718.0,Bayawan City,hotel,5536.0,6,1,Poblacion,hotel,5,0.5648,7,not_relevant
+1,1854.0,Nangka,either,708.0,2,4,Bayawan City,inn,1,0.6773,2,relevant
+3,2634.0,Suba,inn,5474.0,4,1,Poblacion,hotel,1,0.5763,10,not_relevant
+2,2148.0,Suba,hotel,1874.0,4,0,Villareal,hotel,2,0.9293,2,relevant
+2,2104.0,Banga,inn,708.0,4,2,Banga,inn,2,0.903,3,relevant
+2,2983.0,Poblacion,hotel,5056.0,4,3,Poblacion,hotel,2,0.5811,5,relevant
+4,1973.0,Banga,either,5433.0,4,1,Banga,hotel,5,0.7641,1,relevant
+4,1532.0,Bayawan City,inn,2079.0,1,1,Banga,inn,4,0.9045,2,not_relevant
+4,2318.0,Bayawan City,hotel,3190.0,2,1,Bayawan City,hotel,1,0.7593,7,not_relevant
+3,1563.0,Villareal,inn,2748.0,2,1,Villareal,inn,5,0.6338,2,not_relevant
+2,5134.0,Villareal,hotel,2518.0,5,1,Banga,hotel,1,0.8088,6,relevant
+4,3108.0,Nangka,hotel,1931.0,6,2,Suba,hotel,1,0.9594,3,relevant
+3,2239.0,Poblacion,inn,1814.0,4,2,Poblacion,inn,3,0.5621,8,relevant
+5,2201.0,Suba,hotel,1953.0,2,1,Suba,inn,3,0.7877,5,relevant
+4,2205.0,Poblacion,either,1178.0,2,1,Poblacion,inn,2,0.7117,1,relevant
+2,1125.0,Villareal,either,5230.0,5,1,Villareal,hotel,4,0.7644,4,relevant
+5,771.0,Banga,inn,1766.0,2,3,Banga,inn,5,0.9814,2,not_relevant
+4,2363.0,Bayawan City,inn,3018.0,2,1,Bayawan City,inn,1,0.5639,5,not_relevant
+4,2673.0,Nangka,inn,2869.0,1,2,Nangka,inn,1,0.8994,4,not_relevant
+1,3232.0,Bayawan City,hotel,3217.0,3,2,Bayawan City,inn,1,0.6478,9,relevant
+2,3734.0,Poblacion,either,2704.0,1,1,Poblacion,inn,4,0.9893,2,relevant
+3,2371.0,Poblacion,either,1741.0,6,1,Poblacion,hotel,1,0.5576,5,relevant
+4,2402.0,Bayawan City,hotel,5031.0,6,2,Bayawan City,hotel,1,0.6236,6,relevant
+2,4525.0,Villareal,hotel,5078.0,2,2,Villareal,hotel,3,0.8356,7,relevant
+3,3174.0,Bayawan City,hotel,1790.0,5,4,Suba,hotel,2,0.5514,10,relevant
+1,2412.0,Nangka,hotel,1430.0,2,1,Nangka,inn,1,0.6882,6,relevant
+2,3501.0,Villareal,hotel,1203.0,1,3,Villareal,inn,2,0.8034,2,relevant
+1,3836.0,Poblacion,hotel,2948.0,4,4,Villareal,inn,1,0.6226,4,relevant
+3,2023.0,Banga,inn,1097.0,2,1,Banga,inn,1,0.7226,2,relevant
+1,3788.0,Nangka,hotel,2287.0,5,3,Nangka,hotel,3,0.8336,8,relevant
+4,3796.0,Poblacion,hotel,3093.0,6,1,Poblacion,hotel,4,0.6007,7,relevant
+2,1648.0,Nangka,inn,2809.0,4,1,Villareal,inn,1,0.6033,9,not_relevant
+2,3618.0,Poblacion,hotel,4911.0,2,3,Poblacion,hotel,1,0.8491,8,relevant
+4,2495.0,Villareal,either,1418.0,2,1,Villareal,hotel,2,0.6048,3,relevant
+3,4783.0,Villareal,hotel,4144.0,2,1,Villareal,hotel,1,0.7103,5,relevant
+3,3925.0,Poblacion,hotel,4659.0,4,2,Poblacion,hotel,4,0.7976,9,relevant
+4,2248.0,Suba,hotel,2439.0,2,0,Suba,hotel,1,0.9672,1,not_relevant
+3,3678.0,Villareal,hotel,1795.0,3,2,Nangka,inn,1,0.6787,10,relevant
+2,846.0,Nangka,inn,2979.0,4,1,Nangka,inn,4,0.7304,7,relevant
+3,2258.0,Poblacion,inn,2038.0,4,0,Poblacion,hotel,2,0.7526,8,relevant
+2,4543.0,Suba,hotel,2660.0,5,1,Suba,hotel,2,0.7521,4,relevant
+2,1672.0,Nangka,inn,2347.0,2,3,Nangka,inn,2,0.8751,6,relevant
+1,1387.0,Villareal,inn,1745.0,1,1,Villareal,inn,3,0.6461,6,relevant
+2,1460.0,Villareal,inn,1610.0,3,1,Villareal,inn,2,0.918,10,relevant
+5,1422.0,Poblacion,either,4186.0,6,1,Poblacion,hotel,2,0.6077,6,relevant
+2,1403.0,Poblacion,inn,4706.0,6,3,Villareal,hotel,1,0.6814,4,not_relevant
+3,2198.0,Suba,inn,705.0,3,1,Suba,inn,1,0.9663,7,relevant
+4,1631.0,Villareal,hotel,2990.0,3,1,Banga,hotel,2,0.9074,9,not_relevant
+1,3383.0,Suba,either,1566.0,3,0,Suba,inn,3,0.7054,4,relevant
+1,3099.0,Banga,hotel,3156.0,3,1,Banga,hotel,3,0.5658,9,relevant
+5,4455.0,Bayawan City,hotel,2293.0,3,1,Villareal,hotel,3,0.5365,2,relevant
+2,1239.0,Bayawan City,inn,2557.0,1,0,Nangka,inn,1,0.917,4,not_relevant
+3,2704.0,Poblacion,either,1878.0,5,4,Villareal,hotel,3,0.758,10,relevant
+2,3689.0,Banga,hotel,4163.0,4,4,Poblacion,hotel,4,0.7744,5,relevant
+2,1227.0,Banga,inn,3894.0,6,4,Nangka,hotel,4,0.9018,2,not_relevant
+1,3125.0,Bayawan City,hotel,3280.0,4,2,Poblacion,hotel,4,0.9705,2,relevant
+1,2327.0,Bayawan City,either,1992.0,1,1,Villareal,inn,2,0.7811,7,relevant
+2,4139.0,Suba,hotel,6012.0,6,3,Suba,hotel,5,0.7188,4,relevant
+1,1231.0,Banga,inn,2100.0,1,4,Banga,inn,3,0.6553,6,relevant
+4,5025.0,Poblacion,hotel,1915.0,3,1,Bayawan City,hotel,2,0.8146,1,relevant
+2,2255.0,Bayawan City,hotel,3070.0,5,1,Bayawan City,hotel,1,0.8805,3,relevant
+2,1766.0,Poblacion,inn,2087.0,3,2,Villareal,inn,1,0.6981,3,relevant
+4,2566.0,Suba,either,3375.0,5,1,Suba,hotel,2,0.8576,3,relevant
+2,1462.0,Villareal,inn,719.0,2,1,Poblacion,inn,1,0.9689,10,relevant
+4,1908.0,Poblacion,hotel,3883.0,6,1,Suba,hotel,2,0.9415,4,relevant
+1,2692.0,Suba,hotel,2311.0,3,1,Nangka,inn,3,0.8664,8,relevant
+1,2669.0,Banga,hotel,1639.0,3,4,Banga,inn,2,0.6048,2,relevant
+3,1286.0,Villareal,either,1489.0,4,2,Villareal,inn,2,0.948,9,relevant
+5,2595.0,Banga,hotel,2985.0,6,2,Banga,hotel,5,0.8928,3,relevant
+1,1786.0,Suba,inn,5405.0,2,3,Suba,hotel,4,0.7566,9,not_relevant
+3,2356.0,Nangka,hotel,3339.0,4,2,Banga,hotel,1,0.8954,1,relevant
+2,1667.0,Bayawan City,inn,4577.0,4,2,Bayawan City,hotel,3,0.6707,10,not_relevant
+5,1693.0,Poblacion,hotel,1211.0,1,2,Nangka,inn,1,0.8722,10,not_relevant
+4,1832.0,Banga,hotel,3008.0,3,2,Banga,hotel,5,0.6189,2,not_relevant
+3,2073.0,Poblacion,hotel,1991.0,2,2,Poblacion,inn,3,0.7128,8,relevant
+1,3249.0,Nangka,hotel,2448.0,5,0,Nangka,hotel,2,0.7299,1,relevant
+5,851.0,Villareal,inn,3805.0,3,2,Poblacion,hotel,2,0.6179,6,not_relevant
+1,2321.0,Nangka,hotel,2222.0,4,1,Suba,hotel,1,0.841,9,relevant
+2,2214.0,Bayawan City,hotel,3748.0,3,0,Bayawan City,hotel,3,0.8493,4,relevant
+4,3931.0,Bayawan City,either,2930.0,2,2,Poblacion,inn,1,0.7534,10,not_relevant
+1,3851.0,Bayawan City,hotel,1937.0,3,1,Bayawan City,inn,3,0.6196,3,relevant
+6,2730.0,Poblacion,either,1104.0,1,1,Poblacion,inn,1,0.6506,8,relevant
+2,2388.0,Nangka,inn,1534.0,1,1,Villareal,inn,3,0.8255,9,relevant
+2,1732.0,Poblacion,hotel,3445.0,4,0,Bayawan City,hotel,1,0.9468,6,not_relevant
+2,965.0,Nangka,inn,4438.0,4,2,Nangka,hotel,5,0.654,6,not_relevant
+4,2778.0,Bayawan City,either,1806.0,5,0,Bayawan City,hotel,1,0.5776,9,relevant
+1,2131.0,Villareal,either,968.0,4,1,Villareal,inn,1,0.7629,1,relevant
+4,2103.0,Poblacion,inn,849.0,1,1,Poblacion,inn,1,0.5678,8,relevant
+2,2715.0,Bayawan City,inn,1829.0,3,1,Villareal,inn,2,0.8509,2,relevant
+2,1739.0,Suba,inn,2632.0,4,0,Banga,inn,1,0.6769,1,relevant
+4,2041.0,Suba,either,2391.0,4,1,Suba,inn,1,0.795,6,relevant
+1,2650.0,Villareal,either,2299.0,3,1,Villareal,inn,1,0.5317,10,relevant
+1,1752.0,Villareal,hotel,1560.0,4,1,Villareal,hotel,1,0.5519,9,relevant
+1,969.0,Nangka,inn,3994.0,3,2,Suba,hotel,1,0.8062,10,not_relevant
+4,1616.0,Suba,inn,866.0,4,1,Villareal,inn,2,0.9024,2,relevant
+1,1874.0,Villareal,inn,801.0,4,1,Bayawan City,inn,2,0.6297,4,relevant
+3,2784.0,Nangka,hotel,2333.0,6,4,Suba,hotel,2,0.5515,1,relevant
+1,3711.0,Nangka,hotel,2487.0,1,1,Nangka,inn,1,0.713,2,relevant
+1,1663.0,Nangka,inn,2112.0,1,2,Banga,inn,3,0.7611,10,not_relevant
+6,3993.0,Poblacion,either,2801.0,1,1,Bayawan City,inn,2,0.9561,5,relevant
+2,1658.0,Suba,either,1092.0,2,1,Banga,inn,4,0.7653,6,relevant
+5,1852.0,Suba,hotel,705.0,2,0,Suba,inn,2,0.8333,8,not_relevant
+3,4731.0,Suba,hotel,2088.0,2,1,Suba,hotel,2,0.6471,10,relevant
+3,2654.0,Suba,inn,804.0,4,2,Suba,inn,1,0.6416,2,relevant
+2,1425.0,Banga,inn,2596.0,2,3,Banga,inn,2,0.6253,9,relevant
+4,2344.0,Villareal,hotel,1799.0,4,3,Villareal,inn,4,0.9125,5,relevant
+2,1321.0,Suba,inn,865.0,3,1,Suba,inn,1,0.5869,7,relevant
+2,1601.0,Nangka,hotel,2658.0,2,4,Nangka,inn,3,0.7713,5,relevant
+2,1319.0,Villareal,inn,2759.0,4,2,Villareal,inn,2,0.9115,10,relevant
+4,3065.0,Bayawan City,hotel,3056.0,2,1,Bayawan City,inn,3,0.8559,4,relevant
+6,2642.0,Bayawan City,hotel,4031.0,2,1,Bayawan City,hotel,1,0.9477,1,not_relevant
+1,2756.0,Villareal,either,1902.0,1,3,Villareal,inn,2,0.5333,5,relevant
+5,4763.0,Nangka,hotel,2438.0,2,2,Nangka,hotel,2,0.8163,9,relevant
+3,2112.0,Villareal,either,926.0,1,1,Villareal,inn,3,0.89,2,relevant
+2,1719.0,Nangka,inn,4642.0,5,1,Nangka,hotel,1,0.6991,9,not_relevant
+6,1453.0,Banga,either,2416.0,2,2,Banga,hotel,2,0.9171,1,not_relevant
+2,2943.0,Villareal,either,2043.0,2,1,Bayawan City,hotel,3,0.9113,4,relevant
+2,1109.0,Poblacion,inn,3529.0,3,2,Poblacion,hotel,1,0.5431,1,relevant
+6,1432.0,Poblacion,inn,792.0,3,1,Poblacion,inn,1,0.8892,5,relevant
+2,1773.0,Villareal,inn,1766.0,4,3,Villareal,inn,1,0.7503,6,relevant
+4,1487.0,Villareal,inn,2674.0,2,2,Banga,inn,1,0.634,3,not_relevant
+4,4469.0,Villareal,hotel,3769.0,4,0,Poblacion,hotel,1,0.8037,6,relevant
+4,1716.0,Nangka,either,2646.0,2,4,Nangka,hotel,3,0.9732,7,not_relevant
+1,1124.0,Poblacion,inn,923.0,1,1,Nangka,inn,3,0.5634,2,relevant
+2,1245.0,Banga,either,625.0,4,4,Banga,inn,1,0.7967,8,relevant
+4,2167.0,Suba,inn,2418.0,2,3,Suba,inn,4,0.7297,5,not_relevant
+2,4591.0,Poblacion,hotel,2308.0,3,0,Poblacion,hotel,2,0.8656,4,relevant
+2,1796.0,Nangka,hotel,5178.0,6,4,Nangka,hotel,2,0.9822,6,relevant
+4,2928.0,Nangka,hotel,3474.0,6,2,Nangka,hotel,4,0.5348,1,relevant
+2,5162.0,Banga,hotel,3012.0,3,0,Banga,hotel,1,0.5925,4,relevant
+3,3446.0,Suba,hotel,2395.0,1,3,Villareal,inn,1,0.6342,4,not_relevant
+1,1395.0,Villareal,inn,898.0,4,1,Villareal,inn,1,0.5486,9,relevant
+2,835.0,Poblacion,inn,2183.0,2,2,Villareal,inn,3,0.6727,4,relevant
+2,1048.0,Poblacion,either,1692.0,4,3,Poblacion,hotel,3,0.7619,2,relevant
+1,3014.0,Banga,hotel,2811.0,5,1,Banga,hotel,2,0.643,6,relevant
+2,1890.0,Suba,either,5089.0,6,2,Bayawan City,hotel,2,0.8216,1,relevant
+3,3198.0,Banga,either,2469.0,2,1,Banga,inn,1,0.8656,9,relevant
+4,1953.0,Suba,inn,1888.0,1,2,Suba,inn,3,0.6489,2,relevant
+2,4510.0,Bayawan City,hotel,3469.0,5,1,Nangka,hotel,1,0.9109,4,relevant
+4,1161.0,Poblacion,inn,2851.0,2,1,Poblacion,inn,3,0.6187,10,not_relevant
+5,1596.0,Nangka,either,1255.0,2,0,Nangka,inn,1,0.5277,1,relevant
+1,4350.0,Bayawan City,hotel,5339.0,6,1,Bayawan City,hotel,2,0.609,5,relevant
+3,4261.0,Nangka,hotel,3398.0,4,1,Nangka,hotel,2,0.8895,1,relevant
+1,2373.0,Suba,inn,3991.0,4,2,Suba,hotel,1,0.8647,4,relevant
+4,2049.0,Poblacion,inn,4506.0,4,0,Poblacion,hotel,1,0.7249,1,relevant
+5,2219.0,Bayawan City,inn,1825.0,4,2,Bayawan City,inn,3,0.9838,4,relevant
+5,2701.0,Villareal,hotel,5659.0,6,0,Villareal,hotel,3,0.7221,4,relevant
+3,3190.0,Suba,hotel,5161.0,3,2,Nangka,hotel,2,0.7237,9,not_relevant
+3,3516.0,Villareal,either,897.0,4,1,Villareal,inn,2,0.6906,3,relevant
+1,1243.0,Bayawan City,inn,4935.0,2,3,Banga,hotel,3,0.7336,6,not_relevant
+2,723.0,Poblacion,inn,2941.0,1,1,Poblacion,inn,1,0.6898,8,not_relevant
+3,2999.0,Villareal,either,3831.0,3,1,Villareal,hotel,1,0.8363,9,relevant
+5,1790.0,Suba,inn,1325.0,4,1,Villareal,inn,2,0.6771,8,relevant
+2,2031.0,Banga,hotel,2867.0,2,1,Villareal,inn,1,0.9117,8,not_relevant
+1,3635.0,Bayawan City,hotel,1400.0,4,2,Banga,hotel,1,0.5498,1,relevant
+1,1865.0,Villareal,either,1157.0,2,3,Villareal,inn,5,0.5966,9,relevant
+1,4270.0,Banga,hotel,3131.0,6,2,Banga,hotel,1,0.987,3,relevant
+1,3303.0,Banga,either,2277.0,4,1,Banga,hotel,1,0.9166,3,relevant
+2,4646.0,Bayawan City,hotel,2603.0,1,3,Bayawan City,inn,2,0.584,10,not_relevant
+1,1750.0,Suba,inn,2109.0,5,2,Suba,hotel,1,0.8486,6,not_relevant
+3,1573.0,Suba,inn,4776.0,6,2,Suba,hotel,1,0.88,8,not_relevant
+1,1528.0,Nangka,inn,3946.0,5,1,Nangka,hotel,4,0.5367,2,not_relevant
+2,1881.0,Nangka,hotel,2518.0,2,1,Nangka,inn,4,0.7258,6,not_relevant
+1,3235.0,Poblacion,either,5285.0,4,1,Poblacion,hotel,2,0.9852,4,relevant
+2,2302.0,Suba,either,1533.0,2,4,Suba,inn,4,0.7108,5,relevant
+3,3074.0,Villareal,hotel,5078.0,5,2,Banga,hotel,1,0.9716,6,not_relevant
+2,2029.0,Bayawan City,inn,1460.0,3,2,Bayawan City,inn,3,0.5678,10,relevant
+1,1582.0,Villareal,either,1945.0,1,2,Suba,inn,3,0.8405,8,not_relevant
+3,1990.0,Bayawan City,inn,1697.0,2,1,Bayawan City,inn,1,0.9397,1,relevant
+5,2246.0,Suba,hotel,2310.0,1,2,Suba,inn,1,0.5722,6,not_relevant
+2,831.0,Banga,inn,2394.0,3,1,Nangka,inn,4,0.5669,8,not_relevant
+5,4360.0,Suba,hotel,4399.0,6,3,Suba,hotel,2,0.5426,2,relevant
+1,2085.0,Poblacion,hotel,1424.0,6,1,Bayawan City,hotel,1,0.9328,1,relevant
+2,1606.0,Banga,inn,1979.0,1,2,Banga,inn,1,0.6888,9,not_relevant
+1,1889.0,Suba,hotel,2265.0,5,1,Suba,hotel,4,0.8227,1,relevant
+2,3555.0,Suba,hotel,2132.0,4,3,Suba,inn,5,0.6455,9,relevant
+4,2235.0,Nangka,inn,3544.0,4,1,Nangka,hotel,1,0.6771,3,not_relevant
+1,2882.0,Bayawan City,hotel,3789.0,5,1,Bayawan City,hotel,1,0.6397,9,relevant
+1,1960.0,Suba,inn,1955.0,2,3,Poblacion,inn,1,0.7885,1,relevant
+1,3090.0,Bayawan City,either,1814.0,4,3,Bayawan City,inn,1,0.7045,7,relevant
+5,2968.0,Banga,hotel,2904.0,4,1,Villareal,inn,5,0.6719,8,not_relevant
+2,3218.0,Nangka,hotel,2311.0,3,1,Nangka,hotel,2,0.8947,3,relevant
+2,1701.0,Suba,hotel,2759.0,5,1,Suba,hotel,3,0.6261,3,relevant
+3,4571.0,Nangka,hotel,2800.0,6,0,Bayawan City,hotel,4,0.8893,9,relevant
+1,4165.0,Nangka,either,1059.0,1,1,Nangka,inn,1,0.7788,9,relevant
+1,2563.0,Villareal,either,2877.0,1,1,Suba,inn,3,0.9511,6,relevant
+6,2782.0,Poblacion,inn,2983.0,2,1,Poblacion,inn,2,0.9719,6,not_relevant
+3,2265.0,Suba,hotel,1791.0,5,1,Suba,hotel,1,0.8139,3,relevant
+1,3595.0,Poblacion,hotel,3683.0,4,2,Poblacion,hotel,4,0.8715,9,relevant
+1,3757.0,Suba,either,1118.0,1,2,Suba,inn,1,0.98,4,relevant
+2,1220.0,Poblacion,inn,1489.0,3,1,Poblacion,inn,4,0.7566,3,relevant
+3,2410.0,Villareal,either,3290.0,2,1,Villareal,hotel,2,0.9445,7,not_relevant
+6,2402.0,Bayawan City,inn,903.0,1,1,Banga,inn,1,0.5392,10,relevant
+4,1715.0,Poblacion,inn,3958.0,4,1,Poblacion,hotel,1,0.8967,2,relevant
+2,5045.0,Suba,hotel,4821.0,4,3,Suba,hotel,2,0.7001,1,relevant
+2,3380.0,Suba,either,3750.0,4,2,Banga,hotel,3,0.8283,5,relevant
+4,3924.0,Nangka,hotel,2307.0,2,1,Nangka,inn,2,0.7332,3,relevant
+5,2486.0,Bayawan City,hotel,4766.0,4,3,Bayawan City,hotel,3,0.8469,9,not_relevant
+5,4610.0,Suba,hotel,5438.0,6,2,Suba,hotel,2,0.8678,2,relevant
+3,4396.0,Banga,hotel,4515.0,6,1,Bayawan City,hotel,1,0.8983,6,relevant
+4,2193.0,Banga,inn,3332.0,2,1,Poblacion,hotel,1,0.9662,4,not_relevant
+2,2231.0,Nangka,inn,1693.0,1,1,Suba,inn,2,0.9506,7,relevant
+3,4556.0,Villareal,hotel,4148.0,4,1,Villareal,hotel,1,0.7852,6,relevant
+2,3364.0,Nangka,hotel,3109.0,2,1,Nangka,hotel,1,0.6939,5,relevant
+2,1759.0,Suba,either,2234.0,3,2,Banga,inn,1,0.7906,6,not_relevant
+4,1559.0,Poblacion,either,3362.0,4,2,Poblacion,hotel,5,0.6053,5,not_relevant
+3,1644.0,Nangka,either,4803.0,3,2,Suba,hotel,1,0.9365,6,not_relevant
+4,1427.0,Villareal,either,1978.0,3,2,Villareal,hotel,1,0.9063,9,not_relevant
+1,2750.0,Banga,hotel,4007.0,6,1,Suba,hotel,1,0.8674,5,not_relevant
+4,1199.0,Villareal,either,2321.0,5,2,Villareal,hotel,1,0.845,1,relevant
+2,2140.0,Poblacion,hotel,4922.0,5,1,Poblacion,hotel,1,0.5216,8,relevant
+4,1700.0,Nangka,hotel,2105.0,1,1,Poblacion,inn,2,0.5371,1,not_relevant
+2,2596.0,Nangka,inn,1511.0,3,2,Nangka,inn,1,0.8454,10,relevant
+2,1143.0,Suba,either,1412.0,2,1,Bayawan City,inn,1,0.685,6,not_relevant
+3,1708.0,Nangka,inn,2299.0,4,4,Nangka,inn,1,0.9475,4,relevant
+3,4071.0,Villareal,hotel,3113.0,6,3,Villareal,hotel,2,0.8875,4,relevant
+1,1975.0,Suba,hotel,1801.0,5,1,Suba,hotel,2,0.8054,7,relevant
+2,1657.0,Poblacion,hotel,5425.0,2,1,Banga,hotel,1,0.8231,6,relevant
+3,3892.0,Suba,either,2134.0,3,1,Suba,hotel,3,0.9538,7,relevant
+2,1236.0,Villareal,inn,1790.0,3,4,Villareal,inn,5,0.5866,3,not_relevant
+2,2117.0,Bayawan City,inn,2894.0,2,4,Villareal,inn,3,0.5925,10,not_relevant
+5,1234.0,Poblacion,either,2698.0,4,2,Poblacion,inn,5,0.6946,4,not_relevant
+4,1873.0,Nangka,hotel,1069.0,2,1,Villareal,inn,1,0.6496,8,not_relevant
+4,2926.0,Poblacion,hotel,2616.0,6,0,Villareal,hotel,2,0.8841,4,relevant
+2,2196.0,Banga,inn,2655.0,4,1,Banga,inn,2,0.6697,6,relevant
+1,994.0,Nangka,inn,2034.0,4,3,Nangka,hotel,1,0.6477,7,not_relevant
+1,2546.0,Villareal,inn,2841.0,3,2,Villareal,inn,1,0.9013,1,relevant
+3,1993.0,Nangka,hotel,1156.0,4,1,Nangka,inn,1,0.7886,4,relevant
+3,3262.0,Villareal,hotel,748.0,4,1,Villareal,inn,1,0.7204,3,relevant
+3,3485.0,Poblacion,hotel,1989.0,1,4,Poblacion,inn,2,0.8249,8,relevant
+5,2431.0,Poblacion,hotel,2344.0,4,2,Nangka,hotel,2,0.6745,7,not_relevant
+1,1592.0,Suba,either,1187.0,1,0,Suba,inn,3,0.7486,6,relevant
+2,1004.0,Villareal,either,1174.0,1,1,Banga,inn,2,0.6639,7,not_relevant
+3,1064.0,Banga,inn,2319.0,3,1,Banga,inn,1,0.6408,1,relevant
+1,4627.0,Banga,hotel,4563.0,6,4,Suba,hotel,2,0.6076,10,relevant
+1,2512.0,Suba,hotel,2370.0,4,1,Suba,inn,2,0.6042,1,relevant
+2,1920.0,Villareal,hotel,3972.0,3,3,Villareal,hotel,2,0.915,9,relevant
+2,2053.0,Banga,inn,1672.0,3,3,Banga,inn,1,0.6645,4,relevant
+3,4684.0,Suba,hotel,3549.0,2,3,Suba,inn,1,0.7319,10,not_relevant
+4,1598.0,Banga,either,1787.0,2,1,Banga,inn,1,0.8601,8,not_relevant
+3,1108.0,Nangka,inn,3441.0,4,1,Suba,hotel,5,0.7294,10,not_relevant
+2,2389.0,Bayawan City,hotel,1775.0,3,2,Bayawan City,inn,1,0.8962,8,relevant
+2,1946.0,Bayawan City,inn,2162.0,4,1,Bayawan City,inn,2,0.5457,10,relevant
+1,2365.0,Bayawan City,either,2211.0,4,1,Bayawan City,inn,2,0.6755,4,relevant
+2,1594.0,Bayawan City,inn,881.0,1,1,Bayawan City,inn,1,0.847,5,relevant
+1,2814.0,Suba,hotel,3211.0,3,1,Suba,hotel,2,0.5357,3,relevant
+3,2833.0,Banga,hotel,3300.0,2,2,Banga,hotel,2,0.8873,7,not_relevant
+3,3930.0,Nangka,hotel,3698.0,3,2,Nangka,hotel,1,0.8239,2,relevant
+6,2451.0,Villareal,hotel,4225.0,4,1,Villareal,hotel,3,0.9652,6,not_relevant
+2,4078.0,Banga,either,1979.0,4,2,Banga,inn,3,0.6145,4,relevant
+1,3949.0,Bayawan City,hotel,1590.0,4,0,Bayawan City,inn,1,0.6392,4,relevant
+2,3392.0,Nangka,hotel,4896.0,2,1,Villareal,hotel,2,0.6833,10,not_relevant
+2,1920.0,Poblacion,hotel,2817.0,2,2,Poblacion,hotel,2,0.9036,5,relevant
+2,1878.0,Poblacion,hotel,2001.0,5,1,Poblacion,hotel,1,0.6576,3,relevant
+4,4588.0,Nangka,hotel,1016.0,4,1,Nangka,inn,2,0.6709,8,relevant
+5,3182.0,Suba,hotel,2073.0,1,2,Poblacion,inn,1,0.5924,8,not_relevant
+2,2105.0,Bayawan City,inn,2178.0,1,1,Bayawan City,inn,3,0.8606,9,not_relevant
+4,4853.0,Poblacion,hotel,3069.0,2,1,Poblacion,hotel,1,0.7352,9,relevant
+4,1804.0,Nangka,hotel,2005.0,6,0,Nangka,hotel,3,0.846,5,relevant
+6,3844.0,Banga,either,2315.0,3,2,Banga,inn,4,0.7522,2,relevant
+2,2344.0,Villareal,hotel,2739.0,5,0,Poblacion,hotel,3,0.5878,3,not_relevant
+3,2399.0,Banga,hotel,1412.0,3,2,Banga,hotel,1,0.6584,5,relevant
+2,2354.0,Suba,either,1496.0,6,1,Villareal,hotel,1,0.5249,3,relevant
+3,1476.0,Nangka,inn,5071.0,4,2,Nangka,hotel,4,0.7208,7,not_relevant
+2,3452.0,Nangka,hotel,2639.0,2,2,Nangka,inn,1,0.7866,6,relevant
+4,1713.0,Suba,hotel,4421.0,3,3,Suba,hotel,1,0.575,5,not_relevant
+1,2293.0,Villareal,either,2982.0,3,1,Villareal,inn,2,0.8235,3,relevant
+2,1761.0,Poblacion,inn,3153.0,3,2,Poblacion,inn,2,0.6114,2,relevant
+3,4485.0,Bayawan City,hotel,3114.0,3,1,Bayawan City,hotel,3,0.9664,2,relevant
+4,3804.0,Suba,hotel,2658.0,4,1,Suba,hotel,2,0.66,7,relevant
+2,1966.0,Banga,inn,1851.0,4,3,Banga,inn,2,0.8935,1,relevant
+2,2284.0,Villareal,either,2733.0,2,2,Villareal,inn,1,0.6524,7,relevant
+3,1913.0,Bayawan City,inn,3048.0,3,2,Bayawan City,hotel,2,0.6042,3,not_relevant
+3,2488.0,Bayawan City,hotel,2323.0,6,1,Bayawan City,hotel,2,0.8831,10,relevant
+4,4008.0,Suba,hotel,3674.0,5,1,Suba,hotel,2,0.8482,9,relevant
+1,708.0,Villareal,inn,1434.0,2,1,Villareal,inn,1,0.6109,6,relevant
+4,2000.0,Nangka,either,3324.0,4,0,Nangka,hotel,1,0.9547,3,relevant
+1,2470.0,Suba,inn,1271.0,4,2,Bayawan City,inn,3,0.9232,4,relevant
+2,1578.0,Suba,inn,5362.0,3,2,Suba,hotel,2,0.9351,2,relevant
+2,2777.0,Villareal,either,2861.0,2,2,Villareal,inn,1,0.6092,2,relevant
+1,2130.0,Poblacion,inn,1365.0,2,1,Banga,inn,2,0.7683,2,relevant
+5,3019.0,Nangka,either,2301.0,4,1,Nangka,inn,2,0.908,6,relevant
+3,1713.0,Suba,inn,2014.0,4,1,Suba,hotel,2,0.5749,7,relevant
+4,1924.0,Suba,inn,2033.0,2,1,Suba,inn,2,0.8497,3,relevant
+1,1085.0,Suba,inn,2533.0,4,1,Suba,hotel,2,0.7858,10,relevant
+3,4729.0,Banga,hotel,5040.0,2,3,Banga,hotel,2,0.5306,10,not_relevant
+6,957.0,Villareal,inn,4987.0,4,1,Villareal,hotel,1,0.78,1,not_relevant
+3,2764.0,Banga,hotel,4722.0,6,4,Banga,hotel,1,0.8969,10,relevant
+5,2444.0,Banga,hotel,4665.0,4,2,Nangka,hotel,2,0.5702,9,not_relevant
+1,2315.0,Banga,inn,640.0,2,1,Banga,inn,3,0.5971,1,relevant
+5,1433.0,Banga,inn,1708.0,1,1,Banga,inn,2,0.5203,4,not_relevant
+2,2640.0,Nangka,inn,1672.0,2,3,Banga,inn,3,0.7801,2,relevant
+1,1188.0,Villareal,either,4225.0,3,2,Bayawan City,hotel,3,0.5679,7,relevant
+5,2286.0,Poblacion,inn,2032.0,3,2,Poblacion,inn,1,0.98,8,relevant
+2,3953.0,Villareal,either,1559.0,5,1,Villareal,hotel,1,0.5347,1,relevant
+2,2841.0,Nangka,hotel,3868.0,4,3,Nangka,hotel,1,0.8327,5,relevant
+5,1280.0,Banga,inn,2998.0,5,1,Banga,hotel,2,0.5844,8,relevant
+1,1582.0,Poblacion,inn,1807.0,2,0,Poblacion,inn,2,0.9434,8,relevant
+3,2299.0,Banga,hotel,994.0,3,2,Banga,inn,2,0.5229,6,relevant
+1,1230.0,Nangka,either,1427.0,6,1,Nangka,hotel,2,0.9573,2,relevant
+5,1343.0,Nangka,inn,2343.0,4,1,Nangka,inn,2,0.8102,4,not_relevant
+3,1397.0,Banga,inn,2557.0,3,1,Banga,inn,2,0.674,9,relevant
+4,3087.0,Banga,hotel,3927.0,2,2,Nangka,hotel,1,0.6644,8,not_relevant
+2,1159.0,Banga,inn,2489.0,3,1,Villareal,inn,2,0.7359,10,not_relevant
+2,1910.0,Bayawan City,either,1610.0,1,1,Bayawan City,inn,4,0.8435,2,relevant
+1,2772.0,Poblacion,inn,2834.0,5,1,Poblacion,hotel,1,0.7456,3,relevant
+3,2343.0,Villareal,hotel,1100.0,3,1,Villareal,inn,1,0.9555,4,relevant
+2,2159.0,Suba,inn,4880.0,2,1,Suba,hotel,1,0.7534,7,relevant
+2,2871.0,Poblacion,hotel,3540.0,2,1,Poblacion,hotel,2,0.9377,5,relevant
+3,4424.0,Banga,hotel,1123.0,1,2,Banga,inn,1,0.7914,4,relevant
+1,3813.0,Nangka,hotel,3034.0,1,1,Nangka,inn,4,0.8258,3,relevant
+4,2218.0,Suba,inn,2960.0,4,3,Suba,inn,3,0.6744,8,relevant
+1,1892.0,Suba,hotel,5013.0,3,2,Nangka,hotel,2,0.8063,9,relevant
+2,1335.0,Poblacion,either,2760.0,4,2,Poblacion,inn,2,0.955,5,relevant
+4,2302.0,Poblacion,inn,2729.0,3,1,Poblacion,hotel,1,0.7563,9,not_relevant
+3,3206.0,Bayawan City,either,2053.0,5,3,Bayawan City,hotel,2,0.8668,1,relevant
+4,2823.0,Nangka,either,2516.0,1,1,Nangka,inn,1,0.9546,7,relevant
+3,4690.0,Bayawan City,hotel,2503.0,1,0,Bayawan City,inn,3,0.6117,6,not_relevant
+4,1642.0,Bayawan City,hotel,3436.0,2,1,Bayawan City,hotel,3,0.6645,8,not_relevant
+3,2943.0,Nangka,hotel,2227.0,6,2,Nangka,hotel,1,0.5487,6,relevant
+2,3632.0,Villareal,hotel,3084.0,6,1,Villareal,hotel,4,0.622,2,relevant
+2,729.0,Poblacion,inn,3166.0,1,1,Poblacion,inn,4,0.5625,7,not_relevant
+4,2580.0,Bayawan City,hotel,5392.0,5,1,Bayawan City,hotel,3,0.5676,2,relevant
+4,3531.0,Bayawan City,hotel,5496.0,3,3,Bayawan City,hotel,2,0.9885,7,not_relevant
+2,4906.0,Poblacion,hotel,3488.0,5,2,Poblacion,hotel,2,0.5364,2,relevant
+1,3600.0,Banga,either,3854.0,6,1,Banga,hotel,5,0.5376,2,relevant
+1,1554.0,Poblacion,inn,2867.0,4,1,Poblacion,inn,1,0.8379,5,relevant
+1,2386.0,Suba,inn,2955.0,1,1,Suba,inn,2,0.8145,10,relevant
+4,3685.0,Suba,hotel,5121.0,6,3,Suba,hotel,3,0.5726,6,relevant
+1,1504.0,Suba,either,2457.0,4,1,Villareal,inn,1,0.8988,7,relevant
+4,1831.0,Villareal,either,1849.0,1,3,Banga,inn,2,0.9435,9,not_relevant
+2,2478.0,Nangka,hotel,4715.0,3,1,Suba,hotel,2,0.9098,1,relevant
+1,794.0,Suba,inn,1363.0,4,1,Banga,inn,1,0.6443,6,not_relevant
+5,1742.0,Nangka,hotel,4317.0,6,1,Poblacion,hotel,1,0.8762,5,not_relevant
+3,3914.0,Nangka,hotel,3452.0,2,4,Nangka,hotel,1,0.8223,9,relevant
+1,2607.0,Bayawan City,inn,715.0,3,2,Banga,inn,3,0.591,8,relevant
+1,3631.0,Villareal,hotel,1822.0,1,1,Villareal,inn,1,0.601,4,relevant
+2,1106.0,Bayawan City,inn,2505.0,4,0,Bayawan City,inn,2,0.8464,8,not_relevant
+2,2601.0,Bayawan City,either,4792.0,3,0,Bayawan City,hotel,1,0.9705,7,relevant
+1,2596.0,Suba,hotel,2518.0,5,2,Suba,hotel,5,0.8953,1,relevant
+1,1147.0,Bayawan City,inn,1436.0,1,1,Bayawan City,inn,1,0.7421,9,not_relevant
+4,5164.0,Bayawan City,hotel,3688.0,4,2,Bayawan City,hotel,5,0.7877,2,relevant
+2,1220.0,Bayawan City,either,2585.0,5,2,Bayawan City,hotel,1,0.6063,3,relevant
+5,1037.0,Banga,inn,1181.0,3,3,Banga,inn,2,0.7942,1,relevant
+3,3762.0,Villareal,either,1348.0,2,1,Suba,inn,2,0.5644,6,relevant
+2,1248.0,Villareal,inn,1707.0,1,2,Villareal,inn,1,0.6849,9,not_relevant
+5,3981.0,Nangka,hotel,2464.0,6,1,Nangka,hotel,2,0.8643,5,relevant
+4,3762.0,Suba,either,5188.0,6,1,Suba,hotel,1,0.7551,1,relevant
+4,1148.0,Nangka,inn,3191.0,1,2,Nangka,inn,2,0.7255,2,not_relevant
+2,5014.0,Suba,hotel,3016.0,3,2,Poblacion,hotel,5,0.774,5,relevant
+1,2904.0,Bayawan City,hotel,1723.0,4,1,Bayawan City,inn,3,0.551,3,relevant
+1,706.0,Nangka,inn,1452.0,3,0,Nangka,inn,1,0.7639,9,not_relevant
+3,1619.0,Villareal,hotel,1427.0,6,2,Villareal,hotel,3,0.577,2,relevant
+4,1662.0,Bayawan City,inn,1168.0,2,1,Bayawan City,inn,2,0.8364,10,relevant
+2,1929.0,Nangka,inn,2825.0,3,4,Nangka,inn,4,0.7199,9,relevant
+2,2620.0,Bayawan City,hotel,4959.0,3,1,Nangka,hotel,1,0.968,4,not_relevant
+3,4443.0,Banga,hotel,1661.0,3,1,Banga,inn,2,0.5905,5,relevant
+2,1679.0,Nangka,inn,3675.0,4,0,Nangka,hotel,1,0.8054,10,not_relevant
+1,1091.0,Villareal,inn,839.0,1,1,Villareal,inn,2,0.9008,1,relevant
+1,2529.0,Suba,inn,3043.0,2,1,Suba,inn,1,0.5861,7,relevant
+2,1489.0,Banga,inn,2285.0,3,1,Poblacion,inn,4,0.6819,4,not_relevant
+4,3859.0,Suba,hotel,4278.0,3,2,Suba,hotel,4,0.8896,3,relevant
+1,1849.0,Nangka,hotel,5206.0,2,2,Villareal,hotel,1,0.7204,5,not_relevant
+1,4563.0,Suba,hotel,3401.0,2,1,Suba,hotel,3,0.5523,7,relevant
+2,3382.0,Suba,hotel,1931.0,4,1,Bayawan City,inn,3,0.6667,5,relevant
+2,3596.0,Poblacion,either,3856.0,3,1,Suba,hotel,5,0.8124,2,relevant
+5,3614.0,Nangka,hotel,2619.0,4,1,Poblacion,hotel,1,0.559,7,relevant
+4,2314.0,Banga,inn,2455.0,2,4,Poblacion,inn,2,0.8507,7,not_relevant
+2,4145.0,Villareal,hotel,5020.0,2,3,Poblacion,hotel,2,0.7277,9,relevant
+1,3968.0,Villareal,hotel,1892.0,3,1,Villareal,hotel,1,0.8989,2,relevant
+2,1558.0,Poblacion,inn,4390.0,4,1,Poblacion,hotel,3,0.7774,7,relevant
+2,2270.0,Nangka,hotel,4323.0,4,2,Nangka,hotel,1,0.8302,7,relevant
+3,4770.0,Bayawan City,hotel,1401.0,4,1,Bayawan City,inn,1,0.5212,4,relevant
+2,4902.0,Nangka,hotel,2864.0,6,1,Nangka,hotel,1,0.7723,7,relevant
+1,1779.0,Bayawan City,hotel,1861.0,1,3,Bayawan City,inn,1,0.5587,5,relevant
+2,3336.0,Nangka,hotel,1434.0,6,1,Nangka,hotel,1,0.701,9,relevant
+3,4991.0,Nangka,hotel,2318.0,6,1,Nangka,hotel,4,0.66,4,relevant
+1,4120.0,Nangka,either,5282.0,5,1,Nangka,hotel,2,0.9355,7,relevant
+4,3956.0,Nangka,either,5556.0,2,2,Nangka,hotel,1,0.9061,8,not_relevant
+5,2515.0,Bayawan City,hotel,4166.0,4,2,Bayawan City,hotel,1,0.7823,3,not_relevant
+4,4114.0,Bayawan City,either,1860.0,6,1,Bayawan City,hotel,4,0.7206,2,relevant
+1,2273.0,Villareal,inn,3458.0,3,1,Poblacion,hotel,3,0.613,9,not_relevant
+1,2345.0,Villareal,hotel,3749.0,2,2,Villareal,hotel,3,0.8887,6,relevant
+3,1795.0,Poblacion,either,2807.0,4,4,Poblacion,hotel,1,0.7036,2,relevant
+4,2631.0,Villareal,either,3043.0,3,1,Villareal,inn,2,0.7254,2,not_relevant
+1,4613.0,Banga,hotel,1072.0,1,3,Poblacion,inn,4,0.7025,3,relevant
+5,4140.0,Banga,either,3513.0,6,1,Banga,hotel,3,0.8114,2,relevant
+2,1934.0,Banga,inn,1038.0,1,2,Banga,inn,3,0.6687,1,relevant
+3,3189.0,Bayawan City,hotel,3782.0,6,2,Bayawan City,hotel,1,0.9254,10,relevant
+1,2742.0,Banga,inn,2322.0,3,4,Banga,inn,2,0.89,10,relevant
+4,2160.0,Suba,hotel,2025.0,2,3,Suba,hotel,1,0.583,2,relevant
+2,886.0,Bayawan City,inn,3051.0,4,1,Bayawan City,inn,1,0.6589,3,relevant
+4,1278.0,Banga,inn,1700.0,5,1,Suba,hotel,2,0.7365,1,not_relevant
+2,2670.0,Villareal,inn,850.0,2,1,Suba,inn,2,0.98,5,relevant
+2,2580.0,Banga,inn,2883.0,4,1,Villareal,hotel,1,0.6762,3,relevant
+3,1787.0,Poblacion,hotel,5075.0,4,1,Banga,hotel,1,0.7293,1,relevant
+5,2342.0,Bayawan City,inn,2549.0,2,1,Banga,inn,1,0.5789,10,not_relevant
+2,4865.0,Villareal,hotel,3556.0,2,3,Villareal,hotel,5,0.8393,10,relevant
+2,1293.0,Poblacion,inn,5599.0,2,2,Poblacion,hotel,4,0.8002,6,not_relevant
+3,2685.0,Banga,either,2786.0,3,1,Banga,inn,4,0.854,8,relevant
+2,2202.0,Suba,hotel,1341.0,3,1,Bayawan City,inn,3,0.7341,3,relevant
+1,5023.0,Nangka,hotel,5207.0,2,2,Nangka,hotel,2,0.5767,10,relevant
+4,2067.0,Banga,hotel,3767.0,4,1,Banga,hotel,2,0.5352,4,relevant
+3,2366.0,Suba,hotel,1642.0,3,2,Suba,hotel,5,0.8935,10,relevant
+2,1248.0,Poblacion,either,2329.0,1,3,Poblacion,inn,2,0.9531,1,not_relevant
+4,1734.0,Villareal,hotel,1792.0,1,2,Bayawan City,inn,1,0.9125,7,not_relevant
+1,2816.0,Poblacion,either,4949.0,4,4,Suba,hotel,4,0.7738,1,relevant
+1,4122.0,Banga,hotel,4471.0,4,1,Banga,hotel,2,0.7371,3,relevant
+3,1610.0,Bayawan City,inn,2025.0,4,1,Bayawan City,inn,3,0.548,7,relevant
+1,1944.0,Nangka,inn,2057.0,2,2,Nangka,inn,1,0.6956,10,relevant
+1,3088.0,Villareal,hotel,2290.0,4,0,Villareal,inn,1,0.8326,1,relevant
+1,2221.0,Poblacion,inn,3851.0,2,1,Poblacion,hotel,1,0.7748,5,relevant
+1,1409.0,Poblacion,inn,626.0,2,1,Poblacion,inn,1,0.9005,3,relevant
+4,2382.0,Bayawan City,either,3723.0,3,2,Bayawan City,hotel,4,0.922,4,not_relevant
+3,1789.0,Banga,either,1264.0,2,1,Poblacion,inn,1,0.7983,3,relevant
+6,1501.0,Suba,either,2434.0,3,3,Nangka,hotel,3,0.5625,5,not_relevant
+5,1831.0,Suba,hotel,1677.0,2,1,Suba,inn,1,0.7361,8,relevant
+3,4225.0,Bayawan City,hotel,2161.0,4,3,Bayawan City,hotel,1,0.7954,2,relevant
+2,2124.0,Bayawan City,hotel,4869.0,5,1,Bayawan City,hotel,1,0.8159,9,relevant
+2,4912.0,Poblacion,hotel,1536.0,4,0,Nangka,inn,2,0.8301,3,relevant
+1,1257.0,Poblacion,either,4298.0,2,3,Poblacion,hotel,1,0.5642,6,relevant
+2,2508.0,Nangka,inn,2587.0,1,1,Nangka,inn,1,0.8046,8,not_relevant
+1,1741.0,Poblacion,inn,3173.0,2,1,Poblacion,inn,4,0.7976,2,relevant
+1,3597.0,Suba,either,4531.0,5,1,Suba,hotel,1,0.8761,4,relevant
+3,1679.0,Bayawan City,either,4187.0,2,1,Bayawan City,hotel,1,0.6492,7,not_relevant
+1,2303.0,Banga,hotel,4026.0,6,2,Nangka,hotel,3,0.5834,8,relevant
+3,3084.0,Villareal,hotel,3899.0,3,3,Villareal,hotel,2,0.8664,6,relevant
+4,1135.0,Poblacion,inn,3257.0,1,2,Poblacion,inn,4,0.599,7,not_relevant
+4,4246.0,Villareal,hotel,2088.0,3,1,Villareal,hotel,1,0.561,5,relevant
+3,2297.0,Bayawan City,hotel,5341.0,5,1,Bayawan City,hotel,1,0.9092,6,relevant
+4,776.0,Poblacion,inn,1548.0,1,0,Poblacion,inn,3,0.6232,10,not_relevant
+4,1955.0,Poblacion,hotel,3220.0,2,0,Poblacion,hotel,1,0.9579,1,not_relevant
+1,924.0,Villareal,inn,2541.0,4,3,Villareal,inn,1,0.8531,4,relevant
+1,3335.0,Banga,hotel,2138.0,4,1,Banga,hotel,1,0.8364,4,relevant
+3,2060.0,Villareal,either,3719.0,6,4,Villareal,hotel,1,0.8562,4,relevant
+2,3524.0,Bayawan City,hotel,2190.0,4,1,Banga,inn,2,0.9403,7,relevant
+1,4953.0,Banga,hotel,3672.0,2,2,Banga,hotel,2,0.567,6,relevant
+3,2827.0,Villareal,hotel,3083.0,3,1,Villareal,hotel,1,0.6453,5,relevant
+4,2752.0,Banga,inn,2192.0,2,1,Banga,inn,3,0.5978,1,relevant
+4,869.0,Poblacion,inn,1750.0,4,1,Poblacion,inn,2,0.5497,5,relevant
+2,2973.0,Poblacion,either,1997.0,3,2,Poblacion,inn,1,0.8036,10,relevant
+2,1804.0,Villareal,hotel,1848.0,4,2,Villareal,inn,2,0.658,2,relevant
+1,1337.0,Banga,either,5097.0,5,4,Banga,hotel,1,0.6405,7,relevant
+3,2206.0,Villareal,inn,1816.0,1,3,Suba,inn,1,0.9037,6,relevant
+5,1150.0,Poblacion,inn,1490.0,3,1,Poblacion,hotel,1,0.8254,8,not_relevant
+4,1736.0,Poblacion,hotel,4164.0,5,1,Poblacion,hotel,1,0.95,5,relevant
+3,4948.0,Villareal,hotel,4714.0,2,2,Villareal,hotel,4,0.9585,9,relevant
+4,1666.0,Villareal,hotel,5593.0,6,1,Banga,hotel,2,0.6747,7,not_relevant
+4,3298.0,Bayawan City,hotel,3074.0,6,2,Bayawan City,hotel,2,0.9282,10,relevant
+4,1265.0,Nangka,inn,1169.0,3,2,Banga,inn,2,0.6433,1,relevant
+2,1721.0,Bayawan City,hotel,4735.0,5,1,Bayawan City,hotel,1,0.709,2,relevant
+5,4140.0,Bayawan City,either,2684.0,2,1,Bayawan City,inn,5,0.9573,9,relevant
+4,2599.0,Banga,inn,970.0,2,1,Poblacion,inn,4,0.7709,1,relevant
+1,4540.0,Villareal,hotel,3320.0,3,1,Villareal,hotel,3,0.6622,6,relevant
+3,2541.0,Banga,inn,709.0,4,2,Banga,inn,1,0.9052,6,relevant
+5,2550.0,Suba,hotel,5599.0,4,1,Suba,hotel,3,0.8478,1,not_relevant
+2,2631.0,Bayawan City,inn,5512.0,5,0,Bayawan City,hotel,2,0.8318,5,not_relevant
+1,4763.0,Suba,hotel,2562.0,4,3,Bayawan City,hotel,2,0.6744,2,relevant
+3,3288.0,Villareal,hotel,4394.0,3,0,Villareal,hotel,1,0.5348,9,not_relevant
+1,3460.0,Villareal,either,2298.0,2,2,Villareal,inn,3,0.916,5,relevant
+2,3314.0,Bayawan City,either,1353.0,3,1,Bayawan City,inn,1,0.7169,2,relevant
+5,1702.0,Nangka,either,2534.0,1,1,Nangka,inn,2,0.5827,9,not_relevant
+6,1497.0,Nangka,inn,1683.0,4,1,Poblacion,inn,1,0.6993,10,not_relevant
+5,1431.0,Suba,inn,644.0,1,2,Villareal,inn,1,0.6602,3,relevant
+5,2512.0,Bayawan City,hotel,5156.0,3,0,Bayawan City,hotel,2,0.7878,5,not_relevant
+3,1003.0,Poblacion,either,1140.0,4,1,Poblacion,inn,1,0.9169,3,relevant
+2,4466.0,Poblacion,hotel,5001.0,2,2,Suba,hotel,3,0.8394,5,relevant
+2,2442.0,Banga,either,2934.0,1,1,Nangka,inn,2,0.6936,9,not_relevant
+2,3251.0,Poblacion,hotel,5197.0,5,2,Banga,hotel,2,0.7116,9,not_relevant
+1,2650.0,Suba,hotel,2923.0,2,2,Poblacion,hotel,1,0.9718,3,relevant
+2,3989.0,Villareal,hotel,5299.0,6,1,Villareal,hotel,2,0.9471,10,relevant
+5,1582.0,Nangka,inn,1913.0,2,2,Nangka,inn,3,0.7813,7,not_relevant
+1,1711.0,Banga,inn,1643.0,1,1,Suba,inn,1,0.9408,5,relevant
+1,3248.0,Suba,hotel,1480.0,3,0,Nangka,hotel,4,0.6598,5,relevant
+3,1949.0,Villareal,inn,1529.0,1,3,Villareal,inn,3,0.5532,10,relevant
+1,3525.0,Suba,hotel,2897.0,6,1,Suba,hotel,2,0.6596,7,relevant
+3,927.0,Banga,inn,2724.0,2,1,Villareal,inn,1,0.5346,4,not_relevant
+2,2641.0,Bayawan City,either,2424.0,6,2,Bayawan City,hotel,5,0.953,9,relevant
+1,1948.0,Banga,hotel,2540.0,1,1,Banga,inn,4,0.8094,8,not_relevant
+4,1027.0,Banga,either,3936.0,4,1,Poblacion,hotel,4,0.6411,8,not_relevant
+3,5083.0,Nangka,hotel,2383.0,3,1,Nangka,inn,2,0.5544,3,relevant
+5,4446.0,Bayawan City,hotel,4132.0,3,3,Banga,hotel,3,0.8009,10,not_relevant
+1,4919.0,Poblacion,hotel,3807.0,3,1,Poblacion,hotel,3,0.7785,5,relevant
+2,4772.0,Villareal,hotel,3247.0,3,1,Nangka,hotel,1,0.8452,1,relevant
+2,4418.0,Suba,hotel,2882.0,1,4,Suba,inn,1,0.9717,4,relevant
+1,851.0,Banga,inn,3078.0,3,1,Banga,inn,1,0.6818,1,relevant
+4,2711.0,Bayawan City,hotel,4614.0,4,1,Bayawan City,hotel,2,0.542,7,relevant
+5,1975.0,Bayawan City,inn,1906.0,1,1,Bayawan City,inn,1,0.9874,1,relevant
+4,3789.0,Poblacion,either,1456.0,1,1,Poblacion,inn,1,0.6321,1,relevant
+3,1620.0,Nangka,either,2204.0,1,1,Bayawan City,inn,2,0.5626,6,not_relevant
+1,3003.0,Suba,hotel,4948.0,3,3,Suba,hotel,2,0.661,8,relevant
+2,874.0,Bayawan City,inn,3043.0,4,1,Suba,inn,5,0.8018,2,not_relevant
+6,1023.0,Nangka,inn,1514.0,2,3,Nangka,inn,3,0.5671,7,not_relevant
+4,2363.0,Bayawan City,hotel,2812.0,3,1,Bayawan City,hotel,1,0.8954,8,not_relevant
+2,3549.0,Poblacion,hotel,5310.0,2,1,Poblacion,hotel,1,0.8614,8,relevant
+1,2784.0,Nangka,hotel,4598.0,2,2,Poblacion,hotel,3,0.6793,10,not_relevant
+1,2336.0,Villareal,hotel,1616.0,4,1,Suba,inn,3,0.9537,7,relevant
+2,1531.0,Villareal,either,4463.0,2,1,Villareal,hotel,2,0.9462,4,relevant
+1,2577.0,Bayawan City,hotel,2377.0,4,1,Bayawan City,inn,1,0.9369,9,relevant
+3,1586.0,Bayawan City,inn,3162.0,1,4,Bayawan City,inn,1,0.8204,4,not_relevant
+1,4700.0,Banga,hotel,4439.0,5,2,Banga,hotel,1,0.79,2,relevant
+1,2428.0,Suba,either,5438.0,5,3,Villareal,hotel,2,0.9013,5,relevant
+3,1868.0,Banga,inn,2095.0,3,1,Banga,inn,1,0.5768,9,relevant
+4,4721.0,Suba,hotel,4104.0,4,1,Suba,hotel,3,0.8933,10,relevant
+2,2561.0,Bayawan City,hotel,5060.0,2,3,Bayawan City,hotel,1,0.5343,7,not_relevant
+1,3047.0,Villareal,hotel,1915.0,3,1,Suba,hotel,1,0.696,2,relevant
+2,2894.0,Nangka,hotel,4867.0,2,0,Bayawan City,hotel,2,0.5491,10,not_relevant
+2,2686.0,Poblacion,hotel,1863.0,6,4,Poblacion,hotel,3,0.6205,6,relevant
+2,2104.0,Villareal,hotel,2945.0,4,0,Villareal,inn,2,0.8195,9,not_relevant
+3,2952.0,Banga,hotel,4581.0,5,3,Suba,hotel,2,0.9341,4,relevant
+2,2232.0,Suba,inn,2714.0,1,4,Suba,inn,5,0.9184,8,not_relevant
+3,1704.0,Bayawan City,hotel,4348.0,3,1,Poblacion,hotel,1,0.9196,4,not_relevant
+1,1884.0,Poblacion,inn,1661.0,4,0,Banga,inn,3,0.6714,3,relevant
+4,2057.0,Villareal,either,1277.0,2,3,Villareal,inn,2,0.6252,3,relevant
+1,1984.0,Poblacion,hotel,3459.0,6,0,Poblacion,hotel,2,0.6271,4,relevant
+3,737.0,Poblacion,inn,2579.0,2,1,Suba,inn,1,0.6743,2,not_relevant
+2,2426.0,Bayawan City,hotel,2857.0,1,4,Suba,inn,1,0.8568,1,not_relevant
+4,4161.0,Nangka,hotel,2633.0,5,1,Nangka,hotel,2,0.6158,4,relevant
+5,1115.0,Bayawan City,either,5028.0,5,0,Suba,hotel,2,0.6319,1,not_relevant
+2,1947.0,Suba,hotel,1707.0,4,2,Suba,hotel,1,0.5822,1,relevant
+4,2284.0,Villareal,hotel,4906.0,6,1,Villareal,hotel,2,0.9157,1,relevant
+4,4198.0,Poblacion,hotel,2252.0,3,3,Banga,inn,3,0.8626,7,not_relevant
+1,2491.0,Villareal,hotel,5368.0,6,3,Villareal,hotel,3,0.8911,10,relevant
+3,2284.0,Bayawan City,either,1516.0,4,2,Bayawan City,hotel,3,0.5872,4,relevant
+2,2053.0,Poblacion,either,4672.0,6,1,Poblacion,hotel,2,0.8986,9,relevant
+5,2030.0,Suba,either,1670.0,3,1,Suba,hotel,2,0.5846,3,relevant
+1,2096.0,Banga,inn,2228.0,2,2,Villareal,inn,3,0.5502,8,relevant
+2,936.0,Poblacion,inn,1950.0,4,4,Poblacion,inn,1,0.7654,7,relevant
+3,2853.0,Nangka,hotel,5230.0,5,2,Suba,hotel,2,0.9771,9,relevant
+3,3923.0,Banga,hotel,2631.0,3,1,Banga,inn,5,0.9233,10,relevant
+3,3308.0,Bayawan City,hotel,942.0,2,1,Poblacion,inn,1,0.7168,2,not_relevant
+2,4325.0,Suba,hotel,4665.0,5,2,Suba,hotel,1,0.6855,8,relevant
+1,3428.0,Banga,hotel,4165.0,6,2,Banga,hotel,3,0.6568,3,relevant
+1,5129.0,Banga,hotel,3878.0,4,2,Banga,hotel,2,0.9585,8,relevant
+5,1069.0,Poblacion,either,2699.0,4,3,Poblacion,inn,3,0.8632,1,not_relevant
+4,1630.0,Bayawan City,either,3138.0,4,1,Villareal,hotel,2,0.5413,3,relevant
+1,983.0,Nangka,inn,1470.0,3,2,Nangka,inn,2,0.8198,7,relevant
+4,1326.0,Suba,inn,2874.0,3,1,Poblacion,inn,1,0.8064,7,not_relevant
+4,4679.0,Villareal,hotel,2615.0,4,1,Villareal,inn,5,0.6713,10,relevant
+2,1574.0,Nangka,either,2837.0,1,2,Nangka,inn,1,0.8967,1,relevant
+2,3519.0,Poblacion,hotel,2966.0,2,1,Poblacion,hotel,1,0.8697,10,relevant
+2,1964.0,Villareal,inn,873.0,1,1,Villareal,inn,1,0.8592,9,relevant
+4,2323.0,Poblacion,inn,3664.0,6,1,Villareal,hotel,2,0.824,4,not_relevant
+3,3934.0,Nangka,either,4008.0,5,3,Nangka,hotel,1,0.6186,9,relevant
+4,4291.0,Villareal,hotel,2108.0,3,4,Villareal,hotel,2,0.7403,2,relevant
+3,4151.0,Villareal,hotel,1591.0,5,3,Banga,hotel,4,0.5828,4,relevant
+5,2220.0,Villareal,hotel,3249.0,2,2,Villareal,hotel,1,0.6687,7,not_relevant
+3,2608.0,Nangka,inn,2429.0,3,2,Nangka,inn,1,0.7177,8,relevant
+3,4667.0,Suba,hotel,3121.0,5,0,Suba,hotel,2,0.7522,6,relevant
+1,2770.0,Suba,inn,1679.0,2,1,Villareal,inn,2,0.7668,4,relevant
+2,3790.0,Villareal,either,1624.0,4,2,Villareal,inn,2,0.8171,1,relevant
+5,5070.0,Suba,hotel,1002.0,4,1,Suba,inn,3,0.5233,8,not_relevant
+1,1240.0,Suba,inn,3197.0,5,1,Suba,hotel,2,0.78,7,relevant
+4,4088.0,Suba,hotel,2460.0,3,1,Suba,inn,1,0.7507,7,relevant
+2,754.0,Nangka,inn,5388.0,5,1,Poblacion,hotel,3,0.9147,3,not_relevant
+1,2802.0,Banga,either,1668.0,4,2,Banga,hotel,2,0.8036,10,relevant
+2,3801.0,Banga,hotel,3253.0,6,1,Banga,hotel,1,0.967,8,relevant
+4,2340.0,Poblacion,inn,5036.0,3,1,Villareal,hotel,2,0.905,7,not_relevant
+4,2528.0,Suba,inn,3353.0,4,1,Suba,inn,2,0.898,5,relevant
+2,1701.0,Banga,hotel,3299.0,4,1,Banga,hotel,3,0.9028,5,relevant
+4,4311.0,Banga,hotel,3106.0,6,1,Banga,hotel,4,0.7329,6,relevant
+2,1553.0,Poblacion,inn,1278.0,4,1,Poblacion,inn,2,0.822,5,relevant
+6,1882.0,Bayawan City,hotel,4242.0,4,1,Bayawan City,hotel,1,0.8946,7,not_relevant
+3,1423.0,Banga,inn,1101.0,4,1,Suba,inn,2,0.776,6,relevant
+1,2810.0,Nangka,either,1424.0,2,1,Suba,hotel,4,0.5562,3,relevant
+5,2533.0,Nangka,hotel,3856.0,2,3,Banga,hotel,2,0.8486,7,not_relevant
+2,1213.0,Poblacion,inn,4718.0,3,1,Suba,hotel,2,0.9764,4,not_relevant
+5,3955.0,Nangka,hotel,4549.0,2,1,Nangka,hotel,2,0.7153,4,not_relevant
+5,2171.0,Villareal,hotel,3967.0,2,3,Villareal,hotel,1,0.5832,1,not_relevant
+3,1896.0,Poblacion,hotel,3110.0,2,4,Poblacion,hotel,2,0.7495,7,not_relevant
+2,2730.0,Villareal,hotel,4956.0,4,0,Villareal,hotel,1,0.8851,4,relevant
+2,915.0,Banga,inn,2301.0,5,1,Banga,hotel,3,0.6225,7,not_relevant
+3,2158.0,Nangka,inn,2986.0,3,2,Nangka,inn,2,0.6965,8,relevant
+5,2324.0,Bayawan City,either,1420.0,6,2,Bayawan City,hotel,1,0.8624,2,relevant
+4,2970.0,Banga,either,1176.0,4,1,Villareal,inn,4,0.7892,4,relevant
+2,1042.0,Bayawan City,inn,4462.0,5,1,Bayawan City,hotel,3,0.6881,3,not_relevant
+3,1575.0,Suba,inn,1312.0,3,0,Suba,inn,1,0.6541,6,relevant
+3,2756.0,Suba,inn,1281.0,3,2,Suba,inn,2,0.5603,4,relevant
+2,3289.0,Bayawan City,hotel,2799.0,6,3,Bayawan City,hotel,1,0.5565,9,relevant
+2,2954.0,Nangka,hotel,5120.0,3,1,Nangka,hotel,2,0.5871,1,relevant
+5,1503.0,Nangka,inn,650.0,2,0,Nangka,inn,1,0.9707,3,relevant
+3,2288.0,Banga,hotel,3761.0,3,2,Bayawan City,hotel,1,0.5328,3,relevant
+3,1678.0,Banga,hotel,2181.0,3,1,Banga,hotel,4,0.9189,4,relevant
+6,5159.0,Banga,hotel,3444.0,2,1,Banga,inn,1,0.8279,3,relevant
+4,1956.0,Bayawan City,inn,1456.0,3,1,Poblacion,inn,1,0.8216,4,relevant
+2,1741.0,Bayawan City,inn,4148.0,6,3,Banga,hotel,2,0.6766,5,not_relevant
+2,2309.0,Banga,hotel,3560.0,2,1,Banga,hotel,1,0.8703,3,relevant
+3,1833.0,Villareal,inn,2946.0,2,1,Suba,inn,2,0.8123,3,not_relevant
+1,3255.0,Bayawan City,hotel,2119.0,4,2,Bayawan City,inn,1,0.8791,8,relevant
+3,3305.0,Nangka,hotel,2171.0,4,2,Nangka,inn,1,0.71,4,relevant
+5,3378.0,Villareal,hotel,4003.0,5,2,Banga,hotel,1,0.7929,9,relevant
+3,4063.0,Nangka,either,3446.0,4,1,Suba,hotel,1,0.7521,7,relevant
+2,2404.0,Bayawan City,hotel,3239.0,5,1,Bayawan City,hotel,2,0.7778,7,relevant
+1,2202.0,Bayawan City,hotel,3825.0,6,2,Bayawan City,hotel,1,0.8735,10,relevant
+2,1115.0,Bayawan City,inn,2212.0,1,1,Bayawan City,inn,1,0.5615,8,not_relevant
+2,716.0,Poblacion,inn,990.0,2,2,Poblacion,inn,3,0.9448,9,relevant
+1,2169.0,Banga,either,4662.0,2,2,Banga,hotel,1,0.7065,8,relevant
+2,3010.0,Suba,hotel,4721.0,4,1,Poblacion,hotel,3,0.5712,10,not_relevant
+2,2619.0,Suba,either,2945.0,2,3,Suba,inn,1,0.6053,2,relevant
+3,3753.0,Suba,either,704.0,4,3,Suba,inn,1,0.6237,6,relevant
+4,2065.0,Poblacion,hotel,4687.0,2,1,Poblacion,hotel,2,0.5359,10,not_relevant
+5,5012.0,Banga,hotel,5348.0,5,1,Banga,hotel,2,0.8934,9,relevant
+3,2778.0,Nangka,either,5443.0,2,0,Nangka,hotel,5,0.5628,9,not_relevant
+3,1194.0,Nangka,either,1876.0,1,3,Nangka,inn,4,0.5907,1,not_relevant
+2,4063.0,Bayawan City,either,896.0,1,2,Bayawan City,inn,1,0.5773,3,relevant
+3,1845.0,Nangka,hotel,3116.0,3,1,Banga,hotel,1,0.8468,1,relevant
+5,940.0,Suba,inn,927.0,4,1,Suba,inn,3,0.8916,2,relevant
+2,1554.0,Bayawan City,either,1842.0,1,2,Bayawan City,inn,1,0.7812,9,not_relevant
+3,2159.0,Suba,hotel,5369.0,4,0,Suba,hotel,4,0.9758,4,not_relevant
+3,1026.0,Banga,inn,753.0,2,3,Poblacion,inn,2,0.9762,10,relevant
+3,3026.0,Banga,hotel,1763.0,1,0,Banga,inn,1,0.6224,6,not_relevant
+1,2110.0,Nangka,inn,2245.0,3,1,Nangka,inn,2,0.9399,5,relevant
+3,2170.0,Nangka,inn,2344.0,3,1,Villareal,inn,1,0.9815,10,relevant
+3,2772.0,Bayawan City,either,5098.0,4,2,Bayawan City,hotel,2,0.6911,6,relevant
+3,1639.0,Poblacion,either,2196.0,4,2,Poblacion,inn,1,0.5322,6,relevant
+4,2055.0,Bayawan City,hotel,3741.0,4,1,Bayawan City,hotel,2,0.9247,7,relevant
+5,2375.0,Bayawan City,inn,2817.0,4,2,Poblacion,inn,2,0.7484,2,not_relevant
+1,5164.0,Poblacion,hotel,2894.0,4,1,Poblacion,hotel,1,0.5929,9,relevant
+2,4020.0,Poblacion,hotel,4073.0,6,1,Poblacion,hotel,3,0.6459,9,relevant
+2,4983.0,Bayawan City,hotel,3975.0,2,1,Banga,hotel,5,0.956,8,relevant
+2,2704.0,Bayawan City,inn,2879.0,3,4,Suba,inn,2,0.7664,8,relevant
+2,2178.0,Bayawan City,either,4237.0,6,2,Bayawan City,hotel,4,0.8897,3,relevant
+3,2178.0,Banga,either,3293.0,4,1,Banga,inn,2,0.9554,9,relevant
+3,4359.0,Villareal,hotel,1531.0,1,1,Nangka,inn,2,0.8338,2,not_relevant
+5,3951.0,Nangka,either,2248.0,2,0,Nangka,inn,3,0.6719,9,not_relevant
+4,1464.0,Suba,inn,2958.0,3,0,Suba,inn,2,0.7862,7,not_relevant
+2,3145.0,Suba,hotel,873.0,1,1,Suba,inn,2,0.6298,4,relevant
+1,1981.0,Bayawan City,hotel,1512.0,4,2,Bayawan City,inn,1,0.5475,9,relevant
+2,2329.0,Poblacion,inn,1811.0,2,1,Poblacion,inn,3,0.6719,3,relevant
+1,2313.0,Poblacion,hotel,3141.0,4,0,Poblacion,hotel,1,0.7336,2,not_relevant
+3,3789.0,Poblacion,hotel,4169.0,4,1,Suba,hotel,1,0.9562,10,relevant
+2,2852.0,Villareal,either,1341.0,3,1,Villareal,inn,2,0.8936,10,relevant
+3,3751.0,Poblacion,hotel,4569.0,3,1,Villareal,hotel,1,0.8044,3,relevant
+1,2210.0,Suba,either,1242.0,4,2,Suba,inn,1,0.7114,2,relevant
+1,2266.0,Banga,inn,3119.0,5,1,Nangka,hotel,5,0.7062,1,not_relevant
+2,3048.0,Poblacion,either,784.0,2,2,Poblacion,inn,3,0.6069,1,relevant
+3,3130.0,Bayawan City,hotel,3248.0,3,1,Bayawan City,hotel,2,0.5473,1,relevant
+1,2242.0,Villareal,inn,1750.0,3,0,Villareal,inn,3,0.9758,6,relevant
+2,2109.0,Suba,inn,1489.0,3,1,Poblacion,inn,1,0.8259,7,relevant
+2,4006.0,Bayawan City,either,3758.0,5,1,Bayawan City,hotel,3,0.809,2,relevant
+3,3352.0,Nangka,hotel,4846.0,5,2,Bayawan City,hotel,1,0.6031,6,not_relevant
+3,1354.0,Poblacion,either,4030.0,6,0,Poblacion,hotel,2,0.5481,10,not_relevant
+3,1698.0,Villareal,hotel,4565.0,5,1,Villareal,hotel,2,0.6357,6,relevant
+1,2250.0,Banga,inn,2716.0,2,2,Banga,inn,1,0.9485,4,relevant
+1,3457.0,Banga,hotel,4157.0,3,1,Banga,hotel,3,0.9467,10,relevant
+2,4298.0,Poblacion,hotel,5514.0,6,1,Poblacion,hotel,1,0.8748,8,relevant
+3,3002.0,Suba,hotel,1986.0,5,1,Suba,hotel,1,0.5855,9,relevant
+1,2309.0,Bayawan City,inn,1799.0,4,1,Villareal,inn,2,0.9296,4,relevant
+2,3002.0,Banga,either,4393.0,3,1,Banga,hotel,3,0.7406,10,relevant
+1,2205.0,Suba,inn,1400.0,3,2,Suba,inn,1,0.7919,7,relevant
+4,5148.0,Banga,hotel,4854.0,2,2,Poblacion,hotel,3,0.8542,7,relevant
+2,2054.0,Nangka,either,1703.0,2,0,Nangka,inn,2,0.7254,5,relevant
+5,3853.0,Poblacion,hotel,1451.0,5,1,Villareal,hotel,1,0.8598,8,relevant
+3,1099.0,Suba,either,3479.0,5,1,Suba,hotel,1,0.7811,8,relevant
+3,3840.0,Poblacion,either,829.0,2,2,Poblacion,inn,1,0.8574,2,relevant
+2,4348.0,Bayawan City,hotel,2551.0,3,2,Bayawan City,hotel,3,0.6142,7,relevant
+5,3949.0,Poblacion,either,2721.0,1,3,Poblacion,inn,1,0.8834,5,relevant
+2,1693.0,Poblacion,hotel,3286.0,4,2,Poblacion,inn,2,0.8602,8,not_relevant
+2,2481.0,Banga,inn,3442.0,3,4,Banga,inn,4,0.7871,5,relevant
+4,3909.0,Banga,hotel,3162.0,2,2,Banga,hotel,5,0.5564,1,relevant
+3,3815.0,Banga,hotel,1799.0,2,1,Nangka,hotel,2,0.7912,9,relevant
+2,1691.0,Nangka,inn,861.0,3,1,Nangka,inn,2,0.8429,2,relevant
+3,2870.0,Bayawan City,hotel,5152.0,5,1,Bayawan City,hotel,1,0.8204,10,not_relevant
+1,3848.0,Villareal,hotel,2266.0,4,3,Villareal,inn,1,0.8914,8,relevant
+3,4474.0,Nangka,hotel,2242.0,5,1,Nangka,hotel,2,0.7194,7,relevant
+4,2796.0,Suba,either,4318.0,5,2,Suba,hotel,1,0.5951,4,relevant
+6,2535.0,Bayawan City,either,1376.0,2,2,Bayawan City,inn,1,0.7183,6,relevant
+3,4755.0,Banga,hotel,5571.0,6,1,Poblacion,hotel,1,0.8299,7,not_relevant
+1,3209.0,Banga,either,1696.0,3,1,Banga,inn,2,0.522,4,relevant
+1,2332.0,Suba,hotel,5323.0,5,1,Suba,hotel,2,0.6399,4,relevant
+1,3118.0,Bayawan City,hotel,3856.0,6,4,Bayawan City,hotel,1,0.7395,9,relevant
+4,3616.0,Suba,either,5141.0,2,2,Poblacion,hotel,1,0.9666,3,not_relevant
+4,1274.0,Bayawan City,inn,4488.0,4,1,Bayawan City,hotel,2,0.6133,7,relevant
+1,4534.0,Bayawan City,hotel,3933.0,3,2,Bayawan City,hotel,2,0.6839,1,relevant
+4,1492.0,Villareal,either,2974.0,4,2,Bayawan City,inn,2,0.6914,7,relevant
+1,4563.0,Villareal,hotel,4493.0,6,1,Villareal,hotel,1,0.5276,5,relevant
+3,2403.0,Banga,hotel,5159.0,4,2,Suba,hotel,4,0.5798,3,not_relevant
+1,3558.0,Suba,hotel,3392.0,4,1,Villareal,hotel,3,0.7516,6,relevant
+3,1883.0,Banga,hotel,2225.0,1,3,Banga,inn,2,0.7568,1,not_relevant
+4,4048.0,Poblacion,hotel,5133.0,4,3,Poblacion,hotel,1,0.6558,6,relevant
+1,3250.0,Bayawan City,hotel,5266.0,6,2,Bayawan City,hotel,1,0.9543,9,relevant
+4,3626.0,Poblacion,hotel,2536.0,2,2,Bayawan City,hotel,2,0.5887,6,relevant
+5,4343.0,Banga,hotel,2452.0,5,1,Nangka,hotel,1,0.8439,1,relevant
+1,771.0,Villareal,inn,2021.0,4,1,Villareal,inn,1,0.9072,4,relevant
+6,3323.0,Poblacion,hotel,1489.0,3,1,Banga,inn,3,0.9016,4,not_relevant
+4,2561.0,Suba,hotel,1940.0,6,1,Suba,hotel,3,0.9212,5,relevant
+5,2972.0,Poblacion,hotel,2872.0,2,0,Poblacion,hotel,3,0.954,1,relevant
+2,801.0,Bayawan City,inn,2696.0,2,1,Bayawan City,inn,5,0.7644,7,not_relevant
+4,2423.0,Banga,either,1502.0,1,0,Villareal,inn,3,0.5371,2,not_relevant
+4,2736.0,Nangka,inn,1430.0,4,2,Nangka,inn,1,0.5645,3,relevant
+2,4604.0,Nangka,hotel,4316.0,5,2,Nangka,hotel,1,0.7208,8,relevant
+3,4919.0,Villareal,hotel,3175.0,6,1,Poblacion,hotel,1,0.7672,9,relevant
+4,3483.0,Nangka,hotel,4870.0,3,1,Nangka,hotel,2,0.7619,8,not_relevant
+2,4946.0,Poblacion,hotel,4442.0,5,3,Poblacion,hotel,2,0.9747,9,relevant
+1,2998.0,Banga,hotel,5304.0,4,1,Banga,hotel,1,0.9129,10,relevant
+4,2898.0,Suba,hotel,720.0,1,3,Suba,inn,4,0.5787,5,not_relevant
+3,1569.0,Banga,either,3017.0,1,3,Banga,inn,3,0.8967,6,not_relevant
+1,4769.0,Banga,hotel,2165.0,4,1,Banga,hotel,1,0.7657,3,relevant
+1,3631.0,Nangka,either,1536.0,3,2,Nangka,hotel,1,0.8636,2,relevant
+3,1827.0,Suba,inn,1300.0,4,4,Suba,inn,2,0.682,10,relevant
+4,3174.0,Villareal,hotel,1288.0,1,0,Villareal,inn,4,0.5293,4,not_relevant
+2,4474.0,Villareal,hotel,5096.0,4,1,Villareal,hotel,3,0.9872,5,relevant
+3,2849.0,Nangka,hotel,2201.0,3,4,Nangka,inn,1,0.8388,7,relevant
+2,2636.0,Suba,hotel,4452.0,4,1,Poblacion,hotel,1,0.6519,2,relevant
+5,3728.0,Nangka,either,1696.0,2,1,Banga,inn,3,0.8685,9,not_relevant
+4,1884.0,Suba,either,4956.0,5,4,Poblacion,hotel,3,0.6672,9,not_relevant
+2,1998.0,Villareal,either,1251.0,3,2,Villareal,inn,3,0.7836,10,relevant
+3,829.0,Nangka,inn,2528.0,3,2,Nangka,inn,1,0.6898,1,relevant
+4,909.0,Villareal,inn,2663.0,1,3,Villareal,inn,3,0.7866,4,not_relevant
+2,4331.0,Villareal,hotel,3175.0,3,4,Nangka,inn,1,0.9549,9,relevant
+1,4422.0,Banga,hotel,1439.0,3,1,Banga,hotel,2,0.5643,9,relevant
+4,4976.0,Villareal,hotel,3233.0,3,2,Villareal,hotel,3,0.6084,6,relevant
+2,1825.0,Poblacion,inn,1283.0,1,1,Poblacion,inn,2,0.59,5,relevant
+3,2188.0,Nangka,inn,5660.0,6,1,Nangka,hotel,2,0.6575,6,relevant
+3,1984.0,Bayawan City,hotel,921.0,3,1,Poblacion,inn,4,0.6817,5,relevant
+1,1140.0,Villareal,inn,2302.0,2,1,Suba,inn,1,0.7011,5,relevant
+5,4717.0,Banga,hotel,4884.0,3,1,Villareal,hotel,1,0.5335,7,not_relevant
+1,3336.0,Nangka,hotel,3346.0,1,3,Nangka,inn,1,0.9538,4,relevant
+2,3953.0,Villareal,either,2570.0,4,3,Banga,hotel,1,0.7271,7,relevant
+2,3877.0,Poblacion,hotel,1715.0,6,1,Poblacion,hotel,4,0.8256,5,relevant
+1,3864.0,Villareal,hotel,1319.0,2,1,Villareal,inn,1,0.7415,3,relevant
+1,2799.0,Suba,hotel,1598.0,4,2,Suba,hotel,1,0.765,2,relevant
+5,856.0,Suba,inn,1242.0,1,2,Suba,inn,2,0.6707,2,not_relevant
+1,963.0,Nangka,inn,2451.0,3,1,Suba,inn,1,0.9157,2,relevant
+2,1341.0,Nangka,inn,1001.0,2,1,Nangka,inn,2,0.8898,2,relevant
+1,2548.0,Villareal,inn,3025.0,2,1,Villareal,inn,3,0.915,10,relevant
+1,1024.0,Banga,either,2472.0,3,1,Banga,hotel,3,0.7834,4,relevant
+4,4034.0,Banga,hotel,3990.0,3,1,Banga,hotel,1,0.8248,4,relevant
+3,4382.0,Poblacion,hotel,2025.0,4,0,Poblacion,inn,3,0.6328,3,relevant
+2,898.0,Poblacion,inn,1884.0,1,1,Banga,inn,1,0.5483,7,not_relevant
+2,4860.0,Poblacion,hotel,3827.0,4,1,Poblacion,hotel,1,0.9343,2,relevant
+2,1673.0,Nangka,inn,2801.0,1,2,Nangka,inn,1,0.9855,8,not_relevant
+2,2454.0,Suba,inn,2695.0,4,0,Suba,inn,1,0.8484,5,relevant
+2,3896.0,Bayawan City,hotel,4391.0,4,0,Bayawan City,hotel,2,0.9138,9,relevant
+4,4686.0,Suba,hotel,2059.0,6,2,Suba,hotel,1,0.9593,5,relevant
+4,2557.0,Banga,inn,2352.0,2,1,Banga,inn,2,0.8434,2,relevant
+2,1250.0,Villareal,inn,4690.0,2,1,Villareal,hotel,3,0.6228,9,not_relevant
+4,3557.0,Bayawan City,hotel,3746.0,6,0,Bayawan City,hotel,3,0.8431,4,relevant
+2,2261.0,Villareal,inn,1320.0,4,1,Banga,inn,1,0.5204,4,relevant
+1,3134.0,Villareal,hotel,1360.0,1,1,Banga,inn,1,0.7065,10,relevant
+1,3190.0,Villareal,hotel,1882.0,3,4,Villareal,inn,1,0.9441,9,relevant
+2,3592.0,Poblacion,hotel,3266.0,3,1,Poblacion,hotel,3,0.791,6,relevant
+1,2976.0,Nangka,either,836.0,2,1,Suba,inn,2,0.5503,5,relevant
+1,3450.0,Nangka,hotel,2975.0,6,1,Nangka,hotel,1,0.5296,4,relevant
+4,2970.0,Villareal,hotel,5071.0,5,2,Villareal,hotel,3,0.8284,9,relevant
+3,1360.0,Suba,inn,1315.0,3,1,Suba,inn,2,0.8915,7,relevant
+3,3372.0,Suba,hotel,2030.0,2,2,Suba,hotel,2,0.711,6,relevant
+2,2443.0,Bayawan City,either,5075.0,4,2,Bayawan City,hotel,3,0.7167,2,relevant
+1,3752.0,Suba,hotel,1838.0,3,4,Suba,hotel,1,0.5735,1,relevant
+1,1470.0,Villareal,either,4586.0,3,1,Banga,hotel,5,0.7181,4,not_relevant
+2,4089.0,Suba,either,1771.0,2,1,Banga,hotel,2,0.6341,1,relevant
+2,2099.0,Banga,inn,2324.0,2,2,Banga,inn,1,0.951,10,relevant
+3,1595.0,Banga,either,4039.0,3,2,Poblacion,hotel,4,0.7258,2,not_relevant
+4,3577.0,Poblacion,either,1640.0,1,3,Poblacion,inn,4,0.9049,2,relevant
+2,1769.0,Bayawan City,inn,2066.0,2,2,Bayawan City,inn,3,0.6383,9,relevant
+1,4048.0,Bayawan City,hotel,4676.0,5,2,Bayawan City,hotel,3,0.5417,10,relevant
+1,831.0,Suba,inn,2903.0,3,2,Suba,inn,3,0.7366,2,relevant
+2,1844.0,Bayawan City,either,3167.0,2,1,Bayawan City,hotel,4,0.5335,8,relevant
+1,2851.0,Nangka,hotel,2486.0,3,2,Nangka,hotel,3,0.5642,5,relevant
+2,1757.0,Poblacion,either,1561.0,2,1,Bayawan City,inn,1,0.5642,1,relevant
+4,1336.0,Banga,inn,969.0,3,1,Banga,inn,3,0.5234,6,relevant
+4,4292.0,Bayawan City,hotel,1933.0,5,1,Bayawan City,hotel,1,0.8973,10,relevant
+3,3514.0,Suba,hotel,1718.0,3,3,Suba,hotel,1,0.9854,6,relevant
+1,811.0,Poblacion,inn,1417.0,1,1,Poblacion,inn,1,0.799,10,relevant
+2,1409.0,Villareal,inn,1287.0,4,1,Villareal,inn,2,0.7873,2,relevant
+1,4808.0,Poblacion,hotel,2285.0,2,2,Poblacion,inn,1,0.6979,1,relevant
+4,1675.0,Villareal,inn,1943.0,2,1,Villareal,inn,4,0.6992,9,not_relevant
+4,2764.0,Villareal,hotel,3440.0,3,2,Banga,hotel,1,0.964,10,not_relevant
+4,5130.0,Poblacion,hotel,4733.0,6,3,Poblacion,hotel,2,0.8993,9,relevant
+2,2428.0,Villareal,inn,3721.0,5,1,Bayawan City,hotel,1,0.9146,2,not_relevant
+1,4721.0,Bayawan City,hotel,4187.0,2,1,Nangka,hotel,2,0.6198,8,relevant
+2,3360.0,Nangka,hotel,5086.0,5,2,Nangka,hotel,1,0.712,1,relevant
+3,1768.0,Bayawan City,inn,5007.0,2,3,Suba,hotel,1,0.8953,4,not_relevant
+2,2715.0,Villareal,either,2370.0,3,0,Villareal,inn,1,0.8621,9,relevant
+2,2437.0,Villareal,hotel,3727.0,3,4,Villareal,hotel,1,0.7905,7,relevant
+5,2675.0,Banga,either,2273.0,3,2,Banga,inn,4,0.6813,8,not_relevant
+2,3879.0,Banga,either,2799.0,4,2,Nangka,inn,4,0.5785,8,relevant
+2,2752.0,Nangka,either,2812.0,5,2,Suba,hotel,4,0.7617,5,relevant
+2,2367.0,Poblacion,inn,1824.0,3,1,Poblacion,hotel,2,0.5289,4,relevant
+3,2965.0,Poblacion,hotel,2088.0,6,2,Poblacion,hotel,1,0.8221,5,relevant
+2,4708.0,Nangka,hotel,2754.0,4,1,Nangka,inn,2,0.9643,1,relevant
+3,3683.0,Banga,hotel,4492.0,5,2,Banga,hotel,1,0.5538,9,relevant
+2,3437.0,Nangka,hotel,3200.0,2,3,Nangka,hotel,1,0.7367,6,relevant
+5,3804.0,Poblacion,hotel,3965.0,5,1,Poblacion,hotel,4,0.95,9,relevant
+3,3662.0,Villareal,either,3361.0,4,3,Banga,hotel,3,0.585,6,relevant
+5,3550.0,Banga,hotel,4589.0,3,1,Bayawan City,hotel,2,0.5318,5,not_relevant
+1,3036.0,Villareal,hotel,1418.0,4,0,Villareal,inn,3,0.8263,4,relevant
+1,837.0,Bayawan City,inn,2275.0,3,1,Bayawan City,inn,2,0.8701,4,relevant
+2,3000.0,Banga,hotel,2876.0,3,3,Banga,hotel,1,0.722,7,relevant
+2,1022.0,Bayawan City,inn,1974.0,2,0,Poblacion,hotel,1,0.7949,5,not_relevant
+4,3925.0,Bayawan City,hotel,4669.0,6,4,Bayawan City,hotel,1,0.8409,2,relevant
+1,3526.0,Banga,hotel,2437.0,3,1,Banga,inn,2,0.7602,7,relevant
+3,3842.0,Suba,hotel,2606.0,5,0,Suba,hotel,1,0.6934,3,relevant
+1,1653.0,Suba,inn,1740.0,2,2,Suba,inn,1,0.9469,7,relevant
+2,2237.0,Nangka,hotel,874.0,2,1,Nangka,inn,1,0.77,2,relevant
+3,2637.0,Poblacion,hotel,5117.0,2,1,Poblacion,hotel,1,0.6606,8,not_relevant
+1,4557.0,Suba,hotel,3250.0,3,1,Suba,hotel,1,0.9863,6,relevant
+5,2662.0,Villareal,inn,1984.0,4,4,Villareal,inn,4,0.7576,2,relevant
+5,4763.0,Poblacion,hotel,4007.0,5,0,Poblacion,hotel,1,0.9598,10,relevant
+3,5191.0,Bayawan City,hotel,1874.0,4,1,Bayawan City,hotel,3,0.9508,2,relevant
+2,1428.0,Banga,inn,1481.0,3,1,Bayawan City,inn,4,0.7962,2,relevant
+4,966.0,Suba,inn,1657.0,2,3,Bayawan City,inn,1,0.8507,3,not_relevant
+3,4725.0,Bayawan City,hotel,813.0,2,3,Villareal,inn,3,0.6015,2,not_relevant
+1,1960.0,Banga,hotel,1675.0,4,3,Banga,inn,1,0.919,4,relevant
+1,3782.0,Bayawan City,hotel,2120.0,5,2,Villareal,hotel,1,0.8098,1,relevant
+2,3266.0,Banga,hotel,5449.0,5,1,Banga,hotel,5,0.5762,5,relevant
+5,2397.0,Bayawan City,either,1482.0,3,2,Bayawan City,inn,4,0.5308,2,relevant
+3,1241.0,Nangka,either,2756.0,1,1,Nangka,inn,1,0.7101,2,not_relevant
+2,1698.0,Poblacion,either,2160.0,4,3,Suba,inn,2,0.9687,7,not_relevant
+4,3014.0,Suba,hotel,3287.0,2,1,Bayawan City,hotel,3,0.7514,6,not_relevant
+1,2597.0,Nangka,inn,1694.0,1,2,Nangka,inn,3,0.8984,5,relevant
+2,2356.0,Banga,either,5592.0,2,2,Banga,hotel,1,0.9494,3,relevant
+1,2673.0,Bayawan City,hotel,652.0,2,1,Bayawan City,inn,1,0.6438,8,relevant
+3,5166.0,Banga,hotel,941.0,3,4,Banga,inn,2,0.7248,6,relevant
+4,4898.0,Villareal,hotel,2888.0,5,1,Villareal,hotel,2,0.7281,9,relevant
+2,3194.0,Suba,hotel,1829.0,3,1,Suba,hotel,4,0.5308,10,relevant
+1,3574.0,Poblacion,hotel,3669.0,4,1,Poblacion,hotel,4,0.8092,10,relevant
+3,4589.0,Nangka,hotel,3414.0,4,2,Suba,hotel,4,0.6562,10,relevant
+5,1960.0,Villareal,inn,2404.0,2,1,Bayawan City,inn,1,0.9349,6,not_relevant
+3,4293.0,Bayawan City,hotel,4626.0,3,1,Villareal,hotel,3,0.9263,5,relevant
+2,4028.0,Nangka,hotel,2766.0,3,1,Banga,hotel,2,0.8319,9,relevant
+1,3758.0,Nangka,hotel,1785.0,1,1,Nangka,inn,2,0.7617,9,relevant
+2,2757.0,Villareal,inn,675.0,4,1,Villareal,inn,1,0.6228,9,relevant
+1,2163.0,Suba,inn,1765.0,2,1,Suba,inn,1,0.8019,6,relevant
+2,1056.0,Banga,inn,863.0,3,1,Banga,inn,2,0.7214,3,relevant
+2,2970.0,Bayawan City,hotel,3235.0,4,1,Nangka,hotel,2,0.5538,6,relevant
+2,1673.0,Bayawan City,inn,632.0,4,0,Bayawan City,inn,4,0.8661,6,relevant
+4,3957.0,Poblacion,hotel,5294.0,4,2,Bayawan City,hotel,1,0.588,5,relevant
+3,2664.0,Poblacion,inn,4525.0,3,0,Poblacion,hotel,2,0.7249,5,not_relevant
+1,1805.0,Suba,either,1828.0,2,1,Banga,inn,1,0.9291,6,relevant
+6,2027.0,Suba,hotel,2016.0,4,1,Suba,inn,4,0.6352,6,not_relevant
+2,4192.0,Villareal,hotel,2528.0,5,0,Villareal,hotel,1,0.7057,4,relevant
+3,2374.0,Bayawan City,inn,2420.0,3,3,Bayawan City,inn,1,0.6913,9,relevant
+3,3758.0,Banga,either,2636.0,1,1,Poblacion,inn,4,0.5852,9,not_relevant
+2,2693.0,Poblacion,hotel,3763.0,6,2,Villareal,hotel,1,0.8065,9,relevant
+5,3486.0,Bayawan City,either,3014.0,1,1,Bayawan City,inn,1,0.8385,10,relevant
+3,2728.0,Poblacion,hotel,2856.0,5,2,Poblacion,hotel,1,0.8316,6,relevant
+5,1676.0,Villareal,hotel,4362.0,5,1,Nangka,hotel,3,0.8249,5,relevant
+3,2077.0,Villareal,inn,2281.0,1,1,Villareal,inn,1,0.9101,1,relevant
+5,1922.0,Villareal,inn,2322.0,3,1,Villareal,hotel,2,0.9872,2,not_relevant
+2,4739.0,Nangka,hotel,1778.0,2,1,Nangka,inn,2,0.8463,5,relevant
+2,2514.0,Villareal,hotel,2003.0,1,1,Banga,inn,5,0.6652,8,not_relevant
+3,2573.0,Villareal,hotel,2584.0,3,4,Villareal,hotel,1,0.912,1,relevant
+3,2183.0,Banga,inn,5817.0,5,1,Banga,hotel,1,0.8835,9,not_relevant
+1,2518.0,Villareal,inn,1415.0,4,1,Villareal,hotel,1,0.9886,10,relevant
+2,1891.0,Villareal,inn,1109.0,2,2,Villareal,inn,2,0.7636,1,relevant
+2,3492.0,Villareal,either,4719.0,3,1,Villareal,hotel,2,0.8298,1,relevant
+4,3953.0,Villareal,hotel,1673.0,4,1,Villareal,hotel,2,0.6669,9,relevant
+3,4322.0,Bayawan City,hotel,4875.0,3,1,Villareal,hotel,2,0.9892,6,relevant
+3,2703.0,Nangka,inn,836.0,1,1,Suba,inn,1,0.6208,9,relevant
+3,2114.0,Banga,either,2952.0,2,0,Poblacion,hotel,2,0.5975,5,not_relevant
+2,2695.0,Villareal,either,5017.0,6,2,Poblacion,hotel,4,0.7645,5,not_relevant
+1,1635.0,Nangka,inn,4383.0,5,1,Nangka,hotel,1,0.7032,3,not_relevant
+2,4916.0,Poblacion,hotel,3021.0,4,3,Suba,inn,3,0.5865,2,relevant
+4,1503.0,Suba,inn,1700.0,2,2,Suba,inn,1,0.8984,3,not_relevant
+4,5052.0,Nangka,hotel,4129.0,3,3,Nangka,hotel,1,0.7322,6,relevant
+2,1847.0,Banga,inn,1773.0,3,3,Poblacion,inn,1,0.8947,2,relevant
+1,1468.0,Nangka,inn,5587.0,5,2,Nangka,hotel,1,0.7797,4,relevant
+5,1932.0,Poblacion,inn,1008.0,4,3,Poblacion,inn,3,0.6423,2,relevant
+2,2925.0,Banga,hotel,1693.0,2,3,Banga,inn,1,0.5994,8,relevant
+4,3519.0,Suba,hotel,5748.0,4,0,Suba,hotel,2,0.7247,8,relevant
+1,4279.0,Poblacion,hotel,5354.0,5,2,Villareal,hotel,1,0.6072,7,not_relevant
+3,2021.0,Suba,hotel,5504.0,4,1,Villareal,hotel,2,0.6263,1,relevant
+2,3513.0,Nangka,hotel,2235.0,4,1,Nangka,inn,1,0.8063,4,relevant
+3,763.0,Suba,inn,1539.0,4,1,Suba,inn,2,0.8514,2,relevant
+3,1469.0,Bayawan City,inn,2226.0,1,4,Villareal,inn,1,0.7383,7,not_relevant
+3,4584.0,Banga,hotel,2534.0,5,2,Bayawan City,hotel,1,0.7087,3,relevant
+3,3465.0,Nangka,hotel,4405.0,6,2,Bayawan City,hotel,2,0.9265,3,relevant
+4,2386.0,Banga,hotel,3145.0,3,0,Banga,inn,1,0.9361,4,not_relevant
+1,2100.0,Banga,hotel,1612.0,4,2,Banga,hotel,1,0.5908,2,relevant
+3,3919.0,Banga,hotel,1497.0,5,1,Banga,hotel,3,0.7333,10,relevant
+1,2749.0,Nangka,inn,5101.0,5,3,Nangka,hotel,1,0.6392,3,relevant
+4,4019.0,Villareal,hotel,4356.0,6,1,Villareal,hotel,1,0.7332,9,relevant
+2,1970.0,Villareal,inn,4059.0,3,3,Bayawan City,hotel,2,0.8955,10,not_relevant
+2,882.0,Bayawan City,inn,3499.0,3,2,Bayawan City,hotel,2,0.6767,8,not_relevant
+1,1850.0,Banga,inn,1753.0,6,2,Banga,hotel,5,0.9165,4,relevant
+2,3434.0,Banga,either,4348.0,5,2,Poblacion,hotel,3,0.8973,5,relevant
+2,3441.0,Villareal,hotel,4365.0,4,1,Nangka,hotel,3,0.6805,7,not_relevant
+3,2776.0,Poblacion,inn,1983.0,3,4,Poblacion,inn,1,0.7926,4,relevant
+1,3152.0,Suba,hotel,2890.0,5,3,Villareal,hotel,4,0.5518,7,relevant
+4,2805.0,Villareal,either,2468.0,4,1,Villareal,inn,1,0.7877,4,relevant
+1,1885.0,Villareal,hotel,2423.0,5,2,Villareal,hotel,5,0.5811,2,relevant
+5,2777.0,Bayawan City,hotel,3250.0,3,2,Bayawan City,hotel,3,0.8903,1,not_relevant
+4,2247.0,Banga,inn,2918.0,1,1,Banga,inn,1,0.7074,1,not_relevant
+4,2851.0,Suba,hotel,2140.0,6,1,Banga,hotel,1,0.8562,8,relevant
+4,2077.0,Banga,inn,3753.0,6,2,Banga,hotel,1,0.5747,2,relevant
+2,1286.0,Bayawan City,inn,1452.0,4,4,Bayawan City,hotel,2,0.9762,5,relevant
+3,3229.0,Villareal,either,4843.0,5,0,Villareal,hotel,3,0.5993,3,not_relevant
+3,3894.0,Bayawan City,hotel,4687.0,4,3,Bayawan City,hotel,4,0.8311,10,not_relevant
+4,1531.0,Villareal,inn,912.0,4,1,Villareal,inn,1,0.8947,6,relevant
+2,2749.0,Nangka,either,1957.0,2,1,Nangka,hotel,2,0.7414,1,relevant
+2,2214.0,Suba,hotel,1754.0,2,2,Suba,hotel,2,0.5587,1,relevant
+2,4137.0,Banga,hotel,2526.0,5,2,Banga,hotel,1,0.7107,5,relevant
+1,1735.0,Bayawan City,inn,1729.0,4,1,Villareal,inn,1,0.546,7,relevant
+1,2779.0,Suba,inn,2621.0,3,1,Poblacion,inn,1,0.6216,9,relevant
+2,1638.0,Bayawan City,inn,1151.0,2,1,Villareal,inn,1,0.6809,9,relevant
+3,2733.0,Bayawan City,inn,3095.0,4,4,Bayawan City,inn,2,0.8102,1,relevant
+3,1217.0,Suba,inn,1751.0,3,4,Suba,inn,2,0.9107,1,relevant
+1,2407.0,Suba,either,2793.0,1,2,Suba,inn,1,0.901,6,relevant
+2,1079.0,Nangka,either,2511.0,2,3,Nangka,inn,1,0.9876,2,relevant
+2,1533.0,Villareal,either,4233.0,5,2,Nangka,hotel,2,0.6317,9,not_relevant
+4,4501.0,Villareal,hotel,5177.0,5,1,Poblacion,hotel,4,0.6596,5,not_relevant
+2,2274.0,Banga,hotel,3072.0,4,1,Banga,inn,2,0.9449,6,relevant
+4,3340.0,Suba,either,1784.0,6,2,Bayawan City,hotel,1,0.8242,9,relevant
+3,2775.0,Villareal,hotel,1477.0,6,2,Bayawan City,hotel,2,0.747,6,relevant
+4,2115.0,Villareal,hotel,2099.0,2,1,Villareal,inn,1,0.8875,7,relevant
+5,1307.0,Banga,inn,2511.0,3,1,Bayawan City,inn,4,0.8735,2,not_relevant
+5,3324.0,Bayawan City,hotel,1504.0,4,2,Bayawan City,hotel,2,0.9517,3,relevant
+2,2270.0,Suba,hotel,2693.0,4,2,Banga,hotel,2,0.8097,6,relevant
+6,3437.0,Villareal,either,1562.0,3,2,Bayawan City,hotel,1,0.8686,3,relevant
+1,855.0,Bayawan City,inn,827.0,1,3,Bayawan City,inn,2,0.6615,5,relevant
+2,1863.0,Nangka,inn,2842.0,2,1,Nangka,hotel,2,0.5875,10,not_relevant
+5,4147.0,Banga,hotel,3009.0,3,1,Villareal,hotel,1,0.7081,10,not_relevant
+1,2314.0,Nangka,hotel,5240.0,4,1,Nangka,hotel,2,0.9088,4,relevant
+2,4176.0,Bayawan City,hotel,3105.0,3,0,Banga,hotel,5,0.6658,7,relevant
+3,2381.0,Banga,hotel,2701.0,3,1,Banga,inn,1,0.7079,2,relevant
+1,2328.0,Bayawan City,either,5884.0,4,4,Bayawan City,hotel,1,0.6485,1,relevant
+2,1340.0,Banga,inn,2120.0,1,2,Suba,inn,3,0.6707,3,not_relevant
+1,4001.0,Suba,either,2014.0,2,1,Suba,inn,3,0.8073,5,relevant
+2,1986.0,Nangka,inn,2066.0,4,1,Bayawan City,inn,1,0.7232,7,relevant
+2,1492.0,Poblacion,either,2281.0,4,1,Suba,inn,3,0.8289,9,relevant
+4,2485.0,Poblacion,inn,899.0,4,1,Poblacion,inn,1,0.7843,10,relevant
+2,2253.0,Villareal,either,1377.0,1,2,Villareal,inn,2,0.5398,9,relevant
+4,4601.0,Banga,hotel,3173.0,2,2,Suba,hotel,2,0.7665,9,relevant
+3,1695.0,Banga,inn,2872.0,4,1,Suba,inn,2,0.7424,9,not_relevant
+2,1787.0,Nangka,hotel,4271.0,6,2,Nangka,hotel,1,0.8766,7,relevant
+2,4526.0,Suba,hotel,5499.0,3,2,Suba,hotel,5,0.8364,2,relevant
+2,1672.0,Poblacion,hotel,5218.0,4,2,Poblacion,hotel,3,0.9709,1,relevant
+3,1122.0,Suba,inn,1645.0,3,1,Nangka,inn,1,0.6161,9,not_relevant
+5,3757.0,Banga,hotel,4823.0,5,0,Banga,hotel,2,0.9398,8,not_relevant
+4,2448.0,Banga,hotel,4371.0,5,1,Banga,hotel,1,0.6185,8,relevant
+5,2956.0,Banga,hotel,3492.0,5,2,Banga,hotel,2,0.5287,4,relevant
+4,2041.0,Villareal,hotel,4440.0,5,1,Villareal,hotel,1,0.5875,2,relevant
+1,3001.0,Banga,hotel,3823.0,2,0,Banga,hotel,5,0.8329,1,relevant
+2,1253.0,Villareal,inn,1869.0,4,1,Villareal,inn,1,0.6369,5,relevant
+2,1958.0,Suba,inn,3133.0,2,4,Suba,inn,2,0.57,5,relevant
+4,2797.0,Banga,inn,3136.0,2,1,Suba,inn,1,0.7653,2,not_relevant
+1,2121.0,Villareal,hotel,3446.0,3,0,Suba,hotel,1,0.5383,5,not_relevant
+1,878.0,Bayawan City,inn,3913.0,4,3,Bayawan City,hotel,1,0.9348,9,not_relevant
+4,3972.0,Bayawan City,hotel,2441.0,3,1,Poblacion,hotel,2,0.7484,5,relevant
+2,2301.0,Poblacion,inn,3104.0,4,1,Poblacion,inn,3,0.6623,5,relevant
+2,2383.0,Banga,hotel,888.0,4,1,Poblacion,inn,2,0.5561,8,relevant
+3,4381.0,Bayawan City,hotel,4518.0,5,2,Poblacion,hotel,3,0.8904,5,relevant
+1,4805.0,Bayawan City,hotel,2157.0,5,2,Bayawan City,hotel,3,0.9029,2,relevant
+1,2691.0,Villareal,inn,2276.0,3,2,Nangka,inn,2,0.656,4,relevant
+1,2054.0,Bayawan City,hotel,2248.0,2,3,Bayawan City,hotel,1,0.8478,2,relevant
+2,1757.0,Suba,hotel,5515.0,5,0,Suba,hotel,3,0.8991,1,relevant
+1,1510.0,Suba,inn,1028.0,1,2,Suba,inn,3,0.6477,7,relevant
+2,1223.0,Banga,either,5127.0,4,0,Banga,hotel,1,0.6448,8,not_relevant
+3,1711.0,Suba,inn,2272.0,3,1,Suba,hotel,5,0.6558,10,not_relevant
+2,1387.0,Bayawan City,inn,4894.0,3,1,Bayawan City,hotel,1,0.8503,2,relevant
+3,1932.0,Villareal,hotel,709.0,1,2,Villareal,inn,2,0.7113,5,not_relevant
+1,2790.0,Villareal,hotel,4676.0,5,1,Bayawan City,hotel,1,0.6979,9,not_relevant
+2,749.0,Banga,inn,1609.0,4,1,Banga,inn,5,0.895,8,not_relevant
+2,4039.0,Poblacion,hotel,3016.0,4,2,Poblacion,hotel,4,0.7681,8,relevant
+4,2138.0,Suba,either,1593.0,2,1,Villareal,hotel,1,0.6581,5,relevant
+2,1955.0,Suba,either,3882.0,3,2,Suba,hotel,5,0.6958,6,not_relevant
+1,2175.0,Nangka,inn,1598.0,2,3,Nangka,inn,3,0.8101,5,relevant
+3,2656.0,Villareal,inn,2469.0,1,1,Poblacion,inn,5,0.9719,4,relevant
+2,1503.0,Poblacion,inn,2894.0,2,3,Poblacion,inn,1,0.9758,6,relevant
+2,1768.0,Nangka,inn,2040.0,2,4,Suba,hotel,4,0.791,5,not_relevant
+5,1024.0,Suba,either,4392.0,5,2,Suba,hotel,2,0.9076,4,relevant
+2,4456.0,Bayawan City,hotel,3006.0,4,1,Bayawan City,inn,4,0.7048,5,relevant
+1,3714.0,Suba,either,4084.0,4,0,Suba,hotel,4,0.8572,10,not_relevant
+2,2218.0,Bayawan City,hotel,4366.0,6,1,Suba,hotel,2,0.6748,1,relevant
+1,4332.0,Bayawan City,hotel,1093.0,1,1,Bayawan City,inn,2,0.736,10,relevant
+2,1059.0,Nangka,inn,3736.0,3,2,Nangka,hotel,2,0.7695,4,not_relevant
+3,2958.0,Suba,either,1700.0,4,1,Suba,inn,1,0.7687,5,relevant
+6,2298.0,Nangka,either,2486.0,3,1,Nangka,inn,1,0.7771,9,relevant
+6,2097.0,Bayawan City,hotel,5337.0,4,2,Bayawan City,hotel,2,0.9094,4,not_relevant
+3,3675.0,Nangka,hotel,1375.0,4,2,Nangka,inn,2,0.9184,7,relevant
+3,4297.0,Poblacion,hotel,2871.0,3,4,Bayawan City,hotel,1,0.5901,9,relevant
+4,2888.0,Bayawan City,either,2988.0,2,3,Bayawan City,inn,2,0.9601,3,relevant
+3,4113.0,Banga,either,3434.0,4,2,Banga,hotel,2,0.7245,9,relevant
+2,2054.0,Banga,either,1599.0,5,2,Poblacion,hotel,2,0.7841,6,relevant
+3,4157.0,Banga,either,4583.0,2,1,Banga,hotel,2,0.9567,8,not_relevant
+3,2598.0,Nangka,either,1564.0,3,1,Nangka,inn,1,0.7058,7,relevant
+4,4149.0,Banga,hotel,4017.0,3,2,Banga,hotel,2,0.7402,8,relevant
+4,1993.0,Suba,inn,4828.0,5,2,Suba,hotel,1,0.6466,8,not_relevant
+1,3343.0,Villareal,hotel,2615.0,6,4,Suba,hotel,1,0.9255,8,relevant
+1,4862.0,Banga,hotel,659.0,1,1,Poblacion,inn,1,0.5351,4,relevant
+6,2794.0,Poblacion,inn,3075.0,2,3,Poblacion,inn,1,0.5385,2,relevant
+2,2146.0,Bayawan City,inn,1790.0,4,1,Bayawan City,inn,1,0.5231,3,relevant
+2,2789.0,Poblacion,either,1256.0,1,2,Poblacion,inn,3,0.8157,4,relevant
+1,1675.0,Banga,hotel,4377.0,2,0,Banga,hotel,1,0.8437,5,relevant
+1,2413.0,Poblacion,inn,643.0,2,1,Poblacion,inn,1,0.5922,1,relevant
+3,2408.0,Poblacion,hotel,5142.0,4,1,Poblacion,hotel,1,0.8807,7,relevant
+2,1905.0,Suba,either,2415.0,5,3,Suba,hotel,2,0.913,7,relevant
+2,963.0,Poblacion,inn,677.0,3,1,Villareal,inn,2,0.7927,5,relevant
+1,1089.0,Nangka,inn,2606.0,3,1,Nangka,inn,4,0.7624,3,relevant
+1,4901.0,Bayawan City,hotel,4741.0,6,4,Bayawan City,hotel,2,0.5774,4,relevant
+1,2028.0,Nangka,inn,2661.0,1,1,Nangka,inn,2,0.8189,8,relevant
+2,1714.0,Nangka,either,1992.0,4,2,Banga,inn,2,0.6911,10,not_relevant
+2,5019.0,Poblacion,hotel,1343.0,4,1,Villareal,inn,3,0.773,9,relevant
+1,1681.0,Banga,hotel,1643.0,2,1,Banga,inn,4,0.5233,9,relevant
+4,1237.0,Villareal,inn,2858.0,4,3,Villareal,hotel,1,0.971,6,relevant
+4,2366.0,Poblacion,inn,2414.0,3,1,Poblacion,inn,2,0.5703,2,not_relevant
+3,3515.0,Suba,hotel,4772.0,4,1,Suba,hotel,1,0.5612,2,relevant
+2,1146.0,Banga,inn,4255.0,2,2,Nangka,hotel,5,0.5747,3,not_relevant
+5,2715.0,Villareal,hotel,5156.0,3,2,Villareal,hotel,1,0.8187,9,not_relevant
+2,1178.0,Bayawan City,inn,1609.0,1,2,Suba,inn,2,0.7913,8,not_relevant
+3,1602.0,Nangka,inn,1465.0,1,1,Banga,inn,2,0.9345,9,relevant
+4,2624.0,Banga,either,5598.0,6,2,Nangka,hotel,2,0.8847,5,relevant
+1,2626.0,Bayawan City,inn,1571.0,1,1,Nangka,inn,1,0.9807,10,relevant
+2,2268.0,Banga,either,1735.0,3,1,Villareal,inn,5,0.7094,8,relevant
+5,4279.0,Villareal,hotel,3302.0,4,1,Villareal,hotel,1,0.5713,10,relevant
+3,3503.0,Poblacion,either,2712.0,2,2,Poblacion,inn,3,0.8682,10,relevant
+4,2778.0,Villareal,inn,3226.0,5,1,Villareal,hotel,2,0.5539,9,not_relevant
+2,1832.0,Banga,hotel,2413.0,2,1,Banga,inn,2,0.7389,8,not_relevant
+1,3014.0,Poblacion,either,2680.0,1,1,Poblacion,inn,1,0.6128,4,relevant
+3,2132.0,Poblacion,hotel,4128.0,4,0,Poblacion,hotel,1,0.8795,2,relevant
+1,2284.0,Villareal,either,1955.0,2,1,Villareal,inn,2,0.7993,5,relevant
+1,4844.0,Banga,hotel,4101.0,5,2,Banga,hotel,3,0.693,6,relevant
+2,2030.0,Poblacion,either,2601.0,5,1,Poblacion,hotel,4,0.7849,6,relevant
+3,1304.0,Poblacion,inn,2556.0,1,2,Poblacion,inn,1,0.6727,7,not_relevant
+3,3093.0,Poblacion,hotel,2181.0,1,1,Nangka,inn,2,0.6367,6,not_relevant
+1,2469.0,Banga,hotel,4126.0,5,1,Banga,hotel,2,0.8047,9,relevant
+2,3361.0,Nangka,either,1905.0,3,2,Nangka,hotel,1,0.6036,9,relevant
+4,3337.0,Nangka,hotel,1993.0,3,1,Nangka,hotel,1,0.696,8,relevant
+3,1697.0,Suba,hotel,1949.0,5,2,Suba,hotel,1,0.6174,1,relevant
+2,2069.0,Villareal,hotel,4669.0,3,1,Villareal,hotel,1,0.8748,4,relevant
+3,1300.0,Bayawan City,inn,1060.0,4,0,Banga,inn,1,0.7458,1,relevant
+4,1955.0,Bayawan City,either,5195.0,6,1,Banga,hotel,1,0.8863,8,not_relevant
+4,1295.0,Nangka,inn,854.0,2,1,Nangka,inn,2,0.9104,9,relevant
+3,2792.0,Poblacion,hotel,3519.0,2,1,Poblacion,hotel,2,0.5846,6,not_relevant
+3,2447.0,Suba,inn,1686.0,1,2,Suba,inn,1,0.6031,6,relevant
+2,757.0,Banga,inn,2864.0,3,2,Banga,inn,1,0.7449,6,relevant
+3,1627.0,Bayawan City,either,2835.0,4,1,Bayawan City,inn,1,0.5841,10,relevant
+3,2653.0,Nangka,hotel,2379.0,5,0,Nangka,hotel,1,0.555,8,relevant
+2,1904.0,Nangka,hotel,4688.0,3,1,Suba,hotel,5,0.9139,10,not_relevant
+4,2146.0,Poblacion,hotel,4357.0,4,1,Banga,hotel,1,0.5591,5,not_relevant
+3,1680.0,Bayawan City,hotel,5004.0,6,0,Nangka,hotel,3,0.5206,8,not_relevant
+1,1123.0,Bayawan City,inn,824.0,4,1,Bayawan City,inn,1,0.7196,4,relevant
+1,3288.0,Villareal,hotel,2081.0,4,1,Villareal,hotel,1,0.9554,1,relevant
+3,1715.0,Bayawan City,hotel,2846.0,4,0,Suba,hotel,1,0.8326,6,not_relevant
+3,1734.0,Nangka,hotel,1380.0,2,1,Nangka,inn,4,0.6913,8,not_relevant
+3,1642.0,Villareal,inn,3054.0,3,2,Villareal,inn,3,0.8716,8,relevant
+3,1378.0,Villareal,inn,830.0,3,1,Villareal,inn,1,0.7272,4,relevant
+5,1676.0,Banga,inn,2478.0,2,4,Banga,inn,3,0.891,8,not_relevant
+2,4645.0,Nangka,hotel,4486.0,2,0,Nangka,hotel,2,0.7533,6,relevant
+2,2301.0,Nangka,inn,2714.0,3,1,Nangka,inn,2,0.7623,1,relevant
+4,2819.0,Villareal,either,3492.0,4,0,Villareal,hotel,2,0.7253,9,not_relevant
+1,1970.0,Poblacion,hotel,1864.0,2,3,Nangka,hotel,2,0.9722,2,relevant
+6,1610.0,Suba,inn,3041.0,4,2,Suba,hotel,2,0.833,9,not_relevant
+3,863.0,Poblacion,inn,1778.0,1,1,Poblacion,inn,1,0.9749,10,not_relevant
+4,3117.0,Banga,either,5367.0,6,1,Banga,hotel,1,0.5862,10,not_relevant
+3,2530.0,Nangka,inn,1849.0,3,1,Nangka,inn,2,0.9705,8,relevant
+1,1021.0,Villareal,inn,2476.0,4,1,Poblacion,inn,1,0.9001,1,relevant
+4,4138.0,Poblacion,hotel,2662.0,4,2,Poblacion,inn,2,0.7666,9,relevant
+2,1883.0,Suba,hotel,3330.0,4,1,Suba,hotel,2,0.8594,3,relevant
+2,2063.0,Bayawan City,inn,862.0,4,4,Nangka,inn,2,0.6971,5,relevant
+2,2660.0,Banga,inn,3074.0,3,1,Nangka,inn,3,0.7113,6,relevant
+3,5154.0,Suba,hotel,1908.0,3,4,Poblacion,hotel,3,0.8289,1,relevant
+2,4494.0,Banga,hotel,2469.0,3,1,Bayawan City,hotel,4,0.6366,4,relevant
+1,4203.0,Nangka,hotel,2726.0,5,1,Villareal,hotel,2,0.7166,6,relevant
+2,2713.0,Nangka,inn,2830.0,1,1,Nangka,inn,2,0.9459,1,relevant
+2,3142.0,Banga,hotel,1548.0,4,1,Banga,inn,3,0.7658,2,relevant
+1,2261.0,Suba,inn,2372.0,2,3,Suba,inn,1,0.6481,10,relevant
+2,1873.0,Banga,inn,2439.0,2,1,Banga,inn,1,0.8348,2,relevant
+1,2458.0,Suba,hotel,2705.0,3,3,Villareal,hotel,1,0.964,7,relevant
+2,2750.0,Villareal,either,4168.0,3,1,Suba,hotel,1,0.8672,8,relevant
+2,1800.0,Suba,inn,2392.0,2,4,Villareal,inn,4,0.7111,1,relevant
+4,3567.0,Nangka,hotel,3388.0,4,1,Nangka,hotel,1,0.9236,3,relevant
+2,2160.0,Bayawan City,inn,2992.0,3,0,Bayawan City,inn,1,0.6237,8,not_relevant
+5,2278.0,Banga,either,2737.0,2,2,Suba,hotel,1,0.6756,3,not_relevant
+6,2876.0,Nangka,either,1716.0,5,1,Poblacion,hotel,1,0.9764,8,relevant
+4,2637.0,Suba,either,5470.0,4,3,Suba,hotel,5,0.6987,6,not_relevant
+4,3045.0,Nangka,either,3269.0,5,1,Banga,hotel,3,0.9186,10,relevant
+2,1718.0,Banga,hotel,1486.0,5,1,Banga,hotel,1,0.643,10,relevant
+2,2689.0,Banga,either,698.0,4,2,Suba,inn,2,0.5478,4,relevant
+1,1688.0,Poblacion,inn,2666.0,1,3,Poblacion,inn,1,0.6252,9,relevant
+1,1179.0,Suba,inn,2099.0,1,2,Bayawan City,inn,1,0.9137,5,not_relevant
+2,4741.0,Nangka,hotel,5437.0,6,3,Nangka,hotel,1,0.8302,7,relevant
+2,2219.0,Banga,inn,2381.0,3,1,Banga,inn,2,0.583,7,relevant
+5,1904.0,Suba,hotel,3237.0,4,3,Suba,hotel,2,0.8674,3,not_relevant
+3,4773.0,Bayawan City,hotel,904.0,2,1,Nangka,inn,1,0.8068,2,relevant
+3,2210.0,Banga,hotel,845.0,3,0,Banga,inn,3,0.7426,3,relevant
+4,1929.0,Poblacion,inn,1305.0,2,1,Poblacion,inn,3,0.86,3,relevant
+3,4765.0,Banga,hotel,2816.0,2,3,Banga,inn,3,0.6377,10,not_relevant
+4,2148.0,Bayawan City,inn,5317.0,3,2,Bayawan City,hotel,1,0.6527,1,not_relevant
+5,1938.0,Poblacion,inn,2265.0,3,0,Banga,inn,2,0.5609,10,not_relevant
+2,3537.0,Nangka,hotel,881.0,3,1,Poblacion,inn,2,0.7232,10,relevant
+2,1175.0,Bayawan City,inn,1572.0,2,1,Bayawan City,inn,1,0.7562,4,relevant
+1,4067.0,Banga,hotel,1815.0,6,2,Banga,hotel,3,0.6985,10,relevant
+3,1147.0,Bayawan City,either,2662.0,6,0,Poblacion,hotel,1,0.7045,6,not_relevant
+4,3003.0,Villareal,either,1841.0,5,4,Poblacion,hotel,5,0.9483,2,relevant
+3,4124.0,Suba,either,5325.0,6,1,Bayawan City,hotel,1,0.5726,1,relevant
+4,2460.0,Poblacion,inn,713.0,3,0,Poblacion,inn,4,0.8819,8,not_relevant
+2,1622.0,Banga,either,3252.0,5,0,Poblacion,hotel,1,0.5753,4,not_relevant
+1,2892.0,Nangka,hotel,5000.0,2,4,Nangka,hotel,4,0.8077,10,relevant
+2,2750.0,Villareal,hotel,4698.0,6,3,Villareal,hotel,5,0.8426,7,not_relevant
+2,2719.0,Poblacion,inn,2285.0,2,1,Poblacion,hotel,3,0.7926,1,relevant
+2,2821.0,Suba,hotel,3165.0,3,2,Suba,hotel,2,0.8858,9,relevant
+3,1996.0,Suba,either,5234.0,3,2,Suba,hotel,3,0.6077,8,relevant
+2,4042.0,Nangka,either,1723.0,3,4,Nangka,inn,1,0.8816,10,relevant
+4,2754.0,Poblacion,either,2630.0,2,1,Nangka,inn,4,0.8539,9,not_relevant
+2,1133.0,Poblacion,either,1657.0,1,1,Poblacion,inn,2,0.6663,9,not_relevant
+3,2309.0,Nangka,inn,1545.0,1,1,Nangka,inn,1,0.5697,4,relevant
+1,3102.0,Villareal,either,1988.0,3,1,Villareal,inn,3,0.8956,5,relevant
+5,3296.0,Banga,hotel,4522.0,2,1,Suba,hotel,1,0.9241,1,not_relevant
+4,2999.0,Poblacion,hotel,4183.0,4,1,Poblacion,hotel,5,0.6025,5,relevant
+2,2093.0,Banga,either,1623.0,2,1,Poblacion,hotel,4,0.817,5,relevant
+4,1036.0,Banga,either,1545.0,1,3,Banga,inn,1,0.8225,7,not_relevant
+4,1793.0,Poblacion,inn,1114.0,4,2,Suba,inn,2,0.8696,8,relevant
+4,3979.0,Suba,hotel,4061.0,2,2,Suba,hotel,1,0.611,10,not_relevant
+1,985.0,Villareal,inn,1374.0,1,1,Banga,inn,2,0.9224,5,relevant
+3,4053.0,Suba,either,5281.0,3,0,Suba,hotel,2,0.9009,3,relevant
+2,4032.0,Banga,hotel,4311.0,3,1,Bayawan City,hotel,2,0.721,7,relevant
+4,5060.0,Nangka,hotel,4964.0,4,1,Villareal,hotel,1,0.5236,9,relevant
+1,3488.0,Nangka,hotel,2975.0,3,2,Villareal,inn,1,0.795,6,relevant
+2,2430.0,Nangka,inn,3681.0,3,1,Nangka,hotel,2,0.8428,2,relevant
+5,2113.0,Bayawan City,hotel,3725.0,2,1,Bayawan City,hotel,2,0.8667,2,not_relevant
+2,1711.0,Suba,either,3162.0,3,2,Suba,inn,4,0.6673,4,relevant
+1,4362.0,Suba,hotel,2790.0,2,2,Suba,inn,3,0.7897,8,relevant
+2,2569.0,Poblacion,inn,2676.0,3,1,Poblacion,inn,2,0.9128,2,relevant
+2,2997.0,Nangka,either,2962.0,1,1,Suba,inn,5,0.5558,2,relevant
+1,5107.0,Nangka,hotel,6023.0,6,2,Nangka,hotel,1,0.6011,5,relevant
+5,3909.0,Nangka,either,2913.0,4,1,Suba,hotel,5,0.9761,8,not_relevant
+2,3590.0,Villareal,either,1202.0,1,1,Villareal,inn,4,0.5607,3,relevant
+2,947.0,Suba,inn,4751.0,6,2,Poblacion,hotel,2,0.5897,1,not_relevant
+3,2881.0,Suba,either,858.0,3,1,Nangka,inn,2,0.5828,9,relevant
+1,786.0,Poblacion,inn,5061.0,6,0,Suba,hotel,1,0.8851,9,not_relevant
+4,1372.0,Nangka,inn,749.0,2,1,Villareal,inn,3,0.7882,1,relevant
+3,2714.0,Banga,inn,1847.0,4,3,Banga,inn,4,0.8094,3,relevant
+2,1545.0,Nangka,either,2349.0,4,1,Banga,inn,1,0.5622,5,relevant
+2,1614.0,Suba,hotel,2000.0,4,2,Suba,hotel,3,0.6074,1,relevant
+1,4316.0,Poblacion,hotel,1647.0,4,4,Poblacion,inn,1,0.6247,8,relevant
+4,4000.0,Villareal,either,2160.0,1,1,Banga,inn,1,0.6811,9,relevant
+1,2419.0,Villareal,hotel,5350.0,6,2,Villareal,hotel,5,0.8585,1,relevant
+3,1795.0,Nangka,either,2514.0,3,1,Villareal,hotel,1,0.5809,5,relevant
+1,3636.0,Suba,hotel,3331.0,3,2,Suba,hotel,1,0.9007,4,relevant
+2,1583.0,Nangka,either,1450.0,3,1,Bayawan City,inn,4,0.8692,4,relevant
+4,2462.0,Poblacion,hotel,3701.0,6,1,Nangka,hotel,2,0.5801,2,relevant
+1,3426.0,Bayawan City,either,2745.0,1,2,Bayawan City,inn,1,0.7444,2,relevant
+2,1958.0,Nangka,inn,1838.0,3,2,Nangka,inn,1,0.8329,8,relevant
+1,4521.0,Poblacion,hotel,2591.0,3,1,Poblacion,hotel,2,0.7215,10,relevant
+3,1605.0,Poblacion,inn,3070.0,1,3,Poblacion,inn,2,0.9254,9,not_relevant
+3,4702.0,Poblacion,hotel,4845.0,4,2,Poblacion,hotel,3,0.5801,1,relevant
+2,3251.0,Nangka,hotel,2726.0,1,1,Nangka,inn,2,0.9096,5,relevant
+3,703.0,Suba,inn,1546.0,1,1,Suba,inn,1,0.6991,8,not_relevant
+3,2443.0,Villareal,hotel,5205.0,4,1,Villareal,hotel,1,0.6558,10,not_relevant
+2,1512.0,Nangka,inn,905.0,3,1,Nangka,inn,1,0.5903,1,relevant
+3,4397.0,Villareal,hotel,2774.0,3,1,Suba,hotel,1,0.6163,8,relevant
+2,3911.0,Poblacion,hotel,1475.0,3,0,Poblacion,inn,2,0.8946,1,relevant
+2,4662.0,Suba,hotel,5562.0,2,2,Suba,hotel,2,0.9543,5,relevant
+2,2187.0,Nangka,inn,3688.0,6,1,Villareal,hotel,5,0.8898,1,not_relevant
+5,4215.0,Bayawan City,hotel,2280.0,4,0,Villareal,hotel,1,0.9029,8,not_relevant
+2,4420.0,Banga,hotel,1557.0,2,2,Banga,inn,4,0.5815,6,relevant
+6,2383.0,Villareal,hotel,5024.0,6,3,Villareal,hotel,3,0.5626,8,relevant
+4,877.0,Villareal,inn,3083.0,3,1,Villareal,inn,2,0.5391,9,not_relevant
+3,4994.0,Bayawan City,hotel,4594.0,6,2,Bayawan City,hotel,4,0.6447,3,relevant
+3,1159.0,Banga,inn,1364.0,2,2,Banga,inn,1,0.7571,4,not_relevant
+3,2449.0,Banga,inn,602.0,4,3,Suba,inn,2,0.6196,1,relevant
+3,3345.0,Nangka,hotel,2064.0,2,1,Bayawan City,hotel,1,0.5408,6,relevant
+3,2759.0,Villareal,inn,1974.0,5,2,Banga,hotel,4,0.5399,1,relevant
+2,3303.0,Poblacion,hotel,5202.0,6,1,Poblacion,hotel,1,0.8802,1,relevant
+2,827.0,Villareal,inn,2211.0,2,2,Villareal,hotel,3,0.9727,2,not_relevant
+3,3927.0,Nangka,hotel,2349.0,6,1,Bayawan City,hotel,2,0.537,6,relevant
+4,3286.0,Nangka,hotel,4988.0,6,1,Poblacion,hotel,2,0.5561,8,not_relevant
+1,4676.0,Poblacion,hotel,4965.0,3,3,Poblacion,hotel,1,0.5594,7,relevant
+3,2152.0,Bayawan City,hotel,772.0,2,2,Villareal,inn,4,0.5394,5,not_relevant
+5,2487.0,Nangka,either,4257.0,5,2,Nangka,hotel,1,0.7027,1,relevant
+3,943.0,Poblacion,inn,4581.0,3,2,Banga,hotel,3,0.7218,2,not_relevant
+4,3820.0,Suba,hotel,2070.0,2,2,Suba,hotel,1,0.9312,4,relevant
+2,1255.0,Bayawan City,inn,843.0,4,1,Bayawan City,inn,1,0.9035,5,relevant
+4,4483.0,Suba,hotel,4569.0,6,2,Bayawan City,hotel,2,0.9243,7,relevant
+1,5051.0,Poblacion,hotel,3178.0,2,0,Poblacion,hotel,1,0.8847,5,relevant
+4,1174.0,Banga,either,2816.0,4,2,Banga,inn,2,0.6406,2,relevant
+2,822.0,Villareal,inn,2702.0,3,2,Villareal,inn,3,0.5363,9,relevant
+3,2126.0,Banga,inn,2940.0,2,1,Banga,inn,1,0.5567,5,not_relevant
+5,2465.0,Suba,inn,1333.0,4,1,Suba,inn,3,0.6552,9,relevant
+1,5108.0,Suba,hotel,3740.0,5,1,Poblacion,hotel,2,0.578,7,relevant
+5,2286.0,Suba,inn,1130.0,2,1,Suba,inn,1,0.8765,2,relevant
+1,1806.0,Villareal,inn,2238.0,2,2,Villareal,inn,2,0.7471,7,relevant
+1,3090.0,Villareal,hotel,5473.0,2,4,Banga,hotel,1,0.6715,3,not_relevant
+4,3134.0,Banga,either,4029.0,2,2,Suba,hotel,2,0.6652,10,not_relevant
+2,1633.0,Banga,hotel,4348.0,3,3,Bayawan City,hotel,4,0.6136,6,not_relevant
+2,1880.0,Banga,inn,1211.0,2,1,Bayawan City,inn,1,0.5231,2,relevant
+3,4460.0,Banga,hotel,907.0,3,1,Poblacion,inn,1,0.9553,9,relevant
+4,4023.0,Poblacion,hotel,2638.0,5,2,Suba,hotel,1,0.5654,3,relevant
+3,3791.0,Bayawan City,either,2061.0,6,2,Bayawan City,hotel,5,0.6999,10,relevant
+3,4920.0,Villareal,hotel,3178.0,5,1,Villareal,hotel,2,0.8849,5,relevant
+2,1588.0,Nangka,either,3000.0,6,4,Nangka,hotel,3,0.6678,3,relevant
+1,3756.0,Poblacion,hotel,2928.0,5,1,Poblacion,hotel,5,0.6781,5,relevant
+6,2324.0,Villareal,inn,2536.0,4,3,Villareal,inn,3,0.5804,9,not_relevant
+1,927.0,Nangka,inn,3163.0,2,1,Villareal,inn,1,0.8569,4,relevant
+2,4289.0,Banga,hotel,1682.0,2,1,Poblacion,hotel,1,0.6408,2,relevant
+2,2772.0,Bayawan City,hotel,4815.0,4,3,Bayawan City,hotel,1,0.6857,5,relevant
+3,1996.0,Bayawan City,hotel,2403.0,5,1,Bayawan City,hotel,1,0.937,4,relevant
+1,4072.0,Villareal,either,1774.0,2,2,Suba,hotel,3,0.6264,5,relevant
+2,981.0,Nangka,inn,2773.0,4,1,Nangka,inn,4,0.7096,9,relevant
+3,3044.0,Poblacion,either,3086.0,2,1,Poblacion,inn,5,0.762,4,not_relevant
+1,2538.0,Poblacion,hotel,3066.0,2,1,Poblacion,inn,4,0.5265,8,not_relevant
+1,2597.0,Nangka,inn,3936.0,5,1,Suba,hotel,3,0.6402,8,not_relevant
+1,3146.0,Banga,hotel,2921.0,5,3,Banga,hotel,1,0.8901,3,relevant
+2,2275.0,Poblacion,hotel,5338.0,6,1,Nangka,hotel,1,0.5828,8,not_relevant
+3,2464.0,Poblacion,inn,2934.0,3,1,Villareal,inn,3,0.7084,7,relevant
+1,4276.0,Banga,hotel,3567.0,4,1,Bayawan City,hotel,1,0.7918,5,relevant
+4,3039.0,Nangka,hotel,1234.0,4,1,Nangka,inn,1,0.8722,7,relevant
+3,2241.0,Nangka,inn,1633.0,2,1,Nangka,inn,1,0.8615,7,relevant
+3,1683.0,Suba,either,900.0,3,2,Banga,inn,2,0.9531,4,relevant
+3,3002.0,Nangka,either,4674.0,3,1,Nangka,hotel,2,0.7869,6,relevant
+2,2117.0,Banga,inn,1501.0,1,4,Banga,inn,1,0.8266,9,relevant
+3,4383.0,Poblacion,hotel,2607.0,1,1,Poblacion,inn,3,0.5642,1,relevant
+2,2390.0,Suba,inn,1628.0,2,1,Banga,inn,1,0.6429,2,relevant
+2,4783.0,Nangka,hotel,3448.0,5,2,Nangka,hotel,1,0.7882,10,relevant
+1,3511.0,Suba,either,4520.0,5,1,Suba,hotel,2,0.7945,1,relevant
+2,4363.0,Poblacion,hotel,3180.0,3,2,Poblacion,hotel,2,0.981,8,relevant
+4,2482.0,Villareal,either,2418.0,3,1,Villareal,inn,4,0.5233,8,not_relevant
+3,4161.0,Bayawan City,hotel,2898.0,3,2,Suba,hotel,3,0.9041,1,relevant
+2,843.0,Suba,inn,2745.0,1,1,Nangka,inn,2,0.9626,4,not_relevant
+1,2682.0,Suba,either,3643.0,3,1,Suba,hotel,1,0.5907,4,relevant
+4,2071.0,Banga,inn,2722.0,3,2,Banga,inn,1,0.9051,5,not_relevant
+3,2126.0,Banga,either,2415.0,2,3,Banga,inn,2,0.639,3,relevant
+3,4382.0,Suba,hotel,4663.0,4,1,Suba,hotel,2,0.9324,6,relevant
+4,3150.0,Suba,either,1459.0,5,1,Bayawan City,hotel,2,0.8628,4,relevant
+2,3155.0,Nangka,hotel,3881.0,6,1,Nangka,hotel,2,0.9014,5,relevant
+1,2494.0,Banga,hotel,2847.0,5,2,Banga,hotel,3,0.5686,6,relevant
+2,2768.0,Suba,either,3336.0,6,3,Suba,hotel,2,0.6452,7,relevant
+1,2689.0,Villareal,inn,3010.0,3,2,Poblacion,hotel,2,0.6443,8,not_relevant
+4,5192.0,Suba,hotel,2548.0,2,1,Suba,hotel,1,0.5718,9,relevant
+4,3917.0,Suba,hotel,5444.0,5,4,Suba,hotel,3,0.7207,1,relevant
+3,3763.0,Nangka,hotel,3123.0,5,0,Nangka,hotel,3,0.8343,6,relevant
+3,2068.0,Poblacion,inn,2372.0,4,2,Bayawan City,inn,1,0.8192,2,relevant
+2,1088.0,Poblacion,inn,3189.0,5,1,Poblacion,hotel,2,0.691,5,relevant
+4,1717.0,Nangka,inn,2640.0,2,1,Nangka,inn,1,0.8859,9,not_relevant
+4,1187.0,Nangka,inn,1645.0,4,2,Villareal,hotel,1,0.5368,8,not_relevant
+2,3698.0,Nangka,hotel,3007.0,4,1,Nangka,hotel,2,0.7373,6,relevant
+4,3540.0,Nangka,either,1129.0,3,1,Nangka,inn,2,0.5753,4,relevant
+2,2753.0,Nangka,either,5434.0,2,2,Banga,hotel,1,0.7562,10,not_relevant
+3,4641.0,Bayawan City,hotel,3361.0,4,4,Bayawan City,hotel,1,0.7248,6,relevant
+1,1651.0,Suba,either,3093.0,4,2,Suba,hotel,4,0.9654,10,relevant
+5,5080.0,Bayawan City,hotel,4673.0,4,1,Banga,hotel,5,0.5338,4,not_relevant
+4,1553.0,Banga,inn,2738.0,5,0,Bayawan City,hotel,1,0.6879,10,not_relevant
+1,1573.0,Bayawan City,either,1719.0,6,2,Bayawan City,hotel,1,0.5794,9,relevant
+2,3019.0,Nangka,hotel,1817.0,1,2,Nangka,inn,1,0.6887,9,relevant
+2,1809.0,Poblacion,inn,1949.0,2,1,Poblacion,inn,2,0.6961,2,relevant
+2,3388.0,Nangka,hotel,3648.0,3,2,Nangka,hotel,3,0.7571,2,relevant
+2,4309.0,Nangka,hotel,2049.0,6,1,Nangka,hotel,1,0.9603,1,relevant
+2,3457.0,Suba,hotel,5084.0,6,1,Suba,hotel,3,0.7609,5,relevant
+3,1880.0,Banga,inn,4735.0,4,2,Nangka,hotel,1,0.5326,6,not_relevant
+3,3108.0,Banga,hotel,1962.0,2,1,Nangka,inn,1,0.7587,1,relevant
+4,2734.0,Banga,inn,2619.0,4,2,Banga,inn,1,0.9333,5,relevant
+2,4121.0,Banga,hotel,1715.0,5,0,Poblacion,hotel,1,0.9309,5,relevant
+4,1786.0,Banga,inn,1032.0,4,1,Banga,inn,2,0.8904,6,relevant
+2,1391.0,Banga,inn,2444.0,1,1,Banga,inn,3,0.6965,1,not_relevant
+3,3076.0,Poblacion,hotel,1408.0,4,3,Poblacion,inn,3,0.8459,2,relevant
+2,2977.0,Nangka,hotel,2876.0,3,1,Bayawan City,inn,1,0.8126,6,relevant
+6,1833.0,Poblacion,either,2127.0,2,2,Suba,inn,4,0.8487,8,not_relevant
+2,2835.0,Suba,hotel,2150.0,2,0,Nangka,hotel,2,0.658,1,relevant
+2,1982.0,Nangka,hotel,3163.0,2,1,Nangka,inn,1,0.7813,7,relevant
+1,800.0,Poblacion,inn,960.0,3,0,Suba,inn,1,0.6125,9,not_relevant
+2,1735.0,Poblacion,hotel,3103.0,1,2,Poblacion,inn,3,0.962,4,not_relevant
+4,1394.0,Bayawan City,inn,857.0,4,2,Bayawan City,inn,2,0.9677,5,relevant
+2,5054.0,Villareal,hotel,1153.0,3,1,Villareal,inn,1,0.6072,2,relevant
+3,1957.0,Villareal,inn,1725.0,4,1,Villareal,inn,2,0.8803,4,relevant
+2,1080.0,Villareal,inn,2851.0,3,2,Villareal,inn,1,0.7862,10,relevant
+2,2071.0,Banga,inn,1621.0,2,1,Villareal,inn,1,0.7096,7,relevant
+4,4708.0,Poblacion,hotel,1491.0,6,3,Poblacion,hotel,3,0.8799,5,relevant

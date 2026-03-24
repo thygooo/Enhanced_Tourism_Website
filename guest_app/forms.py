@@ -48,6 +48,10 @@ class GuestRegistrationForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput, required=True, label="Confirm Password")
     picture = forms.ImageField(required=True)
     company_name = forms.CharField(max_length=100, required=False, label="Company Name (Optional)")
+    register_as_accommodation_owner = forms.BooleanField(
+        required=False,
+        label="Register as Accommodation Owner",
+    )
 
     class Meta:
         model = Guest

@@ -1,0 +1,206 @@
+{
+  "model_path": "artifacts/text_cnn_intent_final_iter_v1/text_cnn_intent.h5",
+  "manual_query_csv": "thesis_data_templates/text_cnn_intent_manual_validation_queries_v1.csv",
+  "thresholds_tested": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6
+  ],
+  "threshold_summary": [
+    {
+      "threshold": 0.1,
+      "raw_cnn_accuracy": 0.2777777777777778,
+      "fallback_usage_count": 0,
+      "final_routed_accuracy": 0.2777777777777778
+    },
+    {
+      "threshold": 0.2,
+      "raw_cnn_accuracy": 0.2777777777777778,
+      "fallback_usage_count": 2,
+      "final_routed_accuracy": 0.28888888888888886
+    },
+    {
+      "threshold": 0.3,
+      "raw_cnn_accuracy": 0.2777777777777778,
+      "fallback_usage_count": 40,
+      "final_routed_accuracy": 0.43333333333333335
+    },
+    {
+      "threshold": 0.4,
+      "raw_cnn_accuracy": 0.2777777777777778,
+      "fallback_usage_count": 81,
+      "final_routed_accuracy": 0.6333333333333333
+    },
+    {
+      "threshold": 0.5,
+      "raw_cnn_accuracy": 0.2777777777777778,
+      "fallback_usage_count": 90,
+      "final_routed_accuracy": 0.6888888888888889
+    },
+    {
+      "threshold": 0.6,
+      "raw_cnn_accuracy": 0.2777777777777778,
+      "fallback_usage_count": 90,
+      "final_routed_accuracy": 0.6888888888888889
+    }
+  ],
+  "intent_level_analysis": {
+    "per_threshold_direct_intent_stats": {
+      "0.1": {
+        "book_accommodation": {
+          "accepted_count": 4,
+          "accepted_accuracy": 0.0
+        },
+        "calculate_accommodation_billing": {
+          "accepted_count": 1,
+          "accepted_accuracy": 0.0
+        },
+        "calculate_billing": {
+          "accepted_count": 18,
+          "accepted_accuracy": 0.8333333333333334
+        },
+        "get_accommodation_recommendation": {
+          "accepted_count": 1,
+          "accepted_accuracy": 0.0
+        },
+        "get_recommendation": {
+          "accepted_count": 39,
+          "accepted_accuracy": 0.2564102564102564
+        },
+        "get_tourism_information": {
+          "accepted_count": 27,
+          "accepted_accuracy": 0.0
+        }
+      },
+      "0.2": {
+        "book_accommodation": {
+          "accepted_count": 4,
+          "accepted_accuracy": 0.0
+        },
+        "calculate_accommodation_billing": {
+          "accepted_count": 1,
+          "accepted_accuracy": 0.0
+        },
+        "calculate_billing": {
+          "accepted_count": 17,
+          "accepted_accuracy": 0.8823529411764706
+        },
+        "get_accommodation_recommendation": {
+          "accepted_count": 1,
+          "accepted_accuracy": 0.0
+        },
+        "get_recommendation": {
+          "accepted_count": 38,
+          "accepted_accuracy": 0.2631578947368421
+        },
+        "get_tourism_information": {
+          "accepted_count": 27,
+          "accepted_accuracy": 0.0
+        }
+      },
+      "0.3": {
+        "book_accommodation": {
+          "accepted_count": 1,
+          "accepted_accuracy": 0.0
+        },
+        "calculate_billing": {
+          "accepted_count": 10,
+          "accepted_accuracy": 1.0
+        },
+        "get_recommendation": {
+          "accepted_count": 18,
+          "accepted_accuracy": 0.3888888888888889
+        },
+        "get_tourism_information": {
+          "accepted_count": 21,
+          "accepted_accuracy": 0.0
+        }
+      },
+      "0.4": {
+        "calculate_billing": {
+          "accepted_count": 1,
+          "accepted_accuracy": 1.0
+        },
+        "get_recommendation": {
+          "accepted_count": 2,
+          "accepted_accuracy": 0.5
+        },
+        "get_tourism_information": {
+          "accepted_count": 6,
+          "accepted_accuracy": 0.0
+        }
+      },
+      "0.5": {},
+      "0.6": {}
+    },
+    "lower_threshold_aggregate_direct_intent_stats": {
+      "book_accommodation": {
+        "accepted_count": 9,
+        "accepted_accuracy": 0.0
+      },
+      "calculate_accommodation_billing": {
+        "accepted_count": 2,
+        "accepted_accuracy": 0.0
+      },
+      "calculate_billing": {
+        "accepted_count": 46,
+        "accepted_accuracy": 0.8913043478260869
+      },
+      "get_accommodation_recommendation": {
+        "accepted_count": 2,
+        "accepted_accuracy": 0.0
+      },
+      "get_recommendation": {
+        "accepted_count": 97,
+        "accepted_accuracy": 0.28865979381443296
+      },
+      "get_tourism_information": {
+        "accepted_count": 81,
+        "accepted_accuracy": 0.0
+      }
+    },
+    "safest_intents_for_direct_routing": [
+      {
+        "intent": "calculate_billing",
+        "accepted_count": 46,
+        "accepted_accuracy": 0.8913043478260869
+      }
+    ],
+    "riskiest_intents_for_direct_routing": [
+      {
+        "intent": "book_accommodation",
+        "accepted_count": 9,
+        "accepted_accuracy": 0.0
+      },
+      {
+        "intent": "get_recommendation",
+        "accepted_count": 97,
+        "accepted_accuracy": 0.28865979381443296
+      },
+      {
+        "intent": "get_tourism_information",
+        "accepted_count": 81,
+        "accepted_accuracy": 0.0
+      }
+    ]
+  },
+  "recommendation": {
+    "best_threshold": 0.5,
+    "best_final_routed_accuracy": 0.6888888888888889,
+    "improvement_vs_threshold_0_60": 0.0,
+    "note": "Keep conservative threshold and use fallback-first strategy; no global gain over 0.60.",
+    "proposed_selective_routing_rules": [
+      "Allow direct CNN routing for intents listed in safest_intents_for_direct_routing when confidence >= 0.35.",
+      "Keep fallback-first behavior for intents listed in riskiest_intents_for_direct_routing unless confidence >= 0.70.",
+      "For billing intents, require explicit keyword confirmation (tour/hotel/accommodation) before accepting direct CNN at low confidence."
+    ]
+  },
+  "outputs": {
+    "summary_csv": "artifacts/text_cnn_intent/manual_validation/final_iter_calibration_sweep_v1.csv",
+    "rows_csv": "artifacts/text_cnn_intent/manual_validation/final_iter_calibration_rows_v1.csv",
+    "summary_json": "artifacts/text_cnn_intent/manual_validation/final_iter_calibration_sweep_v1.json"
+  }
+}

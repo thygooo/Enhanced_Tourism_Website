@@ -1,0 +1,91 @@
+query_id,expected_intent,input_text
+BA_001,book_accommodation,Book a hotel room in Bayawan for two adults this Saturday.
+BA_002,book_accommodation,I want to reserve an inn for 3 guests from April 5 to April 7.
+BA_003,book_accommodation,Please confirm my accommodation booking for tomorrow night.
+BA_004,book_accommodation,Can you help me book a room near the city plaza?
+BA_005,book_accommodation,Reserve one family room for 4 people.
+BA_006,book_accommodation,Proceed with booking the cheapest available inn room.
+BA_007,book_accommodation,I need to book lodging for my parents this weekend.
+BA_008,book_accommodation,Book this hotel option now and save my reservation.
+BA_009,book_accommodation,Set an accommodation booking for check-in on May 12.
+BA_010,book_accommodation,Finalize my room reservation in Bayawan City.
+BA_011,book_accommodation,Can we reserve two rooms for six guests?
+BA_012,book_accommodation,I am ready to book the hotel you recommended.
+BA_013,book_accommodation,Please make the inn reservation under my account.
+BA_014,book_accommodation,Secure our accommodation booking before it gets full.
+BA_015,book_accommodation,Create a hotel booking for one night and two persons.
+CAB_001,calculate_accommodation_billing,How much is the hotel bill for 2 guests for 3 nights at 1800 per night?
+CAB_002,calculate_accommodation_billing,Compute my accommodation total if room rate is 2500 for 2 nights.
+CAB_003,calculate_accommodation_billing,Calculate inn payment for 4 people staying one night.
+CAB_004,calculate_accommodation_billing,What is my lodging bill with 12 percent tax and service fee?
+CAB_005,calculate_accommodation_billing,Please estimate the room billing from April 10 to April 13.
+CAB_006,calculate_accommodation_billing,Show the accommodation cost breakdown for 3 nights.
+CAB_007,calculate_accommodation_billing,How much should I pay for this hotel booking?
+CAB_008,calculate_accommodation_billing,Can you compute my total accommodation charges?
+CAB_009,calculate_accommodation_billing,Calculate hotel billing for one deluxe room for two days.
+CAB_010,calculate_accommodation_billing,Give me the expected inn bill including extra bed fee.
+CAB_011,calculate_accommodation_billing,What is the final amount due for my accommodation stay?
+CAB_012,calculate_accommodation_billing,Please total my hotel payment before checkout.
+CAB_013,calculate_accommodation_billing,Compute the accommodation invoice for my reservation.
+CAB_014,calculate_accommodation_billing,How much is the lodging fee if we stay 5 nights?
+CAB_015,calculate_accommodation_billing,Calculate room charges for 3 adults in one family room.
+CB_001,calculate_billing,How much is the total tour bill for 4 guests at 500 each?
+CB_002,calculate_billing,Compute our tour payment for two adults and one child.
+CB_003,calculate_billing,Please calculate itinerary billing for tomorrow's city tour.
+CB_004,calculate_billing,What is the final tourism package cost for 6 people?
+CB_005,calculate_billing,Calculate tour charges with admission fees included.
+CB_006,calculate_billing,Can you estimate our tour expenses for one day trip?
+CB_007,calculate_billing,How much do we need to pay for the tour reservation?
+CB_008,calculate_billing,Show me the billing breakdown for our island hopping tour.
+CB_009,calculate_billing,Calculate the total fee for the guided heritage tour.
+CB_010,calculate_billing,What is the amount due for tour booking ID T123?
+CB_011,calculate_billing,Please compute the tourism activity billing for my group.
+CB_012,calculate_billing,How much is each person's share for the tour package?
+CB_013,calculate_billing,Recalculate the tour bill if one guest cancels.
+CB_014,calculate_billing,Provide total tour payment with transport and entrance fees.
+CB_015,calculate_billing,Calculate my tour billing only, not accommodation.
+GAR_001,get_accommodation_recommendation,Recommend a budget inn in Bayawan for 2 guests under 2000.
+GAR_002,get_accommodation_recommendation,Suggest a hotel near the terminal for a family of 4.
+GAR_003,get_accommodation_recommendation,Any accommodation options around Poblacion with parking?
+GAR_004,get_accommodation_recommendation,Find me an inn with affordable rooms and good location.
+GAR_005,get_accommodation_recommendation,Can you recommend a hotel for 3 nights below 3000 per night?
+GAR_006,get_accommodation_recommendation,Show top places to stay in Bayawan City for couples.
+GAR_007,get_accommodation_recommendation,What hotel or inn do you recommend for one solo traveler?
+GAR_008,get_accommodation_recommendation,Give me accommodation recommendations with aircon rooms.
+GAR_009,get_accommodation_recommendation,Suggest nearby lodging that fits 5 guests.
+GAR_010,get_accommodation_recommendation,Recommend the best available inn for tonight.
+GAR_011,get_accommodation_recommendation,I need hotel suggestions close to downtown Bayawan.
+GAR_012,get_accommodation_recommendation,Find accommodation options that are not too expensive.
+GAR_013,get_accommodation_recommendation,Please recommend a room with private bathroom.
+GAR_014,get_accommodation_recommendation,Any hotel recommendations with strong guest ratings?
+GAR_015,get_accommodation_recommendation,Help me choose accommodation for a weekend stay.
+GR_001,get_recommendation,Recommend tourist spots in Bayawan for first-time visitors.
+GR_002,get_recommendation,Suggest a one-day itinerary for nature lovers.
+GR_003,get_recommendation,What tours do you recommend for a group of 5?
+GR_004,get_recommendation,Can you suggest attractions for kids and seniors?
+GR_005,get_recommendation,Give me travel recommendations near Bayawan City.
+GR_006,get_recommendation,Recommend top destinations with low entrance fees.
+GR_007,get_recommendation,What places should we visit this weekend in Negros Oriental?
+GR_008,get_recommendation,Suggest activities for an educational school tour.
+GR_009,get_recommendation,Any recommended eco-tourism sites nearby?
+GR_010,get_recommendation,Please recommend spots with scenic views and short travel time.
+GR_011,get_recommendation,Help me pick attractions based on our budget.
+GR_012,get_recommendation,Recommend a tour package good for two adults.
+GR_013,get_recommendation,Which tourism destinations are best during summer?
+GR_014,get_recommendation,Suggest cultural attractions and local heritage spots.
+GR_015,get_recommendation,Can you recommend where to go in Bayawan this Sunday?
+GTI_001,get_tourism_information,What are the operating hours of Bayawan City Boulevard?
+GTI_002,get_tourism_information,Give me tourism information about Danjugan Island.
+GTI_003,get_tourism_information,Where is the exact location of the city museum?
+GTI_004,get_tourism_information,Who do I contact for inquiries about Balatocan Falls?
+GTI_005,get_tourism_information,What is the entrance fee for the marine sanctuary?
+GTI_006,get_tourism_information,Please provide details about transportation to this tourist site.
+GTI_007,get_tourism_information,Is the tourist information center open on weekends?
+GTI_008,get_tourism_information,Share basic facts about the local mangrove park.
+GTI_009,get_tourism_information,What amenities are available at this attraction?
+GTI_010,get_tourism_information,I need contact number and address of the tourism office.
+GTI_011,get_tourism_information,What time does the nature park open and close?
+GTI_012,get_tourism_information,Provide updated information about admission rules for the cave site.
+GTI_013,get_tourism_information,Do you have information about guides at this destination?
+GTI_014,get_tourism_information,Tell me the latest posted details for Bayawan tourist spots.
+GTI_015,get_tourism_information,What are the visitor guidelines for the waterfall area?

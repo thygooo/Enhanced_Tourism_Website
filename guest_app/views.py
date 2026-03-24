@@ -1,4 +1,5 @@
 from django.contrib.auth import logout, authenticate, login as auth_login
+from django.contrib.auth.models import Group
 from django.db import IntegrityError
 from tour_app.models import Tour_Event
 from .forms import GuestRegistrationForm
@@ -19,6 +20,7 @@ import json
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.utils.decorators import method_decorator
+from django.utils.http import url_has_allowed_host_and_scheme
 import base64
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail, EmailMultiAlternatives
@@ -49,6 +51,38 @@ from .booking_integrity import (
 from ai_chatbot.recommenders import recommend_accommodations, calculate_accommodation_billing
 from functools import wraps
 
+def _verify_recaptcha_response(request):
+    """
+    Verify Google reCAPTCHA token if RECAPTCHA_SECRET_KEY is configured.
+    Returns (is_valid, error_message).
+    """
+    recaptcha_secret = str(getattr(settings, "RECAPTCHA_SECRET_KEY", "") or "").strip()
+    if not recaptcha_secret:
+        # Safe fallback for local/dev when secret is not configured.
+        return True, ""
+
+    recaptcha_response = (
+        request.POST.get("g-recaptcha-response")
+        or request.POST.get("g_recaptcha_response")
+        or ""
+    ).strip()
+    if not recaptcha_response:
+        return False, "Please complete the reCAPTCHA verification."
+
+    try:
+        recaptcha_result = requests.post(
+            "https://www.google.com/recaptcha/api/siteverify",
+            data={"secret": recaptcha_secret, "response": recaptcha_response},
+            timeout=15,
+        ).json()
+    except Exception:
+        return False, "reCAPTCHA verification is temporarily unavailable. Please try again."
+
+    if not recaptcha_result.get("success", False):
+        return False, "reCAPTCHA verification failed. Please try again."
+    return True, ""
+
+
 @ensure_csrf_cookie
 def main_page(request):
     """Main page view with language support"""
@@ -72,7 +106,7 @@ def main_page(request):
     current_language = get_current_language(request)
     
     # Get all tours
-    tours = Tour_Add.objects.all()
+    tours = Tour_Add.objects.filter(publication_status="published")
     
     # For each tour, translate translatable fields and calculate min/max duration
     translated_tours = []
@@ -233,6 +267,24 @@ def main_page(request):
         
         print(f"Final categorization: {len(upcoming_tours)} upcoming, {len(current_tours)} current, {len(past_tours)} past")
     
+    is_accommodation_owner_user = False
+    if request.user.is_authenticated:
+        try:
+            if request.user.groups.filter(name__iexact="accommodation_owner").exists():
+                is_accommodation_owner_user = True
+            else:
+                role_value = str(getattr(request.user, "role", "") or "").strip().lower()
+                if role_value in {"accommodation_owner", "accommodation owner", "owner"}:
+                    is_accommodation_owner_user = True
+                else:
+                    session_user_type = str(request.session.get("user_type") or "").strip().lower()
+                    if session_user_type in {"accomodation", "accommodation", "establishment"}:
+                        is_accommodation_owner_user = True
+                    elif hasattr(request.user, "owned_accommodations"):
+                        is_accommodation_owner_user = request.user.owned_accommodations.exists()
+        except Exception:
+            is_accommodation_owner_user = False
+
     context = {
         'tours': tours,  # Keep the original queryset for Django template usage
         'translated_tours': translated_tours,  # Add translated data
@@ -241,7 +293,13 @@ def main_page(request):
         'current_tours': current_tours,
         'past_tours': past_tours,
         'current_language': current_language,
-        'translations_json': get_translations_json(current_language)  # Add translations for JavaScript
+        'translations_json': get_translations_json(current_language),  # Add translations for JavaScript
+        'is_accommodation_owner_user': is_accommodation_owner_user,
+        'recaptcha_site_key': str(getattr(settings, 'RECAPTCHA_SITE_KEY', '') or '').strip(),
+        'recaptcha_configured': bool(
+            str(getattr(settings, 'RECAPTCHA_SITE_KEY', '') or '').strip()
+            and str(getattr(settings, 'RECAPTCHA_SECRET_KEY', '') or '').strip()
+        ),
     }
     
     return render(request, 'mainpage.html', context)
@@ -312,6 +370,13 @@ def guest_tourist_required(view_func):
 
 def register(request):
     if request.method == 'POST':
+        recaptcha_ok, recaptcha_error = _verify_recaptcha_response(request)
+        if not recaptcha_ok:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'message': recaptcha_error}, status=400)
+            messages.error(request, recaptcha_error)
+            return redirect('main-page')
+
         print("Files in request:", request.FILES)
         print("POST data:", request.POST)
         form = GuestRegistrationForm(request.POST, request.FILES)
@@ -329,14 +394,34 @@ def register(request):
                 # Save the guest to create the instance with an ID
                 guest.save()
 
+                register_as_owner = bool(form.cleaned_data.get("register_as_accommodation_owner"))
+                requested_next = str(request.POST.get("next") or request.GET.get("next") or "").strip()
+                redirect_url = ""
+                if register_as_owner:
+                    pending_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+                    approved_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+                    declined_group, _ = Group.objects.get_or_create(name="accommodation_owner_declined")
+                    guest.groups.remove(approved_group, declined_group)
+                    guest.groups.add(pending_group)
+                    redirect_url = reverse("main-page")
+                    if requested_next and url_has_allowed_host_and_scheme(
+                        requested_next,
+                        allowed_hosts={request.get_host()},
+                    ):
+                        # Keep next flow safe for callers, but owner approval is still required.
+                        redirect_url = requested_next
+
                 messages.success(request, 'Registration successful! You can now log in.')
 
                 # For AJAX requests, return JSON response
                 if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                     return JsonResponse({
                         'success': True,
-                        'message': 'Registration successful! Logging you in...'
+                        'message': 'Registration successful! Logging you in...',
+                        'redirect_url': redirect_url,
                     })
+                if redirect_url:
+                    return redirect(redirect_url)
                 return redirect('login')
             except IntegrityError as e:
                 error_msg = str(e).lower()
@@ -366,6 +451,13 @@ def login_view(request):
         return redirect('main-page')
 
     if request.method == 'POST':
+        recaptcha_ok, recaptcha_error = _verify_recaptcha_response(request)
+        if not recaptcha_ok:
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return JsonResponse({'success': False, 'message': recaptcha_error}, status=400)
+            messages.error(request, recaptcha_error)
+            return redirect('main-page')
+
         email = (request.POST.get('email') or '').strip()
         password = request.POST.get('password') or ''
         
@@ -376,6 +468,24 @@ def login_view(request):
             user = authenticate(request, username=user.username, password=password)
             
             if user is not None:
+                # Enforce split login entry points:
+                # - guest_app/login is for guest/tourist accounts only
+                # - accommodation owners should use admin_app/login
+                if not is_guest_tourist_user(user, request=request):
+                    owner_login_url = reverse("admin_app:login")
+                    owner_only_message = (
+                        "Accommodation owners must log in via the Admin Panel login page."
+                    )
+                    messages.error(request, owner_only_message)
+                    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                        return JsonResponse({
+                            'success': False,
+                            'message': owner_only_message,
+                            'owner_login_only': True,
+                            'redirect_url': owner_login_url,
+                        })
+                    return redirect(owner_login_url)
+
                 auth_login(request, user)
                 # For AJAX requests, return JSON response
                 if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
@@ -439,7 +549,10 @@ def tour_schedule_detail(request, sched_id):
 
 # API to fetch tour schedules dynamically
 def get_tour_schedules(request, tour_id):
-    tour_schedules = Tour_Schedule.objects.filter(tour_id=tour_id)
+    tour_schedules = Tour_Schedule.objects.filter(
+        tour_id=tour_id,
+        tour__publication_status="published",
+    )
     schedules = []
 
     for schedule in tour_schedules:
@@ -453,114 +566,89 @@ def get_tour_schedules(request, tour_id):
 
 
 
+@login_required
+@guest_tourist_required
+@require_POST
 def book_tour(request):
-    if request.method == "POST":
+    try:
+        recaptcha_response = request.POST.get('g_recaptcha_response')
+        if not recaptcha_response:
+            return JsonResponse({'error': 'Please complete the reCAPTCHA verification.'}, status=400)
+
+        recaptcha_secret = str(getattr(settings, 'RECAPTCHA_SECRET_KEY', '') or '').strip()
+        if not recaptcha_secret:
+            return JsonResponse({'error': 'Booking verification is not configured. Please contact support.'}, status=503)
+
+        recaptcha_result = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            data={'secret': recaptcha_secret, 'response': recaptcha_response},
+            timeout=15,
+        ).json()
+        if not recaptcha_result.get('success', False):
+            error_message = recaptcha_result.get('error-codes', ['Unknown error'])[0]
+            return JsonResponse({'error': f'reCAPTCHA verification failed: {error_message}. Please try again.'}, status=400)
+
+        guest = request.user
+        sched_id = request.POST.get('sched_id')
+        price = float(request.POST.get('price', 0))
+        total_guests = int(request.POST.get('total_guests', 1))
+        if total_guests <= 0:
+            return JsonResponse({'error': 'Total guests must be at least 1.'}, status=400)
+
+        selected_companions_json = request.POST.get('selected_companions', '[]')
+        selected_companions = json.loads(selected_companions_json)
+
+        schedule = get_object_or_404(
+            Tour_Schedule,
+            sched_id=sched_id,
+            tour__publication_status='published',
+        )
+        tour = schedule.tour_id
+
+        pending_booking = Pending.objects.create(
+            guest_id=guest,
+            sched_id=schedule,
+            tour_id=tour,
+            status='Pending',
+            total_guests=total_guests,
+            your_name=f'{guest.first_name} {guest.last_name}',
+            your_email=guest.email,
+            your_phone=guest.phone_number,
+            num_adults=total_guests,
+            num_children=0,
+        )
+
+        companion_names = []
+        if selected_companions:
+            companions = Guest.objects.filter(guest_id__in=selected_companions, made_by=guest)
+            for companion in companions:
+                BookingCompanion.objects.create(
+                    booking=pending_booking,
+                    companion=companion,
+                )
+                companion_names.append(f'{companion.first_name} {companion.last_name}')
+
+        if schedule.slots_available < total_guests:
+            return JsonResponse({'error': 'Not enough available slots.'}, status=400)
+
+        schedule.slots_booked += total_guests
+        schedule.slots_available -= total_guests
+        schedule.save()
+
+        total_amount = total_guests * price
+
         try:
-            # Verify reCAPTCHA
-            recaptcha_response = request.POST.get('g_recaptcha_response')
-            if not recaptcha_response:
-                return JsonResponse({'error': 'Please complete the reCAPTCHA verification.'}, status=400)
-                
-            url = 'https://www.google.com/recaptcha/api/siteverify'
-            data = {
-                'secret': '6LeyhAYrAAAAAJdVcBnugINI6kChp_pbtBNIqkyk',
-                'response': recaptcha_response
-            }
-            recaptcha_result = requests.post(url, data=data).json()
-            
-            # If reCAPTCHA fails
-            if not recaptcha_result.get('success', False):
-                error_message = recaptcha_result.get('error-codes', ['Unknown error'])[0]
-                return JsonResponse({
-                    'error': f'reCAPTCHA verification failed: {error_message}. Please try again.'
-                }, status=400)
-                
-            # Continue with your existing booking code
-            guest_id = request.POST.get('guest_id')
-            sched_id = request.POST.get('sched_id')
-            price = float(request.POST.get('price', 0))
-            total_guests = int(request.POST.get('total_guests', 1))
-            
-            # Get the selected companions
-            selected_companions_json = request.POST.get('selected_companions', '[]')
-            selected_companions = json.loads(selected_companions_json)
-            
-            # Get the guest; adjust field name if needed.
-            guest = get_object_or_404(Guest, guest_id=guest_id)
-            # Get the schedule object from Tour_Schedule
-            schedule = get_object_or_404(Tour_Schedule, sched_id=sched_id)
-            # Get the tour from the schedule (assuming FK is set up correctly)
-            tour = schedule.tour_id
+            subject = f'Booking Request Received for {tour.tour_name}'
+            start_time = timezone.localtime(schedule.start_time)
+            end_time = timezone.localtime(schedule.end_time)
+            start_formatted = start_time.strftime('%A %d %B %Y at %I:%M %p')
+            end_formatted = end_time.strftime('%A %d %B %Y at %I:%M %p')
+            current_ph_time = timezone.now() + timedelta(hours=8)
+            ph_time_formatted = current_ph_time.strftime('%A %d %B %Y at %I:%M %p')
+            guest_country_formatted = f'(Please check local time in {guest.country_of_origin})'
+            companions_list = '\n'.join([f'- {name}' for name in companion_names]) or 'None'
 
-            # Create the pending booking record
-            pending_booking = Pending.objects.create(
-                guest_id=guest,
-                sched_id=schedule,
-                tour_id=tour,
-                status="Pending",
-                total_guests=total_guests,
-                your_name=f"{guest.first_name} {guest.last_name}",
-                your_email=guest.email,
-                your_phone=guest.phone_number,
-                num_adults=total_guests,
-                num_children=0
-            )
-            
-            # Fetch companion details for email
-            companion_names = []
-            
-            # Save the selected companions for this booking
-            if selected_companions:
-                # Fetch companion objects
-                companions = Guest.objects.filter(guest_id__in=selected_companions)
-                
-                # Create BookingCompanion records
-                for companion in companions:
-                    BookingCompanion.objects.create(
-                        booking=pending_booking,
-                        companion=companion
-                    )
-                    companion_names.append(f"{companion.first_name} {companion.last_name}")
-
-            # Ensure that there are enough available slots
-            if schedule.slots_available < total_guests:
-                return JsonResponse({'error': 'Not enough available slots.'}, status=400)
-
-            schedule.slots_booked += total_guests
-            schedule.slots_available -= total_guests
-            schedule.save()
-
-            # Calculate price information for the response
-            total_amount = total_guests * price
-
-            # Send a more detailed booking acknowledgment email
-            try:
-                subject = f"Booking Request Received for {tour.tour_name}"
-                
-                # Format schedule in user-friendly way
-                start_time = timezone.localtime(schedule.start_time)
-                end_time = timezone.localtime(schedule.end_time)
-                
-                # Format dates in a user-friendly way (e.g., "Monday 12 March 2024 at 8:00 AM")
-                start_formatted = start_time.strftime("%A %d %B %Y at %I:%M %p")
-                end_formatted = end_time.strftime("%A %d %B %Y at %I:%M %p")
-                
-                # Get current time in Philippine timezone (Asia/Manila)
-                # Without pytz, we'll use a simplified approach for Philippines time
-                # Note: this is an approximation, as Manila is UTC+8
-                from datetime import timedelta
-                current_ph_time = timezone.now() + timedelta(hours=8)  # Approximate Manila time
-                ph_time_formatted = current_ph_time.strftime("%A %d %B %Y at %I:%M %p")
-                
-                # For guest's country time, we'll include a note about timezone
-                guest_country_formatted = f"(Please check local time in {guest.country_of_origin})"
-                
-                # Create a formatted message with companion details
-                companions_list = "\n".join([f"- {name}" for name in companion_names])
-                if not companions_list:
-                    companions_list = "None"
-                    
-                message = f"""Dear {guest.first_name},
+            message = f'''Dear {guest.first_name},
 
 Your booking request for {tour.tour_name} has been received and is pending approval.
 
@@ -568,7 +656,7 @@ Booking Details:
 - Tour: {tour.tour_name}
 - Schedule: {start_formatted} to {end_formatted}
 - Total Guests: {total_guests}
-- Total Amount: ₱{total_amount:.2f}
+- Total Amount: PHP {total_amount:.2f}
 
 Companions included:
 {companions_list}
@@ -582,27 +670,26 @@ We will notify you once your booking is confirmed or if we need additional infor
 Thank you for choosing our tours!
 
 Best regards,
-The Tour Team"""
-                
-                send_mail(
-                    subject=subject,
-                    message=message,
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[guest.email],
-                    fail_silently=False,
-                )
-                print(f"Booking acknowledgment email sent to {guest.email}")
-            except Exception as email_error:
-                print(f"Email sending failed: {str(email_error)}")
-                # Continue even if email fails
+The Tour Team'''
 
-            return JsonResponse({
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[guest.email],
+                fail_silently=False,
+            )
+        except Exception as email_error:
+            print(f'Email sending failed: {str(email_error)}')
+
+        return JsonResponse(
+            {
                 'success': 'Booking request submitted! You will receive a confirmation email when your booking is approved.',
-                'total_payment': total_amount
-            })
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=400)
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+                'total_payment': total_amount,
+            }
+        )
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
 
 @login_required
 def guest_book(request, tour_id):
@@ -611,7 +698,7 @@ def guest_book(request, tour_id):
     current_language = get_current_language(request)
     
     # Retrieve the tour based on the provided tour_id from the URL.
-    tour = get_object_or_404(Tour_Add, tour_id=tour_id)
+    tour = get_object_or_404(Tour_Add, tour_id=tour_id, publication_status="published")
 
     # Retrieve all schedules associated with this tour.
     # Assuming your Tour_Schedule model's foreign key to Tour_Add is named "tour_id".
@@ -656,6 +743,7 @@ def guest_book(request, tour_id):
         'current_language': current_language,
         'translations_json': json.dumps(translations),
         'tour_data': tour_data,
+        'recaptcha_site_key': str(getattr(settings, 'RECAPTCHA_SITE_KEY', '') or '').strip(),
     }
     
     return render(request, 'guest_book.html', context)

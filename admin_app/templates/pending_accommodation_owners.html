@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Accommodation Owner Accounts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+  <style>
+    body {
+      font-family: "Poppins", 'Segoe UI', Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
+        radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
+        #f8f5f1;
+      margin: 0;
+      color: #3f2f26;
+    }
+    .dashboard-container { display: flex; min-height: 100vh; }
+    .content { flex: 1; padding: 24px; }
+    .panel {
+      background: linear-gradient(180deg, #fffefc 0%, #fff9f2 100%);
+      border: 1px solid #ead9c9;
+      border-radius: 16px;
+      box-shadow: 0 14px 28px rgba(56, 33, 16, 0.12);
+      padding: 18px;
+      margin-bottom: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .panel::after {
+      content: "";
+      position: absolute;
+      right: -110px;
+      top: -120px;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(224, 164, 109, 0.23), rgba(224, 164, 109, 0));
+      pointer-events: none;
+    }
+    h1 { margin: 0 0 10px; font-size: 1.4rem; }
+    h2 { margin: 0 0 10px; font-size: 1.1rem; }
+    table { width: 100%; border-collapse: collapse; position: relative; z-index: 1; }
+    th, td { border-bottom: 1px solid #e8d7c7; text-align: left; padding: 10px; font-size: 0.95rem; }
+    th { background: #efe1d4; color: #5d4332; }
+    .btn { border: none; border-radius: 10px; padding: 8px 12px; cursor: pointer; color: #fff; font-weight: 600; }
+    .btn-accept { background: linear-gradient(135deg, #875a34, #b77744); }
+    .btn-decline {
+      background: #f5d8d3;
+      color: #8a2f25;
+      border: 1px solid #e6b9b1;
+      margin-left: 6px;
+    }
+    .muted { color: #666; }
+    .messages { margin-bottom: 12px; }
+    .msg { padding: 10px; border-radius: 6px; margin-bottom: 8px; }
+    .msg.success { background: #e8f5e9; color: #1b5e20; }
+    .msg.error { background: #ffebee; color: #b71c1c; }
+    @media (max-width: 900px) {
+      .content { padding: 14px; }
+      .panel { padding: 14px; border-radius: 14px; }
+      table { display: block; overflow-x: auto; white-space: nowrap; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="navigation">
+      {% include "components/navigation.html" %}
+    </div>
+    <div class="content">
+      <div class="panel">
+        <h1>Accommodation Owner Accounts</h1>
+        <p class="muted">Approve or decline owner account signups before they can register accommodations.</p>
+      </div>
+
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="msg {% if message.tags == 'success' %}success{% else %}error{% endif %}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="panel">
+        <h2>Pending Owners</h2>
+        {% if pending_owners %}
+        <table>
+          <thead>
+            <tr>
+              <th>Guest ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Company Name</th>
+              <th>Registered On</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for owner in pending_owners %}
+            <tr>
+              <td>{{ owner.guest_id }}</td>
+              <td>{{ owner.first_name }} {{ owner.last_name }}</td>
+              <td>{{ owner.email }}</td>
+              <td>{{ owner.company_name|default:"-" }}</td>
+              <td>{{ owner.date_joined|date:"M d, Y H:i" }}</td>
+              <td>
+                <form method="post" action="{% url 'admin_app:accommodation_owner_update' owner.guest_id %}" style="display:inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="accept">
+                  <button class="btn btn-accept" type="submit">Accept</button>
+                </form>
+                <form method="post" action="{% url 'admin_app:accommodation_owner_update' owner.guest_id %}" style="display:inline;">
+                  {% csrf_token %}
+                  <input type="hidden" name="action" value="decline">
+                  <button class="btn btn-decline" type="submit">Decline</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+          <p class="muted">No pending accommodation owner accounts.</p>
+        {% endif %}
+      </div>
+
+      <div class="panel">
+        <h2>Approved Owners</h2>
+        {% if approved_owners %}
+        <table>
+          <thead><tr><th>Guest ID</th><th>Name</th><th>Email</th><th>Company Name</th></tr></thead>
+          <tbody>
+            {% for owner in approved_owners %}
+            <tr>
+              <td>{{ owner.guest_id }}</td>
+              <td>{{ owner.first_name }} {{ owner.last_name }}</td>
+              <td>{{ owner.email }}</td>
+              <td>{{ owner.company_name|default:"-" }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+          <p class="muted">No approved owner accounts yet.</p>
+        {% endif %}
+      </div>
+
+      <div class="panel">
+        <h2>Declined Owners</h2>
+        {% if declined_owners %}
+        <table>
+          <thead><tr><th>Guest ID</th><th>Name</th><th>Email</th><th>Company Name</th></tr></thead>
+          <tbody>
+            {% for owner in declined_owners %}
+            <tr>
+              <td>{{ owner.guest_id }}</td>
+              <td>{{ owner.first_name }} {{ owner.last_name }}</td>
+              <td>{{ owner.email }}</td>
+              <td>{{ owner.company_name|default:"-" }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+          <p class="muted">No declined owner accounts.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "classes": [
+    "not_relevant",
+    "relevant"
+  ],
+  "matrix": [
+    [
+      93,
+      40
+    ],
+    [
+      80,
+      267
+    ]
+  ]
+}

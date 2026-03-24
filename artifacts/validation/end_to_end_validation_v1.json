@@ -1,0 +1,138 @@
+{
+  "intent_results": [
+    {
+      "message": "book hotel for 2 guests tomorrow",
+      "expected_intent": "book_accommodation",
+      "predicted_intent": "get_tourism_information",
+      "confidence": 0.26486897468566895,
+      "source": "text_cnn_intent",
+      "error": "",
+      "is_correct": false
+    },
+    {
+      "message": "calculate hotel bill for 2 nights",
+      "expected_intent": "calculate_accommodation_billing",
+      "predicted_intent": "get_accommodation_recommendation",
+      "confidence": 0.2498760223388672,
+      "source": "text_cnn_intent",
+      "error": "",
+      "is_correct": false
+    },
+    {
+      "message": "calculate tour billing for 4 guests",
+      "expected_intent": "calculate_billing",
+      "predicted_intent": "get_tourism_information",
+      "confidence": 0.2838016152381897,
+      "source": "text_cnn_intent",
+      "error": "",
+      "is_correct": false
+    },
+    {
+      "message": "recommend inn in Bayawan under 2000",
+      "expected_intent": "get_accommodation_recommendation",
+      "predicted_intent": "get_accommodation_recommendation",
+      "confidence": 0.2575327754020691,
+      "source": "text_cnn_intent",
+      "error": "",
+      "is_correct": true
+    },
+    {
+      "message": "recommend tourist spots for family trip",
+      "expected_intent": "get_recommendation",
+      "predicted_intent": "calculate_billing",
+      "confidence": 0.24135226011276245,
+      "source": "text_cnn_intent",
+      "error": "",
+      "is_correct": false
+    },
+    {
+      "message": "tourist spot operating hours in bayawan",
+      "expected_intent": "get_tourism_information",
+      "predicted_intent": "get_tourism_information",
+      "confidence": 0.3262992203235626,
+      "source": "text_cnn_intent",
+      "error": "",
+      "is_correct": true
+    }
+  ],
+  "decision_tree_results": [
+    {
+      "sample": "high_fit_candidate",
+      "prediction": {
+        "score": 1.0,
+        "predicted_label": "relevant",
+        "source": "model:final_default",
+        "error": "",
+        "normalized_features": {
+          "requested_guests": 2,
+          "requested_budget": 2800.0,
+          "requested_location": "bayawan city",
+          "requested_accommodation_type": "hotel",
+          "room_price_per_night": 2300.0,
+          "room_capacity": 3,
+          "room_available": 2,
+          "accom_location": "bayawan city",
+          "company_type": "hotel",
+          "nights_requested": 2,
+          "cnn_confidence": 0.92,
+          "shown_rank": 1
+        }
+      }
+    },
+    {
+      "sample": "low_fit_candidate",
+      "prediction": {
+        "score": 0.0,
+        "predicted_label": "not_relevant",
+        "source": "model:final_default",
+        "error": "",
+        "normalized_features": {
+          "requested_guests": 5,
+          "requested_budget": 1200.0,
+          "requested_location": "poblacion",
+          "requested_accommodation_type": "inn",
+          "room_price_per_night": 3600.0,
+          "room_capacity": 2,
+          "room_available": 1,
+          "accom_location": "banga",
+          "company_type": "hotel",
+          "nights_requested": 3,
+          "cnn_confidence": 0.76,
+          "shown_rank": 6
+        }
+      }
+    },
+    {
+      "sample": "missing_inputs_defaulted",
+      "prediction": {
+        "score": 0.08744247205785668,
+        "predicted_label": "not_relevant",
+        "source": "model:final_default",
+        "error": "",
+        "normalized_features": {
+          "requested_guests": 1,
+          "requested_budget": 0.0,
+          "requested_location": "bayawan city",
+          "requested_accommodation_type": "either",
+          "room_price_per_night": 1700.0,
+          "room_capacity": 2,
+          "room_available": 1,
+          "accom_location": "suba",
+          "company_type": "inn",
+          "nights_requested": 1,
+          "cnn_confidence": 0.0,
+          "shown_rank": 1
+        }
+      }
+    }
+  ],
+  "weak_points": [
+    "Intent classifier mismatch on 4/6 end-to-end intent probes.",
+    "Low-confidence intent predictions observed in 6 probes (<0.60 confidence)."
+  ],
+  "summary": {
+    "intent_probe_total": 6,
+    "intent_probe_correct": 2,
+    "decision_tree_probe_total": 3
+  }
+}

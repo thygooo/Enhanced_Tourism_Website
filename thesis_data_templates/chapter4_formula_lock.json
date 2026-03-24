@@ -1,0 +1,43 @@
+{
+  "booking_conversion_efficiency": {
+    "metric_name": "book_rate_pct",
+    "numerator": "count(RecommendationEvent where event_type='book')",
+    "denominator": "count(RecommendationEvent where event_type='view' and item_ref='chat:accommodation_recommendation_request')",
+    "formula": "(numerator / denominator) * 100",
+    "scope_note": "Accommodation recommendation funnel only.",
+    "status": "locked"
+  },
+  "recommendation_accuracy_distinction": {
+    "true_accuracy": {
+      "definition": "Agreement against labeled relevance ground truth (e.g., relevant/not_relevant).",
+      "required_inputs": [
+        "labeled evaluation dataset",
+        "prediction labels",
+        "ground-truth labels"
+      ],
+      "formula_examples": [
+        "accuracy",
+        "precision",
+        "recall",
+        "f1"
+      ],
+      "status": "not_fully_measurable_online_yet"
+    },
+    "online_effectiveness_proxies": [
+      {
+        "name": "queries_with_results_rate",
+        "formula": "queries_with_results / accommodation_queries * 100"
+      },
+      {
+        "name": "ctr_pct",
+        "formula": "clicks / views * 100"
+      },
+      {
+        "name": "book_rate_pct",
+        "formula": "books / views * 100"
+      }
+    ],
+    "reporting_rule": "Do not label online proxies as true recommendation accuracy in Chapter 4.",
+    "status": "locked"
+  }
+}

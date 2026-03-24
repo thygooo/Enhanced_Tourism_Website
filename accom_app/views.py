@@ -59,36 +59,23 @@ def _resolve_room_management_accommodation(request):
     session_accom_id = request.session.get("accom_id")
     approval_required = "accepted"
 
-    if getattr(request.user, "is_authenticated", False):
-        if not _is_accommodation_owner_user(request.user):
-            return None, False, "Only accommodation owners can manage rooms."
+    if not getattr(request.user, "is_authenticated", False):
+        return None, False, "Authentication required for room management."
+    if not _is_accommodation_owner_user(request.user):
+        return None, False, "Only accommodation owners can manage rooms."
 
-        owned_qs = Accomodation.objects.filter(owner=request.user)
-        accommodation = None
-        if session_accom_id:
-            accommodation = owned_qs.filter(accom_id=session_accom_id).first()
-        if accommodation is None:
-            accommodation = owned_qs.order_by("accom_id").first()
-        if accommodation is None:
-            return None, False, "You do not own any accommodation record."
+    owned_qs = Accomodation.objects.filter(owner=request.user)
+    accommodation = None
+    if session_accom_id:
+        accommodation = owned_qs.filter(accom_id=session_accom_id).first()
+    if accommodation is None:
+        accommodation = owned_qs.order_by("accom_id").first()
+    if accommodation is None:
+        return None, False, "You do not own any accommodation record."
 
-        if str(accommodation.approval_status or "").lower() != approval_required:
-            return None, False, "Your accommodation account is not approved yet."
-        return accommodation, False, ""
-
-    # Transitional support: preserve old accommodation-session login for unlinked records.
-    session_user_type = str(request.session.get("user_type") or "").strip().lower()
-    if session_accom_id and session_user_type in {"accomodation", "establishment"}:
-        accommodation = Accomodation.objects.filter(
-            accom_id=session_accom_id,
-            owner__isnull=True,
-        ).first()
-        if accommodation is not None:
-            if str(accommodation.approval_status or "").lower() != approval_required:
-                return None, False, "Your accommodation account is not approved yet."
-            return accommodation, True, ""
-
-    return None, False, "Authentication required for room management."
+    if str(accommodation.approval_status or "").lower() != approval_required:
+        return None, False, "Your accommodation account is not approved yet."
+    return accommodation, False, ""
 
 
 ROOM_STATUS_SET = {"AVAILABLE", "OCCUPIED", "UNAVAILABLE"}
@@ -480,10 +467,6 @@ def register_room(request):
     accommodation, _legacy_mode, auth_error = _resolve_room_management_accommodation(request)
     if accommodation is None:
         return HttpResponseForbidden(auth_error or "Unauthorized.")
-
-    # Only allow access for Hotel accounts.
-    if accommodation.company_type.lower() != "hotel":
-        return HttpResponseForbidden("You do not have permission to access this page.")
 
     hotel_rooms = (
         AdminRoom.objects.select_related("owner_details")

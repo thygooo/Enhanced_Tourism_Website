@@ -12,6 +12,11 @@ from django.conf import settings
 from django.utils import timezone
 from django.db.models import F, Q
 
+try:
+    import pandas as pd
+except ModuleNotFoundError:
+    pd = None
+
 from admin_app.models import Accomodation, Room
 from tour_app.models import Tour_Schedule
 
@@ -266,16 +271,24 @@ def _decision_tree_relevance_score(room: Room, params: dict, *, shown_rank: int,
     }
 
     try:
+        model_input = [feature_row]
+        if pd is not None and hasattr(model, "named_steps"):
+            # sklearn Pipeline + ColumnTransformer expects named columns.
+            model_input = pd.DataFrame([feature_row])
+
         if hasattr(model, "predict_proba"):
             classes = [str(c).strip().lower() for c in getattr(model, "classes_", [])]
-            probabilities = model.predict_proba([feature_row])[0]
+            if not classes and hasattr(model, "named_steps"):
+                clf = model.named_steps.get("model")
+                classes = [str(c).strip().lower() for c in getattr(clf, "classes_", [])]
+            probabilities = model.predict_proba(model_input)[0]
             if "relevant" in classes:
                 idx = classes.index("relevant")
                 return float(probabilities[idx]), f"model:{_DECISION_TREE_MODEL_SOURCE_CACHE}"
             if probabilities is not None and len(probabilities):
                 return float(max(probabilities)), f"model:{_DECISION_TREE_MODEL_SOURCE_CACHE}"
 
-        predicted = model.predict([feature_row])[0]
+        predicted = model.predict(model_input)[0]
         predicted_label = str(predicted).strip().lower()
         if predicted_label in ("relevant", "1", "true", "yes"):
             return 1.0, f"model:{_DECISION_TREE_MODEL_SOURCE_CACHE}"
@@ -287,6 +300,81 @@ def _decision_tree_relevance_score(room: Room, params: dict, *, shown_rank: int,
             shown_rank=shown_rank,
             cnn_confidence=cnn_confidence,
         ), f"surrogate:{_DECISION_TREE_MODEL_SOURCE_CACHE}"
+
+
+def predict_accommodation_relevance_from_features(feature_row: dict) -> dict:
+    """
+    Runtime helper for direct Decision Tree inference from a feature payload.
+    Used by internal validation utilities and backend integration checks.
+    """
+    normalized = {
+        "requested_guests": _to_int(feature_row.get("requested_guests"), default=1),
+        "requested_budget": float(_to_decimal(feature_row.get("requested_budget"), default=Decimal("0"))),
+        "requested_location": str(feature_row.get("requested_location") or "").strip().lower(),
+        "requested_accommodation_type": str(feature_row.get("requested_accommodation_type") or "either").strip().lower(),
+        "room_price_per_night": float(_to_decimal(feature_row.get("room_price_per_night"), default=Decimal("0"))),
+        "room_capacity": _to_int(feature_row.get("room_capacity"), default=1),
+        "room_available": _to_int(feature_row.get("room_available"), default=0),
+        "accom_location": str(feature_row.get("accom_location") or "").strip().lower(),
+        "company_type": str(feature_row.get("company_type") or "").strip().lower(),
+        "nights_requested": max(1, _to_int(feature_row.get("nights_requested"), default=1)),
+        "cnn_confidence": float(max(0.0, min(1.0, float(feature_row.get("cnn_confidence") or 0.0)))),
+        "shown_rank": max(1, _to_int(feature_row.get("shown_rank"), default=1)),
+    }
+
+    model, error = _load_decision_tree_model()
+    if model is None:
+        return {
+            "score": 0.0,
+            "predicted_label": "unknown",
+            "source": f"unavailable:{_DECISION_TREE_MODEL_SOURCE_CACHE}",
+            "error": error or "model_unavailable",
+            "normalized_features": normalized,
+        }
+
+    try:
+        model_input = [normalized]
+        if pd is not None and hasattr(model, "named_steps"):
+            model_input = pd.DataFrame([normalized])
+
+        if hasattr(model, "predict_proba"):
+            classes = [str(c).strip().lower() for c in getattr(model, "classes_", [])]
+            if not classes and hasattr(model, "named_steps"):
+                clf = model.named_steps.get("model")
+                classes = [str(c).strip().lower() for c in getattr(clf, "classes_", [])]
+            proba = model.predict_proba(model_input)[0]
+            if "relevant" in classes:
+                idx = classes.index("relevant")
+                score = float(proba[idx])
+            else:
+                score = float(max(proba)) if len(proba) else 0.0
+            label = "relevant" if score >= 0.5 else "not_relevant"
+            return {
+                "score": score,
+                "predicted_label": label,
+                "source": f"model:{_DECISION_TREE_MODEL_SOURCE_CACHE}",
+                "error": "",
+                "normalized_features": normalized,
+            }
+
+        pred = str(model.predict(model_input)[0]).strip().lower()
+        score = 1.0 if pred in ("relevant", "1", "true", "yes") else 0.0
+        label = "relevant" if score >= 0.5 else "not_relevant"
+        return {
+            "score": score,
+            "predicted_label": label,
+            "source": f"model:{_DECISION_TREE_MODEL_SOURCE_CACHE}",
+            "error": "",
+            "normalized_features": normalized,
+        }
+    except Exception as exc:
+        return {
+            "score": 0.0,
+            "predicted_label": "unknown",
+            "source": f"error:{_DECISION_TREE_MODEL_SOURCE_CACHE}",
+            "error": str(exc),
+            "normalized_features": normalized,
+        }
 
 
 def _normalize_amenity_tokens(value) -> List[str]:

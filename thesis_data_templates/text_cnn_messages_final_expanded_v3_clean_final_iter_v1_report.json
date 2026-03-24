@@ -1,0 +1,56 @@
+{
+  "base_csv": "thesis_data_templates/text_cnn_messages_final_expanded_v3_clean.csv",
+  "augmentation_v1_csv": "thesis_data_templates/text_cnn_intent_realistic_paraphrase_augmentation_v1.csv",
+  "manual_query_csv": "thesis_data_templates/text_cnn_intent_manual_validation_queries_v1.csv",
+  "target_per_intent": 30,
+  "augmentation_v2_rows": 180,
+  "augmentation_v2_distribution": {
+    "book_accommodation": 30,
+    "calculate_accommodation_billing": 30,
+    "calculate_billing": 30,
+    "get_accommodation_recommendation": 30,
+    "get_recommendation": 30,
+    "get_tourism_information": 30
+  },
+  "merged_rows": 2100,
+  "exact_duplicates_removed": 0,
+  "cross_label_conflicts_removed": 0,
+  "near_duplicates_removed_vs_eval": 0,
+  "split_counts": {
+    "book_accommodation": {
+      "test": 20,
+      "train": 309,
+      "val": 21
+    },
+    "calculate_accommodation_billing": {
+      "test": 20,
+      "train": 314,
+      "val": 16
+    },
+    "calculate_billing": {
+      "test": 12,
+      "train": 321,
+      "val": 17
+    },
+    "get_accommodation_recommendation": {
+      "test": 20,
+      "train": 311,
+      "val": 19
+    },
+    "get_recommendation": {
+      "test": 12,
+      "train": 324,
+      "val": 14
+    },
+    "get_tourism_information": {
+      "test": 15,
+      "train": 313,
+      "val": 22
+    }
+  },
+  "outputs": {
+    "augmentation_v2_csv": "thesis_data_templates\\text_cnn_intent_realistic_paraphrase_augmentation_v1_balanced_final.csv",
+    "merged_dataset_csv": "thesis_data_templates\\text_cnn_messages_final_expanded_v3_clean_final_iter_v1.csv",
+    "report_json": "thesis_data_templates/text_cnn_messages_final_expanded_v3_clean_final_iter_v1_report.json"
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "metadata": {
+    "generated_at": "2026-03-23T18:40:42.629184+00:00",
+    "window_days": 3650,
+    "source": "pilot_test",
+    "counts": {
+      "recommendation_results": 243,
+      "recommendation_events": 236,
+      "system_metric_logs": 507,
+      "chatbot_logs": 0,
+      "survey_rows": 49,
+      "survey_batches_with_batch_id": 8
+    },
+    "accuracy_disclaimer": "True recommendation accuracy is not computed from runtime logs only. Use labeled relevance evaluation dataset for true accuracy metrics.",
+    "offline_true_accuracy_source": "artifacts\\decision_tree_final\\evaluation_metrics_v1.json",
+    "offline_true_accuracy_pct": 75.0,
+    "offline_true_accuracy_test_rows": 480
+  },
+  "rq3_rows": [
+    {
+      "rq_item": "3.1",
+      "indicator": "Recommendation accuracy (true metric)",
+      "metric_name": "true_accuracy_labeled",
+      "formula": "correct_predictions / total_labeled_samples * 100",
+      "value": 75.0,
+      "n": 480,
+      "status": "available_offline_eval",
+      "notes": "Offline labeled evaluation artifact: artifacts\\decision_tree_final\\evaluation_metrics_v1.json"
+    },
+    {
+      "rq_item": "3.1",
+      "indicator": "Recommendation effectiveness proxy",
+      "metric_name": "queries_with_results_rate_pct",
+      "formula": "queries_with_results / accommodation_queries * 100",
+      "value": 100.0,
+      "n": 123,
+      "status": "available_proxy",
+      "notes": "Use as online effectiveness proxy only, not true accuracy."
+    },
+    {
+      "rq_item": "3.1",
+      "indicator": "Recommendation effectiveness proxy",
+      "metric_name": "avg_top1_score",
+      "formula": "mean(top_1_recommendation_score)",
+      "value": 0.720871,
+      "n": 89,
+      "status": "available_proxy",
+      "notes": "Model score proxy from recommendation trace."
+    },
+    {
+      "rq_item": "3.2",
+      "indicator": "System Usability Scale",
+      "metric_name": "sus_mean_0_100",
+      "formula": "mean(SUS batch scores)",
+      "value": 50.0,
+      "n": 1,
+      "status": "available",
+      "notes": "Pair with SD and respondent count in Chapter 4."
+    },
+    {
+      "rq_item": "3.2",
+      "indicator": "System Usability Scale",
+      "metric_name": "sus_sd_0_100",
+      "formula": "sample_sd(SUS batch scores)",
+      "value": "",
+      "n": 1,
+      "status": "available",
+      "notes": ""
+    },
+    {
+      "rq_item": "3.3",
+      "indicator": "User engagement",
+      "metric_name": "ctr_pct",
+      "formula": "click_events / recommendation_view_events * 100",
+      "value": 27.6596,
+      "n": 94,
+      "status": "available",
+      "notes": "Recommendation event funnel."
+    },
+    {
+      "rq_item": "3.3",
+      "indicator": "User engagement",
+      "metric_name": "unique_recommendation_sessions",
+      "formula": "count(distinct RecommendationEvent.session_id)",
+      "value": 28,
+      "n": 28,
+      "status": "available",
+      "notes": "Session-level engagement volume."
+    },
+    {
+      "rq_item": "3.3",
+      "indicator": "User engagement",
+      "metric_name": "unique_chat_users",
+      "formula": "count(distinct ChatbotLog.user_id)",
+      "value": 0,
+      "n": 0,
+      "status": "available",
+      "notes": "User-level chat participation."
+    },
+    {
+      "rq_item": "3.4",
+      "indicator": "Booking conversion efficiency",
+      "metric_name": "book_rate_pct",
+      "formula": "(book_events / recommendation_view_events) * 100",
+      "value": 45.7447,
+      "n": 94,
+      "status": "available",
+      "notes": "Denominator locked to accommodation recommendation view events only."
+    }
+  ],
+  "rq4_rows": [
+    {
+      "rq_item": "4.1",
+      "construct": "Perceived Usefulness (PU)",
+      "metric_name": "pu_mean_1_5",
+      "formula": "mean(mean(PU_Q1..PU_Q4) per complete batch)",
+      "value": 5.0,
+      "n": 1,
+      "status": "available",
+      "notes": ""
+    },
+    {
+      "rq_item": "4.1",
+      "construct": "Perceived Usefulness (PU)",
+      "metric_name": "pu_sd_1_5",
+      "formula": "sample_sd(mean(PU_Q1..PU_Q4) per complete batch)",
+      "value": "",
+      "n": 1,
+      "status": "available",
+      "notes": ""
+    },
+    {
+      "rq_item": "4.1",
+      "construct": "Perceived Usefulness (PU)",
+      "metric_name": "pu_cronbach_alpha",
+      "formula": "Cronbach alpha across PU_Q1..PU_Q4",
+      "value": "",
+      "n": 8,
+      "status": "available",
+      "notes": "Internal consistency reliability."
+    },
+    {
+      "rq_item": "4.2",
+      "construct": "Perceived Ease of Use (PEU)",
+      "metric_name": "peu_mean_1_5",
+      "formula": "mean(mean(PEU_Q1..PEU_Q4) per complete batch)",
+      "value": 5.0,
+      "n": 1,
+      "status": "available",
+      "notes": ""
+    },
+    {
+      "rq_item": "4.2",
+      "construct": "Perceived Ease of Use (PEU)",
+      "metric_name": "peu_sd_1_5",
+      "formula": "sample_sd(mean(PEU_Q1..PEU_Q4) per complete batch)",
+      "value": "",
+      "n": 1,
+      "status": "available",
+      "notes": ""
+    },
+    {
+      "rq_item": "4.2",
+      "construct": "Perceived Ease of Use (PEU)",
+      "metric_name": "peu_cronbach_alpha",
+      "formula": "Cronbach alpha across PEU_Q1..PEU_Q4",
+      "value": "",
+      "n": 8,
+      "status": "available",
+      "notes": "Internal consistency reliability."
+    }
+  ],
+  "rq4_item_rows": [
+    {
+      "statement_code": "PU_Q1",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "PU_Q2",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "PU_Q3",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "PU_Q4",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "PEU_Q1",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "PEU_Q2",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "PEU_Q3",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "PEU_Q4",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "SUS_Q1",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "SUS_Q2",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "SUS_Q3",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "SUS_Q4",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "SUS_Q5",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "SUS_Q6",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "SUS_Q7",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "SUS_Q8",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "SUS_Q9",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "SUS_Q10",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "DIFF_DISCOVER",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "DIFF_MATCH",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "DIFF_PLAN",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    },
+    {
+      "statement_code": "DIFF_BOOKPAY",
+      "n": 1,
+      "mean_1_5": 5.0,
+      "sd_1_5": ""
+    }
+  ],
+  "metric_definition_rows": [
+    {
+      "metric_name": "book_rate_pct",
+      "locked_formula": "(book_events / recommendation_view_events) * 100",
+      "denominator_lock": "RecommendationEvent where event_type='view' and item_ref='chat:accommodation_recommendation_request'",
+      "metric_type": "RQ3 proxy metric",
+      "interpretation_rule": "Report as conversion efficiency only."
+    },
+    {
+      "metric_name": "true_accuracy_labeled",
+      "locked_formula": "correct_predictions / total_labeled_samples * 100",
+      "denominator_lock": "labeled relevance evaluation set size",
+      "metric_type": "RQ3 true accuracy",
+      "interpretation_rule": "Do not substitute online proxies for this metric."
+    },
+    {
+      "metric_name": "queries_with_results_rate_pct",
+      "locked_formula": "queries_with_results / accommodation_queries * 100",
+      "denominator_lock": "accommodation recommendation queries",
+      "metric_type": "RQ3 online proxy",
+      "interpretation_rule": "Label explicitly as effectiveness proxy."
+    },
+    {
+      "metric_name": "ctr_pct",
+      "locked_formula": "click_events / recommendation_view_events * 100",
+      "denominator_lock": "recommendation view events",
+      "metric_type": "RQ3 online proxy",
+      "interpretation_rule": "Engagement indicator, not true accuracy."
+    }
+  ]
+}

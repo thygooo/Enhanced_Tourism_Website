@@ -4,10 +4,22 @@ from django.db import transaction
 
 
 class Tour_Add(models.Model):
+    PUBLICATION_STATUS_CHOICES = [
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+        ('archived', 'Archived'),
+    ]
+
     tour_id = models.CharField(max_length=7, primary_key=True, unique=True)
     tour_name = models.CharField(max_length=200)
     description = models.TextField()
     image = models.ImageField(upload_to='tour_images/', null=True, blank=True)
+    publication_status = models.CharField(
+        max_length=20,
+        choices=PUBLICATION_STATUS_CHOICES,
+        default='published',
+        db_index=True,
+    )
 
     def save(self, *args, **kwargs):
         if not self.tour_id:

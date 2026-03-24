@@ -1,0 +1,55 @@
+{
+  "generated_at": "2026-03-18T03:14:09.400820+00:00",
+  "window": {
+    "days": 30,
+    "source": "all"
+  },
+  "sop_1_difficulty": {
+    "difficulty_avg_by_code": {
+      "DIFF_DISCOVER": 5.0,
+      "DIFF_MATCH": 5.0,
+      "DIFF_PLAN": 5.0,
+      "DIFF_BOOKPAY": 5.0
+    },
+    "difficulty_overall_avg": 5.0,
+    "response_count": 4
+  },
+  "sop_2_functionality_readiness": {
+    "chatbot_logging_enabled": true,
+    "recommendation_logging_enabled": true,
+    "booking_funnel_logging_enabled": true,
+    "records_management_workflow_enabled": true,
+    "note": "Read-only snapshot from runtime tables; does not modify transactions."
+  },
+  "sop_3_performance": {
+    "accommodation_queries": 123,
+    "queries_with_results": 123,
+    "hit_rate_pct": 100.0,
+    "avg_top1_score": 0.7209,
+    "avg_decision_tree_score": 0.7468,
+    "no_match_count": 0,
+    "no_match_pct": 0.0,
+    "views": 166,
+    "clicks": 26,
+    "books": 43,
+    "ctr_pct": 15.66,
+    "book_rate_pct": 25.9,
+    "chat_success_rate_pct": 99.8,
+    "chat_avg_response_ms": 180.47,
+    "chat_p95_response_ms": 1311
+  },
+  "sop_4_acceptance": {
+    "survey_batches": 8,
+    "sus_avg_score_0_100": 50.0,
+    "pu_avg_likert_1_5": 5.0,
+    "peu_avg_likert_1_5": 5.0,
+    "pu_cronbach_alpha": null,
+    "peu_cronbach_alpha": null
+  },
+  "row_counts": {
+    "recommendation_results": 242,
+    "recommendation_events": 235,
+    "system_metric_logs": 501,
+    "survey_rows": 49
+  }
+}

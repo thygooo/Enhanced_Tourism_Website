@@ -14,6 +14,8 @@ urlpatterns = [
     path('employee_dashboard/', views.employee_dashboard, name='employee_dashboard'),
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('accommodation_dashboard/', views.accommodation_dashboard, name='accommodation_dashboard'),
+    path('owner/hub/', views.owner_hub, name='owner_hub'),
+    path('owner/bookings/', views.owner_accommodation_bookings, name='owner_accommodation_bookings'),
     path('establishment_dashboard/', views.establishment_summary, name='establishment_dashboard'),
     path('map/', views.map_view, name='map'),
     path('tour_calendar/', views.tour_calendar, name='tour_calendar'),
@@ -39,9 +41,12 @@ urlpatterns = [
 
     # Accommodation management routes
     path('accommodation/register/', views.accommodation_register, name='accommodation_register'),
+    path('accommodation/<int:accom_id>/manage-rooms/', views.owner_manage_rooms, name='owner_manage_rooms'),
     path('accommodation/create/', views.create_accommodation, name='create_accommodation'),
     path('accommodation/update/<int:pk>/', views.accommodation_update, name='accommodation_update'),
     path('accommodation/pending/', views.pending_accommodation, name='pending_accommodation'),
+    path('accommodation/owners/pending/', views.pending_accommodation_owners, name='pending_accommodation_owners'),
+    path('accommodation/owners/<str:user_id>/update/', views.accommodation_owner_update, name='accommodation_owner_update'),
     path('accommodation/bookings/', views.accommodation_bookings, name='accommodation_bookings'),
     path('accommodation/bookings/<int:booking_id>/update/', views.accommodation_booking_update, name='accommodation_booking_update'),
 

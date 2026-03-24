@@ -1,0 +1,21 @@
+metric_group,metric_name,metric_value,window,notes
+recommendation,accommodation_queries,123,last_365_days_pilot_test,filtered by data_source=pilot_test
+recommendation,queries_with_results,123,last_365_days_pilot_test,
+recommendation,hit_rate_pct,100.0,last_365_days_pilot_test,with_results / accommodation_queries
+recommendation,avg_top1_score,0.7209,last_365_days_pilot_test,top-ranked item score
+recommendation,avg_decision_tree_score,0.7468,last_365_days_pilot_test,from recommendation trace
+recommendation,hybrid_dt_mode_count,33,last_365_days_pilot_test,"scoring_mode in (hybrid_textcnn_decisiontree, hybrid_textcnn_surrogate_tree)"
+recommendation,hybrid_surrogate_tree_mode_count,17,last_365_days_pilot_test,scoring_mode=hybrid_textcnn_surrogate_tree
+recommendation,fallback_mode_count,6,last_365_days_pilot_test,scoring_mode=hybrid_fallback_heuristic
+recommendation,no_match_count,0,last_365_days_pilot_test,recommendation list empty
+recommendation,no_match_pct,0.0,last_365_days_pilot_test,no_match_count / accommodation_queries
+funnel,views,167,last_365_days_pilot_test,RecommendationEvent view
+funnel,clicks,26,last_365_days_pilot_test,RecommendationEvent click
+funnel,books,43,last_365_days_pilot_test,RecommendationEvent book
+funnel,ctr_pct,15.57,last_365_days_pilot_test,clicks / views
+funnel,book_rate_pct,25.75,last_365_days_pilot_test,books / views
+performance,chat_requests,507,last_365_days_pilot_test,SystemMetricLog module=chat
+performance,chat_success_rate_pct,99.8,last_365_days_pilot_test,success_flag=true / total
+performance,chat_avg_response_ms,2994.95,last_365_days_pilot_test,
+performance,chat_p95_response_ms,1394,last_365_days_pilot_test,
+errors,top_error_messages,1x:chat_requires_login,last_365_days_pilot_test,up to top 5

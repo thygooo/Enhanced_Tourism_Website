@@ -1,0 +1,328 @@
+<style>
+  .staff-chat-fab {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1200;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #0d6efd, #1aa7c9);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(13, 110, 253, 0.35);
+  }
+
+  .staff-chat-modal {
+    position: fixed;
+    right: 20px;
+    bottom: 72px;
+    width: min(380px, calc(100vw - 24px));
+    max-height: 70vh;
+    background: #fff;
+    border-radius: 14px;
+    border: 1px solid #d9e2ef;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 1201;
+    display: none;
+    flex-direction: column;
+  }
+
+  .staff-chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    color: #fff;
+    background: linear-gradient(90deg, #1f6feb, #1aa7c9);
+    font-weight: 700;
+    font-size: 0.98rem;
+  }
+
+  .staff-chat-close {
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .staff-chat-messages {
+    padding: 12px;
+    overflow-y: auto;
+    background: #f4f8ff;
+    min-height: 260px;
+    max-height: 45vh;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+  }
+
+  .staff-chat-messages::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(244, 248, 255, 0.86), rgba(244, 248, 255, 0.86)),
+      url('/static/images/chatbot-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1;
+    z-index: 0;
+  }
+
+  .staff-chat-messages > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .staff-chat-message {
+    max-width: 85%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    line-height: 1.35;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .staff-chat-message.user {
+    align-self: flex-end;
+    background: #0d6efd;
+    color: #fff;
+  }
+
+  .staff-chat-message.bot {
+    align-self: flex-start;
+    background: #fff;
+    color: #223;
+    border: 1px solid #d8e2f2;
+  }
+
+  .staff-chat-link {
+    display: inline-block;
+    margin-top: 8px;
+    color: #0d6efd;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .staff-chat-quick-replies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .staff-chat-quick-btn {
+    border: 1px solid #b8c8e5;
+    background: #fff;
+    color: #1f3556;
+    border-radius: 999px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .staff-chat-input-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    padding: 10px;
+    border-top: 1px solid #e0e8f5;
+    background: #fff;
+  }
+
+  .staff-chat-input {
+    width: 100%;
+    padding: 9px 11px;
+    border-radius: 10px;
+    border: 1px solid #bfd1ee;
+    outline: none;
+  }
+
+  .staff-chat-send {
+    border: none;
+    border-radius: 10px;
+    padding: 0 14px;
+    background: #0d6efd;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 700;
+  }
+</style>
+
+<button id="staffChatFab" class="staff-chat-fab" type="button">Chat Assistant</button>
+<section
+  id="staffChatModal"
+  class="staff-chat-modal"
+  data-chat-role="{{ chat_role|default:'guest' }}"
+  data-welcome-admin="Hello! Admin assistant mode is active. Type help to see what I can do for you."
+  data-welcome-employee="Hello! Employee assistant mode is active. Type help to see available commands."
+  data-welcome-owner="Hello! Owner assistant mode is active. Try: show my rooms or show my bookings."
+>
+  <div class="staff-chat-header">
+    <span>Ibayaw Chat Assistant</span>
+    <button id="staffChatClose" class="staff-chat-close" type="button">x</button>
+  </div>
+  <div id="staffChatMessages" class="staff-chat-messages"></div>
+  <div class="staff-chat-input-row">
+    <input id="staffChatInput" class="staff-chat-input" type="text" placeholder="Type your message..." />
+    <button id="staffChatSend" class="staff-chat-send" type="button">Send</button>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const fab = document.getElementById("staffChatFab");
+    const modal = document.getElementById("staffChatModal");
+    const closeBtn = document.getElementById("staffChatClose");
+    const messagesEl = document.getElementById("staffChatMessages");
+    const inputEl = document.getElementById("staffChatInput");
+    const sendBtn = document.getElementById("staffChatSend");
+    if (!fab || !modal || !closeBtn || !messagesEl || !inputEl || !sendBtn) {
+      return;
+    }
+
+    const role = String(modal.getAttribute("data-chat-role") || "guest").trim().toLowerCase();
+    const welcomeMap = {
+      admin: modal.getAttribute("data-welcome-admin") || "Hello! Admin assistant mode is active.",
+      employee: modal.getAttribute("data-welcome-employee") || "Hello! Employee assistant mode is active.",
+      owner: modal.getAttribute("data-welcome-owner") || "Hello! Owner assistant mode is active.",
+      guest: "Hello! Guest assistant mode is active.",
+    };
+
+    function escapeHtml(text) {
+      return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function addMessage(text, kind) {
+      const msg = document.createElement("div");
+      msg.className = "staff-chat-message " + (kind === "user" ? "user" : "bot");
+      msg.textContent = String(text || "");
+      messagesEl.appendChild(msg);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return msg;
+    }
+
+    function addQuickReplies(list) {
+      if (!Array.isArray(list) || !list.length) {
+        return;
+      }
+      const row = document.createElement("div");
+      row.className = "staff-chat-quick-replies";
+      list.slice(0, 4).forEach((item) => {
+        const label = typeof item === "string" ? item : String(item.label || item.value || "");
+        const value = typeof item === "string" ? item : String(item.value || item.label || "");
+        if (!label || !value) return;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "staff-chat-quick-btn";
+        btn.textContent = label;
+        btn.addEventListener("click", function () {
+          inputEl.value = value;
+          sendMessage();
+        });
+        row.appendChild(btn);
+      });
+      messagesEl.appendChild(row);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const message = String(inputEl.value || "").trim();
+      if (!message) return;
+      inputEl.value = "";
+      addMessage(message, "user");
+      sendBtn.disabled = true;
+      const typing = addMessage("Thinking...", "bot");
+
+      try {
+        const response = await fetch("/api/chat/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: message }),
+        });
+        let data = {};
+        try {
+          data = await response.json();
+        } catch (e) {
+          data = {};
+        }
+
+        if (typing && typing.parentNode) typing.parentNode.removeChild(typing);
+
+        const replyText = String(data.fulfillmentText || "").trim() || "No response from assistant.";
+        const replyNode = addMessage(replyText, "bot");
+
+        if (data.billing_link) {
+          const a = document.createElement("a");
+          a.className = "staff-chat-link";
+          a.href = String(data.billing_link);
+          a.textContent = String(data.billing_link_label || "Open");
+          if (data.open_in_new_tab === true) {
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+          }
+          replyNode.appendChild(document.createElement("br"));
+          replyNode.appendChild(a);
+        }
+
+        if (Array.isArray(data.quick_replies) && data.quick_replies.length > 0) {
+          addQuickReplies(data.quick_replies);
+        }
+
+        if (data.redirect_url) {
+          window.location.href = String(data.redirect_url);
+        }
+      } catch (error) {
+        if (typing && typing.parentNode) typing.parentNode.removeChild(typing);
+        addMessage("Sorry, I could not connect to the chatbot right now.", "bot");
+      } finally {
+        sendBtn.disabled = false;
+        inputEl.focus();
+      }
+    }
+
+    fab.addEventListener("click", function () {
+      modal.style.display = "flex";
+      if (!messagesEl.dataset.initialized) {
+        addMessage(welcomeMap[role] || welcomeMap.guest, "bot");
+        addMessage("Type help to see available prompts for your role.", "bot");
+        messagesEl.dataset.initialized = "1";
+      }
+      inputEl.focus();
+    });
+
+    closeBtn.addEventListener("click", function () {
+      modal.style.display = "none";
+    });
+
+    sendBtn.addEventListener("click", sendMessage);
+    inputEl.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+
+    window.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  })();
+</script>

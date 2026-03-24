@@ -710,8 +710,13 @@
       console.log("reCAPTCHA callback triggered");
       // Explicit render of reCAPTCHA
       try {
+        const captchaSiteKey = '{{ recaptcha_site_key|escapejs }}';
+        if (!captchaSiteKey) {
+          console.warn("reCAPTCHA site key is not configured.");
+          return;
+        }
         recaptchaWidgetId = grecaptcha.render('recaptcha-container', {
-          'sitekey': '6LeyhAYrAAAAAFGtpGaYGmM1-FEw52YXcQ78XP8E',
+          'sitekey': captchaSiteKey,
           'callback': onRecaptchaSuccess,
           'expired-callback': onRecaptchaExpired,
           'error-callback': onRecaptchaError,

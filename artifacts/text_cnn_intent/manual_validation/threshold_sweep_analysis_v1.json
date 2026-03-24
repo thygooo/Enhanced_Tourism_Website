@@ -1,0 +1,148 @@
+{
+  "thresholds_tested": [
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7
+  ],
+  "old_model_path": "artifacts/text_cnn_intent/text_cnn_intent.h5",
+  "new_model_path": "artifacts/text_cnn_intent_robust_round1/text_cnn_intent.h5",
+  "old_model_sweep": [
+    {
+      "threshold": 0.3,
+      "raw_cnn_accuracy": 0.16666666666666666,
+      "fallback_usage_count": 32,
+      "cnn_low_confidence_count": 32,
+      "cnn_accepted_count": 58,
+      "cnn_accepted_accuracy": 0.1724137931034483,
+      "final_routed_accuracy": 0.3333333333333333
+    },
+    {
+      "threshold": 0.4,
+      "raw_cnn_accuracy": 0.16666666666666666,
+      "fallback_usage_count": 74,
+      "cnn_low_confidence_count": 74,
+      "cnn_accepted_count": 16,
+      "cnn_accepted_accuracy": 0.0,
+      "final_routed_accuracy": 0.5333333333333333
+    },
+    {
+      "threshold": 0.5,
+      "raw_cnn_accuracy": 0.16666666666666666,
+      "fallback_usage_count": 88,
+      "cnn_low_confidence_count": 88,
+      "cnn_accepted_count": 2,
+      "cnn_accepted_accuracy": 0.0,
+      "final_routed_accuracy": 0.6666666666666666
+    },
+    {
+      "threshold": 0.6,
+      "raw_cnn_accuracy": 0.16666666666666666,
+      "fallback_usage_count": 90,
+      "cnn_low_confidence_count": 90,
+      "cnn_accepted_count": 0,
+      "cnn_accepted_accuracy": 0.0,
+      "final_routed_accuracy": 0.6888888888888889
+    },
+    {
+      "threshold": 0.7,
+      "raw_cnn_accuracy": 0.16666666666666666,
+      "fallback_usage_count": 90,
+      "cnn_low_confidence_count": 90,
+      "cnn_accepted_count": 0,
+      "cnn_accepted_accuracy": 0.0,
+      "final_routed_accuracy": 0.6888888888888889
+    }
+  ],
+  "new_model_sweep": [
+    {
+      "threshold": 0.3,
+      "raw_cnn_accuracy": 0.3111111111111111,
+      "fallback_usage_count": 1,
+      "cnn_low_confidence_count": 1,
+      "cnn_accepted_count": 89,
+      "cnn_accepted_accuracy": 0.3146067415730337,
+      "final_routed_accuracy": 0.32222222222222224
+    },
+    {
+      "threshold": 0.4,
+      "raw_cnn_accuracy": 0.3111111111111111,
+      "fallback_usage_count": 13,
+      "cnn_low_confidence_count": 13,
+      "cnn_accepted_count": 77,
+      "cnn_accepted_accuracy": 0.35064935064935066,
+      "final_routed_accuracy": 0.4
+    },
+    {
+      "threshold": 0.5,
+      "raw_cnn_accuracy": 0.3111111111111111,
+      "fallback_usage_count": 36,
+      "cnn_low_confidence_count": 36,
+      "cnn_accepted_count": 54,
+      "cnn_accepted_accuracy": 0.3888888888888889,
+      "final_routed_accuracy": 0.5111111111111111
+    },
+    {
+      "threshold": 0.6,
+      "raw_cnn_accuracy": 0.3111111111111111,
+      "fallback_usage_count": 59,
+      "cnn_low_confidence_count": 59,
+      "cnn_accepted_count": 31,
+      "cnn_accepted_accuracy": 0.22580645161290322,
+      "final_routed_accuracy": 0.5222222222222223
+    },
+    {
+      "threshold": 0.7,
+      "raw_cnn_accuracy": 0.3111111111111111,
+      "fallback_usage_count": 71,
+      "cnn_low_confidence_count": 71,
+      "cnn_accepted_count": 19,
+      "cnn_accepted_accuracy": 0.2631578947368421,
+      "final_routed_accuracy": 0.5777777777777777
+    }
+  ],
+  "best_threshold_old_model": {
+    "threshold": 0.6,
+    "raw_cnn_accuracy": 0.16666666666666666,
+    "fallback_usage_count": 90,
+    "cnn_low_confidence_count": 90,
+    "cnn_accepted_count": 0,
+    "cnn_accepted_accuracy": 0.0,
+    "final_routed_accuracy": 0.6888888888888889
+  },
+  "best_threshold_new_model": {
+    "threshold": 0.7,
+    "raw_cnn_accuracy": 0.3111111111111111,
+    "fallback_usage_count": 71,
+    "cnn_low_confidence_count": 71,
+    "cnn_accepted_count": 19,
+    "cnn_accepted_accuracy": 0.2631578947368421,
+    "final_routed_accuracy": 0.5777777777777777
+  },
+  "row_by_row_old_vs_new_summary": {
+    "rows_compared": 90,
+    "regressed_count": 16,
+    "improved_count": 1,
+    "unchanged_count": 73,
+    "regressed_by_intent": {
+      "calculate_accommodation_billing": 9,
+      "book_accommodation": 5,
+      "calculate_billing": 1,
+      "get_recommendation": 1
+    },
+    "improved_by_intent": {
+      "get_accommodation_recommendation": 1
+    }
+  },
+  "inference": {
+    "raw_accuracy_change_at_0_60": 0.14444444444444446,
+    "final_accuracy_change_at_0_60": -0.16666666666666663,
+    "fallback_usage_change_at_0_60": -31
+  },
+  "outputs": {
+    "analysis_json": "artifacts/text_cnn_intent/manual_validation/threshold_sweep_analysis_v1.json",
+    "analysis_csv": "artifacts/text_cnn_intent/manual_validation/threshold_sweep_analysis_v1.csv",
+    "row_compare_csv": "artifacts/text_cnn_intent/manual_validation/old_vs_new_row_compare_v1.csv"
+  }
+}

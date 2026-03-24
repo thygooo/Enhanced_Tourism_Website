@@ -1,0 +1,26 @@
+feature,importance
+num__requested_budget,0.3174215639126942
+num__room_price_per_night,0.25285555729114884
+num__requested_guests,0.1326110985623355
+num__room_capacity,0.09970679317647779
+num__shown_rank,0.04829683804558625
+num__nights_requested,0.03988038218447455
+num__cnn_confidence,0.03941204322405025
+num__room_available,0.02374073740437522
+cat__requested_location_suba,0.01396754079982792
+cat__requested_accommodation_type_hotel,0.00904543233252212
+cat__accom_location_villareal,0.007214012681534213
+cat__requested_location_banga,0.006218996147350138
+cat__requested_accommodation_type_inn,0.003566445054580014
+cat__accom_location_banga,0.0031920771907320315
+cat__requested_accommodation_type_either,0.002870481992310785
+cat__requested_location_poblacion,0.0
+cat__requested_location_nangka,0.0
+cat__requested_location_villareal,0.0
+cat__requested_location_bayawan city,0.0
+cat__accom_location_nangka,0.0
+cat__accom_location_bayawan city,0.0
+cat__accom_location_poblacion,0.0
+cat__accom_location_suba,0.0
+cat__company_type_hotel,0.0
+cat__company_type_inn,0.0

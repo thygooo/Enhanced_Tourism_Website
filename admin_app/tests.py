@@ -83,6 +83,62 @@ class AccommodationDashboardTemplateRouteTests(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
+class AccommodationRegisterOwnerApprovalRequiredTests(TestCase):
+    def setUp(self):
+        user_model = get_user_model()
+        self.user = user_model.objects.create_user(
+            username="upgrade_guest_user",
+            email="upgrade_guest_user@example.com",
+            password="secure-pass-123",
+            first_name="Upgrade",
+            last_name="Guest",
+        )
+        self.url = reverse("admin_app:accommodation_register")
+
+    def test_authenticated_guest_is_redirected_to_owner_signup_flow(self):
+        self.client.force_login(self.user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        self.assertIn("owner_signup=1", response.url)
+        self.user.refresh_from_db()
+        self.assertFalse(self.user.groups.filter(name__iexact="accommodation_owner").exists())
+
+
+class AccommodationOwnerApprovalDashboardTests(TestCase):
+    def setUp(self):
+        user_model = get_user_model()
+        self.owner_candidate = user_model.objects.create_user(
+            username="pending_owner_candidate",
+            email="pending_owner_candidate@example.com",
+            password="secure-pass-123",
+            first_name="Pending",
+            last_name="Owner",
+        )
+        pending_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+        self.owner_candidate.groups.add(pending_group)
+
+        session = self.client.session
+        session["user_type"] = "employee"
+        session["is_admin"] = True
+        session["employee_id"] = 1
+        session.save()
+
+    def test_pending_owner_page_lists_owner_candidates(self):
+        response = self.client.get(reverse("admin_app:pending_accommodation_owners"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "pending_owner_candidate@example.com")
+
+    def test_admin_can_accept_pending_owner(self):
+        response = self.client.post(
+            reverse("admin_app:accommodation_owner_update", kwargs={"user_id": self.owner_candidate.pk}),
+            data={"action": "accept"},
+        )
+        self.assertEqual(response.status_code, 302)
+        self.owner_candidate.refresh_from_db()
+        self.assertTrue(self.owner_candidate.groups.filter(name__iexact="accommodation_owner").exists())
+        self.assertFalse(self.owner_candidate.groups.filter(name__iexact="accommodation_owner_pending").exists())
+
+
 class TourismInformationModelTests(TestCase):
     def setUp(self):
         user_model = get_user_model()
