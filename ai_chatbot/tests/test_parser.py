@@ -47,8 +47,21 @@ class ChatbotFallbackParserTests(SimpleTestCase):
         self.assertEqual(params.get("company_type"), "either")
 
     def test_location_extraction_near_terminal(self):
-        params = _extract_params_from_message("recommend an inn near terminal for 1 guest")
-        self.assertEqual(params.get("location"), "terminal area")
+        parsed = _extract_params_with_confidence("recommend an inn near terminal for 1 guest")
+        self.assertTrue(parsed.get("needs_clarification"))
+        self.assertIn("terminal", str(parsed.get("clarification_question") or "").lower())
+        options = parsed.get("clarification_options") or []
+        self.assertTrue(isinstance(options, list) and len(options) >= 2)
+
+    def test_location_extraction_near_trike_terminal_alias(self):
+        params = _extract_params_from_message("show inns near trike terminal")
+        self.assertEqual(params.get("location"), "tinago")
+        self.assertNotIn("location_anchor", params)
+
+    def test_location_extraction_near_bus_terminal_maps_to_public_terminal_anchor(self):
+        params = _extract_params_from_message("show inns near bus terminal")
+        self.assertEqual(params.get("location"), "tinago")
+        self.assertEqual(params.get("location_anchor"), "Bayawan City Public Terminal")
 
     def test_location_extraction_in_bayawan(self):
         params = _extract_params_from_message("recommend hotel in bayawan for 2 guests")
@@ -57,6 +70,13 @@ class ChatbotFallbackParserTests(SimpleTestCase):
     def test_location_extraction_around_poblacion(self):
         params = _extract_params_from_message("show inns around poblacion under 1200")
         self.assertEqual(params.get("location"), "poblacion")
+
+    def test_location_ambiguity_prompts_for_clarification(self):
+        parsed = _extract_params_with_confidence("recommend an inn near city")
+        self.assertTrue(parsed.get("needs_clarification"))
+        self.assertIn("multiple places", str(parsed.get("clarification_question") or "").lower())
+        options = parsed.get("clarification_options") or []
+        self.assertTrue(isinstance(options, list) and len(options) >= 2)
 
     def test_month_range_without_year_needs_clarification(self):
         parsed = _extract_params_with_confidence("March 10-12")

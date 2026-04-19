@@ -86,7 +86,15 @@ class TourEventForm(forms.ModelForm):
     
     class Meta:
         model = Tour_Event
-        fields = ('sched_id', 'day_number', 'event_time', 'event_name', 'event_description', 'image')
+        fields = (
+            'sched_id',
+            'day_number',
+            'event_time',
+            'event_name',
+            'event_description',
+            'event_location',
+            'image',
+        )
         widgets = {
             'event_time': forms.TimeInput(attrs={'type': 'time'}),
             'sched_id': forms.HiddenInput(),

@@ -7,37 +7,37 @@
     "relevant": 1735,
     "not_relevant": 665
   },
-  "accuracy": 0.75,
-  "precision_macro": 0.7036395473630699,
-  "recall_macro": 0.7343502849342376,
-  "f1_macro": 0.7121784493613958,
-  "precision_weighted": 0.7776778821713016,
-  "recall_weighted": 0.75,
-  "f1_weighted": 0.7586946093422077,
+  "accuracy": 0.8729166666666667,
+  "precision_macro": 0.8369830674047541,
+  "recall_macro": 0.8587787913588004,
+  "f1_macro": 0.8465400762058501,
+  "precision_weighted": 0.878775405676761,
+  "recall_weighted": 0.8729166666666667,
+  "f1_weighted": 0.874904851877281,
   "classification_report": {
     "not_relevant": {
-      "precision": 0.5375722543352601,
-      "recall": 0.6992481203007519,
-      "f1-score": 0.6078431372549019,
+      "precision": 0.7432432432432432,
+      "recall": 0.8270676691729323,
+      "f1-score": 0.7829181494661922,
       "support": 133.0
     },
     "relevant": {
-      "precision": 0.8697068403908795,
-      "recall": 0.7694524495677233,
-      "f1-score": 0.8165137614678899,
+      "precision": 0.9307228915662651,
+      "recall": 0.8904899135446686,
+      "f1-score": 0.9101620029455081,
       "support": 347.0
     },
-    "accuracy": 0.75,
+    "accuracy": 0.8729166666666667,
     "macro avg": {
-      "precision": 0.7036395473630699,
-      "recall": 0.7343502849342376,
-      "f1-score": 0.7121784493613958,
+      "precision": 0.8369830674047541,
+      "recall": 0.8587787913588004,
+      "f1-score": 0.8465400762058501,
       "support": 480.0
     },
     "weighted avg": {
-      "precision": 0.7776778821713016,
-      "recall": 0.75,
-      "f1-score": 0.7586946093422077,
+      "precision": 0.878775405676761,
+      "recall": 0.8729166666666667,
+      "f1-score": 0.874904851877281,
       "support": 480.0
     }
   },
@@ -47,62 +47,102 @@
   ],
   "confusion_matrix": [
     [
-      93,
-      40
+      110,
+      23
     ],
     [
-      80,
-      267
+      38,
+      309
     ]
   ],
   "model_params": {
     "algorithm": "DecisionTreeClassifier",
+    "criterion": "entropy",
     "max_depth": 8,
     "min_samples_leaf": 5,
+    "min_samples_split": 30,
+    "max_features": null,
     "class_weight": "balanced",
     "random_state": 42,
     "test_size": 0.2
   },
+  "feature_columns_base": [
+    "requested_guests",
+    "requested_budget",
+    "requested_location",
+    "requested_accommodation_type",
+    "room_price_per_night",
+    "room_capacity",
+    "room_available",
+    "accom_location",
+    "company_type",
+    "nights_requested",
+    "cnn_confidence",
+    "shown_rank"
+  ],
+  "feature_columns_engineered": [
+    "budget_ratio",
+    "budget_within",
+    "budget_gap_pct",
+    "capacity_gap",
+    "capacity_fit",
+    "availability_flag",
+    "location_match",
+    "type_match",
+    "city_proper_match"
+  ],
+  "data_quality_audit": {
+    "rows": 2400,
+    "duplicate_rows": 0,
+    "missing_cells_total": 0,
+    "class_distribution": {
+      "relevant": 1735,
+      "not_relevant": 665
+    },
+    "class_imbalance_ratio": 2.6090225563909772,
+    "feature_label_conflict_rows": 0
+  },
+  "tuning_summary": {},
   "feature_importance_top10": [
     {
-      "feature": "num__requested_budget",
-      "importance": 0.3174215639126942
+      "feature": "num__budget_ratio",
+      "importance": 0.32828396667122844
     },
     {
-      "feature": "num__room_price_per_night",
-      "importance": 0.25285555729114884
+      "feature": "num__capacity_fit",
+      "importance": 0.28380758061405315
     },
     {
-      "feature": "num__requested_guests",
-      "importance": 0.1326110985623355
+      "feature": "num__type_match",
+      "importance": 0.0790657381817741
     },
     {
-      "feature": "num__room_capacity",
-      "importance": 0.09970679317647779
+      "feature": "num__location_match",
+      "importance": 0.07551881785145173
     },
     {
       "feature": "num__shown_rank",
-      "importance": 0.04829683804558625
+      "importance": 0.06069201836720963
     },
     {
       "feature": "num__nights_requested",
-      "importance": 0.03988038218447455
+      "importance": 0.05475624546314985
     },
     {
-      "feature": "num__cnn_confidence",
-      "importance": 0.03941204322405025
+      "feature": "num__budget_gap_pct",
+      "importance": 0.046728393180298054
     },
     {
       "feature": "num__room_available",
-      "importance": 0.02374073740437522
+      "importance": 0.019829802526725716
     },
     {
-      "feature": "cat__requested_location_suba",
-      "importance": 0.01396754079982792
+      "feature": "num__room_price_per_night",
+      "importance": 0.018058313917747964
     },
     {
-      "feature": "cat__requested_accommodation_type_hotel",
-      "importance": 0.00904543233252212
+      "feature": "num__cnn_confidence",
+      "importance": 0.012274038677766304
     }
   ],
   "outputs": {

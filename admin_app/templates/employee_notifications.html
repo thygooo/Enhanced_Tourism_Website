@@ -1,0 +1,212 @@
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Notifications</title>
+  <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+  <link rel="stylesheet" href="{% static 'css/admin_page_polish.css' %}">
+  <style>
+    :root {
+      --bg: #f3f6fb;
+      --panel: #ffffff;
+      --line: #dfe7f2;
+      --text: #1f2a37;
+      --muted: #64748b;
+      --accent: #2f80ed;
+      --shadow: 0 10px 24px rgba(22, 43, 77, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+    .dashboard-container { display: flex; height: 100vh; }
+    .content { flex: 1; padding: clamp(16px, 2.4vw, 28px); height: 100vh; overflow: hidden; }
+    .shell { max-width: 1100px; margin: 0 auto; height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 14px; }
+
+    .hero {
+      background: linear-gradient(135deg, #ffffff 0%, #f4f9ff 100%);
+      border: 1px solid #dce7f6;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 16px 18px;
+    }
+    .hero h1 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 2rem); }
+    .hero p { margin: 4px 0 0; color: var(--muted); font-size: .95rem; }
+
+    .list-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      padding: 10px;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 4px 10px;
+      border-bottom: 1px solid #e8edf5;
+      margin-bottom: 10px;
+    }
+    .list-title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #1f2a37;
+    }
+    .count-chip {
+      font-size: .75rem;
+      font-weight: 700;
+      color: #234f95;
+      background: #eaf2ff;
+      border: 1px solid #bfd5fb;
+      border-radius: 999px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+
+    .notification-list {
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .notification-list::-webkit-scrollbar { width: 8px; }
+    .notification-list::-webkit-scrollbar-thumb { background: #cbd6e6; border-radius: 999px; }
+
+    .row {
+      border: 1px solid #e8edf5;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #fff;
+    }
+    .row:last-child { margin-bottom: 0; }
+
+    .row-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+    .title { font-weight: 700; }
+    .time { color: var(--muted); font-size: .8rem; white-space: nowrap; }
+    .msg { color: #334155; font-size: .92rem; line-height: 1.45; }
+    .meta {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 700;
+      background: #eaf2ff;
+      color: #2258ad;
+    }
+    .badge.assignment { background: #e8f7ee; color: #15703f; border: 1px solid #b5e0c5; }
+    .badge.activity { background: #eef4ff; color: #1f4b9a; border: 1px solid #c8d8fa; }
+    .badge.status { background: #fff5df; color: #8a5a00; border: 1px solid #f1dbac; }
+    .btn {
+      text-decoration: none;
+      background: #edf5ff;
+      border: 1px solid #b9d2fb;
+      color: #194d9f;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 28px 12px;
+      border: 1px dashed #d0dbe8;
+      border-radius: 12px;
+      background: #fbfdff;
+    }
+
+    /* Keep logout reachable without long page scrolling */
+    .employee-notifications-page .navigation {
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .employee-notifications-page .nav-footer {
+      position: sticky;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(248,246,244,0.92) 0%, #f8f6f4 35%);
+      padding-bottom: 8px;
+      z-index: 2;
+    }
+
+    @media (max-width: 768px) {
+      body { overflow: auto; }
+      .dashboard-container { height: auto; }
+      .content { height: auto; overflow: visible; }
+      .shell { height: auto; grid-template-rows: auto auto; }
+      .notification-list { max-height: none; overflow: visible; }
+    }
+  </style>
+</head>
+<body class="employee-notifications-page">
+  <div class="dashboard-container">
+    {% include "components/employee_navigation.html" %}
+    <main class="content">
+      <div class="shell">
+        <section class="hero">
+          <h1>Notifications</h1>
+          <p>Latest activity and system updates relevant to your account.</p>
+        </section>
+
+        <section class="list-card">
+          <div class="list-header">
+            <h2 class="list-title">Recent Notifications</h2>
+            <span class="count-chip">{{ notifications|length }} item{{ notifications|length|pluralize }}</span>
+          </div>
+          <div class="notification-list">
+            {% if notifications %}
+              {% for item in notifications %}
+                <article class="row">
+                  <div class="row-head">
+                    <div class="title">{{ item.title }}</div>
+                    <div class="time">{{ item.timestamp|date:"M d, Y h:i A" }}</div>
+                  </div>
+                  <div class="msg">{{ item.message }}</div>
+                  <div class="meta">
+                    <div>
+                      {% if item.kind == 'assignment' %}
+                        <span class="badge assignment">Assignment</span>
+                      {% else %}
+                        <span class="badge activity">Activity</span>
+                      {% endif %}
+                      {% if item.status %}<span class="badge status">{{ item.status }}</span>{% endif %}
+                    </div>
+                    <div>
+                      {% if item.cta_url %}
+                        <a class="btn" href="{{ item.cta_url }}">{{ item.cta_label|default:"Open" }}</a>
+                      {% endif %}
+                    </div>
+                  </div>
+                </article>
+              {% endfor %}
+            {% else %}
+              <div class="empty">No notifications yet.</div>
+            {% endif %}
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

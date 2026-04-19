@@ -3,21 +3,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page_title }}</title>
     <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
     <style>
-        body { font-family: Arial, sans-serif; background: #f5f7fb; margin: 0; }
+        body { font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: #f4f7fc; margin: 0; }
         .dashboard-container { display: flex; min-height: 100vh; }
         .content { flex: 1; padding: 24px; }
-        .card { max-width: 900px; background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .card { max-width: 900px; background: #fff; border: 1px solid #e4e8ef; border-radius: 10px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
         .field { margin-bottom: 12px; }
         .field label { display: block; font-weight: 600; margin-bottom: 4px; }
-        .field input, .field textarea, .field select { width: 100%; padding: 8px; box-sizing: border-box; }
+        .field input, .field textarea, .field select { width: 100%; padding: 8px 10px; box-sizing: border-box; border: 1px solid #d7dce3; border-radius: 10px; min-height: 38px; }
         .actions { display: flex; gap: 10px; margin-top: 14px; }
-        .btn { display: inline-block; padding: 8px 12px; border-radius: 8px; text-decoration: none; border: 0; cursor: pointer; }
-        .btn-primary { background: #2f6fed; color: #fff; }
+        .btn { display: inline-block; padding: 8px 12px; border-radius: 999px; text-decoration: none; border: 0; cursor: pointer; font-weight: 700; }
+        .btn-primary { background: #875a34; color: #fff; }
         .btn-muted { background: #6c757d; color: #fff; }
         .errors { color: #c92a2a; margin-bottom: 12px; }
+        @media (max-width: 768px) {
+            .content { padding: 12px; }
+            .card { padding: 14px; }
+            .actions { flex-wrap: wrap; }
+        }
     </style>
 </head>
 <body>

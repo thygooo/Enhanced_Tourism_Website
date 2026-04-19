@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from admin_app.models import Accomodation, Room as AdminRoom, RoomAssignment as AdminRoomAssignment
 from accom_app.models import Room as LegacyRoom, RoomsGuestAdd, AuthoritativeRoomDetails
+from guest_app.models import AccommodationBooking, Guest
 
 
 class RoomManagementAuthoritativeModelTests(TestCase):
@@ -271,3 +272,91 @@ class RoomManagementAuthoritativeModelTests(TestCase):
         self.assertFalse(AdminRoom.objects.filter(room_id=admin_room.room_id).exists())
         self.assertFalse(LegacyRoom.objects.filter(pk=legacy_room.pk).exists())
         self.assertFalse(RoomsGuestAdd.objects.filter(room_id=legacy_room).exists())
+
+
+class OwnerReportsAnalyticsTests(TestCase):
+    def setUp(self):
+        user_model = get_user_model()
+        owner_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+
+        self.owner = user_model.objects.create_user(
+            username="analytics_owner",
+            email="analytics_owner@example.com",
+            password="secure-pass-123",
+            first_name="Analytics",
+            last_name="Owner",
+        )
+        self.owner.groups.add(owner_group)
+
+        self.accommodation = Accomodation.objects.create(
+            owner=self.owner,
+            company_name="Analytics Hotel",
+            email_address="analytics-hotel@example.com",
+            location="Bayawan",
+            company_type="hotel",
+            password="accom-pass-owner",
+            phone_number="09990009999",
+            approval_status="accepted",
+            status="accepted",
+        )
+        self.room = AdminRoom.objects.create(
+            accommodation=self.accommodation,
+            room_name="Executive Twin",
+            person_limit=5,
+            current_availability=5,
+            price_per_night="3400.00",
+            status="AVAILABLE",
+        )
+        self.guest = Guest.objects.create_user(
+            username="analytics_guest",
+            email="analytics_guest@example.com",
+            password="guest-pass-123",
+            first_name="Test",
+            last_name="Guest",
+            country_of_origin="Philippines",
+            phone_number="09171234567",
+            sex="F",
+        )
+
+    def test_reports_default_to_latest_confirmed_booking_month_when_unfiltered(self):
+        AccommodationBooking.objects.create(
+            guest=self.guest,
+            accommodation=self.accommodation,
+            room=self.room,
+            check_in=date(2026, 5, 10),
+            check_out=date(2026, 5, 13),
+            num_guests=2,
+            status="confirmed",
+            total_amount="6800.00",
+        )
+
+        self.client.force_login(self.owner)
+        response = self.client.get(reverse("accom_app:owner_reports_analytics"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["selected_month"], 5)
+        self.assertEqual(response.context["selected_year"], 2026)
+        self.assertEqual(response.context["total_checkins"], 1)
+
+    def test_reports_respect_explicit_month_filter(self):
+        AccommodationBooking.objects.create(
+            guest=self.guest,
+            accommodation=self.accommodation,
+            room=self.room,
+            check_in=date(2026, 5, 25),
+            check_out=date(2026, 5, 27),
+            num_guests=2,
+            status="confirmed",
+            total_amount="6800.00",
+        )
+
+        self.client.force_login(self.owner)
+        response = self.client.get(
+            reverse("accom_app:owner_reports_analytics"),
+            {"month": "4", "year": "2026"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context["selected_month"], 4)
+        self.assertEqual(response.context["selected_year"], 2026)
+        self.assertEqual(response.context["total_checkins"], 0)

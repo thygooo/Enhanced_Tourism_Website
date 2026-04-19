@@ -1,0 +1,110 @@
+/* Final polish layer for large admin pages (safe visual overrides) */
+
+:root {
+  --ui-bg: #f4f6fb;
+  --ui-card: #ffffff;
+  --ui-ink: #1f2937;
+  --ui-muted: #6b7280;
+  --ui-line: #e3e8f1;
+  --ui-brand: #875a34;
+  --ui-brand-2: #b1743f;
+  --ui-blue: #1f6feb;
+  --ui-shadow: 0 12px 28px rgba(15, 23, 42, 0.09);
+  --ui-radius: 14px;
+}
+
+body.admin-dashboard-page,
+body.employee-dashboard-page,
+body.admin-map-page {
+  background: radial-gradient(circle at top right, #efe7dc 0%, #f6f8fc 42%, #f3f5fa 100%);
+  color: var(--ui-ink);
+}
+
+/* Admin dashboard */
+body.admin-dashboard-page .dashboard-header,
+body.admin-dashboard-page .stats-container,
+body.admin-dashboard-page .recent-bookings,
+body.admin-dashboard-page .messages-container,
+body.admin-dashboard-page .card,
+body.admin-dashboard-page .panel {
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow);
+  background: var(--ui-card);
+}
+
+body.admin-dashboard-page .dashboard-header h1 {
+  letter-spacing: 0.02em;
+  color: #111827;
+}
+
+body.admin-dashboard-page .user-info {
+  color: var(--ui-muted);
+}
+
+/* Employee dashboard */
+body.employee-dashboard-page .section,
+body.employee-dashboard-page .stat-card,
+body.employee-dashboard-page .book-card,
+body.employee-dashboard-page .calendar-panel,
+body.employee-dashboard-page .insight,
+body.employee-dashboard-page .kpi-card {
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-radius);
+  box-shadow: var(--ui-shadow);
+  background: var(--ui-card);
+}
+
+body.employee-dashboard-page .page-title {
+  color: #111827;
+  letter-spacing: 0.02em;
+}
+
+body.employee-dashboard-page .section-title {
+  color: #1f2937;
+}
+
+/* Map page */
+body.admin-map-page .navbar {
+  background: linear-gradient(120deg, #124ec0 0%, #1c67d1 100%);
+  box-shadow: 0 10px 24px rgba(17, 45, 94, 0.32);
+}
+
+body.admin-map-page .navbar-title {
+  letter-spacing: 0.01em;
+}
+
+body.admin-map-page .navbar-links a {
+  border-radius: 8px;
+}
+
+body.admin-map-page .navbar-links a:hover {
+  background-color: rgba(255, 255, 255, 0.26);
+}
+
+body.admin-map-page .map-control,
+body.admin-map-page .control-button,
+body.admin-map-page .spot-detail,
+body.admin-map-page .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+}
+
+/* Consistent focus */
+body.admin-dashboard-page :where(a, button, input, select, textarea):focus-visible,
+body.employee-dashboard-page :where(a, button, input, select, textarea):focus-visible,
+body.admin-map-page :where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid rgba(31, 111, 235, 0.32);
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  body.admin-dashboard-page .content,
+  body.employee-dashboard-page .content {
+    padding: 14px;
+  }
+
+  body.admin-map-page .navbar {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

@@ -37,6 +37,20 @@ class Tour_Add(models.Model):
         return self.tour_name
 
 
+class Tour_SupportingImage(models.Model):
+    support_id = models.AutoField(primary_key=True)
+    tour = models.ForeignKey('Tour_Add', on_delete=models.CASCADE, related_name='supporting_images')
+    image = models.ImageField(upload_to='tour_images/supporting/', null=False, blank=False)
+    caption = models.CharField(max_length=255, blank=True, default='')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-uploaded_at']
+
+    def __str__(self):
+        return f"{self.tour.tour_name} supporting image #{self.support_id}"
+
+
 class Tour_Schedule(models.Model):
     STATUS_CHOICES = [
         ('active', 'Active'),
@@ -118,9 +132,15 @@ class Tour_Schedule(models.Model):
         
         # Base queryset
         qs = cls.objects
-        
+
         # Apply date filtering if period is specified or custom dates are provided
         now = timezone.now()
+
+        # Keep status values aligned with real time so dashboard cards stay accurate
+        # even when records were not re-saved after schedule end.
+        non_cancelled = cls.objects.exclude(status='cancelled')
+        non_cancelled.filter(end_time__lt=now).exclude(status='completed').update(status='completed')
+        non_cancelled.filter(start_time__lte=now, end_time__gte=now).exclude(status='active').update(status='active')
         
         if custom_start and custom_end:
             # Use custom date range if provided
@@ -138,7 +158,7 @@ class Tour_Schedule(models.Model):
             start_date = datetime.datetime(now.year, 1, 1, tzinfo=timezone.get_current_timezone())
             qs = qs.filter(end_time__gte=start_date)
         
-        # Count tours by status
+        # Count tours by status after synchronization
         completed = qs.filter(status='completed').count()
         active = qs.filter(status='active').count()
         cancelled = qs.filter(status='cancelled').count()
@@ -175,6 +195,7 @@ class Tour_Event(models.Model):
     event_time = models.TimeField()
     event_name = models.CharField(max_length=200)
     event_description = models.TextField()
+    event_location = models.CharField(max_length=255, blank=True, default='')
     image = models.ImageField(upload_to='tour_images/', null=True, blank=True)
 
     def save(self, *args, **kwargs):

@@ -1,0 +1,41 @@
+﻿id,category,prompt,expected_detection_topic,expected_endpoint_intents,needs_clarification_expected
+1,approval_workflow,How do I approve accommodation registrations?,admin_approval_workflow,admin_approval_workflow,no
+2,approval_workflow,Can I review pending accommodation listings?,admin_approval_workflow,admin_approval_workflow,no
+3,approval_workflow,How do I reject a submitted accommodation listing?,admin_approval_workflow,admin_approval_workflow,no
+4,approval_workflow,Where can I see listings waiting for approval?,admin_approval_workflow,admin_approval_workflow,no
+5,approval_workflow,Can I check which accommodations are still pending review?,admin_approval_workflow,admin_approval_workflow,no
+6,destination_management,How do I publish a tourism destination?,admin_destination_management,admin_destination_management,no
+7,destination_management,Can I unpublish a destination from the website?,admin_destination_management,admin_destination_management,no
+8,destination_management,How do I update destination details?,admin_destination_management,admin_destination_management,no
+9,destination_management,Where can I manage tourism attractions in the system?,admin_destination_management,admin_destination_management,no
+10,destination_management,Can I edit destination information after publishing?,admin_destination_management,admin_destination_management,no
+11,accommodation_records,How do I view all registered accommodations?,admin_accommodation_records_management,admin_accommodation_records_management,no
+12,accommodation_records,Can I check accommodation details in the system?,admin_accommodation_records_management,admin_accommodation_records_management,no
+13,accommodation_records,How do I see which accommodations are active or inactive?,admin_accommodation_records_management,admin_accommodation_records_management,no
+14,accommodation_records,Can I search for a specific hotel or inn?,admin_accommodation_records_management,admin_accommodation_records_management,no
+15,accommodation_records,Where can I manage accommodation records?,admin_accommodation_records_management,admin_accommodation_records_management,no
+16,booking_monitoring,How can I view all bookings in the system?,admin_booking_system_monitoring,admin_booking_system_monitoring,no
+17,booking_monitoring,Can I monitor confirmed and pending reservations?,admin_booking_system_monitoring,admin_booking_system_monitoring,no
+18,booking_monitoring,How do I check cancelled bookings?,admin_booking_system_monitoring,admin_booking_system_monitoring,no
+19,booking_monitoring,Where can I see system-wide booking summaries?,admin_booking_system_monitoring,admin_booking_system_monitoring,no
+20,booking_monitoring,Can I view overall reservation activity?,admin_booking_system_monitoring,admin_booking_system_monitoring,no
+21,user_account,How do I manage user accounts?,admin_user_account_management,admin_user_account_management,no
+22,user_account,Can I reset a user account or password?,admin_user_account_management,admin_user_account_management,no
+23,user_account,How do I check employee and owner accounts?,admin_user_account_management,admin_user_account_management,no
+24,user_account,Where can I manage system users?,admin_user_account_management,admin_user_account_management,no
+25,user_account,Can I update account roles or access?,admin_user_account_management,admin_user_account_management,no
+26,reports_dashboard,How do I generate system reports?,admin_reports_dashboard_support,admin_reports_dashboard_support,no
+27,reports_dashboard,Can I see tourism statistics and booking reports?,admin_reports_dashboard_support,admin_reports_dashboard_support,no
+28,reports_dashboard,Where can I access the admin dashboard?,admin_reports_dashboard_support,admin_reports_dashboard_support|open_dashboard,no
+29,reports_dashboard,Why is a record not showing in the admin panel?,admin_record_visibility_issue,admin_record_visibility_issue,no
+30,reports_dashboard,Can I view overall system summaries?,admin_reports_dashboard_support,admin_reports_dashboard_support,no
+31,mixed_admin,Paano i-approve ang accommodation listing?,admin_approval_workflow,admin_approval_workflow,no
+32,mixed_admin,Saan makikita ang pending listings?,admin_approval_workflow,admin_approval_workflow,no
+33,mixed_admin,Can I check all bookings po?,admin_booking_system_monitoring,admin_booking_system_monitoring,no
+34,mixed_admin,Hindi lumalabas ang record sa admin panel.,admin_record_visibility_issue,admin_record_visibility_issue,no
+35,mixed_admin,Paano i-manage ang users sa system?,admin_user_account_management,admin_user_account_management,no
+36,short_messy,approve listing,admin_approval_workflow,admin_approval_workflow,yes
+37,short_messy,pending accommodations,admin_approval_workflow,admin_approval_workflow|admin_pending_accommodations,yes
+38,short_messy,manage users,admin_user_account_management,admin_user_account_management,yes
+39,short_messy,admin dashboard,admin_reports_dashboard_support,admin_reports_dashboard_support|open_dashboard,yes
+40,short_messy,booking summary,admin_reports_dashboard_support,admin_reports_dashboard_support|admin_booking_system_monitoring|booking_count_summary,yes

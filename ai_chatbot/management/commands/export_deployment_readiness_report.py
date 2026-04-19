@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 
 from django.conf import settings
@@ -112,14 +113,19 @@ class Command(BaseCommand):
         db_host = str(db_cfg.get("HOST", ""))
         db_name = str(db_cfg.get("NAME", ""))
         db_password = str(db_cfg.get("PASSWORD", ""))
-        db_password_hardcoded = bool(db_password)
+        db_password_from_env = bool(str(os.environ.get("DB_PASSWORD", "") or "").strip())
+        db_password_hardcoded = bool(db_password) and not db_password_from_env
         rows.append(
             _status_row(
                 "Database credential handling",
-                "WARN" if db_password_hardcoded else "PASS",
+                "WARN" if db_password_hardcoded else ("PASS" if db_password_from_env else "WARN"),
                 f"ENGINE={db_engine}, HOST={db_host}, NAME={db_name}, PASSWORD={'set' if db_password else 'empty'}",
                 "Credentials from environment variables",
-                "Hardcoded DB password in settings should be moved to .env for production.",
+                (
+                    "DB password sourced from environment."
+                    if db_password_from_env
+                    else "Hardcoded DB password in settings should be moved to .env for production."
+                ),
             )
         )
 

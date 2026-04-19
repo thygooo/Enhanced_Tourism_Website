@@ -1,0 +1,41 @@
+﻿id,category,prompt,expected_topic,needs_clarification_expected
+1,listing,How do I register my hotel in the system?,owner_register_listing,no
+2,listing,How can I add my inn to the website?,owner_register_listing,no
+3,listing,What requirements do I need to submit to list my accommodation?,owner_listing_requirements,no
+4,listing,How do I update my accommodation information?,owner_listing_update,no
+5,listing,Can I edit my hotel profile after registration?,owner_listing_update,no
+6,room_management,How do I add a new room?,owner_add_room,no
+7,room_management,Can I update the room price?,owner_update_room_price,no
+8,room_management,How do I change the room capacity?,owner_update_room_capacity,no
+9,room_management,Can I mark a room as unavailable?,owner_mark_room_unavailable,no
+10,room_management,How do I edit the amenities of a room?,owner_edit_room_amenities,no
+11,booking_monitoring,How can I view bookings for my accommodation?,owner_view_bookings,no
+12,booking_monitoring,Can I check who reserved a room?,owner_booking_guest_details,no
+13,booking_monitoring,How do I confirm a guest reservation?,owner_confirm_reservation,no
+14,booking_monitoring,Can I see pending reservations?,owner_pending_reservations,no
+15,booking_monitoring,How do I know if a booking is cancelled?,owner_cancelled_reservations,no
+16,availability,How do I update room availability?,owner_update_availability,no
+17,availability,Can I close a room for maintenance?,owner_mark_room_unavailable,no
+18,availability,Why is my room still showing as available?,owner_room_still_available_issue,no
+19,availability,How do I block dates for a room?,owner_block_dates,no
+20,availability,Can I reopen a room after marking it unavailable?,owner_update_availability,no
+21,pricing_billing,How do I update my room rates?,owner_update_room_price,no
+22,pricing_billing,Can I see the payment status of reservations?,owner_payment_status,no
+23,pricing_billing,How do I check if a guest already paid?,owner_payment_status,no
+24,pricing_billing,Can I view the billing details for a booking?,owner_billing_details,no
+25,pricing_billing,Where can I see my accommodation booking transactions?,owner_transactions,no
+26,account_dashboard,I forgot my password. How can I log in again?,owner_password_help,no
+27,account_dashboard,Why is my accommodation not showing on the website?,owner_listing_visibility,no
+28,account_dashboard,My listing is missing. What should I do?,owner_listing_visibility,no
+29,account_dashboard,I cannot update my room details.,owner_room_update_issue,no
+30,account_dashboard,How do I access my accommodation dashboard?,,no
+31,mixed_owner,Paano i-register ang hotel ko sa system?,owner_register_listing,no
+32,mixed_owner,How can I update my room price po?,owner_update_room_price,no
+33,mixed_owner,Hindi lumalabas ang listing ko sa website.,owner_listing_visibility,no
+34,mixed_owner,Paano ko makikita ang bookings ng accommodation ko?,owner_view_bookings,no
+35,mixed_owner,Pwede bang i-edit ang room details after posting?,owner_room_update_issue,no
+36,short_messy,add room,owner_add_room,yes
+37,short_messy,update price,owner_update_room_price,yes
+38,short_messy,view bookings,owner_view_bookings,yes
+39,short_messy,listing not showing,owner_listing_visibility,yes
+40,short_messy,room unavailable how,owner_mark_room_unavailable,yes

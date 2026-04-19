@@ -1,0 +1,175 @@
+{
+  "dataset_csv": "thesis_data_templates/accommodation_reco_training_final_v1.csv",
+  "rows": 2400,
+  "data_quality_audit": {
+    "rows": 2400,
+    "duplicate_rows": 0,
+    "missing_cells_total": 0,
+    "class_distribution": {
+      "relevant": 1735,
+      "not_relevant": 665
+    },
+    "class_imbalance_ratio": 2.6090225563909772,
+    "feature_label_conflict_rows": 0
+  },
+  "search_space_size": 36,
+  "cv": {
+    "strategy": "RepeatedStratifiedKFold",
+    "n_splits": 5,
+    "n_repeats": 2,
+    "total_runs_per_config": 10
+  },
+  "baseline_current_model": {
+    "params": {
+      "criterion": "entropy",
+      "max_depth": null,
+      "min_samples_leaf": 3,
+      "min_samples_split": 2,
+      "max_features": null
+    },
+    "train": {
+      "accuracy": {
+        "mean": 0.9698958333333334,
+        "std": 0.0030349685254739264,
+        "min": 0.965625,
+        "max": 0.9744791666666667
+      },
+      "precision_macro": {
+        "mean": 0.953050213824359,
+        "std": 0.004476724506036842,
+        "min": 0.9459538677201478,
+        "max": 0.9592482032983904
+      },
+      "recall_macro": {
+        "mean": 0.9755850360772248,
+        "std": 0.002611689421403634,
+        "min": 0.9710082121730841,
+        "max": 0.98003022686399
+      },
+      "f1_macro": {
+        "mean": 0.9633740678788177,
+        "std": 0.0035937626157117614,
+        "min": 0.9582269668136458,
+        "max": 0.9688701018306353
+      }
+    },
+    "validation": {
+      "accuracy": {
+        "mean": 0.881875,
+        "std": 0.014233570233955287,
+        "min": 0.8604166666666667,
+        "max": 0.9104166666666667
+      },
+      "precision_macro": {
+        "mean": 0.8482812058054241,
+        "std": 0.017494755617194765,
+        "min": 0.8219776380153738,
+        "max": 0.8833027752312692
+      },
+      "recall_macro": {
+        "mean": 0.8698435570193495,
+        "std": 0.014872519730559053,
+        "min": 0.8486273320188078,
+        "max": 0.8986262486186648
+      },
+      "f1_macro": {
+        "mean": 0.8573852694848936,
+        "std": 0.015977904630356508,
+        "min": 0.8360647381164776,
+        "max": 0.8904313205043133
+      }
+    },
+    "gap": {
+      "accuracy": 0.08802083333333344,
+      "precision_macro": 0.10476900801893485,
+      "recall_macro": 0.10574147905787534,
+      "f1_macro": 0.10598879839392417
+    },
+    "selection_score": 0.8064947292815564
+  },
+  "recommended_pruned_model": {
+    "params": {
+      "criterion": "entropy",
+      "max_depth": 8,
+      "max_features": null,
+      "min_samples_leaf": 5,
+      "min_samples_split": 30
+    },
+    "train": {
+      "accuracy": {
+        "mean": 0.9151562499999999,
+        "std": 0.007605078268543915,
+        "min": 0.903125,
+        "max": 0.928125
+      },
+      "precision_macro": {
+        "mean": 0.8846431187815809,
+        "std": 0.0105094013586283,
+        "min": 0.8695849656503718,
+        "max": 0.903036541430777
+      },
+      "recall_macro": {
+        "mean": 0.9228865571710256,
+        "std": 0.004326183363171246,
+        "min": 0.9157466793785617,
+        "max": 0.9317891269961648
+      },
+      "f1_macro": {
+        "mean": 0.8996190451775758,
+        "std": 0.007450066254668489,
+        "min": 0.8880776636713735,
+        "max": 0.9126563851558049
+      }
+    },
+    "validation": {
+      "accuracy": {
+        "mean": 0.8902083333333334,
+        "std": 0.010017827473257404,
+        "min": 0.8770833333333333,
+        "max": 0.9083333333333333
+      },
+      "precision_macro": {
+        "mean": 0.8559019249710709,
+        "std": 0.011541024288112413,
+        "min": 0.8408882783882784,
+        "max": 0.8770762127480962
+      },
+      "recall_macro": {
+        "mean": 0.8920684275530325,
+        "std": 0.011171372703692225,
+        "min": 0.8723754631535612,
+        "max": 0.9087777079586574
+      },
+      "f1_macro": {
+        "mean": 0.8701064994833743,
+        "std": 0.011218287819475984,
+        "min": 0.8555746923699445,
+        "max": 0.8904359735220269
+      }
+    },
+    "gap": {
+      "accuracy": 0.024947916666666514,
+      "precision_macro": 0.02874119381050999,
+      "recall_macro": 0.03081812961799313,
+      "f1_macro": 0.029512545694201586
+    },
+    "selection_score": 0.8545821963570883
+  },
+  "comparison": {
+    "baseline_val_f1_macro_mean": 0.8573852694848936,
+    "pruned_val_f1_macro_mean": 0.8701064994833743,
+    "baseline_f1_gap_mean": 0.10598879839392417,
+    "pruned_f1_gap_mean": 0.029512545694201586,
+    "delta_val_f1_macro_mean": 0.012721229998480688,
+    "delta_f1_gap_mean": -0.07647625269972258,
+    "keep_baseline": false,
+    "switch_to_pruned": true
+  },
+  "recommendation_reasoning": "Pruned model reduces overfitting gap with only small validation-F1 tradeoff, making it safer for defense generalization claims.",
+  "thesis_alignment": {
+    "cnn": "Intent classification only (unchanged).",
+    "decision_tree": "Recommendation/refinement only (retained).",
+    "backend_database": "Operational truth and retrieval remain unchanged.",
+    "gemini": "Phrasing/clarification only (unchanged)."
+  }
+}

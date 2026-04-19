@@ -56,13 +56,29 @@ def _normalize_language_code(value):
         return "en"
     if lang in ("english", "eng", "en-us", "en-gb"):
         return "en"
-    return lang
+    aliases = {
+        "tagalog": "tl",
+        "fil": "tl",
+        "filipino": "tl",
+        "cebuano": "ceb",
+        "bisaya": "ceb",
+        "spanish": "es",
+        "espanol": "es",
+    }
+    normalized = aliases.get(lang, lang)
+    # Keep translations within the app-supported UI languages to avoid
+    # accidental back-translation to unrelated languages (e.g., Dutch).
+    return normalized if normalized in {"en", "tl", "ceb", "es"} else "en"
 
 
 def translate_to_english(user_input):
     text = str(user_input or "").strip()
     if not text:
         return "", "en"
+    # Numeric/ID-only replies (e.g., "2", "1500", "room 12") should not trigger
+    # language detection because they can be misclassified by external models.
+    if not re.search(r"[A-Za-z]", text):
+        return text, "en"
 
     client = _gemini_client()
     if client is None:
@@ -128,3 +144,17 @@ def translate_to_user_language(response_text, target_language):
         return translated or reply
     except Exception:
         return reply
+
+
+def translation_runtime_health():
+    key_present = bool(str(os.getenv("GEMINI_API_KEY", "") or "").strip())
+    module_loaded = genai is not None
+    enabled = _is_translation_enabled()
+    client_ready = bool(_gemini_client())
+    return {
+        "enabled": enabled,
+        "module_loaded": module_loaded,
+        "api_key_present": key_present,
+        "client_ready": client_ready,
+        "model": _gemini_model(),
+    }

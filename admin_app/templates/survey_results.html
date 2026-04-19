@@ -1,261 +1,301 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Survey Results - Admin Panel</title>
-    <style>
-        body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            background: #f4f6f8;
-            color: #253548;
-        }
-        header {
-            background: #21364b;
-            color: #fff;
-            padding: 14px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .container {
-            width: 95%;
-            max-width: 1240px;
-            margin: 20px auto;
-            background: #fff;
-            border-radius: 6px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            padding: 20px;
-        }
-        .row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            align-items: end;
-            margin-bottom: 16px;
-        }
-        .field {
-            display: grid;
-            gap: 4px;
-        }
-        .field label {
-            font-size: 0.78rem;
-            font-weight: 700;
-        }
-        .field input, .field select {
-            padding: 8px;
-            border: 1px solid #cfd7df;
-            border-radius: 4px;
-            min-width: 130px;
-        }
-        .btn {
-            border: none;
-            border-radius: 4px;
-            padding: 9px 12px;
-            cursor: pointer;
-            color: #fff;
-            font-weight: 700;
-        }
-        .btn-primary { background: #2674d9; }
-        .btn-secondary { background: #5e6b78; text-decoration: none; display: inline-block; }
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        .card {
-            background: #f8fbff;
-            border: 1px solid #d9e6f4;
-            border-radius: 6px;
-            padding: 12px;
-        }
-        .card .label {
-            font-size: 0.78rem;
-            color: #4e6074;
-        }
-        .card .value {
-            font-size: 1.25rem;
-            font-weight: 800;
-            margin-top: 6px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            border-bottom: 1px solid #e7edf4;
-            padding: 8px;
-            text-align: left;
-            font-size: 0.82rem;
-        }
-        th {
-            background: #edf3fa;
-            color: #2d4662;
-        }
-        .grid-two {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-        @media (max-width: 980px) {
-            .grid-two {
-                grid-template-columns: 1fr;
-            }
-        }
-        .small-note {
-            font-size: 0.75rem;
-            color: #5b6d80;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tourism Reports Dashboard</title>
+  <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: #f4f6f8;
+      color: #2b3743;
+    }
+
+    .dashboard-container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .content {
+      flex: 1;
+      padding: 26px;
+      box-sizing: border-box;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .page-header h1 {
+      margin: 0;
+      font-size: 38px;
+      color: #2f2418;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      background: #fff;
+      color: #2f2418;
+      border: 1px solid #ded2c3;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .reports-card {
+      background: #fff;
+      border: 1px solid #e9e2da;
+      border-radius: 10px;
+      box-shadow: 0 4px 14px rgba(30, 20, 12, 0.05);
+      padding: 16px;
+    }
+
+    .reports-card h2 {
+      margin: 0;
+      text-align: center;
+      color: #5f3e1f;
+      font-size: 36px;
+      border-top: 4px solid #7e4d22;
+      padding-top: 12px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #6b7480;
+      font-size: 13px;
+      margin: 4px 0 14px;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid #ece5dc;
+      border-radius: 8px;
+      background: #fbfaf8;
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #5a6068;
+    }
+
+    .field select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #d8dfe6;
+      border-radius: 6px;
+      font-size: 13px;
+      background: #fff;
+    }
+
+    .section {
+      margin-top: 12px;
+    }
+
+    .section h3 {
+      margin: 0 0 8px;
+      color: #56371d;
+      font-size: 15px;
+      border-bottom: 1px solid #e7dccf;
+      padding-bottom: 6px;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .event-card {
+      border: 1px solid #e8dfd2;
+      border-left: 3px solid #8a572d;
+      border-radius: 8px;
+      background: #fff;
+      padding: 10px 10px 12px;
+      box-shadow: 0 3px 8px rgba(39, 27, 14, 0.05);
+    }
+
+    .event-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+
+    .event-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: #2e251b;
+      line-height: 1.2;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      background: #84582c;
+      border-radius: 999px;
+      padding: 3px 8px;
+      white-space: nowrap;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      gap: 6px;
+      font-size: 12px;
+      margin-bottom: 4px;
+      color: #44505c;
+    }
+
+    .meta-row strong {
+      color: #2d3b4a;
+    }
+
+    .empty-box {
+      text-align: center;
+      color: #76808a;
+      font-style: italic;
+      padding: 18px 10px;
+      border: 1px dashed #ddd5ca;
+      border-radius: 8px;
+      background: #f9f8f6;
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .filters {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div><strong>Ibayaw Tour</strong> - Survey Results</div>
-        <div>
-            <a href="{% url 'admin_app:admin_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
-            <a href="{% url 'admin_app:admin_logout' %}" class="btn btn-secondary">Logout</a>
-        </div>
-    </header>
-    <div class="container">
-        <h2 style="margin-top:0;">Live Survey Results</h2>
-        <p class="small-note">Data source can be switched between seeded and real-world records. Auto-refresh every 15 seconds.</p>
-
-        <div class="row">
-            <div class="field">
-                <label for="source">Data Source</label>
-                <select id="source">
-                    {% for opt in source_options %}
-                    <option value="{{ opt }}" {% if selected_source == opt %}selected{% endif %}>{{ opt }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="field">
-                <label for="days">Days Window</label>
-                <input id="days" type="number" min="1" max="3650" value="{{ selected_days }}">
-            </div>
-            <div class="field">
-                <label for="limit">Recent Rows</label>
-                <input id="limit" type="number" min="1" max="1000" value="{{ selected_limit }}">
-            </div>
-            <button id="refreshBtn" class="btn btn-primary">Refresh</button>
-        </div>
-
-        <div class="cards">
-            <div class="card"><div class="label">Total Responses</div><div class="value" id="totalResponses">-</div></div>
-            <div class="card"><div class="label">Survey Batches</div><div class="value" id="totalBatches">-</div></div>
-            <div class="card"><div class="label">Distinct Users</div><div class="value" id="distinctUsers">-</div></div>
-            <div class="card"><div class="label">Quick Helpfulness Avg</div><div class="value" id="helpfulnessAvg">-</div></div>
-        </div>
-
-        <div class="grid-two">
-            <div>
-                <h3>Per Statement Summary</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Statement</th>
-                            <th>Count</th>
-                            <th>Avg Score</th>
-                        </tr>
-                    </thead>
-                    <tbody id="statementBody">
-                        <tr><td colspan="3">No data.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                <h3>Recent Responses</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Submitted</th>
-                            <th>Code</th>
-                            <th>Score</th>
-                            <th>Batch</th>
-                            <th>Source</th>
-                            <th>User</th>
-                        </tr>
-                    </thead>
-                    <tbody id="recentBody">
-                        <tr><td colspan="6">No data.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  <div class="dashboard-container">
+    <div class="navigation">
+      {% include 'components/navigation.html' %}
     </div>
 
-    <script>
-        (function() {
-            const sourceEl = document.getElementById('source');
-            const daysEl = document.getElementById('days');
-            const limitEl = document.getElementById('limit');
-            const refreshBtn = document.getElementById('refreshBtn');
+    <div class="content">
+      <div class="page-header">
+        <h1>Tourism Reports Dashboard</h1>
+        <a class="back-btn" href="{% url 'admin_app:admin_dashboard' %}">&larr; Back to Dashboard</a>
+      </div>
 
-            function toText(value) {
-                if (value === null || value === undefined || value === '') return '-';
-                return String(value);
-            }
+      <div class="reports-card">
+        <h2>Tourism Reports</h2>
+        <div class="subtitle">View all MICE, Accommodation, and Attraction reports in one place</div>
 
-            function params() {
-                const q = new URLSearchParams();
-                q.set('source', sourceEl.value || 'all');
-                q.set('days', daysEl.value || '30');
-                q.set('limit', limitEl.value || '100');
-                return q.toString();
-            }
+        <form method="get" class="filters">
+          <div class="field">
+            <label for="month">Month</label>
+            <select id="month" name="month" onchange="this.form.submit()">
+              <option value="all" {% if selected_month == 'all' %}selected{% endif %}>All Months</option>
+              {% for mval, mlabel in month_options %}
+                <option value="{{ mval }}" {% if selected_month == mval|stringformat:'s' %}selected{% endif %}>{{ mlabel }}</option>
+              {% endfor %}
+            </select>
+          </div>
 
-            async function load() {
-                try {
-                    const res = await fetch(`/admin_app/api/survey-results/?${params()}`, { method: 'GET' });
-                    if (!res.ok) return;
-                    const data = await res.json();
-                    const summary = data.summary || {};
+          <div class="field">
+            <label for="year">Year</label>
+            <select id="year" name="year" onchange="this.form.submit()">
+              <option value="all" {% if selected_year == 'all' %}selected{% endif %}>All Years</option>
+              {% for y in year_options %}
+                <option value="{{ y }}" {% if selected_year == y|stringformat:'s' %}selected{% endif %}>{{ y }}</option>
+              {% endfor %}
+            </select>
+          </div>
 
-                    document.getElementById('totalResponses').textContent = toText(summary.total_responses);
-                    document.getElementById('totalBatches').textContent = toText(summary.total_batches);
-                    document.getElementById('distinctUsers').textContent = toText(summary.distinct_users);
-                    document.getElementById('helpfulnessAvg').textContent = toText(summary.chat_ux_helpfulness_avg);
+          <div class="field">
+            <label for="establishment_type">Establishment Type</label>
+            <select id="establishment_type" name="establishment_type" onchange="this.form.submit()">
+              <option value="all" {% if selected_establishment_type == 'all' %}selected{% endif %}>All Types</option>
+              <option value="mice" {% if selected_establishment_type == 'mice' %}selected{% endif %}>MICE</option>
+              <option value="accommodation" {% if selected_establishment_type == 'accommodation' %}selected{% endif %}>Accommodation</option>
+              <option value="attraction" {% if selected_establishment_type == 'attraction' %}selected{% endif %}>Attraction</option>
+            </select>
+          </div>
+        </form>
 
-                    const statementBody = document.getElementById('statementBody');
-                    const statementRows = Array.isArray(data.per_statement) ? data.per_statement : [];
-                    if (statementRows.length === 0) {
-                        statementBody.innerHTML = '<tr><td colspan="3">No data.</td></tr>';
-                    } else {
-                        statementBody.innerHTML = statementRows.map((row) => (
-                            `<tr><td>${toText(row.statement_code)}</td><td>${toText(row.response_count)}</td><td>${toText(row.avg_score)}</td></tr>`
-                        )).join('');
-                    }
+        <div class="section">
+          <h3>MICE Events Reports</h3>
+          {% if mice_reports %}
+            <div class="report-grid">
+              {% for row in mice_reports %}
+                <article class="event-card">
+                  <div class="event-head">
+                    <div class="event-title">{{ row.title }}</div>
+                    <span class="tag">{{ row.tag }}</span>
+                  </div>
+                  <div class="meta-row"><strong>Meeting Place:</strong><span>{{ row.location }}</span></div>
+                  <div class="meta-row"><strong>Date:</strong><span>{{ row.date }}</span></div>
+                  <div class="meta-row"><strong>Participant Count:</strong><span>{{ row.participants }}</span></div>
+                </article>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="empty-box">No MICE reports have been submitted matching your filters.</div>
+          {% endif %}
+        </div>
 
-                    const recentBody = document.getElementById('recentBody');
-                    const recentRows = Array.isArray(data.recent_rows) ? data.recent_rows : [];
-                    if (recentRows.length === 0) {
-                        recentBody.innerHTML = '<tr><td colspan="6">No data.</td></tr>';
-                    } else {
-                        recentBody.innerHTML = recentRows.map((row) => (
-                            `<tr>` +
-                            `<td>${toText(row.submitted_at)}</td>` +
-                            `<td>${toText(row.statement_code)}</td>` +
-                            `<td>${toText(row.likert_score)}</td>` +
-                            `<td>${toText(row.survey_batch_id)}</td>` +
-                            `<td>${toText(row.data_source)}</td>` +
-                            `<td>${toText(row.username || row.user_id)}</td>` +
-                            `</tr>`
-                        )).join('');
-                    }
-                } catch (err) {
-                    // Keep page resilient on transient API errors.
-                }
-            }
+        <div class="section">
+          <h3>Accommodation Event Reports</h3>
+          {% if accommodation_reports %}
+            <div class="report-grid">
+              {% for row in accommodation_reports %}
+                <article class="event-card">
+                  <div class="event-head">
+                    <div class="event-title">{{ row.title }}</div>
+                    <span class="tag">{{ row.tag }}</span>
+                  </div>
+                  <div class="meta-row"><strong>Location:</strong><span>{{ row.location }}</span></div>
+                  <div class="meta-row"><strong>Date:</strong><span>{{ row.date }}</span></div>
+                  <div class="meta-row"><strong>Participant Count:</strong><span>{{ row.participants }}</span></div>
+                </article>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="empty-box">No accommodation reports have been submitted matching your filters.</div>
+          {% endif %}
+        </div>
 
-            refreshBtn.addEventListener('click', load);
-            sourceEl.addEventListener('change', load);
-
-            load();
-            setInterval(load, 15000);
-        })();
-    </script>
+        <div class="section">
+          <h3>Attractions Event Reports</h3>
+          {% if attractions_reports %}
+            <div class="report-grid">
+              {% for row in attractions_reports %}
+                <article class="event-card">
+                  <div class="event-head">
+                    <div class="event-title">{{ row.title }}</div>
+                    <span class="tag">{{ row.tag }}</span>
+                  </div>
+                  <div class="meta-row"><strong>Location:</strong><span>{{ row.location }}</span></div>
+                  <div class="meta-row"><strong>Date:</strong><span>{{ row.date }}</span></div>
+                  <div class="meta-row"><strong>Participant Count:</strong><span>{{ row.participants }}</span></div>
+                </article>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="empty-box">No attraction reports have been submitted matching your filters.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

@@ -16,6 +16,9 @@ urlpatterns = [
     path('accommodation_dashboard/', views.accommodation_dashboard, name='accommodation_dashboard'),
     path('owner/hub/', views.owner_hub, name='owner_hub'),
     path('owner/bookings/', views.owner_accommodation_bookings, name='owner_accommodation_bookings'),
+    path('owner/bookings/<int:booking_id>/update/', views.owner_accommodation_booking_update, name='owner_accommodation_booking_update'),
+    path('owner/room-bookings/<int:room_id>/', views.owner_room_bookings_json, name='owner_room_bookings_json'),
+    path('owner/room-bookings/check-in/', views.owner_room_bookings_check_in, name='owner_room_bookings_check_in'),
     path('establishment_dashboard/', views.establishment_summary, name='establishment_dashboard'),
     path('map/', views.map_view, name='map'),
     path('tour_calendar/', views.tour_calendar, name='tour_calendar'),
@@ -27,11 +30,14 @@ urlpatterns = [
     path('tourism-information/<int:tourism_info_id>/edit/', views.tourism_information_edit, name='tourism_information_edit'),
     path('tourism-information/<int:tourism_info_id>/publish/', views.tourism_information_publish, name='tourism_information_publish'),
     path('tourism-information/<int:tourism_info_id>/archive/', views.tourism_information_archive, name='tourism_information_archive'),
+    path('mainpage-photos/', views.mainpage_photos, name='mainpage_photos'),
     
     # Employee specific routes
     path('employee/assigned-tours/', views.employee_assigned_tours, name='employee_assigned_tours'),
     path('employee/tour-calendar/', views.employee_tour_calendar, name='employee_tour_calendar'),
     path('employee/accommodations/', views.employee_accommodations, name='employee_accommodations'),
+    path('employee/map/', views.employee_map_view, name='employee_map'),
+    path('employee/notifications/', views.employee_notifications, name='employee_notifications'),
     path('employee/profile/', views.employee_profile, name='employee_profile'),
 
     # Employee management routes
@@ -74,8 +80,8 @@ urlpatterns = [
     
     # Employee tour assignment routes
     # path('admin/assign-employee/', views.assign_employee_to_tour, name='assign_employee_to_tour'),
-    # path('employee/get-itinerary/<str:tour_id>/', views.get_employee_itinerary, name='get_employee_itinerary'),
-    # path('employee/update-event-status/', views.update_event_status, name='update_event_status'),
+    path('employee/get-itinerary/<str:tour_id>/', views.get_employee_itinerary, name='get_employee_itinerary'),
+    path('employee/update-event-status/', views.update_event_status, name='update_event_status'),
     # path('assign-employee-to-tour/', views.assign_employee_to_tour, name='assign_employee_to_tour'),
     path('assign-employee-direct/', views.assign_employee_direct, name='assign_employee_direct'),
     # path('admin/get-employee-progress/', views.get_employee_progress, name='get_employee_progress'),

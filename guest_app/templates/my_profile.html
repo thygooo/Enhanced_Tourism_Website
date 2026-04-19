@@ -1,0 +1,513 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - Ibayaw Tour</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/guest_unified.css">
+  <style>
+    body.guest-profile {
+      font-family: "Poppins", "Segoe UI", Tahoma, Arial, sans-serif;
+      margin: 0;
+      color: #1f2937;
+      background: radial-gradient(circle at top right, #efe6db 0%, #f7f8fb 45%, #f4f6fa 100%);
+    }
+
+    .profile-shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+
+    .profile-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #6f4e37;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid #e5ded3;
+    }
+
+    .profile-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
+      overflow: hidden;
+    }
+
+    .profile-header {
+      padding: 22px 24px;
+      color: #fff;
+      background: linear-gradient(120deg, #875a34 0%, #b1743f 100%);
+    }
+
+    .profile-header h1 {
+      margin: 0;
+      font-size: 1.55rem;
+      letter-spacing: 0.01em;
+    }
+
+    .profile-header p {
+      margin: 8px 0 0;
+      opacity: 0.92;
+      font-size: 0.95rem;
+    }
+
+    .profile-body {
+      padding: 22px;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .avatar-panel {
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+    }
+
+    .avatar {
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #e8dbcb;
+      background: #f4f6f9;
+    }
+
+    .avatar-hint {
+      text-align: center;
+      color: #6b7280;
+      font-size: 0.84rem;
+      margin: 0;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field-group {
+      display: grid;
+      gap: 6px;
+    }
+
+    .field-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.83rem;
+      color: #4b5563;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid #d7dee7;
+      border-radius: 10px;
+      padding: 8px 11px;
+      font: inherit;
+      color: #1f2937;
+      background: #fff;
+    }
+
+    .readonly {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      min-height: 40px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.94rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #b1743f, #875a34);
+    }
+
+    .btn-secondary {
+      color: #6f4e37;
+      background: #fff;
+      border: 1px solid #d8ccbc;
+    }
+
+    .msg {
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      display: none;
+    }
+
+    .msg.success {
+      display: block;
+      background: #edf9f0;
+      border: 1px solid #cae9d2;
+      color: #17613a;
+    }
+
+    .msg.error {
+      display: block;
+      background: #fff1f2;
+      border: 1px solid #ffd5da;
+      color: #b3263a;
+    }
+
+    .field-error {
+      margin-top: 2px;
+      color: #b3263a;
+      font-size: 0.82rem;
+      min-height: 1em;
+    }
+
+    @media (max-width: 860px) {
+      .profile-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-header,
+      .profile-body {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body class="guest-profile">
+  <div class="profile-shell">
+    <div class="profile-topbar">
+      <a class="back-link" href="{% url 'main-page' %}">&#8592; Back to Main Page</a>
+    </div>
+
+    <section class="profile-card">
+      <header class="profile-header">
+        <h1>My Profile</h1>
+        <p>Review and update your account details for booking and communication.</p>
+      </header>
+
+      <div class="profile-body">
+        <div id="profile-message" class="msg" role="status" aria-live="polite"></div>
+
+        <form id="profile-form" enctype="multipart/form-data" novalidate>
+          {% csrf_token %}
+          <div class="profile-grid">
+            <aside class="avatar-panel">
+              {% if user.picture %}
+              <img id="profile-preview" src="{{ user.picture.url }}" alt="Profile picture" class="avatar">
+              {% else %}
+              <img id="profile-preview" src="/static/images/default-profile.png" alt="Profile picture" class="avatar">
+              {% endif %}
+              <input type="file" id="picture" name="picture" accept="image/*">
+              <p class="avatar-hint">Upload a clear photo for account identity.</p>
+            </aside>
+
+            <div>
+              <div class="field-grid">
+                <div class="field-group">
+                  <label for="first_name">First Name</label>
+                  <input id="first_name" name="first_name" required>
+                  <div class="field-error" data-error-for="first_name"></div>
+                </div>
+                <div class="field-group">
+                  <label for="middle_initial">Middle Initial</label>
+                  <input id="middle_initial" name="middle_initial" maxlength="1">
+                  <div class="field-error" data-error-for="middle_initial"></div>
+                </div>
+                <div class="field-group">
+                  <label for="last_name">Last Name</label>
+                  <input id="last_name" name="last_name" required>
+                  <div class="field-error" data-error-for="last_name"></div>
+                </div>
+                <div class="field-group">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" required>
+                  <div class="field-error" data-error-for="email"></div>
+                </div>
+                <div class="field-group">
+                  <label for="birthday">Birthday</label>
+                  <input id="birthday" name="birthday" type="date">
+                  <div class="field-error" data-error-for="birthday"></div>
+                </div>
+                <div class="field-group">
+                  <label for="age">Age</label>
+                  <input id="age" name="age" class="readonly" readonly>
+                  <div class="field-error" data-error-for="age"></div>
+                </div>
+                <div class="field-group">
+                  <label for="age_label">Age Category</label>
+                  <input id="age_label" name="age_label" class="readonly" readonly>
+                  <div class="field-error" data-error-for="age_label"></div>
+                </div>
+                <div class="field-group">
+                  <label for="sex">Sex</label>
+                  <select id="sex" name="sex" required>
+                    <option value="">Select</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                  </select>
+                  <div class="field-error" data-error-for="sex"></div>
+                </div>
+                <div class="field-group">
+                  <label for="country_of_origin">Country of Origin</label>
+                  <input id="country_of_origin" name="country_of_origin" required>
+                  <div class="field-error" data-error-for="country_of_origin"></div>
+                </div>
+                <div class="field-group">
+                  <label for="city">City</label>
+                  <input id="city" name="city" required>
+                  <div class="field-error" data-error-for="city"></div>
+                </div>
+                <div class="field-group">
+                  <label for="phone_number">Phone Number</label>
+                  <input id="phone_number" name="phone_number" required>
+                  <div class="field-error" data-error-for="phone_number"></div>
+                </div>
+                <div class="field-group">
+                  <label for="company_name">Company Name (Optional)</label>
+                  <input id="company_name" name="company_name">
+                  <div class="field-error" data-error-for="company_name"></div>
+                </div>
+                <div class="field-group full">
+                  <label>
+                    <input type="checkbox" id="has_disability" name="has_disability" style="min-height:0; width:auto; margin-right:6px;">
+                    I have a disability
+                  </label>
+                </div>
+                <div class="field-group full" id="disability-group" style="display:none;">
+                  <label for="disability_type">Disability Type</label>
+                  <input id="disability_type" name="disability_type">
+                  <div class="field-error" data-error-for="disability_type"></div>
+                </div>
+              </div>
+
+              <div class="actions">
+                <a class="btn btn-secondary" href="{% url 'main-page' %}">Cancel</a>
+                <button type="submit" class="btn btn-primary" id="save-btn">Save Profile</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      const form = document.getElementById('profile-form');
+      const msg = document.getElementById('profile-message');
+      const saveBtn = document.getElementById('save-btn');
+      const birthdayField = document.getElementById('birthday');
+      const ageField = document.getElementById('age');
+      const ageLabelField = document.getElementById('age_label');
+      const hasDisability = document.getElementById('has_disability');
+      const disabilityGroup = document.getElementById('disability-group');
+      const pictureInput = document.getElementById('picture');
+      const picturePreview = document.getElementById('profile-preview');
+
+      function clearErrors() {
+        document.querySelectorAll('.field-error').forEach((node) => {
+          node.textContent = '';
+        });
+      }
+
+      function showMessage(type, text) {
+        msg.className = 'msg ' + type;
+        msg.textContent = text;
+      }
+
+      function toggleDisability() {
+        disabilityGroup.style.display = hasDisability.checked ? 'grid' : 'none';
+        if (!hasDisability.checked) {
+          document.getElementById('disability_type').value = '';
+        }
+      }
+
+      function calculateAgeLabel(age) {
+        if (age <= 1) return 'Infant';
+        if (age <= 4) return 'Toddler';
+        if (age <= 12) return 'Child';
+        if (age <= 19) return 'Teen';
+        if (age <= 39) return 'Adult';
+        if (age <= 59) return 'Middle Adult';
+        return 'Senior';
+      }
+
+      function updateAgeFromBirthday() {
+        const val = String(birthdayField.value || '').trim();
+        if (!val) {
+          ageField.value = '';
+          ageLabelField.value = '';
+          return;
+        }
+        const birth = new Date(val + 'T00:00:00');
+        if (Number.isNaN(birth.getTime())) {
+          ageField.value = '';
+          ageLabelField.value = '';
+          return;
+        }
+        const today = new Date();
+        let age = today.getFullYear() - birth.getFullYear();
+        const m = today.getMonth() - birth.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+          age -= 1;
+        }
+        if (age < 0) age = 0;
+        ageField.value = String(age);
+        ageLabelField.value = calculateAgeLabel(age);
+      }
+
+      function applyProfile(profile) {
+        document.getElementById('first_name').value = profile.first_name || '';
+        document.getElementById('middle_initial').value = profile.middle_initial || '';
+        document.getElementById('last_name').value = profile.last_name || '';
+        document.getElementById('email').value = profile.email || '';
+        document.getElementById('birthday').value = profile.birthday || '';
+        document.getElementById('country_of_origin').value = profile.country_of_origin || '';
+        document.getElementById('city').value = profile.city || '';
+        document.getElementById('phone_number').value = profile.phone_number || '';
+        document.getElementById('company_name').value = profile.company_name || '';
+        document.getElementById('sex').value = profile.sex || '';
+        document.getElementById('has_disability').checked = !!profile.has_disability;
+        document.getElementById('disability_type').value = profile.disability_type || '';
+
+        if (profile.age !== null && profile.age !== undefined && String(profile.age) !== '') {
+          ageField.value = String(profile.age);
+        } else {
+          updateAgeFromBirthday();
+        }
+        ageLabelField.value = profile.age_label || ageLabelField.value;
+        toggleDisability();
+      }
+
+      function loadProfile() {
+        fetch('{% url "get_profile_data" %}', {
+          method: 'GET',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (!data.success || !data.user) {
+              showMessage('error', data.message || 'Unable to load profile data.');
+              return;
+            }
+            applyProfile(data.user);
+          })
+          .catch(() => {
+            showMessage('error', 'Unable to load profile data right now.');
+          });
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        clearErrors();
+        msg.className = 'msg';
+        msg.textContent = '';
+
+        updateAgeFromBirthday();
+
+        const formData = new FormData(form);
+        if (hasDisability.checked) {
+          formData.set('has_disability', 'true');
+        } else {
+          formData.delete('has_disability');
+          formData.set('disability_type', '');
+        }
+
+        saveBtn.disabled = true;
+        fetch('{% url "update_profile" %}', {
+          method: 'POST',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' },
+          body: formData,
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              showMessage('success', 'Profile updated successfully.');
+              loadProfile();
+              return;
+            }
+
+            const errors = data.errors || {};
+            const keys = Object.keys(errors);
+            if (keys.length) {
+              keys.forEach((key) => {
+                const node = document.querySelector('.field-error[data-error-for="' + key + '"]');
+                if (node) node.textContent = errors[key];
+              });
+              showMessage('error', 'Please review the highlighted fields.');
+            } else {
+              showMessage('error', data.message || 'Failed to update profile.');
+            }
+          })
+          .catch(() => {
+            showMessage('error', 'Failed to update profile. Please try again.');
+          })
+          .finally(() => {
+            saveBtn.disabled = false;
+          });
+      });
+
+      birthdayField.addEventListener('change', updateAgeFromBirthday);
+      hasDisability.addEventListener('change', toggleDisability);
+      pictureInput.addEventListener('change', function () {
+        const file = pictureInput.files && pictureInput.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (ev) {
+          picturePreview.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      loadProfile();
+    })();
+  </script>
+</body>
+</html>

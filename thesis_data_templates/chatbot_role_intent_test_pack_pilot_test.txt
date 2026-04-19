@@ -1,0 +1,120 @@
+IBAYAW CHATBOT ROLE-BASED TEST PACK (PILOT TEST)
+Date: 2026-03-25
+Scope: Chatbot intent coverage by role + multilingual behavior
+
+How to use:
+1) Log in with a role account (guest / owner / admin / employee).
+2) Open chatbot and send prompts below exactly.
+3) Mark PASS if expected behavior happens.
+4) Save screenshots for thesis appendix/demo.
+
+==================================================
+A) GUEST TESTS
+==================================================
+A1. "recommend a hotel in bayawan for 2 guests under 2000"
+Expected: Accommodation recommendations from DB; no invented records.
+
+A2. "kinahanglan kog inn sa villareal para sa 3 ka bisita, budget 1200"
+Expected: Understood via translation; recommendations or clear clarifying question.
+
+A3. "show tourism information about bayawan city"
+Expected: Tourism info from published DB records only.
+
+A4. "book room 111 for 2 guests from 2026-04-10 to 2026-04-12"
+Expected: Booking draft/confirmation flow; guest-linked booking only.
+
+A5. "calculate hotel bill for room 111 for 2 nights"
+Expected: Billing response from backend logic.
+
+A6. "recommend tours for 2 guests under 1000"
+Expected: Tour recommendations from published schedules.
+
+A7. After tour recommendations, send: "book #1"
+Expected: Returns clickable booking link/button for selected tour schedule.
+
+A8. "show my bookings"
+Expected: Button/link opens guest booking page in new tab.
+
+==================================================
+B) OWNER TESTS
+==================================================
+B1. "show my accommodations"
+Expected: Owner-specific accommodation summary.
+
+B2. "show my rooms"
+Expected: Owner-specific room list with availability/capacity.
+
+B3. "show my bookings"
+Expected: Link/button to owner accommodation bookings page.
+
+B4. "open owner hub"
+Expected: Link/button opens owner hub in new tab.
+
+B5. "show occupancy summary"
+Expected: Owner performance snapshot with occupancy proxy, booking counts, revenue totals.
+
+B6. "pakita revenue"
+Expected: Same owner performance snapshot (Bisaya variant).
+
+==================================================
+C) ADMIN TESTS
+==================================================
+C1. "open dashboard"
+Expected: Redirect/button to admin dashboard.
+
+C2. "show pending accommodations"
+Expected: Pending counts + link/button to pending accommodations page.
+
+C3. "show pending owner accounts"
+Expected: Owner account review summary + link/button.
+
+C4. "open accommodation bookings"
+Expected: Link/button to accommodation bookings page.
+
+C5. "open tourism management"
+Expected: Link/button to tourism information management page.
+
+C6. "show survey results"
+Expected: Link/button to survey results dashboard.
+
+==================================================
+D) EMPLOYEE TESTS
+==================================================
+D1. "open dashboard"
+Expected: Redirect/button to employee dashboard.
+
+D2. "show my assigned tours"
+Expected: Link/button to assigned tours page.
+
+D3. "show my schedule"
+Expected: Link/button to tour calendar.
+
+D4. "show accommodations"
+Expected: Link/button to employee accommodations view.
+
+D5. "show profile"
+Expected: Link/button to employee profile page.
+
+==================================================
+E) MULTILINGUAL / MESSY INPUT TESTS
+==================================================
+E1. "ga kinahanglan kog hotel sa villareal, duha mi, budget namo 1500"
+Expected: System extracts/asks missing slots without jumping to wrong intent.
+
+E2. "sa villareal"
+Expected: Follow-up remains in current accommodation context when collecting slots.
+
+E3. "1500 ang budget"
+Expected: Budget recognized in follow-up state.
+
+E4. "show pending owners" (while input language set to Cebuano/Tagalog mixed)
+Expected: Command still works and reply can be translated back.
+
+==================================================
+PASS/FAIL LOG TEMPLATE
+==================================================
+Role | Prompt ID | Prompt Text | Expected | Actual | PASS/FAIL | Screenshot File
+
+Notes for thesis:
+- This pack validates role gating, multilingual understanding, and command routing.
+- Record failures as improvement backlog; do not hide failed cases in reporting.

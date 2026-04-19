@@ -4,248 +4,424 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Owner Accommodation Bookings</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>Hotel Bookings</title>
+  <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
   <style>
-    * { box-sizing: border-box; }
-
     :root {
-      --bg: #f8f5f1;
-      --panel: #fffdf9;
-      --panel-alt: #fff7ef;
-      --ink: #3f2f26;
-      --muted: #765b48;
-      --line: #e6d7c8;
-      --brand-900: #6f4e37;
-      --brand-700: #b1743f;
-      --brand-500: #d09b6c;
-      --chip: #f2e4d6;
-      --chip-ink: #6b4423;
+      --bg: #f4f7fc;
+      --panel: #ffffff;
+      --line: #e5e7eb;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --brand: #875a34;
+      --brand-dark: #6d4827;
+      --ok-bg: #d1e7dd;
+      --ok-ink: #0f5132;
+      --warn-bg: #fff3cd;
+      --warn-ink: #8a6d1d;
+      --bad-bg: #f8d7da;
+      --bad-ink: #842029;
+      --neutral-bg: #e9ecef;
+      --neutral-ink: #495057;
     }
 
+    * { box-sizing: border-box; }
     body {
-      font-family: "Poppins", "Segoe UI", Tahoma, Arial, sans-serif;
       margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
       color: var(--ink);
-      background:
-        radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
-        radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
-        var(--bg);
     }
-
-    header {
-      background: linear-gradient(135deg, var(--brand-900), var(--brand-700));
-      color: #fff;
-      padding: 30px 16px 40px;
-      position: relative;
-      overflow: hidden;
-    }
-    header::after {
-      content: "";
-      position: absolute;
-      right: -90px;
-      top: -80px;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.18), rgba(255,255,255,0));
-      pointer-events: none;
-    }
-    .container { max-width: 1150px; margin: 0 auto; padding: 18px; box-sizing: border-box; }
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    h1 {
-      margin: 0;
-      font-size: 1.6rem;
-      color: #fff;
-      letter-spacing: 0.01em;
-    }
-    .muted {
-      color: var(--muted);
-      margin: 6px 0 0;
-      font-size: 0.95rem;
-    }
-    .page {
-      max-width: 1150px;
-      margin: 0 auto 18px;
-      padding: 0 18px 18px;
-      box-sizing: border-box;
-    }
-    .card {
+    .dashboard-container { display: flex; min-height: 100vh; }
+    .content { flex: 1; padding: 24px; }
+    .shell {
+      max-width: 1220px;
+      margin: 0 auto;
       background: var(--panel);
-      border-radius: 16px;
-      padding: 18px;
-      border: 1px solid rgba(111, 78, 55, 0.12);
-      box-shadow: 0 10px 24px rgba(56, 33, 16, 0.08);
-      margin-bottom: 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+      padding: 14px;
     }
-    .badge-row {
+    .title {
+      margin: 0;
+      font-size: 1.75rem;
+      color: #6b4423;
+      font-weight: 700;
+    }
+    .subtitle {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .filters {
+      margin-top: 12px;
+      border: 1px solid #dce5f2;
+      border-radius: 8px;
+      background: #f2f6fc;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: 180px 180px 180px auto;
+      gap: 8px;
+      align-items: end;
+    }
+    .field label {
+      display: block;
+      font-size: 0.78rem;
+      color: #475569;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    .field input, .field select {
+      width: 100%;
+      height: 36px;
+      border: 1px solid #d3dbe7;
+      border-radius: 6px;
+      padding: 0 10px;
+      font-size: 0.86rem;
+      background: #fff;
+    }
+    .btn {
+      border: none;
+      border-radius: 6px;
+      padding: 8px 11px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+    }
+    .btn-filter {
+      background: var(--brand);
+      color: #fff;
+    }
+    .btn-filter:hover { background: var(--brand-dark); }
+    .btn-secondary {
+      background: #eef2f7;
+      border: 1px solid #d5dde8;
+      color: #364152;
+    }
+    .btn-edit {
+      background: #3b82f6;
+      color: #fff;
+    }
+    .btn-confirm {
+      background: #0ea5a3;
+      color: #fff;
+    }
+    .btn-cancel {
+      background: #ef4444;
+      color: #fff;
+    }
+    .chips {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
+      margin-top: 10px;
     }
-    .badge {
-      font-size: 0.8rem;
-      padding: 5px 10px;
+    .chip {
       border-radius: 999px;
-      background: var(--chip);
-      color: var(--chip-ink);
-      border: 1px solid #e0c9b2;
+      padding: 5px 10px;
+      font-size: 0.76rem;
       font-weight: 700;
+      border: 1px solid transparent;
     }
-    .badge.pending { background: #fff3cd; color: #8a6d1d; border-color: #ffe69c; }
-    .badge.confirmed { background: #d1e7dd; color: #0f5132; border-color: #badbcc; }
-    .badge.declined { background: #f8d7da; color: #842029; border-color: #f1b0b7; }
-    .badge.cancelled { background: #e9ecef; color: #495057; border-color: #dde1e5; }
+    .chip.pending { background: var(--warn-bg); color: var(--warn-ink); border-color: #ffe69c; }
+    .chip.confirmed { background: var(--ok-bg); color: var(--ok-ink); border-color: #badbcc; }
+    .chip.declined { background: var(--bad-bg); color: var(--bad-ink); border-color: #f1b0b7; }
+    .chip.cancelled { background: var(--neutral-bg); color: var(--neutral-ink); border-color: #dde1e5; }
     .table-wrap {
-      overflow-x: auto;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fff;
       margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow-x: auto;
+      background: #fff;
     }
     table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 1020px;
     }
     th, td {
-      border-bottom: 1px solid #eedfce;
       padding: 10px 9px;
+      border-bottom: 1px solid #eef1f4;
       text-align: left;
-      vertical-align: top;
-      font-size: 0.89rem;
-      overflow-wrap: anywhere;
+      font-size: 0.84rem;
+      vertical-align: middle;
     }
     th {
-      background: #f8efe7;
-      color: #6b4423;
+      background: #f5f8fc;
+      color: #374151;
       font-weight: 700;
     }
-    tbody tr:nth-child(even) { background: #fffaf5; }
-    tbody tr:hover { background: #fcf4ed; }
+    tbody tr:nth-child(even) { background: #fafbfc; }
+    tbody tr:hover { background: #f6f9ff; }
     .status {
       display: inline-block;
-      padding: 4px 10px;
       border-radius: 999px;
-      font-size: 0.78rem;
+      padding: 4px 9px;
+      font-size: 0.75rem;
       font-weight: 700;
       text-transform: capitalize;
-      letter-spacing: 0.01em;
     }
-    .status.pending { background: #fff3cd; color: #8a6d1d; }
-    .status.confirmed { background: #d1e7dd; color: #0f5132; }
-    .status.declined { background: #f8d7da; color: #842029; }
-    .status.cancelled { background: #e9ecef; color: #495057; }
-    .btn {
-      display: inline-block;
-      padding: 9px 13px;
+    .status.pending { background: var(--warn-bg); color: var(--warn-ink); }
+    .status.confirmed { background: var(--ok-bg); color: var(--ok-ink); }
+    .status.declined { background: var(--bad-bg); color: var(--bad-ink); }
+    .status.cancelled { background: var(--neutral-bg); color: var(--neutral-ink); }
+    .actions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .inline-form { display: inline; }
+    .empty {
+      color: #64748b;
+      font-style: italic;
+      text-align: center;
+      padding: 18px !important;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1200;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.45);
+      padding: 18px;
+    }
+    .modal-card {
+      width: min(520px, 96vw);
+      margin: 8vh auto 0;
+      background: #fff;
+      border: 1px solid #dbe4ef;
       border-radius: 10px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
-      transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+      box-shadow: 0 18px 36px rgba(15, 23, 42, 0.24);
+      padding: 14px;
     }
-    .btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 14px rgba(70, 42, 21, 0.2);
-    }
-    .btn.primary {
-      background: linear-gradient(135deg, var(--brand-900), var(--brand-700));
-      color: #fff;
-    }
-    .btn.secondary {
-      background: #f2e4d6;
+    .modal-card h3 {
+      margin: 0 0 10px;
       color: #6b4423;
-      border: 1px solid #e0c9b2;
-      box-shadow: none;
+      font-size: 1.1rem;
     }
-    .btn.secondary:hover {
-      box-shadow: 0 4px 10px rgba(70, 42, 21, 0.13);
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
-    a:focus-visible,
-    button:focus-visible {
-      outline: 3px solid rgba(181, 121, 70, 0.35);
-      outline-offset: 2px;
+    .modal-grid .full { grid-column: 1 / -1; }
+    .modal-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 12px;
     }
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        transition: none !important;
-        animation: none !important;
-      }
+    @media (max-width: 920px) {
+      .filters { grid-template-columns: 1fr 1fr; }
     }
-    @media (max-width: 640px) {
-      header { padding-top: 24px; padding-bottom: 30px; }
-      .container, .page { padding-left: 12px; padding-right: 12px; }
-      h1 { font-size: 1.4rem; }
+    @media (max-width: 700px) {
+      .filters { grid-template-columns: 1fr; }
+      .content { padding: 12px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container">
-      <div class="topbar">
-        <h1>My Accommodation Bookings</h1>
-        <a class="btn secondary" href="{% url 'admin_app:owner_hub' %}">Back to Owner Hub</a>
-      </div>
-      <p class="muted" style="color: rgba(255,255,255,0.9);">Read-only monitoring page for bookings across your accommodations.</p>
+  <div class="dashboard-container">
+    <div class="navigation">
+      {% include 'components/owner_navigation.html' %}
     </div>
-  </header>
 
-  <div class="page">
-    <div class="card">
-      <div class="badge-row">
-        <span class="badge pending">Pending: {{ pending_count }}</span>
-        <span class="badge confirmed">Confirmed: {{ confirmed_count }}</span>
-        <span class="badge declined">Declined: {{ declined_count }}</span>
-        <span class="badge cancelled">Cancelled: {{ cancelled_count }}</span>
-      </div>
+    <main class="content">
+      <div class="shell">
+        <h1 class="title">All Room Bookings</h1>
+        <p class="subtitle">View and manage booking requests for your accommodations.</p>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Booking ID</th>
-              <th>Date</th>
-              <th>Accommodation</th>
-              <th>Room</th>
-              <th>Guest</th>
-              <th>Stay</th>
-              <th>Guests</th>
-              <th>Total</th>
-              <th>Payment</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for booking in bookings %}
+        <form method="get" class="filters">
+          <div class="field">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+              <option value="" {% if not status_filter %}selected{% endif %}>All Statuses</option>
+              <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pending</option>
+              <option value="confirmed" {% if status_filter == 'confirmed' %}selected{% endif %}>Confirmed</option>
+              <option value="declined" {% if status_filter == 'declined' %}selected{% endif %}>Declined</option>
+              <option value="cancelled" {% if status_filter == 'cancelled' %}selected{% endif %}>Cancelled</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="date_from">From Date</label>
+            <input type="date" id="date_from" name="date_from" value="{{ date_from }}">
+          </div>
+          <div class="field">
+            <label for="date_to">To Date</label>
+            <input type="date" id="date_to" name="date_to" value="{{ date_to }}">
+          </div>
+          <div style="display:flex; gap:8px; align-items:end;">
+            <button class="btn btn-filter" type="submit">Filter</button>
+            <a href="{% url 'admin_app:owner_accommodation_bookings' %}" class="btn btn-secondary">Reset</a>
+          </div>
+        </form>
+
+        <div class="chips">
+          <span class="chip pending">Pending: {{ pending_count }}</span>
+          <span class="chip confirmed">Confirmed: {{ confirmed_count }}</span>
+          <span class="chip declined">Declined: {{ declined_count }}</span>
+          <span class="chip cancelled">Cancelled: {{ cancelled_count }}</span>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
               <tr>
-                <td>#{{ booking.booking_id }}</td>
-                <td>{{ booking.booking_date|date:"M d, Y H:i" }}</td>
-                <td>{{ booking.accommodation.company_name }}</td>
-                <td>{% if booking.room %}{{ booking.room.room_name }}{% else %}-{% endif %}</td>
-                <td>{{ booking.guest.username }}</td>
-                <td>{{ booking.check_in }} to {{ booking.check_out }}</td>
-                <td>{{ booking.num_guests }}</td>
-                <td>PHP {{ booking.total_amount }}</td>
-                <td>{{ booking.payment_status|title }}</td>
-                <td><span class="status {{ booking.status }}">{{ booking.status }}</span></td>
+                <th>Room</th>
+                <th>Guests</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Nights</th>
+                <th>Status</th>
+                <th>Remarks</th>
+                <th>Actions</th>
               </tr>
-            {% empty %}
-              <tr>
-                <td colspan="10">No bookings found yet for your accommodations.</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {% for booking in bookings %}
+                <tr>
+                  <td>{% if booking.room %}{{ booking.room.room_name }}{% else %}-{% endif %}</td>
+                  <td>
+                    {{ booking.num_guests }}
+                    <div style="color:#6b7280; font-size:0.73rem;">{{ booking.guest.username }}</div>
+                  </td>
+                  <td>{{ booking.check_in|date:"M d, Y" }}</td>
+                  <td>{{ booking.check_out|date:"M d, Y" }}</td>
+                  <td>{{ booking.nights }}</td>
+                  <td><span class="status {{ booking.status }}">{{ booking.status }}</span></td>
+                  <td>
+                    {% if booking.cancellation_reason %}
+                      {{ booking.cancellation_reason }}
+                    {% else %}
+                      -
+                    {% endif %}
+                  </td>
+                  <td>
+                    <div class="actions">
+                      {% if booking.status == 'pending' %}
+                        <form class="inline-form" method="post" action="{% url 'admin_app:owner_accommodation_booking_update' booking.booking_id %}">
+                          {% csrf_token %}
+                          <input type="hidden" name="action" value="confirm">
+                          <button class="btn btn-confirm" type="submit">Confirm</button>
+                        </form>
+                        <button
+                          class="btn btn-edit js-open-edit"
+                          type="button"
+                          data-booking-id="{{ booking.booking_id }}"
+                          data-update-url="{% url 'admin_app:owner_accommodation_booking_update' booking.booking_id %}"
+                          data-check-in="{{ booking.check_in|date:'Y-m-d' }}"
+                          data-check-out="{{ booking.check_out|date:'Y-m-d' }}"
+                          data-num-guests="{{ booking.num_guests }}"
+                        >
+                          Edit
+                        </button>
+                        <form class="inline-form" method="post" action="{% url 'admin_app:owner_accommodation_booking_update' booking.booking_id %}">
+                          {% csrf_token %}
+                          <input type="hidden" name="action" value="cancel">
+                          <button class="btn btn-cancel" type="submit">Cancel</button>
+                        </form>
+                      {% elif booking.status == 'confirmed' %}
+                        <button
+                          class="btn btn-edit js-open-edit"
+                          type="button"
+                          data-booking-id="{{ booking.booking_id }}"
+                          data-update-url="{% url 'admin_app:owner_accommodation_booking_update' booking.booking_id %}"
+                          data-check-in="{{ booking.check_in|date:'Y-m-d' }}"
+                          data-check-out="{{ booking.check_out|date:'Y-m-d' }}"
+                          data-num-guests="{{ booking.num_guests }}"
+                        >
+                          Edit
+                        </button>
+                        <form class="inline-form" method="post" action="{% url 'admin_app:owner_accommodation_booking_update' booking.booking_id %}">
+                          {% csrf_token %}
+                          <input type="hidden" name="action" value="cancel">
+                          <button class="btn btn-cancel" type="submit">Cancel</button>
+                        </form>
+                      {% else %}
+                        <span style="color:#6b7280; font-size:0.78rem;">No actions</span>
+                      {% endif %}
+                    </div>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td class="empty" colspan="8">No bookings found for the selected filter.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
+    </main>
+  </div>
+
+  <div id="editBookingModal" class="modal">
+    <div class="modal-card">
+      <h3>Edit Booking</h3>
+      <form id="editBookingForm" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="edit">
+        <div class="modal-grid">
+          <div>
+            <label for="editCheckIn">Check-in</label>
+            <input id="editCheckIn" name="check_in" type="date" required>
+          </div>
+          <div>
+            <label for="editCheckOut">Check-out</label>
+            <input id="editCheckOut" name="check_out" type="date" required>
+          </div>
+          <div class="full">
+            <label for="editNumGuests">Number of Guests</label>
+            <input id="editNumGuests" name="num_guests" type="number" min="1" required>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="editBookingCancelBtn">Close</button>
+          <button type="submit" class="btn btn-edit">Save Changes</button>
+        </div>
+      </form>
     </div>
   </div>
+
+  <script>
+    (function () {
+      const modal = document.getElementById("editBookingModal");
+      const form = document.getElementById("editBookingForm");
+      const closeBtn = document.getElementById("editBookingCancelBtn");
+      const checkIn = document.getElementById("editCheckIn");
+      const checkOut = document.getElementById("editCheckOut");
+      const guests = document.getElementById("editNumGuests");
+
+      function closeModal() {
+        modal.style.display = "none";
+      }
+
+      document.querySelectorAll(".js-open-edit").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          const updateUrl = String(this.getAttribute("data-update-url") || "").trim();
+          if (!updateUrl) return;
+          form.action = updateUrl;
+          checkIn.value = this.getAttribute("data-check-in") || "";
+          checkOut.value = this.getAttribute("data-check-out") || "";
+          guests.value = this.getAttribute("data-num-guests") || "1";
+          modal.style.display = "block";
+        });
+      });
+
+      closeBtn.addEventListener("click", closeModal);
+      modal.addEventListener("click", function (event) {
+        if (event.target === modal) closeModal();
+      });
+    })();
+  </script>
 </body>
 </html>

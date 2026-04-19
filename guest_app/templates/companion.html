@@ -1669,9 +1669,210 @@
             margin-left: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
+
+        /* Legacy visual alignment pass (UI-only) */
+        body {
+            background: #f2f4f7;
+            color: #2f2f2f;
+        }
+
+        .navbar {
+            background: #3e3e3e;
+            border-bottom: 1px solid #2e2e2e;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+        }
+
+        .nav-link,
+        .user-name,
+        .navbar .fas {
+            color: #f4f6f8;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 28px auto 48px;
+            padding: 0 16px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 14px;
+            color: #1f2937;
+            padding-bottom: 8px;
+        }
+
+        h1:after {
+            width: 72px;
+            height: 2px;
+            background: #6b7280;
+        }
+
+        .action-bar {
+            background: #ffffff;
+            border: 1px solid #d8dee5;
+            border-radius: 8px;
+            box-shadow: none;
+            padding: 10px 14px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 8px;
+        }
+
+        .left-actions,
+        .right-actions {
+            gap: 8px;
+        }
+
+        .action-button,
+        .requests-btn,
+        .search-btn {
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #374151;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            box-shadow: none;
+        }
+
+        .action-button:hover,
+        .requests-btn:hover,
+        .search-btn:hover {
+            transform: none;
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .unified-companion-box {
+            border: 1px solid #d8dee5;
+            border-radius: 8px;
+            box-shadow: none;
+            background: #fff;
+        }
+
+        .section-headers {
+            background: #f8fafc;
+        }
+
+        .section-header {
+            padding: 14px 16px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #374151;
+            background: #f8fafc;
+            border-right: 1px solid #e5e7eb;
+        }
+
+        .section-header:hover:not(.active) {
+            background: #eef2f7;
+        }
+
+        .section-header.active {
+            background: #355f3a;
+            color: #ffffff;
+            box-shadow: none;
+        }
+
+        .sections-container {
+            padding: 16px;
+        }
+
+        .view-tabs {
+            margin-bottom: 14px !important;
+            gap: 8px;
+        }
+
+        .view-tab {
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            background: #ffffff;
+            color: #374151;
+            box-shadow: none;
+            padding: 9px 14px;
+            font-size: 0.9rem;
+            margin-right: 0;
+        }
+
+        .view-tab.active {
+            background: #355f3a;
+            color: #fff;
+            border-color: #355f3a;
+            box-shadow: none;
+        }
+
+        .group-filter-bar {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 14px;
+            box-shadow: none;
+        }
+
+        .companions-list {
+            max-height: none;
+            overflow: visible;
+            padding: 0;
+        }
+
+        .group-section {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: none;
+            margin-bottom: 14px;
+        }
+
+        .group-header {
+            padding: 12px 14px;
+            font-size: 1rem;
+            background: #f9fafb;
+            color: #1f2937;
+        }
+
+        .companion-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: none;
+            margin: 10px;
+            padding: 14px;
+            transform: none !important;
+            animation: none !important;
+            opacity: 1 !important;
+        }
+
+        .companion-card:before {
+            width: 3px;
+            background: #355f3a;
+        }
+
+        .companion-image {
+            width: 72px;
+            height: 72px;
+            margin-right: 14px;
+            border-width: 2px;
+            box-shadow: none;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            color: #374151;
+            text-decoration: none;
+            background: #fff;
+        }
+
+        .footer {
+            display: none;
+        }
     </style>
+  <link rel="stylesheet" href="/static/css/guest_unified.css">
 </head>
-<body>
+<body class="guest-companion">
     <!-- Navigation Bar -->
     <nav class="navbar">
         <!-- Logo -->
@@ -4038,5 +4239,6 @@
     </script>
 </body>
 </html> 
+
 
 

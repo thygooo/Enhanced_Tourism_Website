@@ -1,5 +1,7 @@
 # Deployment Checklist (Thesis)
 
+Reference: `thesis_data_templates/FINAL_DEFENSE_RUNBOOK.md`
+
 ## A. Environment & Secrets
 - [ ] `SECRET_KEY` is non-default and stored in environment.
 - [ ] Gemini key is stored in environment, not hardcoded in source.
@@ -39,3 +41,8 @@
 - [ ] UAT execution log is filled and signed by testers.
 - [ ] Screenshots/recordings mapped to UAT test IDs.
 - [ ] RQ3/RQ4 output tables are ready for slide deck and Chapter 4 appendix.
+
+## H. Final Window Exports (Recommended)
+- [ ] `export_rq34_chapter4_bundle --days 365` generated final-window outputs.
+- [ ] `export_survey_readiness_audit --target-complete-batches <approved target>` generated gap report.
+- [ ] Defense-profile deployment report exported (`deployment_readiness_report_defense_profile.md`).

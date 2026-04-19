@@ -23,17 +23,19 @@ urlpatterns = [
     path('companion/groups/debug/', views.companion_group_debug, name='companion_group_debug'),
     path('get_companions/', views.get_companions, name='get_companions'),
     
-    # Tour details endpoints - commented out missing view functions
+    # Tour details endpoints
     # path('get_tour_payables/', views.get_tour_payables, name='get_tour_payables'),
-    # path('get_tour_itinerary/', views.get_tour_itinerary, name='get_tour_itinerary'),
+    path('get_tour_itinerary/', views.get_tour_itinerary, name='get_tour_itinerary'),
     
     # Language settings endpoint
     path('set-language/<str:lang_code>/', views.set_language_view, name='set-language'),
     path('get-translations/<str:lang_code>/', views.get_translations_view, name='get-translations'),
     
     # Profile update endpoints
+    path('profile/', views.my_profile, name='my_profile'),
     path('profile/data/', views.get_profile_data, name='get_profile_data'),
     path('profile/update/', views.update_profile, name='update_profile'),
+    path('notifications/', views.guest_notifications, name='guest_notifications'),
     
     # Friendship management
     path('friendship_debug/', views.friendship_debug, name='friendship_debug'),
@@ -60,6 +62,7 @@ urlpatterns = [
     path('accommodations/recommend/', views.accommodation_recommend, name='accommodation_recommend'),
     path('accommodations/billing/', views.accommodation_billing, name='accommodation_billing'),
     path('accommodations/book/', views.accommodation_book, name='accommodation_book'),
+    path('accommodations/payment/webhook/', views.payment_webhook_callback, name='payment_webhook_callback'),
 
     # Companion request endpoints
     path('companion/search/', views.search_users, name='search_users'),

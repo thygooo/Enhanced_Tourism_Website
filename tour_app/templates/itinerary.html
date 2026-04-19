@@ -206,6 +206,22 @@
                                     <label for="event_description_day{{ day_num }}">Event Description:</label>
                                     <textarea class="form-control" id="event_description_day{{ day_num }}" name="event_description" rows="3" required></textarea>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="event_location_day{{ day_num }}">Location:</label>
+                                    <div class="input-group">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="event_location_day{{ day_num }}"
+                                            name="event_location"
+                                            placeholder="Enter location or click Browse to select on map"
+                                        >
+                                        <div class="input-group-append">
+                                            <a class="btn btn-outline-primary" href="{% url 'admin_app:map' %}" target="_blank" rel="noopener noreferrer">Browse</a>
+                                        </div>
+                                    </div>
+                                </div>
                                 
                                 <div class="form-group">
                                     <label for="image_day{{ day_num }}">Event Image:</label>
@@ -241,6 +257,9 @@
                                 <h4>{{ event.event_name }}</h4>
                                 <p class="event-time">Time: {{ event.event_time|time:"h:i A" }}</p>
                                 <p>{{ event.event_description }}</p>
+                                {% if event.event_location %}
+                                <p><strong>Location:</strong> {{ event.event_location }}</p>
+                                {% endif %}
                                 {% if event.image %}
                                 <img src="{{ event.image.url }}" alt="{{ event.event_name }}" class="event-image">
                                 {% endif %}
@@ -273,6 +292,23 @@
                                                     <div class="form-group">
                                                         <label for="edit_event_description{{ event.event_ID }}">Event Description:</label>
                                                         <textarea class="form-control" id="edit_event_description{{ event.event_ID }}" name="event_description" rows="3" required>{{ event.event_description }}</textarea>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="edit_event_location{{ event.event_ID }}">Location:</label>
+                                                        <div class="input-group">
+                                                            <input
+                                                                type="text"
+                                                                class="form-control"
+                                                                id="edit_event_location{{ event.event_ID }}"
+                                                                name="event_location"
+                                                                value="{{ event.event_location }}"
+                                                                placeholder="Enter location"
+                                                            >
+                                                            <div class="input-group-append">
+                                                                <a class="btn btn-outline-primary" href="{% url 'admin_app:map' %}" target="_blank" rel="noopener noreferrer">Browse</a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     
                                                     <div class="form-group">

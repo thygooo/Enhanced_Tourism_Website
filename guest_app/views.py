@@ -22,6 +22,8 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.utils.decorators import method_decorator
 from django.utils.http import url_has_allowed_host_and_scheme
 import base64
+import hashlib
+import hmac
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -40,25 +42,37 @@ from .models import FriendGroup, Friendship
 import pytz  # Add this import
 import qrcode
 from io import BytesIO
+import sys
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from PIL import Image
 from admin_app.models import Accomodation, Room as AdminRoom
 from .models import AccommodationBooking
+from .models import Billing
 from .booking_integrity import (
     create_accommodation_booking_with_integrity,
     sync_room_current_availability,
 )
 from ai_chatbot.recommenders import recommend_accommodations, calculate_accommodation_billing
+from admin_app.mainpage_media import get_public_assets as get_mainpage_public_assets
 from functools import wraps
+from decimal import Decimal, InvalidOperation
 
 def _verify_recaptcha_response(request):
     """
-    Verify Google reCAPTCHA token if RECAPTCHA_SECRET_KEY is configured.
+    Verify Google reCAPTCHA token only when both site key and secret are configured.
     Returns (is_valid, error_message).
     """
+    recaptcha_site_key = str(getattr(settings, "RECAPTCHA_SITE_KEY", "") or "").strip()
     recaptcha_secret = str(getattr(settings, "RECAPTCHA_SECRET_KEY", "") or "").strip()
-    if not recaptcha_secret:
-        # Safe fallback for local/dev when secret is not configured.
+    recaptcha_enforce_on_debug = bool(getattr(settings, "RECAPTCHA_ENFORCE_ON_DEBUG", False))
+    if getattr(settings, "TESTING", False) or "test" in sys.argv:
+        return True, ""
+    if bool(getattr(settings, "DEBUG", False)) and not recaptcha_enforce_on_debug:
+        # Local development default: do not block auth flows on reCAPTCHA.
+        return True, ""
+    if not recaptcha_site_key or not recaptcha_secret:
+        # Safe fallback for local/dev or partial config.
+        # Enforcing verification with only one key causes impossible login/signup flows.
         return True, ""
 
     recaptcha_response = (
@@ -83,9 +97,42 @@ def _verify_recaptcha_response(request):
     return True, ""
 
 
+def _is_recaptcha_required():
+    """
+    Determine if UI should require CAPTCHA completion.
+    Keep this aligned with _verify_recaptcha_response behavior.
+    """
+    recaptcha_site_key = str(getattr(settings, "RECAPTCHA_SITE_KEY", "") or "").strip()
+    recaptcha_secret = str(getattr(settings, "RECAPTCHA_SECRET_KEY", "") or "").strip()
+    recaptcha_enforce_on_debug = bool(getattr(settings, "RECAPTCHA_ENFORCE_ON_DEBUG", False))
+
+    if bool(getattr(settings, "TESTING", False)) or "test" in sys.argv:
+        return False
+    if bool(getattr(settings, "DEBUG", False)) and not recaptcha_enforce_on_debug:
+        return False
+    if not recaptcha_site_key or not recaptcha_secret:
+        return False
+    return True
+
+
 @ensure_csrf_cookie
 def main_page(request):
     """Main page view with language support"""
+    # Keep accommodation owners in admin-side owner workflow.
+    if request.user.is_authenticated:
+        role_value = str(getattr(request.user, "role", "") or "").strip().lower()
+        owner_group_names = {
+            "accommodation_owner",
+            "accommodation_owner_pending",
+            "accommodation_owner_declined",
+        }
+        if (
+            role_value in {"accommodation_owner", "accommodation owner", "owner"}
+            or request.user.groups.filter(name__in=owner_group_names).exists()
+            or str(request.session.get("user_type") or "").strip().lower() in {"accomodation", "accommodation", "establishment"}
+        ):
+            return redirect("admin_app:owner_hub")
+
     # Helper function to ensure datetime objects are properly converted
     def ensure_timezone_aware(dt):
         if dt is None:
@@ -285,6 +332,8 @@ def main_page(request):
         except Exception:
             is_accommodation_owner_user = False
 
+    mainpage_assets = get_mainpage_public_assets()
+
     context = {
         'tours': tours,  # Keep the original queryset for Django template usage
         'translated_tours': translated_tours,  # Add translated data
@@ -300,6 +349,8 @@ def main_page(request):
             str(getattr(settings, 'RECAPTCHA_SITE_KEY', '') or '').strip()
             and str(getattr(settings, 'RECAPTCHA_SECRET_KEY', '') or '').strip()
         ),
+        'active_logo_url': mainpage_assets.get('active_logo_url') or '',
+        'hero_backgrounds': mainpage_assets.get('hero_urls') or [],
     }
     
     return render(request, 'mainpage.html', context)
@@ -336,15 +387,16 @@ def is_guest_tourist_user(user, request=None):
         return False
 
     try:
-        if user.groups.filter(name__iexact="accommodation_owner").exists():
+        blocked_group_names = {
+            "accommodation_owner",
+            "accommodation_owner_pending",
+            "accommodation_owner_declined",
+        }
+        user_groups = {str(name).strip().lower() for name in user.groups.values_list("name", flat=True)}
+        if user_groups.intersection(blocked_group_names):
             return False
     except Exception:
         pass
-
-    if request is not None:
-        session_user_type = str(request.session.get("user_type") or "").strip().lower()
-        if session_user_type in {"employee", "accomodation", "establishment"}:
-            return False
 
     return True
 
@@ -368,7 +420,386 @@ def guest_tourist_required(view_func):
 
     return wrapped_view
 
+
+@login_required
+@require_http_methods(["GET", "POST"])
+def guest_notifications(request):
+    """
+    Lightweight guest notification feed for navbar dropdown.
+    Uses existing booking/accommodation/tour records (no schema changes).
+    """
+    if not is_guest_tourist_user(request.user, request=request):
+        return JsonResponse({"success": False, "message": "Guest access required."}, status=403)
+
+    now = timezone.now()
+    cookie_key = "guest_notifications_state_v1"
+    seen_key = "guest_notifications_seen_at"
+    seen_ids_key = "guest_notifications_seen_ids"
+    first_seen_key = "guest_notifications_first_seen_map"
+
+    def _parse_seen_at(raw_value):
+        raw = str(raw_value or "").strip()
+        if not raw:
+            return None
+        try:
+            parsed = datetime.fromisoformat(raw)
+            return timezone.make_aware(parsed) if timezone.is_naive(parsed) else parsed
+        except Exception:
+            return None
+
+    def _read_cookie_state():
+        raw = str(request.COOKIES.get(cookie_key) or "").strip()
+        if not raw:
+            return {"seen_at": "", "seen_ids": []}
+        try:
+            payload = json.loads(raw)
+        except Exception:
+            return {"seen_at": "", "seen_ids": []}
+        if not isinstance(payload, dict):
+            return {"seen_at": "", "seen_ids": []}
+        if str(payload.get("uid") or "") != str(getattr(request.user, "pk", "") or ""):
+            return {"seen_at": "", "seen_ids": []}
+        seen_at_raw = str(payload.get("seen_at") or "").strip()
+        seen_ids_raw = payload.get("seen_ids") if isinstance(payload.get("seen_ids"), list) else []
+        seen_ids_clean = [str(v).strip() for v in seen_ids_raw if str(v).strip()]
+        return {"seen_at": seen_at_raw, "seen_ids": seen_ids_clean}
+
+    def _write_cookie_state(response, *, seen_at_raw, seen_ids):
+        safe_ids = [str(v).strip() for v in (seen_ids or []) if str(v).strip()][:120]
+        payload = {
+            "uid": str(getattr(request.user, "pk", "") or ""),
+            "seen_at": str(seen_at_raw or "").strip(),
+            "seen_ids": safe_ids,
+        }
+        response.set_cookie(
+            cookie_key,
+            json.dumps(payload, separators=(",", ":")),
+            max_age=60 * 60 * 24 * 180,
+            httponly=True,
+            samesite="Lax",
+        )
+        return response
+
+    seen_ids = request.session.get(seen_ids_key) or []
+    if not isinstance(seen_ids, list):
+        seen_ids = []
+    cookie_state = _read_cookie_state()
+    seen_ids_set = {str(v) for v in seen_ids if str(v).strip()}
+    seen_ids_set.update({str(v) for v in cookie_state.get("seen_ids", []) if str(v).strip()})
+    first_seen_raw = request.session.get(first_seen_key) or {}
+    if not isinstance(first_seen_raw, dict):
+        first_seen_raw = {}
+    first_seen_map = {
+        str(k).strip(): str(v).strip()
+        for k, v in first_seen_raw.items()
+        if str(k).strip() and str(v).strip()
+    }
+
+    if request.method == "POST":
+        notif_id = ""
+        notif_ids = []
+        try:
+            payload = json.loads(request.body.decode("utf-8") or "{}")
+            notif_id = str(payload.get("notification_id") or "").strip()
+            if isinstance(payload.get("notification_ids"), list):
+                notif_ids = [
+                    str(v).strip()
+                    for v in payload.get("notification_ids")
+                    if str(v).strip()
+                ]
+        except Exception:
+            notif_id = ""
+            notif_ids = []
+
+        if notif_id:
+            seen_ids_set.add(notif_id)
+            request.session[seen_ids_key] = list(seen_ids_set)[-400:]
+            request.session.modified = True
+            seen_raw = str(request.session.get(seen_key) or "").strip()
+            response = JsonResponse({"success": True, "message": "Notification marked as read."})
+            return _write_cookie_state(response, seen_at_raw=seen_raw, seen_ids=list(seen_ids_set))
+
+        request.session[seen_key] = now.isoformat()
+        if notif_ids:
+            seen_ids_set.update(notif_ids)
+        request.session[seen_ids_key] = list(seen_ids_set)[-400:]
+        request.session.modified = True
+        response = JsonResponse({"success": True, "message": "Notifications marked as read.", "unread_count": 0})
+        return _write_cookie_state(response, seen_at_raw=now.isoformat(), seen_ids=list(seen_ids_set))
+
+    seen_at = None
+    seen_raw = str(request.session.get(seen_key) or "").strip()
+    if seen_raw:
+        seen_at = _parse_seen_at(seen_raw)
+    cookie_seen_at = _parse_seen_at(cookie_state.get("seen_at"))
+    if cookie_seen_at is not None and (seen_at is None or cookie_seen_at > seen_at):
+        seen_at = cookie_seen_at
+
+    notifications = []
+    guest_user = request.user
+    recent_cutoff = now - timedelta(days=30)
+
+    # Accommodation booking updates
+    accommodation_updates = (
+        AccommodationBooking.objects.filter(guest=guest_user)
+        .select_related("accommodation", "room")
+        .order_by("-last_updated")[:20]
+    )
+    status_title = {
+        "pending": "Accommodation booking pending",
+        "confirmed": "Accommodation booking confirmed",
+        "declined": "Accommodation booking declined",
+        "cancelled": "Accommodation booking cancelled",
+    }
+    for booking in accommodation_updates:
+        updated_at = booking.last_updated or booking.booking_date
+        notif_status = str(booking.status or "").strip().lower()
+        title = status_title.get(notif_status, "Accommodation booking update")
+        room_name = booking.room.room_name if booking.room else "Selected room"
+        message = (
+            f"{booking.accommodation.company_name} - {room_name} | "
+            f"{booking.check_in} to {booking.check_out} | Status: {str(booking.status).title()}."
+        )
+        notifications.append(
+            {
+                "id": f"accom-{booking.booking_id}-{notif_status}",
+                "title": title,
+                "message": message,
+                "type": "booking",
+                "status": notif_status,
+                "created_at": updated_at,
+                "link": reverse("my_accommodation_bookings"),
+            }
+        )
+
+    # Tour booking updates (new flow)
+    tour_updates = (
+        TourBooking.objects.filter(guest=guest_user)
+        .select_related("tour", "schedule")
+        .order_by("-last_updated")[:20]
+    )
+    tour_status_title = {
+        "pending": "Tour booking pending",
+        "active": "Tour booking active",
+        "completed": "Tour booking completed",
+        "cancelled": "Tour booking cancelled",
+    }
+    for booking in tour_updates:
+        updated_at = booking.last_updated or booking.booking_date
+        notif_status = str(booking.status or "").strip().lower()
+        title = tour_status_title.get(notif_status, "Tour booking update")
+        message = (
+            f"{booking.tour.tour_name} ({booking.schedule.sched_id}) | "
+            f"Guests: {booking.total_guests} | Status: {str(booking.status).title()}."
+        )
+        notifications.append(
+            {
+                "id": f"tour-{booking.booking_id}-{notif_status}",
+                "title": title,
+                "message": message,
+                "type": "tour",
+                "status": notif_status,
+                "created_at": updated_at,
+                "link": reverse("main-page") + "#user-bookings",
+            }
+        )
+
+    # Tour booking updates (legacy pending module) for Accepted/Declined visibility
+    pending_updates = (
+        Pending.objects.filter(guest_id=guest_user)
+        .select_related("tour_id", "sched_id")
+        .order_by("-id")[:20]
+    )
+    for pending in pending_updates:
+        pending_status = str(pending.status or "").strip().lower()
+        if pending_status not in {"accepted", "declined", "cancelled"}:
+            continue
+        created_at = pending.cancellation_date or pending.sched_id.start_time or now
+        message = (
+            f"{pending.tour_id.tour_name} ({pending.sched_id.sched_id}) | "
+            f"Guests: {pending.total_guests} | Status: {str(pending.status).title()}."
+        )
+        notifications.append(
+            {
+                "id": f"pending-{pending.id}-{pending_status}",
+                "title": f"Tour booking {pending_status}",
+                "message": message,
+                "type": "tour",
+                "status": pending_status,
+                "created_at": created_at,
+                "link": reverse("main-page") + "#user-bookings",
+            }
+        )
+
+    # New published tours with upcoming schedules
+    new_tour_schedules = (
+        Tour_Schedule.objects.filter(
+            status="active",
+            start_time__gte=now,
+            start_time__lte=now + timedelta(days=30),
+            tour__publication_status="published",
+        )
+        .select_related("tour")
+        .order_by("start_time")[:10]
+    )
+    seen_tour_ids = set()
+    for sched in new_tour_schedules:
+        if sched.tour_id in seen_tour_ids:
+            continue
+        seen_tour_ids.add(sched.tour_id)
+        notifications.append(
+            {
+                "id": f"new-tour-{sched.tour_id}",
+                "title": "New or upcoming tour available",
+                "message": f"{sched.tour.tour_name} is available. Next schedule: {timezone.localtime(sched.start_time).strftime('%b %d, %Y %I:%M %p')}.",
+                "type": "announcement",
+                "status": "info",
+                "created_at": sched.start_time,
+                "link": reverse("main-page") + "#tour-packages",
+            }
+        )
+
+    # New accepted accommodations and new rooms
+    new_accommodations = (
+        Accomodation.objects.filter(approval_status="accepted", submitted_at__gte=recent_cutoff, is_active=True)
+        .order_by("-submitted_at")[:10]
+    )
+    for accom in new_accommodations:
+        notifications.append(
+            {
+                "id": f"new-accom-{accom.accom_id}",
+                "title": "New accommodation available",
+                "message": f"{accom.company_name} ({str(accom.company_type).title()}) is now available in {accom.location}.",
+                "type": "announcement",
+                "status": "info",
+                "created_at": accom.submitted_at,
+                "link": reverse("accommodation_page"),
+            }
+        )
+
+    new_rooms = (
+        AdminRoom.objects.filter(created_at__gte=recent_cutoff, accommodation__approval_status="accepted", accommodation__is_active=True)
+        .select_related("accommodation")
+        .order_by("-created_at")[:10]
+    )
+    for room in new_rooms:
+        notifications.append(
+            {
+                "id": f"new-room-{room.room_id}",
+                "title": "New room option added",
+                "message": f"{room.accommodation.company_name} added {room.room_name} (up to {room.person_limit} guests).",
+                "type": "announcement",
+                "status": "info",
+                "created_at": room.created_at,
+                "link": reverse("accommodation_page"),
+            }
+        )
+
+    # Stable latest-first order:
+    # - transaction updates keep backend created_at
+    # - generated announcement items keep their first-seen timestamp,
+    #   so newer notifications naturally push older ones down.
+    current_ids = set()
+    map_updated = False
+    for row in notifications:
+        notif_id = str(row.get("id") or "").strip()
+        if not notif_id:
+            continue
+        current_ids.add(notif_id)
+        if notif_id not in first_seen_map:
+            first_seen_map[notif_id] = now.isoformat()
+            map_updated = True
+
+    # Trim stale entries and keep map bounded.
+    stale_ids = [k for k in first_seen_map.keys() if k not in current_ids]
+    if stale_ids:
+        for stale_id in stale_ids:
+            first_seen_map.pop(stale_id, None)
+        map_updated = True
+    if len(first_seen_map) > 400:
+        ordered_first_seen = sorted(
+            first_seen_map.items(),
+            key=lambda item: item[1],
+            reverse=True,
+        )
+        first_seen_map = dict(ordered_first_seen[:400])
+        map_updated = True
+
+    if map_updated:
+        request.session[first_seen_key] = first_seen_map
+        request.session.modified = True
+
+    def _parse_iso_dt(value):
+        raw = str(value or "").strip()
+        if not raw:
+            return None
+        try:
+            parsed = datetime.fromisoformat(raw)
+            return timezone.make_aware(parsed) if timezone.is_naive(parsed) else parsed
+        except Exception:
+            return None
+
+    for row in notifications:
+        created_at = row.get("created_at") or now
+        if timezone.is_naive(created_at):
+            created_at = timezone.make_aware(created_at)
+
+        notif_id = str(row.get("id") or "").strip()
+        notif_type = str(row.get("type") or "").strip().lower()
+        sort_at = created_at
+        if notif_type == "announcement" and notif_id:
+            first_seen_dt = _parse_iso_dt(first_seen_map.get(notif_id))
+            if first_seen_dt is not None:
+                sort_at = first_seen_dt
+
+        row["_created_at_dt"] = created_at
+        row["_sort_at"] = sort_at
+
+    notifications.sort(key=lambda row: row.get("_sort_at") or now, reverse=True)
+    notifications = notifications[:25]
+
+    serialized = []
+    unread_count = 0
+    for row in notifications:
+        created_at = row.get("_created_at_dt") or row.get("created_at") or now
+        if timezone.is_naive(created_at):
+            created_at = timezone.make_aware(created_at)
+        is_unread = bool((seen_at is None or created_at > seen_at) and (str(row.get("id")) not in seen_ids_set))
+        if is_unread:
+            unread_count += 1
+        serialized.append(
+            {
+                "id": row.get("id"),
+                "title": row.get("title"),
+                "message": row.get("message"),
+                "type": row.get("type"),
+                "status": row.get("status"),
+                "link": row.get("link") or "",
+                "created_at": created_at.isoformat(),
+                "display_date": timezone.localtime(created_at).strftime("%b %d"),
+                "is_unread": is_unread,
+            }
+        )
+
+    response = JsonResponse(
+        {
+            "success": True,
+            "unread_count": unread_count,
+            "notifications": serialized,
+            "generated_at": now.isoformat(),
+        }
+    )
+    seen_at_out = seen_at.isoformat() if seen_at is not None else str(seen_raw or "").strip()
+    return _write_cookie_state(response, seen_at_raw=seen_at_out, seen_ids=list(seen_ids_set))
+
 def register(request):
+    next_url = str(request.GET.get("next") or request.POST.get("next") or "").strip()
+    owner_signup_intent = str(
+        request.GET.get("owner_signup")
+        or request.POST.get("owner_signup_intent")
+        or ""
+    ).strip() == "1"
+
     if request.method == 'POST':
         recaptcha_ok, recaptcha_error = _verify_recaptcha_response(request)
         if not recaptcha_ok:
@@ -394,7 +825,9 @@ def register(request):
                 # Save the guest to create the instance with an ID
                 guest.save()
 
-                register_as_owner = bool(form.cleaned_data.get("register_as_accommodation_owner"))
+                register_as_owner_requested = bool(form.cleaned_data.get("register_as_accommodation_owner"))
+                # Owner routing requires explicit owner-signup intent.
+                register_as_owner = bool(owner_signup_intent and register_as_owner_requested)
                 requested_next = str(request.POST.get("next") or request.GET.get("next") or "").strip()
                 redirect_url = ""
                 if register_as_owner:
@@ -403,13 +836,19 @@ def register(request):
                     declined_group, _ = Group.objects.get_or_create(name="accommodation_owner_declined")
                     guest.groups.remove(approved_group, declined_group)
                     guest.groups.add(pending_group)
-                    redirect_url = reverse("main-page")
+                    redirect_url = reverse("admin_app:login")
                     if requested_next and url_has_allowed_host_and_scheme(
                         requested_next,
                         allowed_hosts={request.get_host()},
                     ):
                         # Keep next flow safe for callers, but owner approval is still required.
                         redirect_url = requested_next
+                else:
+                    # Defensive cleanup: keep standard guest signups out of owner groups.
+                    pending_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+                    approved_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+                    declined_group, _ = Group.objects.get_or_create(name="accommodation_owner_declined")
+                    guest.groups.remove(pending_group, approved_group, declined_group)
 
                 messages.success(request, 'Registration successful! You can now log in.')
 
@@ -443,7 +882,15 @@ def register(request):
             })
     else:
         form = GuestRegistrationForm()
-    return render(request, 'register.html', {'form': form})
+    return render(
+        request,
+        'register.html',
+        {
+            'form': form,
+            'next_url': next_url,
+            'owner_signup_intent': owner_signup_intent,
+        },
+    )
 
 
 def login_view(request):
@@ -451,9 +898,10 @@ def login_view(request):
         return redirect('main-page')
 
     if request.method == 'POST':
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         recaptcha_ok, recaptcha_error = _verify_recaptcha_response(request)
         if not recaptcha_ok:
-            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            if is_ajax:
                 return JsonResponse({'success': False, 'message': recaptcha_error}, status=400)
             messages.error(request, recaptcha_error)
             return redirect('main-page')
@@ -476,19 +924,19 @@ def login_view(request):
                     owner_only_message = (
                         "Accommodation owners must log in via the Admin Panel login page."
                     )
-                    messages.error(request, owner_only_message)
-                    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                    if is_ajax:
                         return JsonResponse({
                             'success': False,
                             'message': owner_only_message,
                             'owner_login_only': True,
                             'redirect_url': owner_login_url,
                         })
+                    messages.error(request, owner_only_message)
                     return redirect(owner_login_url)
 
                 auth_login(request, user)
                 # For AJAX requests, return JSON response
-                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                if is_ajax:
                     return JsonResponse({
                         'success': True,
                         'first_name': user.first_name,
@@ -496,21 +944,21 @@ def login_view(request):
                     })
                 return redirect(request.GET.get('next', 'main-page'))
             else:
-                messages.error(request, "Invalid email or password")
                 # For AJAX requests, return JSON response
-                if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                if is_ajax:
                     return JsonResponse({
                         'success': False, 
                         'message': 'Invalid email or password'
                     })
+                messages.error(request, "Invalid email or password")
         except Guest.DoesNotExist:
-            messages.error(request, "Invalid email or password")
             # For AJAX requests, return JSON response
-            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            if is_ajax:
                 return JsonResponse({
                     'success': False, 
                     'message': 'Invalid email or password'
                 })
+            messages.error(request, "Invalid email or password")
         
         return redirect('main-page')
 
@@ -571,22 +1019,9 @@ def get_tour_schedules(request, tour_id):
 @require_POST
 def book_tour(request):
     try:
-        recaptcha_response = request.POST.get('g_recaptcha_response')
-        if not recaptcha_response:
-            return JsonResponse({'error': 'Please complete the reCAPTCHA verification.'}, status=400)
-
-        recaptcha_secret = str(getattr(settings, 'RECAPTCHA_SECRET_KEY', '') or '').strip()
-        if not recaptcha_secret:
-            return JsonResponse({'error': 'Booking verification is not configured. Please contact support.'}, status=503)
-
-        recaptcha_result = requests.post(
-            'https://www.google.com/recaptcha/api/siteverify',
-            data={'secret': recaptcha_secret, 'response': recaptcha_response},
-            timeout=15,
-        ).json()
-        if not recaptcha_result.get('success', False):
-            error_message = recaptcha_result.get('error-codes', ['Unknown error'])[0]
-            return JsonResponse({'error': f'reCAPTCHA verification failed: {error_message}. Please try again.'}, status=400)
+        recaptcha_ok, recaptcha_error = _verify_recaptcha_response(request)
+        if not recaptcha_ok:
+            return JsonResponse({'error': recaptcha_error}, status=400)
 
         guest = request.user
         sched_id = request.POST.get('sched_id')
@@ -603,7 +1038,16 @@ def book_tour(request):
             sched_id=sched_id,
             tour__publication_status='published',
         )
-        tour = schedule.tour_id
+        tour = schedule.tour
+
+        if schedule.slots_available < total_guests:
+            return JsonResponse({'error': 'Not enough available slots.'}, status=400)
+
+        companion_names = []
+        if selected_companions:
+            companions = Guest.objects.filter(guest_id__in=selected_companions, made_by=guest)
+        else:
+            companions = Guest.objects.none()
 
         pending_booking = Pending.objects.create(
             guest_id=guest,
@@ -618,18 +1062,13 @@ def book_tour(request):
             num_children=0,
         )
 
-        companion_names = []
         if selected_companions:
-            companions = Guest.objects.filter(guest_id__in=selected_companions, made_by=guest)
             for companion in companions:
                 BookingCompanion.objects.create(
                     booking=pending_booking,
                     companion=companion,
                 )
                 companion_names.append(f'{companion.first_name} {companion.last_name}')
-
-        if schedule.slots_available < total_guests:
-            return JsonResponse({'error': 'Not enough available slots.'}, status=400)
 
         schedule.slots_booked += total_guests
         schedule.slots_available -= total_guests
@@ -744,6 +1183,7 @@ def guest_book(request, tour_id):
         'translations_json': json.dumps(translations),
         'tour_data': tour_data,
         'recaptcha_site_key': str(getattr(settings, 'RECAPTCHA_SITE_KEY', '') or '').strip(),
+        'recaptcha_required': _is_recaptcha_required(),
     }
     
     return render(request, 'guest_book.html', context)
@@ -1144,6 +1584,12 @@ def bookmark_get_images(request, bookmark_id):
     return JsonResponse({'message': 'Invalid request method'}, status=405)
 
 # Profile update functions
+@login_required
+@guest_tourist_required
+def my_profile(request):
+    return render(request, "my_profile.html", {"user": request.user})
+
+
 @require_http_methods(["GET"])
 def get_profile_data(request):
     if request.user.is_authenticated:
@@ -1154,12 +1600,17 @@ def get_profile_data(request):
                 'first_name': user.first_name,
                 'middle_initial': user.middle_initial,
                 'last_name': user.last_name,
+                'email': user.email,
+                'birthday': user.birthday.isoformat() if user.birthday else '',
                 'country_of_origin': user.country_of_origin,
                 'city': user.city,
                 'phone_number': user.phone_number,
                 'age': user.age,
+                'age_label': user.age_label,
                 'company_name': user.company_name,
                 'sex': user.sex,
+                'has_disability': user.has_disability,
+                'disability_type': user.disability_type,
             }
         })
     return JsonResponse({'success': False, 'message': 'User not authenticated'})
@@ -1177,6 +1628,9 @@ def update_profile(request):
         if not request.POST.get('last_name'):
             errors['last_name'] = 'Last name is required'
         
+        if not request.POST.get('email'):
+            errors['email'] = 'Email is required'
+
         if not request.POST.get('country_of_origin'):
             errors['country_of_origin'] = 'Country of origin is required'
         
@@ -1201,9 +1655,27 @@ def update_profile(request):
             user.first_name = request.POST.get('first_name')
             user.middle_initial = request.POST.get('middle_initial')
             user.last_name = request.POST.get('last_name')
+            requested_email = (request.POST.get('email') or '').strip()
+            if requested_email and Guest.objects.exclude(pk=user.pk).filter(email__iexact=requested_email).exists():
+                return JsonResponse({
+                    'success': False,
+                    'errors': {'email': 'This email is already in use'}
+                })
+            if requested_email:
+                user.email = requested_email
             user.country_of_origin = request.POST.get('country_of_origin')
             user.city = request.POST.get('city')
             user.phone_number = request.POST.get('phone_number')
+
+            birthday_raw = (request.POST.get('birthday') or '').strip()
+            if birthday_raw:
+                try:
+                    user.birthday = datetime.strptime(birthday_raw, '%Y-%m-%d').date()
+                except ValueError:
+                    return JsonResponse({
+                        'success': False,
+                        'errors': {'birthday': 'Invalid birthday format'}
+                    })
             
             # Handle optional fields
             age = request.POST.get('age')
@@ -1218,6 +1690,8 @@ def update_profile(request):
                 user.company_name = None
                 
             user.sex = request.POST.get('sex')
+            user.has_disability = str(request.POST.get('has_disability', '')).lower() in {'true', '1', 'on', 'yes'}
+            user.disability_type = (request.POST.get('disability_type') or '').strip() if user.has_disability else None
             
             if 'picture' in request.FILES:
                 user.picture = request.FILES['picture']
@@ -1304,8 +1778,65 @@ def cancel_booking(request):
     
     return JsonResponse({'success': False, 'message': 'Invalid request method'})
 
-# Placeholder functions for tour details endpoints
-# Uncomment these when you uncomment the URLs in urls.py
+@login_required
+@require_http_methods(["GET"])
+def get_tour_itinerary(request):
+    """Get detailed itinerary information for a tour schedule."""
+    tour_id = str(request.GET.get('tour_id') or '').strip()
+    sched_id = str(request.GET.get('sched_id') or '').strip()
+
+    if not tour_id:
+        return JsonResponse({'success': False, 'message': 'Missing tour_id parameter'}, status=400)
+
+    tour = get_object_or_404(Tour_Add, tour_id=tour_id, publication_status="published")
+
+    schedules_qs = Tour_Schedule.objects.filter(tour=tour)
+    if sched_id:
+        schedules_qs = schedules_qs.filter(sched_id=sched_id)
+    schedule = schedules_qs.order_by('start_time').first()
+    if schedule is None:
+        return JsonResponse({'success': False, 'message': 'Schedule not found'}, status=404)
+
+    events = (
+        Tour_Event.objects.filter(sched_id=schedule)
+        .order_by('day_number', 'event_time')
+    )
+
+    if not events.exists():
+        return JsonResponse({
+            'success': True,
+            'tour_name': tour.tour_name,
+            'itinerary_html': '<p>No detailed itinerary available for this schedule.</p>',
+        })
+
+    days = {}
+    for event in events:
+        days.setdefault(event.day_number, []).append(event)
+
+    itinerary_parts = []
+    for day_number in sorted(days.keys()):
+        itinerary_parts.append(f'<div class="itinerary-day"><h4>Day {day_number}</h4><ul>')
+        for event in days[day_number]:
+            event_time_display = event.event_time.strftime('%I:%M %p') if event.event_time else ''
+            name = event.event_name or 'Activity'
+            description = event.event_description or ''
+            location = event.event_location or ''
+            description_html = f'<br><span class="event-description">{description}</span>' if description else ''
+            location_html = f'<br><small><strong>Location:</strong> {location}</small>' if location else ''
+            itinerary_parts.append(
+                f'<li>'
+                f'<strong>{event_time_display}</strong> - {name}'
+                f'{description_html}'
+                f'{location_html}'
+                f'</li>'
+            )
+        itinerary_parts.append('</ul></div>')
+
+    return JsonResponse({
+        'success': True,
+        'tour_name': tour.tour_name,
+        'itinerary_html': ''.join(itinerary_parts),
+    })
 
 # @login_required
 # def get_tour_payables(request):
@@ -2657,69 +3188,78 @@ def friendship_debug(request):
 @login_required
 def get_companions(request):
     """API endpoint to get companions for the current user"""
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+    try:
+        user = request.user
+        if not hasattr(user, 'guest_id'):
+            return JsonResponse({'success': False, 'message': 'User is not associated with a guest profile'}, status=400)
+
+        guest = Guest.objects.get(guest_id=user.guest_id)
+        all_companions = []
+
+        # Simple direct query using the new Friendship model
         try:
-            user = request.user
-            if not hasattr(user, 'guest_id'):
-                return JsonResponse({'success': False, 'message': 'User is not associated with a guest profile'}, status=400)
-            
-            guest = Guest.objects.get(guest_id=user.guest_id)
-            all_companions = []
-            
-            # Simple direct query using the new Friendship model
-            try:
-                # Get all friendships for this user
+            # Get all friendships for this user
+            friendships = Friendship.objects.filter(user=guest).select_related('friend')
+
+            # Group by relationship type
+            friendship_groups = {}
+            for friendship in friendships:
+                group_name = friendship.group_name
+                if group_name not in friendship_groups:
+                    friendship_groups[group_name] = []
+
+                friend = friendship.friend
+                friendship_groups[group_name].append({
+                    'guest_id': friend.guest_id,
+                    'first_name': friend.first_name,
+                    'last_name': friend.last_name,
+                    'age': friend.age,
+                    'age_label': friend.age_label,
+                    'group_name': group_name,
+                    'picture_url': friend.picture.url if friend.picture else None
+                })
+
+            # Combine all groups into a single list
+            for group_name, companions in friendship_groups.items():
+                all_companions.extend(companions)
+
+            print(f"Found {len(all_companions)} companions using Friendship model for guest {guest.guest_id}")
+
+            # If no companions found in Friendship model, fall back to legacy methods
+            if not all_companions:
+                print("No companions found in Friendship model, attempting to populate...")
+                from .utils import populate_friendships
+                populate_friendships()
+                # Try once more directly (no recursive request wrapper call)
                 friendships = Friendship.objects.filter(user=guest).select_related('friend')
-                
-                # Group by relationship type
-                friendship_groups = {}
                 for friendship in friendships:
-                    group_name = friendship.group_name
-                    if group_name not in friendship_groups:
-                        friendship_groups[group_name] = []
-                    
                     friend = friendship.friend
-                    friendship_groups[group_name].append({
+                    all_companions.append({
                         'guest_id': friend.guest_id,
                         'first_name': friend.first_name,
                         'last_name': friend.last_name,
                         'age': friend.age,
                         'age_label': friend.age_label,
-                        'group_name': group_name,
+                        'group_name': friendship.group_name,
                         'picture_url': friend.picture.url if friend.picture else None
                     })
-                
-                # Combine all groups into a single list
-                for group_name, companions in friendship_groups.items():
-                    all_companions.extend(companions)
-                
-                print(f"Found {len(all_companions)} companions using Friendship model for guest {guest.guest_id}")
-                
-                # If no companions found in Friendship model, fall back to legacy methods
-                if not all_companions:
-                    print("No companions found in Friendship model, attempting to populate...")
-                    from .utils import populate_friendships
-                    populate_friendships()
-                    return get_companions(request)  # Try again after populating
-            
-            except Exception as e:
-                import traceback
-                print(f"Error using Friendship model: {e}")
-                traceback.print_exc()
-                # If Friendship approach fails, fall back to legacy method
-                all_companions = get_companions_legacy(guest)
-            
-            return JsonResponse({
-                'success': True,
-                'companions': all_companions
-            })
+
         except Exception as e:
             import traceback
-            print(f"Error in get_companions: {e}")
+            print(f"Error using Friendship model: {e}")
             traceback.print_exc()
-            return JsonResponse({'success': False, 'message': str(e)}, status=500)
-    
-    return JsonResponse({'success': False, 'message': 'Invalid request'}, status=400)
+            # If Friendship approach fails, fall back to legacy method
+            all_companions = get_companions_legacy(guest)
+
+        return JsonResponse({
+            'success': True,
+            'companions': all_companions
+        })
+    except Exception as e:
+        import traceback
+        print(f"Error in get_companions: {e}")
+        traceback.print_exc()
+        return JsonResponse({'success': False, 'message': str(e)}, status=500)
 
 def get_companions_legacy(guest):
     """Legacy method to get companions from various relationship sources"""
@@ -3449,3 +3989,158 @@ def accommodation_book(request):
         "booking_id": booking.booking_id,
         "total_amount": f"{booking.total_amount:.2f}",
     })
+
+
+def _parse_decimal_amount(raw_value, *, default=None):
+    if raw_value in (None, ""):
+        return default
+    try:
+        return Decimal(str(raw_value))
+    except (InvalidOperation, TypeError, ValueError):
+        return default
+
+
+def _normalize_payment_method(raw_value):
+    value = str(raw_value or "").strip().lower()
+    allowed = {choice[0] for choice in Billing.PAYMENT_METHOD_CHOICES}
+    if value in allowed:
+        return value
+    if value:
+        return "other"
+    return ""
+
+
+def _derive_payment_status(*, total_amount, amount_paid, explicit_status):
+    valid_statuses = {"unpaid", "partial", "paid"}
+    if isinstance(amount_paid, Decimal):
+        if amount_paid <= Decimal("0"):
+            return "unpaid"
+        if amount_paid >= total_amount:
+            return "paid"
+        return "partial"
+
+    explicit = str(explicit_status or "").strip().lower()
+    if explicit in valid_statuses:
+        return explicit
+    return "unpaid"
+
+
+@csrf_exempt
+@require_POST
+def payment_webhook_callback(request):
+    """
+    Receives payment callbacks from external LGU payment system.
+
+    Expected auth header:
+      X-Payment-Signature: hex(HMAC_SHA256(raw_body, PAYMENT_WEBHOOK_SECRET))
+
+    Payload (JSON preferred, form-encoded also accepted):
+      booking_reference: AB-<booking_id> (preferred) OR booking_id: <int>
+      payment_status: unpaid|partial|paid (optional if amount_paid is provided)
+      amount_paid: decimal (optional)
+      payment_method: cash|gcash|bank_transfer|card|other (optional)
+    """
+    webhook_secret = str(
+        getattr(settings, "PAYMENT_WEBHOOK_SECRET", "") or ""
+    ).strip()
+    if not webhook_secret:
+        return JsonResponse(
+            {"status": "error", "error": "payment_webhook_not_configured"},
+            status=503,
+        )
+
+    raw_body = request.body or b""
+    provided_sig = str(
+        request.headers.get("X-Payment-Signature")
+        or request.META.get("HTTP_X_PAYMENT_SIGNATURE")
+        or ""
+    ).strip().lower()
+    expected_sig = hmac.new(
+        webhook_secret.encode("utf-8"),
+        raw_body,
+        hashlib.sha256,
+    ).hexdigest()
+    if not provided_sig or not hmac.compare_digest(provided_sig, expected_sig):
+        return JsonResponse({"status": "error", "error": "invalid_signature"}, status=403)
+
+    try:
+        payload = json.loads(raw_body.decode("utf-8") or "{}")
+        if not isinstance(payload, dict):
+            payload = {}
+    except Exception:
+        payload = request.POST.dict() if hasattr(request, "POST") else {}
+
+    booking_reference = str(payload.get("booking_reference") or "").strip()
+    booking_id_raw = payload.get("booking_id")
+    payment_status_raw = str(payload.get("payment_status") or "").strip().lower()
+    payment_method = _normalize_payment_method(payload.get("payment_method"))
+    amount_paid = _parse_decimal_amount(payload.get("amount_paid"), default=None)
+
+    booking = None
+    billing = None
+    if booking_reference:
+        billing = (
+            Billing.objects.select_related("booking")
+            .filter(booking_reference=booking_reference)
+            .first()
+        )
+        booking = billing.booking if billing else None
+
+    if booking is None and booking_id_raw not in (None, ""):
+        try:
+            booking_id = int(str(booking_id_raw).strip())
+        except (TypeError, ValueError):
+            booking_id = 0
+        if booking_id > 0:
+            booking = (
+                AccommodationBooking.objects.select_related("billing")
+                .filter(booking_id=booking_id)
+                .first()
+            )
+            if booking is not None:
+                billing = getattr(booking, "billing", None)
+
+    if booking is None:
+        return JsonResponse({"status": "error", "error": "booking_not_found"}, status=404)
+
+    if billing is None:
+        billing = Billing.objects.create(
+            booking=booking,
+            booking_reference=f"AB-{booking.booking_id}",
+            total_amount=booking.total_amount,
+            payment_status=booking.payment_status,
+            amount_paid=booking.amount_paid,
+            payment_method="",
+        )
+
+    total_amount = Decimal(str(billing.total_amount or booking.total_amount or 0))
+    current_paid = Decimal(str(billing.amount_paid or booking.amount_paid or 0))
+    effective_amount_paid = amount_paid if isinstance(amount_paid, Decimal) else current_paid
+    if effective_amount_paid < Decimal("0"):
+        effective_amount_paid = Decimal("0")
+
+    resolved_status = _derive_payment_status(
+        total_amount=total_amount,
+        amount_paid=effective_amount_paid if amount_paid is not None else None,
+        explicit_status=payment_status_raw,
+    )
+
+    billing.amount_paid = effective_amount_paid
+    billing.payment_status = resolved_status
+    if payment_method:
+        billing.payment_method = payment_method
+    billing.save(update_fields=["amount_paid", "payment_status", "payment_method", "updated_at"])
+
+    booking.amount_paid = effective_amount_paid
+    booking.payment_status = resolved_status
+    booking.save(update_fields=["amount_paid", "payment_status", "last_updated"])
+
+    return JsonResponse(
+        {
+            "status": "ok",
+            "booking_id": booking.booking_id,
+            "booking_reference": billing.booking_reference,
+            "payment_status": resolved_status,
+            "amount_paid": f"{effective_amount_paid:.2f}",
+        }
+    )

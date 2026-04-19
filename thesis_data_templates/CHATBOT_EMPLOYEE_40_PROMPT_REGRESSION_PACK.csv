@@ -1,0 +1,41 @@
+﻿id,category,prompt,expected_detection_topic,expected_endpoint_intents,needs_clarification_expected
+1,tourist_monitoring,How can I view tourist records in the system?,employee_tourist_monitoring,employee_tourist_monitoring,no
+2,tourist_monitoring,Can I check the list of current tourists?,employee_tourist_monitoring,employee_tourist_monitoring,no
+3,tourist_monitoring,How do I monitor tourist arrivals?,employee_tourist_monitoring,employee_tourist_monitoring,no
+4,tourist_monitoring,Where can I see tourist information records?,employee_tourist_monitoring,employee_tourist_monitoring,no
+5,tourist_monitoring,Can I search for a tourist by name?,employee_tourist_monitoring,employee_tourist_monitoring,no
+6,booking_monitoring,How can I view all bookings in the system?,employee_booking_monitoring,employee_booking_monitoring,no
+7,booking_monitoring,Can I check pending reservations?,employee_booking_monitoring,employee_booking_monitoring,no
+8,booking_monitoring,How do I know which bookings are confirmed?,employee_booking_monitoring,employee_booking_monitoring,no
+9,booking_monitoring,Can I see cancelled reservations?,employee_booking_monitoring,employee_booking_monitoring,no
+10,booking_monitoring,Where can I monitor accommodation bookings?,employee_booking_monitoring,employee_booking_monitoring,no
+11,accommodation_records,How do I view registered accommodations?,employee_accommodation_records,employee_accommodation_records|employee_accommodations,no
+12,accommodation_records,Can I check which hotels or inns are active?,employee_accommodation_records,employee_accommodation_records,no
+13,accommodation_records,How do I see accommodation details in the system?,employee_accommodation_records,employee_accommodation_records|employee_accommodations,no
+14,destination_records,Can I view tourism destination records?,employee_destination_records,employee_destination_records,no
+15,destination_records,Where can I check if a destination is published?,employee_destination_records,employee_destination_records,no
+16,reports,How can I generate tourism reports?,employee_reports_support,employee_reports_support,no
+17,reports,Where can I see booking summaries?,employee_reports_support,employee_reports_support,no
+18,reports,Can I view tourist statistics?,employee_reports_support,employee_reports_support,no
+19,reports,How do I access monitoring reports?,employee_reports_support,employee_reports_support,no
+20,reports,Can I see accommodation-related reports?,employee_reports_support,employee_reports_support,no
+21,workflow,How do I approve accommodation registrations?,employee_workflow_listing_review,employee_workflow_listing_review,no
+22,workflow,Can I review submitted accommodation listings?,employee_workflow_listing_review,employee_workflow_listing_review,no
+23,workflow,How do I update tourism destination details?,employee_workflow_destination_feedback,employee_workflow_destination_feedback,no
+24,workflow,Can I manage published attractions in the system?,employee_workflow_destination_feedback,employee_workflow_destination_feedback,no
+25,workflow,Where can I handle feedback or tourism concerns?,employee_workflow_destination_feedback,employee_workflow_destination_feedback,no
+26,account_support,I forgot my password. How do I recover it?,employee_account_access_help,employee_account_access_help,no
+27,account_support,I cannot access the employee dashboard.,employee_account_access_help,employee_account_access_help|open_dashboard,no
+28,account_support,Why is a record not showing in the system?,employee_record_visibility_issue,employee_record_visibility_issue,no
+29,account_support,How do I go to the monitoring dashboard?,employee_monitoring_dashboard_help,employee_monitoring_dashboard_help|open_dashboard,no
+30,account_support,Can I update records from my account?,employee_record_update_help,employee_record_update_help,no
+31,mixed_employee,Paano makita ang tourist records sa system?,employee_tourist_monitoring,employee_tourist_monitoring,no
+32,mixed_employee,Can I check pending reservations po?,employee_booking_monitoring,employee_booking_monitoring,no
+33,mixed_employee,Saan makikita ang accommodation reports?,employee_reports_support,employee_reports_support,no
+34,mixed_employee,Hindi lumalabas ang tourist record.,employee_record_visibility_issue,employee_record_visibility_issue,no
+35,mixed_employee,Paano i-review ang accommodation listing?,employee_workflow_listing_review,employee_workflow_listing_review,no
+36,short_messy,tourist records,employee_tourist_monitoring,employee_tourist_monitoring,yes
+37,short_messy,pending bookings,employee_booking_monitoring,employee_booking_monitoring,yes
+38,short_messy,generate report,employee_reports_support,employee_reports_support,yes
+39,short_messy,listing approval,employee_workflow_listing_review,employee_workflow_listing_review,yes
+40,short_messy,dashboard not opening,employee_account_access_help,employee_account_access_help|open_dashboard,yes

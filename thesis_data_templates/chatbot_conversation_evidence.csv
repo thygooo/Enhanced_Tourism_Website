@@ -1,0 +1,1035 @@
+created_at,log_id,user_id,session_id,resolved_intent,intent_classifier_source,response_nlg_source,fallback_used,user_message,bot_response,params_json,step_event_count_in_session,step_event_click_count_in_session,step_event_book_count_in_session,recommendation_result_count_in_session,latest_recommendation_trace_count
+2026-03-17T00:05:14.541142+00:00,1,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+2. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+3. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-17T00:13:25.376306+00:00,2,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+2. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+3. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-17T00:17:08.508111+00:00,3,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+2. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-17T00:19:45.591521+00:00,4,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,Recommend a hotel in bayawan for 1 guest with budget 1200,Please share check-in/check-out dates (YYYY-MM-DD) or tell me the number of nights.,"{""guests"": 1, ""budget"": 1200, ""location"": ""bayawan"", ""accom_name"": ""in bayawan for 1 guest with budget 1200"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-17T00:19:58.547057+00:00,5,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_unavailable,1,2026-03-20 to 2026-03-22,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Economy Single | Room ID: 111 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | 1 pax
+   Reasons: Within your budget (PHP 850.00 <= PHP 1200.00); Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (1/1 pax)
+2. Poblacion Central Suites - Business Single | Room ID: 114 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | 1 pax
+   Reasons: Within your budget (PHP 1100.00 <= PHP 1200.00); Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (1/1 pax)","{""guests"": 1, ""budget"": 1200, ""location"": ""bayawan"", ""accom_name"": ""in bayawan for 1 guest with budget 1200"", ""company_type"": ""hotel"", ""check_in"": ""2026-03-20"", ""check_out"": ""2026-03-22"", ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.5488700866699219}",0,0,0,0,0
+2026-03-17T00:27:13.473028+00:00,6,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+2. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+3. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-17T00:28:27.639414+00:00,7,Q4CV2,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+2. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+3. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-17T00:30:55.305725+00:00,8,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+2. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-17T00:34:30.631269+00:00,9,Q4CV2,,get_accommodation_recommendation,text_cnn_low_confidence,,1,show my rooms,"To recommend the best hotel/inn and prepare your booking, please send all missing details in one reply:
+- Accommodation type (hotel / inn / either)
+- Preferred area/location in Bayawan
+- Budget per night in PHP
+- Number of guests
+- Stay details: check-in/check-out dates (YYYY-MM-DD) or number of nights
+
+Example: hotel in bayawan, budget 1500, 2 guests, 2026-03-10 to 2026-03-12",{},0,0,0,0,0
+2026-03-17T00:42:34.332458+00:00,10,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+2. Poblacion Central Suites - Business Single | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | up to 1 guests
+3. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-17T00:47:44.775998+00:00,11,8NTOQ,,get_recommendation,text_cnn_low_confidence,openai_nlg_unavailable,1,show my bookings,I couldn't find a matching tour right now. Try increasing budget or changing preferred tour type.,{},0,0,0,0,0
+2026-03-17T00:50:44.545200+00:00,12,8NTOQ,,view_my_accommodation_bookings,,,0,show my bookings,Opening your accommodation-owner booking status page now.,{},0,0,0,0,0
+2026-03-17T00:54:36.679278+00:00,13,8NTOQ,,owner_room_overview,,,0,show rooms,"You currently have 3 room(s) across 1 accepted accommodation(s). Total available slots: 10.
+Your rooms:
+- Baywalk Breeze Resort | Deluxe Queen (Room 106) | PHP 2300.00/night | Capacity: 2 pax | Available: 2 | Status: Available
+- Baywalk Breeze Resort | Family Villa (Room 107) | PHP 4200.00/night | Capacity: 6 pax | Available: 6 | Status: Available
+- Baywalk Breeze Resort | Garden Twin (Room 105) | PHP 1800.00/night | Capacity: 2 pax | Available: 2 | Status: Available
+Tip: Open Owner Hub > Manage Rooms to edit prices, pax, and availability.",{},0,0,0,0,0
+2026-03-17T00:55:00.910741+00:00,14,8NTOQ,,get_recommendation,text_cnn_low_confidence,openai_nlg_unavailable,1,show my  bookings,I couldn't find a matching tour right now. Try increasing budget or changing preferred tour type.,{},0,0,0,0,0
+2026-03-17T00:55:06.093762+00:00,15,8NTOQ,,view_my_accommodation_bookings,,,0,show bookings,Opening your accommodation-owner booking status page now.,{},0,0,0,0,0
+2026-03-17T01:44:48.770444+00:00,16,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+2. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+3. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-17T01:44:53.052227+00:00,17,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,recommend a hotel,"To recommend the best hotel/inn and prepare your booking, please send all missing details in one reply:
+- Preferred area/location in Bayawan
+- Budget per night in PHP
+- Number of guests
+- Stay details: check-in/check-out dates (YYYY-MM-DD) or number of nights
+
+Example: hotel in bayawan, budget 1500, 2 guests, 2026-03-10 to 2026-03-12","{""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-17T01:45:00.857486+00:00,18,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,in Kalumboyan,"To recommend the best hotel/inn and prepare your booking, please send all missing details in one reply:
+- Budget per night in PHP
+- Number of guests
+- Stay details: check-in/check-out dates (YYYY-MM-DD) or number of nights
+
+Example: hotel in bayawan, budget 1500, 2 guests, 2026-03-10 to 2026-03-12","{""company_type"": ""hotel"", ""location"": ""kalumboyan""}",0,0,0,0,0
+2026-03-17T01:45:47.417941+00:00,19,UB1P2,,owner_room_overview,,,0,show rooms,"You currently have 3 room(s) across 1 accepted accommodation(s). Total available slots: 7.
+Your rooms:
+- Riverside Travelers Lodge | Economy Single (Room 111) | PHP 850.00/night | Capacity: 1 pax | Available: 1 | Status: Available
+- Riverside Travelers Lodge | Quad Room (Room 113) | PHP 2200.00/night | Capacity: 4 pax | Available: 4 | Status: Available
+- Riverside Travelers Lodge | Standard Double (Room 112) | PHP 1300.00/night | Capacity: 2 pax | Available: 2 | Status: Available
+Tip: Open Owner Hub > Manage Rooms to edit prices, pax, and availability.",{},0,0,0,0,0
+2026-03-17T01:47:14.037774+00:00,20,UB1P2,,view_my_accommodation_bookings,,,0,show bookings,Opening your accommodation-owner booking status page now.,{},0,0,0,0,0
+2026-03-17T01:49:53.438230+00:00,21,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+2. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+3. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-17T01:50:14.202572+00:00,22,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,recommend a hotel in bayawan for 2 guests with 2000 budget,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Standard Double | Room ID: 112 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | 2 pax
+   Reasons: No budget limit provided; Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/2 pax)
+2. Riverside Travelers Lodge - Quad Room | Room ID: 113 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | 4 pax
+   Reasons: No budget limit provided; Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/4 pax)
+3. Poblacion Central Suites - Executive Twin | Room ID: 115 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | 5 pax
+   Reasons: No budget limit provided; Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/5 pax)
+
+To continue booking, please share your budget per night in PHP, check-in/check-out dates or number of nights.","{""guests"": 2, ""location"": ""bayawan"", ""accom_name"": ""in bayawan for 2 guests with 2000 budget"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-17T01:50:45.228110+00:00,23,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,in Poblacion,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Poblacion Central Suites - Executive Twin | Room ID: 115 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | 5 pax
+   Reasons: No budget limit provided; Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/5 pax)
+2. Poblacion Central Suites - Premium Family Suite | Room ID: 116 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | 5 pax
+   Reasons: No budget limit provided; Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/5 pax)
+
+To continue booking, please share your budget per night in PHP, check-in/check-out dates or number of nights.","{""guests"": 2, ""location"": ""poblacion"", ""accom_name"": ""in bayawan for 2 guests with 2000 budget"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-17T01:50:57.005954+00:00,24,QE8WW,,book_accommodation,text_cnn_low_confidence,openai_nlg_unavailable,1,book room 115,"I found a room match, but I still need your dates to book it.
+Matched room: Poblacion Central Suites - Executive Twin (Room 115)
+Please send your check-in and check-out dates in YYYY-MM-DD format.","{""guests"": 2, ""location"": ""poblacion"", ""accom_name"": ""in bayawan for 2 guests with 2000 budget"", ""company_type"": ""hotel"", ""room_id"": ""115""}",0,0,0,0,0
+2026-03-17T01:51:15.454086+00:00,25,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,2026-03-22 to 2026-03-25,What is your budget per night in PHP?,"{""guests"": 2, ""location"": ""poblacion"", ""accom_name"": ""in bayawan for 2 guests with 2000 budget"", ""company_type"": ""hotel"", ""check_in"": ""2026-03-22"", ""check_out"": ""2026-03-25""}",0,0,0,0,0
+2026-03-17T01:51:35.586011+00:00,26,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_unavailable,1,3500,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Poblacion Central Suites - Executive Twin | Room ID: 115 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | 5 pax
+   Reasons: Within your budget (PHP 3400.00 <= PHP 3500.00); Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/5 pax)
+2. Poblacion Central Suites - Premium Family Suite | Room ID: 116 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | 5 pax
+   Reasons: Within your budget (PHP 3400.00 <= PHP 3500.00); Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/5 pax)","{""guests"": 2, ""location"": ""poblacion"", ""accom_name"": ""in bayawan for 2 guests with 2000 budget"", ""company_type"": ""hotel"", ""check_in"": ""2026-03-22"", ""check_out"": ""2026-03-25"", ""budget"": 3500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.25651291012763977}",0,0,0,0,0
+2026-03-17T01:51:42.240449+00:00,27,QE8WW,,book_accommodation,text_cnn_low_confidence,openai_nlg_unavailable,1,book room 115,"Booking Draft (Not yet saved)
+Booking ID: Pending confirmation
+Hotel: Poblacion Central Suites
+Room: Executive Twin (Room 115)
+Check-in: 2026-03-22
+Check-out: 2026-03-25
+Nights: 3
+Guests: 2
+Rate per night: PHP 3400.00
+Estimated Total: PHP 10200.00
+Booking Status: Awaiting confirmation
+Payment Status: Unpaid
+Estimated total: PHP 10200.00 for 3 nights.
+Confirm booking to generate LGU billing reference/link? (Yes/No)","{""guests"": 2, ""location"": ""poblacion"", ""accom_name"": ""in bayawan for 2 guests with 2000 budget"", ""company_type"": ""hotel"", ""check_in"": ""2026-03-22"", ""check_out"": ""2026-03-25"", ""budget"": 3500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.25651291012763977, ""room_id"": ""115""}",0,0,0,0,0
+2026-03-17T01:51:48.000387+00:00,28,QE8WW,,book_accommodation_confirmation,,,0,Yes,"Booking Receipt / Summary (Accommodation)
+Booking ID: #43
+Hotel: Poblacion Central Suites
+Room: Executive Twin (Room 115)
+Check-in: 2026-03-22
+Check-out: 2026-03-25
+Nights: 3
+Guests: 2
+Rate per night: PHP 3400.00
+Estimated Total: PHP 10200.00
+Booking Status: Pending
+Payment Status: Unpaid
+Billing / Payment Link: use the button/link provided in the chat.","{""room_id"": 115, ""check_in"": ""2026-03-22"", ""check_out"": ""2026-03-25"", ""guests"": 2}",0,0,0,0,0
+2026-03-17T02:30:44.542010+00:00,29,OUK3F,,view_my_accommodation_bookings,,,0,show bookings,Opening your accommodation-owner booking status page now.,{},0,0,0,0,0
+2026-03-17T02:47:44.300548+00:00,30,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+2. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+3. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-17T02:50:32.449111+00:00,31,OUK3F,,view_my_accommodation_bookings,,,0,show bookings,Opening your accommodation-owner booking status page now.,{},0,0,0,0,0
+2026-03-18T03:06:39.323691+00:00,32,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+2. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-23T15:14:36.472338+00:00,33,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+2. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+3. Poblacion Central Suites - Business Single | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-23T15:14:45.066665+00:00,34,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_error,1,hi,I couldn't find a matching tour right now. Try increasing budget or changing preferred tour type.,{},0,0,0,0,0
+2026-03-23T15:15:52.532200+00:00,35,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+2. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+3. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-23T15:17:25.449240+00:00,36,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,"Pangita ug inn sa Bayawan para sa 3 ka bisita, budget 1200.","Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Top View Inn Bayawan - Single Room | Room ID: 102 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | 1 pax
+   Reasons: Within your budget (PHP 700.00 <= PHP 1200.00); Location match: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Inn type match; Fits your guest count (1/1 pax)
+2. Top View Inn Bayawan - Matrimonial Room | Room ID: 103 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | 2 pax
+   Reasons: Within your budget (PHP 950.00 <= PHP 1200.00); Location match: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Inn type match; Fits your guest count (1/2 pax)
+
+To continue booking, please share your number of guests, check-in/check-out dates or number of nights.","{""budget"": 1200, ""location"": ""bayawan"", ""accom_name"": ""in bayawan for 3 visitors"", ""company_type"": ""inn""}",0,0,0,0,0
+2026-03-23T15:26:37.275815+00:00,37,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+2. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-23T15:44:12.776354+00:00,38,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+2. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+3. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-23T17:51:53.566758+00:00,39,,,role_help,,,0,help,"Admin assistant mode is active.
+I can answer tourism information and help with quick navigation.
+Use the Admin Dashboard for approvals, encoding, and reports.",{},0,0,0,0,0
+2026-03-23T18:16:15.871209+00:00,40,UB1P2,,view_my_accommodation_bookings,,,0,show my bookings,Opening your accommodation-owner booking status page now.,{},0,0,0,0,0
+2026-03-23T18:37:24.731736+00:00,41,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+2. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-23T18:37:58.049619+00:00,42,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,kinahanglan kog hotel sa villareal,"To recommend the best hotel/inn and prepare your booking, please send all missing details in one reply:
+- Preferred area/location in Bayawan
+- Budget per night in PHP
+- Number of guests
+- Stay details: check-in/check-out dates (YYYY-MM-DD) or number of nights
+
+Example: hotel in bayawan, budget 1500, 2 guests, 2026-03-10 to 2026-03-12","{""accom_name"": ""in villareal"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-23T18:38:20.965739+00:00,43,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,sa villareal,"To recommend the best hotel/inn and prepare your booking, please send all missing details in one reply:
+- Budget per night in PHP
+- Number of guests
+- Stay details: check-in/check-out dates (YYYY-MM-DD) or number of nights
+
+Example: hotel in bayawan, budget 1500, 2 guests, 2026-03-10 to 2026-03-12","{""accom_name"": ""in villareal"", ""company_type"": ""hotel"", ""location"": ""villarreal""}",0,0,0,0,0
+2026-03-23T18:49:33.233302+00:00,44,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+2. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-23T18:49:50.095016+00:00,45,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,need nako ug hotel sa villareal,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Economy Single | Room ID: 111 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | 1 pax
+   Reasons: No budget limit provided; Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (1/1 pax)
+2. Riverside Travelers Lodge - Standard Double | Room ID: 112 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | 2 pax
+   Reasons: No budget limit provided; Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (1/2 pax)
+3. Riverside Travelers Lodge - Quad Room | Room ID: 113 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | 4 pax
+   Reasons: No budget limit provided; Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (1/4 pax)
+
+To continue booking, please share your budget per night in PHP, number of guests, check-in/check-out dates or number of nights.","{""location"": ""villareal"", ""accom_name"": ""in villareal"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-23T18:50:10.223114+00:00,46,QE8WW,,book_accommodation,text_cnn_low_confidence,openai_nlg_disabled,1,book room 111,"I found a room match, but I still need your dates to book it.
+Matched room: Riverside Travelers Lodge - Economy Single (Room 111)
+Please send your check-in and check-out dates in YYYY-MM-DD format.","{""location"": ""villareal"", ""accom_name"": ""in villareal"", ""company_type"": ""hotel"", ""room_id"": ""111""}",0,0,0,0,0
+2026-03-24T01:16:26.278627+00:00,47,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+2. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-24T02:01:30.496042+00:00,48,,,view_my_accommodation_bookings,,,0,how many accommodation bookings today?,I found your admin dashboard. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-24T02:01:49.316044+00:00,49,,,view_my_accommodation_bookings,,,0,the accommodation bookings?,I found your admin dashboard. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-24T02:29:20.063406+00:00,50,,,booking_count_summary,,,0,how many accommodation bookings today?,"Booking summary for today (2026-03-24): Total 0, Pending 0, Confirmed 0, Declined 0, Cancelled 0.",{},0,0,0,0,0
+2026-03-24T02:29:35.252406+00:00,51,,,admin_pending_accommodations,,,0,show pending accommodations,"Accommodation moderation summary: Pending 0, Accepted 9, Declined 1.",{},0,0,0,0,0
+2026-03-24T02:47:03.089022+00:00,52,,,employee_assigned_tours,,,0,open assigned tours,I found your assigned tours page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-24T04:30:41.576313+00:00,53,,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,hel[,"Tour package recommendations are currently guest-focused. Admin assistant mode is active.
+I can answer tourism information, show moderation summaries, and help with quick navigation.
+Use the Admin Dashboard for approvals, encoding, and reports.",{},0,0,0,0,0
+2026-03-24T04:30:51.103429+00:00,54,,,role_help,,,0,help,"Admin assistant mode is active.
+I can answer tourism information, show moderation summaries, and help with quick navigation.
+Use the Admin Dashboard for approvals, encoding, and reports.",{},0,0,0,0,0
+2026-03-24T04:30:59.670956+00:00,55,,,admin_accommodation_bookings,,,0,Open accommodation bookings,I found the Accommodation Bookings page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-24T04:36:52.712581+00:00,56,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+2. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+3. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-24T04:37:28.036107+00:00,57,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,"ga kinahanglan kog hotel sa villareal, 2 guests, 1500 ang budget.","I understood: accommodation type: hotel; guests: 2. I just need a few more details.
+- Which area in Bayawan should I prioritize?
+- What is your budget per night in PHP?
+- Please share check-in/check-out dates (YYYY-MM-DD) or tell me number of nights.
+
+You can send them in one message, for example:
+hotel in bayawan, budget 1500, 2 guests, 2026-03-10 to 2026-03-12","{""guests"": 2, ""accom_name"": ""sa villareal"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-24T04:37:50.240117+00:00,58,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,"sa Villareal, 1500 ang budget","I understood: guests: 2.
+I couldn’t find a strong tour match yet. Try increasing budget, changing tour type, or sharing preferred destination.","{""guests"": 2, ""accom_name"": ""sa villareal"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-24T04:38:07.093107+00:00,59,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,"sa Villareal, 1500 budget","I understood: guests: 1.
+I couldn’t find a strong tour match yet. Try increasing budget, changing tour type, or sharing preferred destination.",{},0,0,0,0,0
+2026-03-24T15:18:38.049935+00:00,60,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+2. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+3. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-25T11:36:39.335019+00:00,61,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+2. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+3. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-25T11:36:53.918066+00:00,62,QE8WW,,get_tourism_information,text_cnn_low_confidence,openai_nlg_disabled,1,show tourism information,I don't have published tourism information yet. Please check back later once the Tourism Office publishes records.,{},0,0,0,0,0
+2026-03-25T11:37:15.119123+00:00,63,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,show available hotels in Villareal,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Economy Single | Room ID: 111 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | 1 pax
+   Reasons: No budget limit provided; Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (1/1 pax)
+2. Riverside Travelers Lodge - Standard Double | Room ID: 112 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | 2 pax
+   Reasons: No budget limit provided; Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (1/2 pax)
+3. Riverside Travelers Lodge - Quad Room | Room ID: 113 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | 4 pax
+   Reasons: No budget limit provided; Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (1/4 pax)
+
+To continue booking, please share your budget per night in PHP, number of guests, check-in/check-out dates or number of nights.","{""location"": ""villareal"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-25T11:37:48.704124+00:00,64,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,good for 2 guests with 1500 budget,Please share check-in/check-out dates (YYYY-MM-DD) or tell me the number of nights.,"{""location"": ""villareal"", ""company_type"": ""hotel"", ""guests"": 2, ""budget"": 1500}",0,0,0,0,0
+2026-03-25T11:38:22.523345+00:00,65,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,"April 1, 2026 to April 3, 2026","Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Standard Double | Room ID: 112 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | 2 pax
+   Reasons: Within your budget (PHP 1300.00 <= PHP 1500.00); Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/2 pax)","{""location"": ""villareal"", ""company_type"": ""hotel"", ""guests"": 2, ""budget"": 1500, ""check_in"": ""2026-04-01"", ""check_out"": ""2026-04-03"", ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.6093059778213501}",0,0,0,0,0
+2026-03-25T11:38:41.774347+00:00,66,QE8WW,,book_accommodation,text_cnn_low_confidence,openai_nlg_disabled,1,book room 112,"Booking Draft (Not yet saved)
+Booking ID: Pending confirmation
+Hotel: Riverside Travelers Lodge
+Room: Standard Double (Room 112)
+Check-in: 2026-04-01
+Check-out: 2026-04-03
+Nights: 2
+Guests: 2
+Rate per night: PHP 1300.00
+Estimated Total: PHP 2600.00
+Booking Status: Awaiting confirmation
+Payment Status: Unpaid
+Estimated total: PHP 2600.00 for 2 nights.
+Confirm booking to generate LGU billing reference/link? (Yes/No)","{""location"": ""villareal"", ""company_type"": ""hotel"", ""guests"": 2, ""budget"": 1500, ""check_in"": ""2026-04-01"", ""check_out"": ""2026-04-03"", ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.6093059778213501, ""room_id"": ""112""}",0,0,0,0,0
+2026-03-25T11:38:58.383346+00:00,67,QE8WW,,book_accommodation_confirmation,,,0,Yes,"Booking Receipt / Summary (Accommodation)
+Booking ID: #44
+Hotel: Riverside Travelers Lodge
+Room: Standard Double (Room 112)
+Check-in: 2026-04-01
+Check-out: 2026-04-03
+Nights: 2
+Guests: 2
+Rate per night: PHP 1300.00
+Estimated Total: PHP 2600.00
+Booking Status: Pending
+Payment Status: Unpaid
+Billing / Payment Link: use the button/link provided in the chat.","{""room_id"": 112, ""check_in"": ""2026-04-01"", ""check_out"": ""2026-04-03"", ""guests"": 2}",0,0,0,0,0
+2026-03-25T11:56:03.118134+00:00,68,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+2. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+3. Poblacion Central Suites - Business Single | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-25T12:27:05.387414+00:00,69,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+2. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+3. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-26T11:36:33.495301+00:00,70,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+2. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-26T11:36:56.860360+00:00,71,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,show me available rooms,"Based on your 1 past booking(s), I can use defaults around PHP 3400, hotel stays, in National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental. Want similar options? Reply yes or no.",{},0,0,0,0,0
+2026-03-26T11:37:08.139772+00:00,72,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,no,"I can proceed once I get a few more details.
+- Do you prefer a hotel, an inn, or either?
+- Which area in Bayawan should I prioritize?
+- What is your budget per night in PHP?
+- How many guests will stay?
+- Please share check-in/check-out dates (YYYY-MM-DD) or tell me number of nights.
+
+You can send them in one message, for example:
+hotel in bayawan, budget 1500, 2 guests, 2026-03-10 to 2026-03-12",{},0,0,0,0,0
+2026-03-26T11:49:27.100725+00:00,73,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+2. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+3. Poblacion Central Suites - Business Single | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-26T11:49:40.617678+00:00,74,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,show available rooms,"Based on your 1 past booking(s), I can use defaults around PHP 3400, hotel stays, in National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental. Want similar options? Reply yes or no.",{},0,0,0,0,0
+2026-03-26T11:49:49.392922+00:00,75,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,no,"Share the details of your hotel/inn inquiry or booking so I can help you find available rooms.
+- preferred accommodation type: hotel, inn, or either
+- preferred area in Bayawan
+- budget per night in PHP
+- number of guests
+- check-in/check-out dates (YYYY-MM-DD) or number of nights
+
+You can ask about hotels, inns, or room availability in one message, for example:
+I want to book a hotel in Bayawan, budget 1500, 2 guests, 2026-03-10 to 2026-03-12
+or
+Show me available inn rooms in Poblacion for 2 guests under PHP 1500.",{},0,0,0,0,0
+2026-03-26T12:09:01.872633+00:00,76,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+2. Poblacion Central Suites - Business Single | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | up to 1 guests
+3. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-26T12:09:12.125425+00:00,77,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,show available rooms in bayawan,"Based on your 1 past booking(s), I can use defaults around PHP 3400, hotel stays. Want similar options? Reply yes or no.","{""location"": ""bayawan""}",0,0,0,0,0
+2026-03-26T12:09:18.183964+00:00,78,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,no,"I understood: location: bayawan. For your hotel/inn inquiry, do you prefer a hotel, an inn, or either?","{""location"": ""bayawan""}",0,0,0,0,0
+2026-03-26T12:09:48.427897+00:00,79,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,a hotel please,"Based on your 1 past booking(s), I can use defaults around PHP 3400. Want similar options? Reply yes or no.","{""location"": ""bayawan"", ""accom_name"": ""please"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-26T12:10:01.976091+00:00,80,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,no,I understood: accommodation type: hotel; location: bayawan. Please share your check-in/check-out dates (YYYY-MM-DD) or tell me how many nights you plan to stay.,"{""location"": ""bayawan"", ""accom_name"": ""please"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-26T12:10:13.487868+00:00,81,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,2 nights,"Based on your 1 past booking(s), I can use defaults around PHP 3400. Want similar options? Reply yes or no.","{""location"": ""bayawan"", ""accom_name"": ""please"", ""company_type"": ""hotel"", ""nights"": 2}",0,0,0,0,0
+2026-03-26T12:10:22.065393+00:00,82,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,no,I understood: accommodation type: hotel; location: bayawan; stay details received. How many guests will stay in the room?,"{""location"": ""bayawan"", ""accom_name"": ""please"", ""company_type"": ""hotel"", ""nights"": 2}",0,0,0,0,0
+2026-03-26T12:10:36.177241+00:00,83,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,4 guests,"Based on your 1 past booking(s), I can use defaults around PHP 3400. Want similar options? Reply yes or no.","{""location"": ""bayawan"", ""accom_name"": ""please"", ""company_type"": ""hotel"", ""nights"": 2, ""guests"": 4}",0,0,0,0,0
+2026-03-26T12:18:07.176951+00:00,84,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+2. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+3. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-26T12:18:29.988482+00:00,85,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,available hotels near terminal,"Based on your 1 past booking(s), I can use defaults around PHP 3400. Want similar options? Reply yes or no.","{""location"": ""terminal area"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-26T12:18:39.435016+00:00,86,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,no,I understood: accommodation type: hotel; location: terminal area. Please share your check-in/check-out dates (YYYY-MM-DD) or tell me how many nights you plan to stay.,"{""location"": ""terminal area"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-26T12:19:32.601866+00:00,87,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,2 nights,I understood: accommodation type: hotel; location: terminal area; stay details received. How many guests will stay in the room?,"{""location"": ""terminal area"", ""company_type"": ""hotel"", ""nights"": 2}",0,0,0,0,0
+2026-03-26T12:19:55.831942+00:00,88,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled|gemini_back_translate,1,2,"Ik heb begrepen: type: hotel; locatie: terminalgebied; budget: PHP 2.00; gasten: 2.
+Ik kon nog geen sterke hotel-/pensionovereenkomst vinden.","{""location"": ""terminal area"", ""company_type"": ""hotel"", ""nights"": 2, ""budget"": 2, ""guests"": 2, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.25651291012763977}",0,0,0,0,0
+2026-03-26T13:14:22.611502+00:00,89,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Business Single | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | up to 1 guests
+2. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+3. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-26T13:14:48.284846+00:00,90,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,looking for a hotel in bayawan,"Based on your 1 past booking(s), I can apply similar preferences such as around PHP 3400. Would you like me to proceed with these defaults? Please reply Yes or No.","{""location"": ""bayawan"", ""accom_name"": ""in bayawan"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-26T13:14:56.188293+00:00,91,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,No,"Thank you. I have recorded the following details: accommodation type: hotel; location: bayawan. Please provide your check-in/check-out dates (YYYY-MM-DD), or indicate how many nights you plan to stay.","{""location"": ""bayawan"", ""accom_name"": ""in bayawan"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-26T13:15:18.220030+00:00,92,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,i'm planning to stay for 2 nights,Thank you. I have recorded the following details: accommodation type: hotel; location: bayawan; stay details received. Please indicate how many guests will stay in the room.,"{""location"": ""bayawan"", ""accom_name"": ""in bayawan"", ""company_type"": ""hotel"", ""nights"": 2}",0,0,0,0,0
+2026-03-26T13:15:41.319370+00:00,93,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,2 guests,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Quad Room | Room ID: 113 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | 4 pax
+   Reasons: No budget limit provided; Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/4 pax)
+2. Poblacion Central Suites - Executive Twin | Room ID: 115 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | 5 pax
+   Reasons: No budget limit provided; Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/5 pax)
+3. Poblacion Central Suites - Premium Family Suite | Room ID: 116 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | 5 pax
+   Reasons: No budget limit provided; Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/5 pax)
+
+To continue booking, Please provide your preferred budget per night in PHP.","{""location"": ""bayawan"", ""accom_name"": ""in bayawan"", ""company_type"": ""hotel"", ""nights"": 2, ""guests"": 2}",0,0,0,0,0
+2026-03-26T13:16:16.947042+00:00,94,QE8WW,,book_accommodation,text_cnn_low_confidence,openai_nlg_disabled,1,I want to book the Villareal Room,"I couldn’t map that booking request to a valid room yet.
+Please provide a room ID or clearer hotel details.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.","{""location"": ""bayawan"", ""accom_name"": ""in bayawan"", ""company_type"": ""hotel"", ""nights"": 2, ""guests"": 2}",0,0,0,0,0
+2026-03-26T13:16:39.166222+00:00,95,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,more hotels in Villareal,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Quad Room | Room ID: 113 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | 4 pax
+   Reasons: No budget limit provided; Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/4 pax)
+2. Riverside Travelers Lodge - Standard Double | Room ID: 112 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | 2 pax
+   Reasons: No budget limit provided; Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/2 pax)
+
+To continue booking, Please provide your preferred budget per night in PHP.","{""location"": ""villareal"", ""accom_name"": ""in bayawan"", ""company_type"": ""hotel"", ""nights"": 2, ""guests"": 2}",0,0,0,0,0
+2026-03-26T13:17:02.598099+00:00,96,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,1500 budget,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Standard Double | Room ID: 112 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | 2 pax
+   Reasons: Within your budget (PHP 1300.00 <= PHP 1500.00); Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/2 pax)","{""location"": ""villareal"", ""accom_name"": ""in bayawan"", ""company_type"": ""hotel"", ""nights"": 2, ""guests"": 2, ""budget"": 1500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.3793986141681671}",0,0,0,0,0
+2026-03-26T13:17:16.560213+00:00,97,QE8WW,,book_accommodation,text_cnn_low_confidence,openai_nlg_disabled,1,book room 112,"I can prepare your booking now. I just need the missing stay date details.
+I understood: room: Riverside Travelers Lodge - Standard Double (Room 112); guests: 2.
+Please provide both check-in and check-out dates in YYYY-MM-DD format (example: 2026-03-10 to 2026-03-12).","{""location"": ""villareal"", ""accom_name"": ""in bayawan"", ""company_type"": ""hotel"", ""nights"": 2, ""guests"": 2, ""budget"": 1500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.3793986141681671, ""room_id"": ""112""}",0,0,0,0,0
+2026-03-26T15:51:36.634472+00:00,98,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+2. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+3. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-26T15:51:41.317834+00:00,99,QE8WW,,book_tour_via_link,,,0,show my tour bookings,"I can open tour booking for you. Please include a schedule ID.
+Example: book tour sched00001",{},0,0,0,0,0
+2026-03-26T15:52:00.634796+00:00,100,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,what are the available tours?,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-26T16:11:18.341295+00:00,101,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+2. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+3. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-26T16:11:22.861825+00:00,102,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,what are the available tours?,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-29T12:30:33.013438+00:00,103,,,view_my_accommodation_bookings,,,0,show bookings,I found your admin dashboard. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T01:53:47.498826+00:00,104,WWCRR,,role_help,,,0,help,"Guest assistant mode is active. I can help you find and book hotels/inns in Bayawan.
+Try: recommend a hotel in Bayawan for 2 guests under 2000.",{},0,0,0,0,0
+2026-03-31T01:53:50.299542+00:00,105,Q56QE,,role_help,,,0,help,"Owner assistant mode is active. I can help you check your business side.
+- Show my accommodations
+- Show my rooms
+- Show my bookings
+- Open Owner Hub
+- Show tourism information about <place>
+
+For registration/edits, use Owner Hub.",{},0,0,0,0,0
+2026-03-31T01:53:53.292944+00:00,106,,,open_dashboard,,,0,open dashboard,Opening your dashboard now.,{},0,0,0,0,0
+2026-03-31T01:53:56.091201+00:00,107,,,open_dashboard,,,0,open dashboard,Opening your dashboard now.,{},0,0,0,0,0
+2026-03-31T02:00:14.664979+00:00,108,,,admin_pending_accommodations,,,0,what are the pending accommodations today?,"Accommodation moderation summary: Pending 0, Accepted 11, Declined 2.",{},0,0,0,0,0
+2026-03-31T02:11:12.401784+00:00,109,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+2. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+3. Inn e08e9c - R1 | Bayawan | PHP 1200.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-31T02:23:12.868513+00:00,110,,,role_help,,,0,help,"Admin assistant mode is active.
+I can answer tourism information, show moderation summaries, and help with quick navigation.
+Use the Admin Dashboard for approvals, encoding, and reports.",{},0,0,0,0,0
+2026-03-31T03:20:39.681797+00:00,111,0P2H1,,role_help,,,0,help,"Guest assistant mode is active. I can help you find and book hotels/inns in Bayawan.
+Try: recommend a hotel in Bayawan for 2 guests under 2000.",{},0,0,0,0,0
+2026-03-31T03:20:43.906843+00:00,112,0P2H1,,get_accommodation_recommendation,text_cnn_low_confidence,,1,find hotel in bayawan budget 1500 for 2 guests,"Please provide your check-in/check-out dates (YYYY-MM-DD), or indicate how many nights you plan to stay.","{""guests"": 2, ""budget"": 1500, ""location"": ""bayawan"", ""accom_name"": ""in bayawan budget 1500 for 2 guests"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-31T03:20:46.094658+00:00,113,0P2H1,,view_my_accommodation_bookings,,,0,show my accommodation bookings,I found your hotel/inn bookings page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:20:48.374950+00:00,114,J97QE,,role_help,,,0,help,"Owner assistant mode is active. I can help you check your business side.
+- Show my accommodations
+- Show my rooms
+- Show my bookings
+- Open reports and analytics
+- Open Owner Hub
+- Show tourism information about <place>
+
+For registration/edits, use Owner Hub.",{},0,0,0,0,0
+2026-03-31T03:20:50.566309+00:00,115,J97QE,,owner_room_overview,,,0,show my rooms,"You currently have 1 room(s) across 1 accepted accommodation(s). Total available slots: 2.
+Your rooms:
+- Smoke Inn | Smoke Room (Room 118) | PHP 900.00/night | Capacity: 2 pax | Available: 2 | Status: Available
+Tip: Open Owner Hub > Manage Rooms to edit prices, pax, and availability.",{},0,0,0,0,0
+2026-03-31T03:20:53.195350+00:00,116,J97QE,,open_owner_reports_analytics,,,0,open reports and analytics,I found your Reports & Analytics page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:20:55.525352+00:00,117,J97QE,,view_my_accommodation_bookings,,,0,show my bookings,I found your accommodation-owner bookings page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:20:57.715107+00:00,118,TNOAA,,role_help,,,0,help,"Guest assistant mode is active. I can help you find and book hotels/inns in Bayawan.
+Try: recommend a hotel in Bayawan for 2 guests under 2000.",{},0,0,0,0,0
+2026-03-31T03:21:00.378413+00:00,119,TNOAA,,view_my_accommodation_bookings,,,0,open accommodation bookings,I found your hotel/inn bookings page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:21:03.325279+00:00,120,TNOAA,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,open map,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T03:21:05.732085+00:00,121,TNOAA,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,open discounts,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T03:21:08.054092+00:00,122,TNOAA,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,open activity logs,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T03:21:10.548765+00:00,123,TNOAA,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,open tour list,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T03:21:13.382759+00:00,124,TNOAA,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,open traveler surveys,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T03:21:15.527942+00:00,125,8DNHR,,role_help,,,0,help,"Guest assistant mode is active. I can help you find and book hotels/inns in Bayawan.
+Try: recommend a hotel in Bayawan for 2 guests under 2000.",{},0,0,0,0,0
+2026-03-31T03:21:17.853837+00:00,126,8DNHR,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,open assigned tours,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T03:21:20.323957+00:00,127,8DNHR,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,open tour calendar,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T03:21:23.186533+00:00,128,8DNHR,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,open map,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T03:21:25.512548+00:00,129,8DNHR,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,open tour list,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T03:21:27.873935+00:00,130,8DNHR,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,open create tour,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T03:28:29.169091+00:00,131,TNOAA,,role_help,,,0,help,"Admin assistant mode is active.
+I can answer tourism information, show moderation summaries, and help with quick navigation.
+Use the Admin Dashboard for approvals, encoding, and reports.",{},0,0,0,0,0
+2026-03-31T03:28:31.972766+00:00,132,TNOAA,,admin_map,,,0,open map,I found the Map page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:28:34.114421+00:00,133,TNOAA,,admin_discounts,,,0,open discounts,I found the Discounts page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:28:37.283748+00:00,134,TNOAA,,admin_activity_logs,,,0,open activity logs,I found the Activity Logs page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:28:39.644460+00:00,135,TNOAA,,admin_tour_list,,,0,open tour list,I found the Tour List page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:28:43.389955+00:00,136,TNOAA,,admin_traveler_surveys,,,0,open traveler surveys,I found the Traveler Surveys page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:28:46.184659+00:00,137,8DNHR,,role_help,,,0,help,"Employee assistant mode is active.
+I can answer tourism information and guide role-based navigation.
+Use the Employee Dashboard for operational tasks.",{},0,0,0,0,0
+2026-03-31T03:28:48.663639+00:00,138,8DNHR,,employee_assigned_tours,,,0,open assigned tours,I found your assigned tours page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:28:53.456007+00:00,139,8DNHR,,employee_tour_calendar,,,0,open tour calendar,I found your tour calendar. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:28:55.816940+00:00,140,8DNHR,,employee_map,,,0,open map,I found the Map page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:28:57.982101+00:00,141,8DNHR,,employee_tour_list,,,0,open tour list,I found the Tour List page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:29:00.547441+00:00,142,8DNHR,,employee_create_tour,,,0,open create tour,I found the Create Tour page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:30:21.954432+00:00,143,0P2H1,,role_help,,,0,help,"Guest assistant mode is active. I can help you find and book hotels/inns in Bayawan.
+Try: recommend a hotel in Bayawan for 2 guests under 2000.",{},0,0,0,0,0
+2026-03-31T03:30:24.406440+00:00,144,0P2H1,,view_my_accommodation_bookings,,,0,show my accommodation bookings,I found your hotel/inn bookings page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:30:26.540986+00:00,145,J97QE,,role_help,,,0,help,"Owner assistant mode is active. I can help you check your business side.
+- Show my accommodations
+- Show my rooms
+- Show my bookings
+- Open reports and analytics
+- Open Owner Hub
+- Show tourism information about <place>
+
+For registration/edits, use Owner Hub.",{},0,0,0,0,0
+2026-03-31T03:30:28.728521+00:00,146,J97QE,,owner_room_overview,,,0,show my rooms,"You currently have 1 room(s) across 1 accepted accommodation(s). Total available slots: 2.
+Your rooms:
+- Smoke Inn | Smoke Room (Room 118) | PHP 900.00/night | Capacity: 2 pax | Available: 2 | Status: Available
+Tip: Open Owner Hub > Manage Rooms to edit prices, pax, and availability.",{},0,0,0,0,0
+2026-03-31T03:30:30.859918+00:00,147,J97QE,,open_owner_reports_analytics,,,0,open reports and analytics,I found your Reports & Analytics page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:30:33.283970+00:00,148,J97QE,,view_my_accommodation_bookings,,,0,show my bookings,I found your accommodation-owner bookings page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T03:59:16.274924+00:00,149,,,role_help,,,0,help,"Admin assistant mode is active.
+I can answer tourism information, show moderation summaries, and help with quick navigation.
+Use the Admin Dashboard for approvals, encoding, and reports.",{},0,0,0,0,0
+2026-03-31T03:59:32.494476+00:00,150,,,admin_pending_accommodations,,,0,how many pending accommodations today?,"Accommodation moderation summary: Pending 0, Accepted 12, Declined 2.",{},0,0,0,0,0
+2026-03-31T04:00:28.530213+00:00,151,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Inn e08e9c - R1 | Bayawan | PHP 1200.00 per night | up to 2 guests
+2. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-31T04:01:17.044988+00:00,152,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,what are the available tours?,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T04:01:49.219621+00:00,153,QE8WW,,book_tour_via_link,,,0,how can I book Bayawan Nature and Falls Day Tour or Sched00002?,I found Bayawan Nature and Falls Day Tour (Sched00002). Click the button below to open booking in a new tab.,{},0,0,0,0,0
+2026-03-31T04:05:10.441147+00:00,154,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+2. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+3. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-31T04:06:17.850501+00:00,155,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+2. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-31T04:06:39.645853+00:00,156,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,give 10 inns available,"Based on your 1 past booking(s), I can apply similar preferences such as around PHP 3400, in National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental. Would you like me to proceed with these defaults? Please reply Yes or No.","{""company_type"": ""inn""}",0,0,0,0,0
+2026-03-31T04:06:57.872403+00:00,157,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,no. give list,"Based on your 1 past booking(s), I can apply similar preferences such as around PHP 3400, in National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental. Would you like me to proceed with these defaults? Please reply Yes or No.","{""company_type"": ""inn""}",0,0,0,0,0
+2026-03-31T04:07:09.033475+00:00,158,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,no,Thank you. I have recorded the following details: accommodation type: inn. Please specify the area in Bayawan you would like me to prioritize.,"{""company_type"": ""inn""}",0,0,0,0,0
+2026-03-31T04:08:09.958622+00:00,159,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,near pedicab terminal,I couldn't map that place. Please specify the barangay or area in Bayawan.,"{""company_type"": ""inn"", ""location"": ""terminal area""}",0,0,0,0,0
+2026-03-31T04:08:23.187233+00:00,160,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,near terminal,"Based on your 1 past booking(s), I can apply similar preferences such as around PHP 3400. Would you like me to proceed with these defaults? Please reply Yes or No.","{""company_type"": ""inn"", ""location"": ""terminal area""}",0,0,0,0,0
+2026-03-31T04:08:36.047672+00:00,161,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,no,"Thank you. I have recorded the following details: accommodation type: inn; location: terminal area. Please provide your check-in/check-out dates (YYYY-MM-DD), or indicate how many nights you plan to stay.","{""company_type"": ""inn"", ""location"": ""terminal area""}",0,0,0,0,0
+2026-03-31T04:09:24.812666+00:00,162,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,april 14 2026. 3 nights,"Please provide both check-in and check-out dates (YYYY-MM-DD or Month DD, YYYY).","{""company_type"": ""inn"", ""location"": ""terminal area"", ""nights"": 3}",0,0,0,0,0
+2026-03-31T04:10:13.322445+00:00,163,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,"april 14, 2026 to april 17, 2026","Based on your 1 past booking(s), I can apply similar preferences such as around PHP 3400. Would you like me to proceed with these defaults? Please reply Yes or No.","{""company_type"": ""inn"", ""location"": ""terminal area"", ""nights"": 3, ""check_in"": ""2026-04-14"", ""check_out"": ""2026-04-17""}",0,0,0,0,0
+2026-03-31T04:10:18.773031+00:00,164,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,No,Thank you. I have recorded the following details: accommodation type: inn; location: terminal area; stay details received. Please indicate how many guests will stay in the room.,"{""company_type"": ""inn"", ""location"": ""terminal area"", ""nights"": 3, ""check_in"": ""2026-04-14"", ""check_out"": ""2026-04-17""}",0,0,0,0,0
+2026-03-31T04:10:31.821598+00:00,165,QE8WW,,get_recommendation,text_cnn_low_confidence,,1,2 guests,Please provide your preferred budget per night in PHP.,"{""company_type"": ""inn"", ""location"": ""terminal area"", ""nights"": 3, ""check_in"": ""2026-04-14"", ""check_out"": ""2026-04-17"", ""guests"": 2}",0,0,0,0,0
+2026-03-31T04:10:36.532361+00:00,166,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,1500,"Thank you. I have recorded the following details: type: inn; location: terminal area; budget: PHP 1500.00; guests: 2.
+I could not find a strong hotel/inn match at this time.
+
+I found options outside your current location filter. If you want, send: broaden location","{""company_type"": ""inn"", ""location"": ""terminal area"", ""nights"": 3, ""check_in"": ""2026-04-14"", ""check_out"": ""2026-04-17"", ""guests"": 2, ""budget"": 1500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.25651291012763977}",0,0,0,0,0
+2026-03-31T04:10:49.101829+00:00,167,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,broaden location,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Top View Inn Bayawan - Matrimonial Room | Room ID: 103 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | 2 pax
+   Reasons: Within your budget (PHP 950.00 <= PHP 1500.00); Outside preferred location: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Inn type match; Fits your guest count (2/2 pax)
+2. Top View Inn Bayawan - Family Room | Room ID: 104 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | 4 pax
+   Reasons: Within your budget (PHP 1500.00 <= PHP 1500.00); Outside preferred location: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Inn type match; Fits your guest count (2/4 pax)
+3. Smoke Inn - Smoke Room | Room ID: 118 | Bayawan | PHP 900.00 per night | 2 pax
+   Reasons: Within your budget (PHP 900.00 <= PHP 1500.00); Outside preferred location: Bayawan; Inn type match; Fits your guest count (2/2 pax)","{""company_type"": ""inn"", ""location"": ""terminal area"", ""nights"": 3, ""check_in"": ""2026-04-14"", ""check_out"": ""2026-04-17"", ""guests"": 2, ""budget"": 1500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.25651291012763977, ""broaden_location"": true}",0,0,0,0,0
+2026-03-31T04:12:01.218097+00:00,168,QE8WW,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,3,"Thank you. I have recorded the following details: type: inn; location: terminal area; budget: PHP 3.00; guests: 2.
+I could not find a strong hotel/inn match at this time.","{""company_type"": ""inn"", ""location"": ""terminal area"", ""nights"": 3, ""check_in"": ""2026-04-14"", ""check_out"": ""2026-04-17"", ""guests"": 2, ""budget"": 3, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.25651291012763977, ""broaden_location"": true}",0,0,0,0,0
+2026-03-31T04:12:34.734219+00:00,169,QE8WW,,book_accommodation,text_cnn_low_confidence,openai_nlg_disabled,1,book room 118,"Booking Draft (Not yet saved)
+Booking ID: Pending confirmation
+Hotel: Smoke Inn
+Room: Smoke Room (Room 118)
+Check-in: 2026-04-14
+Check-out: 2026-04-17
+Nights: 3
+Guests: 2
+Rate per night: PHP 900.00
+Estimated Total: PHP 2700.00
+Booking Status: Awaiting confirmation
+Payment Status: Unpaid
+Estimated total: PHP 2700.00 for 3 nights.
+Confirm booking to generate LGU billing reference/link? (Yes/No)","{""company_type"": ""inn"", ""location"": ""terminal area"", ""nights"": 3, ""check_in"": ""2026-04-14"", ""check_out"": ""2026-04-17"", ""guests"": 2, ""budget"": 3, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.25651291012763977, ""broaden_location"": true, ""room_id"": ""118""}",0,0,0,0,0
+2026-03-31T04:12:41.812384+00:00,170,QE8WW,,book_accommodation_confirmation,,,0,Yes,"Booking Receipt / Summary (Accommodation)
+Booking ID: #46
+Hotel: Smoke Inn
+Room: Smoke Room (Room 118)
+Check-in: 2026-04-14
+Check-out: 2026-04-17
+Nights: 3
+Guests: 2
+Rate per night: PHP 900.00
+Estimated Total: PHP 2700.00
+Booking Status: Pending
+Payment Status: Unpaid
+Billing / Payment Link: use the button/link provided in the chat.","{""room_id"": 118, ""check_in"": ""2026-04-14"", ""check_out"": ""2026-04-17"", ""guests"": 2}",0,0,0,0,0
+2026-03-31T04:21:04.198804+00:00,171,X6ADR,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,tours,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T04:31:52.385530+00:00,172,0P2H1,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,tours,"Top recommendations for you (CNN + Decision Tree):
+1. Bayawan City Highlights Day Tour | Sched00001 | PHP 0.00 per guest | 1 day(s)
+2. Bayawan Food and Culture Trail | Sched00003 | PHP 370.00 per guest | 1 day(s)
+3. Bayawan Nature and Falls Day Tour | Sched00002 | PHP 444.00 per guest | 1 day(s)",{},0,0,0,0,0
+2026-03-31T04:36:15.243326+00:00,173,F6AH1,,get_accommodation_recommendation,text_cnn_low_confidence,,1,give 10 inns available,"Based on your 1 past booking(s), I can apply similar preferences such as around PHP 3400, in National Highway, Brgy. Poblacion, Bayawan City. Would you like me to proceed with these defaults? Please reply Yes or No.","{""company_type"": ""inn""}",0,0,0,0,0
+2026-03-31T04:36:17.461697+00:00,174,F6AH1,,get_recommendation,text_cnn_low_confidence,,1,no. give list,Thank you. I have recorded the following details: accommodation type: inn. Please specify the area in Bayawan you would like me to prioritize.,"{""company_type"": ""inn""}",0,0,0,0,0
+2026-03-31T04:36:20.301629+00:00,175,F6AH1,,get_recommendation,text_cnn_low_confidence,,1,no,Thank you. I have recorded the following details: accommodation type: inn. Please specify the area in Bayawan you would like me to prioritize.,"{""company_type"": ""inn"", ""_personalization_opt_out"": true}",0,0,0,0,0
+2026-03-31T04:36:48.432405+00:00,176,F6AH1,,get_accommodation_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,recommend inn in bayawan for 2 guests under 1500 from 2026-04-14 to 2026-04-17,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Top View Inn Bayawan - Matrimonial Room | Room ID: 103 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | 2 pax
+   Reasons: Within your budget (PHP 950.00 <= PHP 1500.00); Location match: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Inn type match; Fits your guest count (2/2 pax)
+2. Top View Inn Bayawan - Family Room | Room ID: 104 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | 4 pax
+   Reasons: Within your budget (PHP 1500.00 <= PHP 1500.00); Location match: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Inn type match; Fits your guest count (2/4 pax)
+3. Smoke Inn - Smoke Room | Room ID: 118 | Bayawan | PHP 900.00 per night | 2 pax
+   Reasons: Within your budget (PHP 900.00 <= PHP 1500.00); Location match: Bayawan; Inn type match; Fits your guest count (2/2 pax)","{""guests"": 2, ""budget"": 1500, ""location"": ""bayawan"", ""check_in"": ""2026-04-14"", ""check_out"": ""2026-04-17"", ""accom_name"": ""in bayawan for 2 guests under 1500 from 2026-04-14 to 2026-04-17"", ""company_type"": ""inn"", ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.9000889658927917}",0,0,0,0,0
+2026-03-31T04:36:51.798363+00:00,177,F6AH1,,get_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,broaden location,"Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Top View Inn Bayawan - Matrimonial Room | Room ID: 103 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | 2 pax
+   Reasons: Within your budget (PHP 950.00 <= PHP 1500.00); Location match: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Inn type match; Fits your guest count (2/2 pax)
+2. Top View Inn Bayawan - Family Room | Room ID: 104 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | 4 pax
+   Reasons: Within your budget (PHP 1500.00 <= PHP 1500.00); Location match: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Inn type match; Fits your guest count (2/4 pax)
+3. Smoke Inn - Smoke Room | Room ID: 118 | Bayawan | PHP 900.00 per night | 2 pax
+   Reasons: Within your budget (PHP 900.00 <= PHP 1500.00); Location match: Bayawan; Inn type match; Fits your guest count (2/2 pax)","{""guests"": 2, ""budget"": 1500, ""location"": ""bayawan"", ""check_in"": ""2026-04-14"", ""check_out"": ""2026-04-17"", ""accom_name"": ""in bayawan for 2 guests under 1500 from 2026-04-14 to 2026-04-17"", ""company_type"": ""inn"", ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.9000889658927917, ""broaden_location"": true}",0,0,0,0,0
+2026-03-31T04:36:51.861812+00:00,178,F6AH1,,,,,0,3,"Booking Draft (Not yet saved)
+Booking ID: Pending confirmation
+Hotel: Smoke Inn
+Room: Smoke Room (Room 118)
+Check-in: 2026-04-14
+Check-out: 2026-04-17
+Nights: 3
+Guests: 2
+Rate per night: PHP 900.00
+Estimated Total: PHP 2700.00
+Booking Status: Awaiting confirmation
+Payment Status: Unpaid
+Estimated total: PHP 2700.00 for 3 nights.
+Confirm booking to generate LGU billing reference/link? (Yes/No)",{},0,0,0,0,0
+2026-03-31T04:52:21.278439+00:00,179,OUK3F,,role_help,,,0,help,"Owner assistant mode is active. I can help you check your business side.
+Current snapshot: 1 accommodation(s), 3 room(s), 0 pending booking(s).
+- Show my accommodations
+- Show my rooms
+- Show my bookings
+- Open reports and analytics
+- Open Owner Hub
+- Show tourism information about <place>
+
+For registration/edits, use Owner Hub.",{},0,0,0,0,0
+2026-03-31T04:54:13.139198+00:00,180,OUK3F,,role_help,,,0,help,"Owner assistant mode is active. I can help you check your business side.
+Current snapshot: 1 accommodation(s), 3 room(s), 0 pending booking(s).
+- Show my accommodations
+- Show my rooms
+- Show my bookings
+- Open reports and analytics
+- Open Owner Hub
+- Show tourism information about <place>
+
+For registration/edits, use Owner Hub.",{},0,0,0,0,0
+2026-03-31T06:00:01.876203+00:00,181,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+2. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+3. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-31T06:00:27.787488+00:00,182,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,show available hotes in bayawan,"Based on your 1 past booking(s), I can apply similar preferences such as around PHP 3400, hotel stays. Would you like me to proceed with these defaults? Please reply Yes or No.","{""location"": ""bayawan""}",0,0,0,0,0
+2026-03-31T06:00:36.036437+00:00,183,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,No,"Thank you. I have recorded the following details: location: bayawan. For your hotel/inn inquiry, please specify whether you prefer a hotel, an inn, or either.","{""location"": ""bayawan""}",0,0,0,0,0
+2026-03-31T06:10:31.866393+00:00,184,,,role_help,,,0,help,"Employee assistant mode is active.
+Current snapshot: Renold, 3 active schedule(s), 0 upcoming schedule(s).
+I can answer tourism information and guide role-based navigation.
+Use the Employee Dashboard for operational tasks.",{},0,0,0,0,0
+2026-03-31T06:10:42.962516+00:00,185,,,employee_tour_list,,,0,Open tour list,I found the Tour List page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T06:10:51.197410+00:00,186,,,employee_assigned_tours,,,0,Open assigned tours,I found your assigned tours page. Click the button below to open it in a new tab.,{},0,0,0,0,0
+2026-03-31T06:40:23.192907+00:00,187,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Business Single | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | up to 1 guests
+2. Inn e08e9c - R1 | Bayawan | PHP 1200.00 per night | up to 2 guests
+3. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-31T06:40:39.238017+00:00,188,QE8WW,,role_help,,,0,help,"Guest assistant mode is active. I can help you find and book hotels/inns in Bayawan.
+Try: recommend a hotel in Bayawan for 2 guests under 2000.",{},0,0,0,0,0
+2026-03-31T06:40:56.640146+00:00,189,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,Recommend a hotel in Bayawan for 2 guests under 2000,"Please provide your check-in/check-out dates (YYYY-MM-DD), or indicate how many nights you plan to stay.","{""guests"": 2, ""budget"": 2000, ""location"": ""bayawan"", ""accom_name"": ""in bayawan for 2 guests under 2000"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-31T06:41:05.377965+00:00,190,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,3 nights,"I found 2 option(s) based on your request hotel, near bayawan, for 2 guest(s), under PHP 2000, for 3 night(s).
+Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Standard Double | Room ID: 112 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | 2 pax
+   Reasons: Within your budget (PHP 1300.00 <= PHP 2000.00); Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/2 pax)
+2. Inn e08e9c - R1 | Room ID: 117 | Bayawan | PHP 1200.00 per night | 2 pax
+   Reasons: Within your budget (PHP 1200.00 <= PHP 2000.00); Location match: Bayawan; Hotel type match; Fits your guest count (2/2 pax)","{""guests"": 2, ""budget"": 2000, ""location"": ""bayawan"", ""accom_name"": ""in bayawan for 2 guests under 2000"", ""company_type"": ""hotel"", ""nights"": 3, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.27399057149887085}",0,0,0,0,0
+2026-03-31T06:41:24.617120+00:00,191,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,4000 budget,"I found 3 option(s) based on your request hotel, near bayawan, for 2 guest(s), under PHP 4000, for 3 night(s).
+Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Standard Double | Room ID: 112 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | 2 pax
+   Reasons: Within your budget (PHP 1300.00 <= PHP 4000.00); Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/2 pax)
+2. Riverside Travelers Lodge - Quad Room | Room ID: 113 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | 4 pax
+   Reasons: Within your budget (PHP 2200.00 <= PHP 4000.00); Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/4 pax)
+3. Poblacion Central Suites - Executive Twin | Room ID: 115 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | 5 pax
+   Reasons: Within your budget (PHP 3400.00 <= PHP 4000.00); Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/5 pax)","{""guests"": 2, ""budget"": 4000, ""location"": ""bayawan"", ""accom_name"": ""in bayawan for 2 guests under 2000"", ""company_type"": ""hotel"", ""nights"": 3, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.27399057149887085}",0,0,0,0,0
+2026-03-31T06:41:50.059479+00:00,192,QE8WW,,book_accommodation,text_cnn_low_confidence,openai_nlg_disabled,1,book room 113,"I can prepare your booking request. I only need your stay date details.
+
+Details received:
+- room: Riverside Travelers Lodge - Quad Room (Room 113)
+- guests: 2
+
+Next step:
+Please provide both check-in and check-out dates in YYYY-MM-DD format (example: 2026-03-10 to 2026-03-12).","{""guests"": 2, ""budget"": 4000, ""location"": ""bayawan"", ""accom_name"": ""in bayawan for 2 guests under 2000"", ""company_type"": ""hotel"", ""nights"": 3, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.27399057149887085, ""room_id"": ""113""}",0,0,0,0,0
+2026-03-31T06:42:29.745123+00:00,193,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,openai_nlg_disabled,1,"April 26, 2026 to April 29, 2026","I found 3 option(s) based on your request hotel, near bayawan, for 2 guest(s), under PHP 4000, from 2026-04-26 to 2026-04-29.
+Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Standard Double | Room ID: 112 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | 2 pax
+   Reasons: Within your budget (PHP 1300.00 <= PHP 4000.00); Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/2 pax)
+2. Riverside Travelers Lodge - Quad Room | Room ID: 113 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | 4 pax
+   Reasons: Within your budget (PHP 2200.00 <= PHP 4000.00); Location match: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/4 pax)
+3. Poblacion Central Suites - Executive Twin | Room ID: 115 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | 5 pax
+   Reasons: Within your budget (PHP 3400.00 <= PHP 4000.00); Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/5 pax)","{""guests"": 2, ""budget"": 4000, ""location"": ""bayawan"", ""accom_name"": ""in bayawan for 2 guests under 2000"", ""company_type"": ""hotel"", ""nights"": 3, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.27399057149887085, ""check_in"": ""2026-04-26"", ""check_out"": ""2026-04-29""}",0,0,0,0,0
+2026-03-31T06:42:39.526744+00:00,194,QE8WW,,book_accommodation,text_cnn_low_confidence,openai_nlg_disabled,1,book room 113,"Booking Draft (Not yet saved)
+Booking ID: Pending confirmation
+Hotel: Riverside Travelers Lodge
+Room: Quad Room (Room 113)
+Check-in: 2026-04-26
+Check-out: 2026-04-29
+Nights: 3
+Guests: 2
+Rate per night: PHP 2200.00
+Estimated Total: PHP 6600.00
+Booking Status: Awaiting confirmation
+Payment Status: Unpaid
+Estimated total: PHP 6600.00 for 3 nights.
+Confirm booking to generate LGU billing reference/link? (Yes/No)","{""guests"": 2, ""budget"": 4000, ""location"": ""bayawan"", ""accom_name"": ""in bayawan for 2 guests under 2000"", ""company_type"": ""hotel"", ""nights"": 3, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.27399057149887085, ""check_in"": ""2026-04-26"", ""check_out"": ""2026-04-29"", ""room_id"": ""113""}",0,0,0,0,0
+2026-03-31T06:44:35.220995+00:00,195,QE8WW,,book_accommodation_confirmation,,,0,Yes,"Booking Receipt / Summary (Accommodation)
+Booking ID: #48
+Hotel: Riverside Travelers Lodge
+Room: Quad Room (Room 113)
+Check-in: 2026-04-26
+Check-out: 2026-04-29
+Nights: 3
+Guests: 2
+Rate per night: PHP 2200.00
+Estimated Total: PHP 6600.00
+Booking Status: Pending
+Payment Status: Unpaid
+Billing / Payment Link: use the button/link provided in the chat.","{""room_id"": 113, ""check_in"": ""2026-04-26"", ""check_out"": ""2026-04-29"", ""guests"": 2}",0,0,0,0,0
+2026-03-31T07:41:23.669134+00:00,196,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+2. Poblacion Central Suites - Business Single | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | up to 1 guests
+3. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-31T07:44:57.827872+00:00,197,,,role_help,,,0,help,"Employee assistant mode is active.
+Current snapshot: Renold, 3 active schedule(s), 0 upcoming schedule(s).
+I can answer tourism information and guide role-based navigation.
+Use the Employee Dashboard for operational tasks.",{},0,0,0,0,0
+2026-03-31T07:46:02.216246+00:00,198,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,I'm looking for a hotel in Villareal,I can speed up your booking search with suggested defaults: around PHP 3400. Would you like me to proceed with these defaults? Please reply Yes or No.,"{""location"": ""villareal"", ""accom_name"": ""in villareal"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-31T07:46:12.830091+00:00,199,QE8WW,,get_accommodation_recommendation,text_cnn_low_confidence,,1,No,"Great. Here are the details I have so far: accommodation type: hotel; location: villareal.
+Next: Please provide your check-in/check-out dates (YYYY-MM-DD), or indicate how many nights you plan to stay.?","{""location"": ""villareal"", ""accom_name"": ""in villareal"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-31T08:50:44.885601+00:00,200,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+2. Repeat Fix Hotel - Std | National Highway, Brgy. Poblacion, Bayawan City | PHP 3400.00 per night | up to 2 guests
+3. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-31T08:51:15.224315+00:00,201,QE8WW,,get_accommodation_recommendation,text_cnn_incompatible_label_space,,1,show available hotels in Villareal,I can speed up your booking search with suggested defaults: around PHP 3400. Would you like me to proceed with these defaults? Please reply Yes or No.,"{""location"": ""villareal"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-31T08:51:20.788539+00:00,202,QE8WW,,get_accommodation_recommendation,text_cnn_incompatible_label_space,,1,No,"Great. Here are the details I have so far: accommodation type: hotel; location: villareal.
+Next: Please provide your check-in/check-out dates (YYYY-MM-DD), or indicate how many nights you plan to stay.?","{""location"": ""villareal"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-31T09:01:53.727959+00:00,203,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+2. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+3. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-03-31T09:02:26.262271+00:00,204,QE8WW,,get_accommodation_recommendation,text_cnn_incompatible_label_space,,1,show available hotels in Poblacion,I can speed up your booking search with suggested defaults: around PHP 3400. Would you like me to proceed with these defaults? Please reply Yes or No.,"{""location"": ""poblacion"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-31T09:02:46.253625+00:00,205,QE8WW,,get_accommodation_recommendation,text_cnn_incompatible_label_space,,1,No,"I found 3 option(s) based on your request hotel, near poblacion, for 1 guest(s).
+Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Poblacion Central Suites - Business Single | Room ID: 114 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | 1 pax
+   Reasons: No budget limit provided; Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (1/1 pax)
+2. Poblacion Central Suites - Executive Twin | Room ID: 115 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | 5 pax
+   Reasons: No budget limit provided; Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (1/5 pax)
+3. Poblacion Central Suites - Premium Family Suite | Room ID: 116 | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | 5 pax
+   Reasons: No budget limit provided; Location match: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (1/5 pax)
+
+To continue booking, Great. Here are the details I have so far: accommodation type: hotel; location: poblacion.
+Next: Please provide your check-in/check-out dates (YYYY-MM-DD), or indicate how many nights you plan to stay.?","{""location"": ""poblacion"", ""company_type"": ""hotel""}",0,0,0,0,0
+2026-03-31T09:03:27.419117+00:00,206,QE8WW,,book_accommodation,text_cnn_incompatible_label_space,gemini_nlg_error,1,book room 115,"I can prepare your booking request. I only need your stay date details.
+
+Details received:
+- room: Poblacion Central Suites - Executive Twin (Room 115)
+- guests: 1
+
+Next step:
+Please provide both check-in and check-out dates in YYYY-MM-DD format (example: 2026-03-10 to 2026-03-12).","{""location"": ""poblacion"", ""company_type"": ""hotel"", ""_personalization_opt_out"": true, ""room_id"": ""115""}",0,0,0,0,0
+2026-03-31T09:03:54.927071+00:00,207,QE8WW,,book_accommodation,text_cnn_incompatible_label_space,gemini_nlg_error,1,"May 1, 2026 to May 4, 2026","Booking Draft (Not yet saved)
+Booking ID: Pending confirmation
+Hotel: Poblacion Central Suites
+Room: Executive Twin (Room 115)
+Check-in: 2026-05-01
+Check-out: 2026-05-04
+Nights: 3
+Guests: 1
+Rate per night: PHP 3400.00
+Estimated Total: PHP 10200.00
+Booking Status: Awaiting confirmation
+Payment Status: Unpaid
+Estimated total: PHP 10200.00 for 3 nights.
+Confirm booking to generate LGU billing reference/link? (Yes/No)","{""location"": ""poblacion"", ""company_type"": ""hotel"", ""_personalization_opt_out"": true, ""room_id"": 115, ""guests"": 1, ""check_in"": ""2026-05-01"", ""check_out"": ""2026-05-04""}",0,0,0,0,0
+2026-03-31T09:04:02.000181+00:00,208,QE8WW,,book_accommodation_confirmation,,,0,Yes,"Booking Receipt / Summary (Accommodation)
+Booking ID: #49
+Hotel: Poblacion Central Suites
+Room: Executive Twin (Room 115)
+Check-in: 2026-05-01
+Check-out: 2026-05-04
+Nights: 3
+Guests: 1
+Rate per night: PHP 3400.00
+Estimated Total: PHP 10200.00
+Booking Status: Pending
+Payment Status: Unpaid
+Billing / Payment Link: use the button/link provided in the chat.","{""room_id"": 115, ""check_in"": ""2026-05-01"", ""check_out"": ""2026-05-04"", ""guests"": 1}",0,0,0,0,0
+2026-03-31T09:12:38.182353+00:00,209,QE8WW,,get_accommodation_recommendation_init,,,0,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+2. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Riverside Travelers Lodge - Quad Room | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 2200.00 per night | up to 4 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},0,0,0,0,0
+2026-04-02T10:46:24.377430+00:00,210,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg,1,show default hotel suggestions,"Here are some suggested accommodations:
+
+1. Top View Inn Bayawan - Matrimonial Room
+   - Location: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental
+   - Rate: PHP 950.00 per night
+   - Occupancy: Up to 2 guests
+
+2. Top View Inn Bayawan - Single Room
+   - Location: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental
+   - Rate: PHP 700.00 per night
+   - Occupancy: Up to 1 guest
+
+3. Poblacion Central Suites - Business Single
+   - Location: National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental
+   - Rate: PHP 1100.00 per night
+   - Occupancy: Up to 1 guest
+
+To proceed with a booking, please provide the following information: ""book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>"".",{},13,1,0,7,1
+2026-04-02T10:47:07.921503+00:00,211,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation,text_cnn_incompatible_label_space,gemini_nlg,1,I'm looking for a hotel near Hayahay,"I can assist you with your accommodation search. For your convenience, I can suggest an average price point of PHP 3400. Would you like me to proceed with this suggestion? Please reply with 'Yes' or 'No'.","{""location"": ""hayahay"", ""company_type"": ""hotel""}",13,1,0,7,1
+2026-04-02T10:47:20.491312+00:00,212,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation,text_cnn_incompatible_label_space,gemini_nlg,1,No,We were unable to find suitable hotel or inn accommodations near Hayahay for one guest at this time. We did find options outside your specified location. Would you like us to broaden the search area?,"{""location"": ""hayahay"", ""company_type"": ""hotel""}",13,1,0,7,1
+2026-04-02T10:47:37.000646+00:00,213,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation,text_cnn_incompatible_label_space,gemini_nlg,1,include both hotel and inn,"Certainly. You are looking for accommodation in Hayahay, and you're interested in either a hotel or an inn. To help you further, could you please provide your desired check-in and check-out dates, or the total number of nights you plan to stay?","{""location"": ""hayahay"", ""company_type"": ""either"", ""_personalization_opt_out"": true, ""accom_name"": ""and inn"", ""broaden_company_type"": true}",13,1,0,7,1
+2026-04-02T10:47:55.889941+00:00,214,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation,text_cnn_incompatible_label_space,gemini_nlg,1,2 nights,"Thank you for providing your stay details. To confirm, you are looking for accommodation in Hayahay for two nights.
+
+Before I proceed, could you please specify how many people the room should accommodate?","{""location"": ""hayahay"", ""company_type"": ""either"", ""_personalization_opt_out"": true, ""accom_name"": ""and inn"", ""broaden_company_type"": true, ""nights"": 2}",13,1,0,7,1
+2026-04-02T10:48:07.017675+00:00,215,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation,text_cnn_incompatible_label_space,gemini_nlg,1,2 guests,We have noted your preference for 2 guests. What is your target budget per night in Philippine Pesos?,"{""location"": ""hayahay"", ""company_type"": ""either"", ""_personalization_opt_out"": true, ""accom_name"": ""and inn"", ""broaden_company_type"": true, ""nights"": 2, ""guests"": 2}",13,1,0,7,1
+2026-04-02T10:48:17.903591+00:00,216,QE8WW,,get_accommodation_recommendation,text_cnn_incompatible_label_space,gemini_nlg,1,budget 1500,"We were unable to find accommodation matching your specific request within the PHP 1500 budget for your desired location and number of guests.
+
+We do have options available outside your current location filter. Please let us know if you would like us to broaden the location search.","{""location"": ""hayahay"", ""company_type"": ""either"", ""_personalization_opt_out"": true, ""accom_name"": ""and inn"", ""broaden_company_type"": true, ""nights"": 2, ""guests"": 2, ""budget"": 1500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.4094545245170593}",0,0,0,0,0
+2026-04-02T10:48:32.312306+00:00,217,QE8WW,,get_accommodation_recommendation,text_cnn_incompatible_label_space,gemini_nlg,1,broaden location,"We have found three accommodation options for you, based on your request for a hotel or inn for two guests, with a budget of under PHP 1500 per night, for two nights.
+
+Here are the recommendations:
+
+1.  **Top View Inn Bayawan** - Matrimonial Room
+    *   This option is an inn located at H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental. It accommodates two guests and is within your budget.
+
+2.  **Top View Inn Bayawan** - Family Room
+    *   This option is an inn located at H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental. It can accommodate up to four guests, with two guests fitting within the requirement, and is within your budget.
+
+3.  **Smoke Inn** - Smoke Room
+    *   This option is an inn located in Bayawan. It accommodates two guests and is within your budget.","{""location"": ""hayahay"", ""company_type"": ""either"", ""_personalization_opt_out"": true, ""accom_name"": ""and inn"", ""broaden_company_type"": true, ""nights"": 2, ""guests"": 2, ""budget"": 1500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.4094545245170593, ""broaden_location"": true}",0,0,0,0,0
+2026-04-02T10:48:48.173227+00:00,218,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,,,gemini_nlg,1,why option 1,"We have selected Option 1, the Top View Inn Bayawan, which offers a Matrimonial Room. This accommodation is located at H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental, and is priced at PHP 950.00 per night for two guests. This option aligns with your budget and guest count. However, please note that the location is outside your preferred area and the accommodation type is an inn.",{},13,1,0,7,1
+2026-04-02T10:49:37.579121+00:00,219,QE8WW,,get_accommodation_recommendation,text_cnn_incompatible_label_space,gemini_nlg_fallback_paraphrase,1,what about a hotel near Bayawan City Plaza,"I found 2 option(s) based on your request hotel, near poblacion, anchored to map place: Bayawan City Plaza, for 2 guest(s), under PHP 1500, for 2 night(s).
+Matched by city-proper map anchor and accommodation records.
+Using map anchor: Bayawan City Plaza (city-proper map coverage).
+Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Standard Double | Room ID: 112 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | 2 pax
+Reasons: Within your budget (PHP 1300.00 <= PHP 1500.00); Map anchor considered: Bayawan City Plaza (city-proper coverage); Outside preferred location: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/2 pax)
+2. Inn e08e9c - R1 | Room ID: 117 | Bayawan | PHP 1200.00 per night | 2 pax
+Reasons: Within your budget (PHP 1200.00 <= PHP 1500.00); Map anchor considered: Bayawan City Plaza (city-proper coverage); Outside preferred location: Bayawan; Hotel type match; Fits your guest count (2/2 pax).","{""location"": ""poblacion"", ""company_type"": ""hotel"", ""_personalization_opt_out"": true, ""accom_name"": ""and inn"", ""broaden_company_type"": true, ""nights"": 2, ""guests"": 2, ""budget"": 1500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.4094545245170593, ""broaden_location"": true, ""location_anchor"": ""Bayawan City Plaza"", ""location_anchor_source"": ""map_reference"", ""location_scope_note"": ""Matched by city-proper map anchor and accommodation records.""}",0,0,0,0,0
+2026-04-02T10:51:16.333584+00:00,220,QE8WW,,get_accommodation_recommendation,text_cnn_incompatible_label_space,gemini_nlg_fallback_paraphrase,1,are there any available accommodations near City Plaza?,"I found 2 option(s) based on your request hotel, near poblacion, anchored to map place: Bayawan City Plaza, for 2 guest(s), under PHP 1500, for 2 night(s).
+Matched by city-proper map anchor and accommodation records.
+Using map anchor: Bayawan City Plaza (city-proper map coverage).
+Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Riverside Travelers Lodge - Standard Double | Room ID: 112 | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | 2 pax
+Reasons: Within your budget (PHP 1300.00 <= PHP 1500.00); Map anchor considered: Bayawan City Plaza (city-proper coverage); Outside preferred location: Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental; Hotel type match; Fits your guest count (2/2 pax)
+2. Inn e08e9c - R1 | Room ID: 117 | Bayawan | PHP 1200.00 per night | 2 pax
+Reasons: Within your budget (PHP 1200.00 <= PHP 1500.00); Map anchor considered: Bayawan City Plaza (city-proper coverage); Outside preferred location: Bayawan; Hotel type match; Fits your guest count (2/2 pax).","{""location"": ""poblacion"", ""company_type"": ""hotel"", ""_personalization_opt_out"": true, ""accom_name"": ""and inn"", ""broaden_company_type"": true, ""nights"": 2, ""guests"": 2, ""budget"": 1500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.4094545245170593, ""broaden_location"": true, ""location_anchor"": ""Bayawan City Plaza"", ""location_anchor_source"": ""map_reference"", ""location_scope_note"": ""Matched by city-proper map anchor and accommodation records.""}",0,0,0,0,0
+2026-04-02T10:52:06.666712+00:00,221,QE8WW,,get_accommodation_recommendation,text_cnn_incompatible_label_space,gemini_nlg_fallback_paraphrase,1,"without minding  the budget, are there any available hotel or inns near terminal?","I found 3 option(s) based on your request hotel/inn, near terminal area, anchored to map place: Bayawan City Plaza, for 2 guest(s), under PHP 1500, with preferences: accessible, for 2 night(s).
+Matched by city-proper map anchor and accommodation records.
+Using map anchor: Bayawan City Plaza (city-proper map coverage).
+Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Top View Inn Bayawan - Matrimonial Room | Room ID: 103 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | 2 pax
+Reasons: Within your budget (PHP 950.00 <= PHP 1500.00); Map anchor considered: Bayawan City Plaza (city-proper coverage); Outside preferred location: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Different type: Inn; Fits your guest count (2/2 pax); Preference match: accessible
+2. Top View Inn Bayawan - Family Room | Room ID: 104 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | 4 pax
+Reasons: Within your budget (PHP 1500.00 <= PHP 1500.00); Map anchor considered: Bayawan City Plaza (city-proper coverage); Outside preferred location: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Different type: Inn; Fits your guest count (2/4 pax); Preference match: accessible
+3. Smoke Inn - Smoke Room | Room ID: 118 | Bayawan | PHP 900.00 per night | 2 pax
+Reasons: Within your budget (PHP 900.00 <= PHP 1500.00); Map anchor considered: Bayawan City Plaza (city-proper coverage); Outside preferred location: Bayawan; Different type: inn; Fits your guest count (2/2 pax); No strong text match for your descriptive preferences yet.","{""location"": ""terminal area"", ""company_type"": ""either"", ""_personalization_opt_out"": true, ""accom_name"": ""and inn"", ""broaden_company_type"": true, ""nights"": 2, ""guests"": 2, ""budget"": 1500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.4094545245170593, ""broaden_location"": true, ""location_anchor"": ""Bayawan City Plaza"", ""location_anchor_source"": ""map_reference"", ""location_scope_note"": ""Matched by city-proper map anchor and accommodation records."", ""preference_tags"": [""accessible""]}",0,0,0,0,0
+2026-04-02T10:53:17.900568+00:00,222,QE8WW,,get_accommodation_recommendation,text_cnn_incompatible_label_space,gemini_nlg_fallback_paraphrase,1,near the bus terminal,"I found 3 option(s) based on your request hotel/inn, near the bus terminal, anchored to map place: Bayawan City Plaza, for 2 guest(s), under PHP 1500, with preferences: accessible, for 2 night(s).
+Matched by city-proper map anchor and accommodation records.
+Using map anchor: Bayawan City Plaza (city-proper map coverage).
+Top hotel/inn recommendations for you (CNN + Decision Tree):
+1. Top View Inn Bayawan - Matrimonial Room | Room ID: 103 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | 2 pax
+Reasons: Within your budget (PHP 950.00 <= PHP 1500.00); Map anchor considered: Bayawan City Plaza (city-proper coverage); Outside preferred location: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Different type: Inn; Fits your guest count (2/2 pax); Preference match: accessible
+2. Top View Inn Bayawan - Family Room | Room ID: 104 | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | 4 pax
+Reasons: Within your budget (PHP 1500.00 <= PHP 1500.00); Map anchor considered: Bayawan City Plaza (city-proper coverage); Outside preferred location: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental; Different type: Inn; Fits your guest count (2/4 pax); Preference match: accessible
+3. Smoke Inn - Smoke Room | Room ID: 118 | Bayawan | PHP 900.00 per night | 2 pax
+Reasons: Within your budget (PHP 900.00 <= PHP 1500.00); Map anchor considered: Bayawan City Plaza (city-proper coverage); Outside preferred location: Bayawan; Different type: inn; Fits your guest count (2/2 pax); No strong text match for your descriptive preferences yet.","{""location"": ""the bus terminal"", ""company_type"": ""either"", ""_personalization_opt_out"": true, ""accom_name"": ""and inn"", ""broaden_company_type"": true, ""nights"": 2, ""guests"": 2, ""budget"": 1500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.4094545245170593, ""broaden_location"": true, ""location_anchor"": ""Bayawan City Plaza"", ""location_anchor_source"": ""map_reference"", ""location_scope_note"": ""Matched by city-proper map anchor and accommodation records."", ""preference_tags"": [""accessible""]}",0,0,0,0,0
+2026-04-02T10:53:43.695796+00:00,223,QE8WW,,get_recommendation,text_cnn_incompatible_label_space,gemini_nlg_error,1,remove the budget,"I had trouble loading tour recommendations just now. Please try again, or ask for tourism information while I reset.","{""location"": ""the bus terminal"", ""company_type"": ""either"", ""_personalization_opt_out"": true, ""accom_name"": ""and inn"", ""broaden_company_type"": true, ""nights"": 2, ""guests"": 2, ""budget"": 1500, ""predicted_accommodation_type"": ""inn"", ""predicted_accommodation_confidence"": 0.4094545245170593, ""broaden_location"": true, ""location_anchor"": ""Bayawan City Plaza"", ""location_anchor_source"": ""map_reference"", ""location_scope_note"": ""Matched by city-proper map anchor and accommodation records."", ""preference_tags"": [""accessible""]}",0,0,0,0,0
+2026-04-02T11:10:44.670669+00:00,224,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,role_help,,gemini_nlg_error,1,help,"Guest assistant mode is active. I can help you find and book hotels/inns in Bayawan.
+Try: recommend a hotel in Bayawan for 2 guests under 2000.",{},13,1,0,7,1
+2026-04-02T11:11:06.437874+00:00,225,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,view_my_accommodation_bookings,,gemini_nlg_error,1,Show my bookings,I found your hotel/inn bookings page. Click the button below to open it in a new tab.,{},13,1,0,7,1
+2026-04-02T11:12:20.870250+00:00,226,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg_error,1,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+2. Poblacion Central Suites - Business Single | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | up to 1 guests
+3. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},13,1,0,7,1
+2026-04-02T11:12:42.039002+00:00,227,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg_error,1,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+2. Top View Inn Bayawan - Family Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1500.00 per night | up to 4 guests
+3. Repeat Fix Hotel - Std | National Highway, Brgy. Poblacion, Bayawan City | PHP 3400.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},13,1,0,7,1
+2026-04-02T11:33:12.740141+00:00,228,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg_error,1,show default hotel suggestions,"Here are some suggested stays:
+1. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+2. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Repeat Fix Hotel - Std | National Highway, Brgy. Poblacion, Bayawan City | PHP 3400.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},13,1,0,7,1
+2026-04-02T11:36:07.249199+00:00,229,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg_error,1,show default hotel suggestions,"Here are some suggested stays:
+1. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+2. Inn e08e9c - R1 | Bayawan | PHP 1200.00 per night | up to 2 guests
+3. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},13,1,0,7,1
+2026-04-02T11:37:49.791196+00:00,230,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg_error,1,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+2. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+3. Poblacion Central Suites - Premium Family Suite | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},13,1,0,7,1
+2026-04-02T11:38:02.662498+00:00,231,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg_error,1,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+2. Repeat Fix Hotel - Std | National Highway, Brgy. Poblacion, Bayawan City | PHP 3400.00 per night | up to 2 guests
+3. Riverside Travelers Lodge - Standard Double | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 1300.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},13,1,0,7,1
+2026-04-02T11:40:01.597414+00:00,232,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg_error,1,show default hotel suggestions,"Here are some suggested stays:
+1. Inn e08e9c - R1 | Bayawan | PHP 1200.00 per night | up to 2 guests
+2. Repeat Fix Hotel - Std | National Highway, Brgy. Poblacion, Bayawan City | PHP 3400.00 per night | up to 2 guests
+3. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},13,1,0,7,1
+2026-04-02T11:43:55.265282+00:00,233,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg_error,1,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+2. Repeat Fix Hotel - Std | National Highway, Brgy. Poblacion, Bayawan City | PHP 3400.00 per night | up to 2 guests
+3. Inn e08e9c - R1 | Bayawan | PHP 1200.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},13,1,0,7,1
+2026-04-02T11:44:55.197656+00:00,234,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg_error,1,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+2. Poblacion Central Suites - Business Single | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 1100.00 per night | up to 1 guests
+3. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},13,1,0,7,1
+2026-04-02T11:46:24.161586+00:00,235,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg,1,show default hotel suggestions,"We are pleased to present the following accommodation suggestions:
+
+1.  **Top View Inn Bayawan - Matrimonial Room**
+    *   Location: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental
+    *   Rate: PHP 950.00 per night
+    *   Occupancy: Up to 2 guests
+
+2.  **Inn e08e9c - R1**
+    *   Location: Bayawan
+    *   Rate: PHP 1200.00 per night
+    *   Occupancy: Up to 2 guests
+
+3.  **Top View Inn Bayawan - Family Room**
+    *   Location: H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental
+    *   Rate: PHP 1500.00 per night
+    *   Occupancy: Up to 4 guests
+
+To proceed with a booking, please provide your request in the following format: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.",{},13,1,0,7,1
+2026-04-02T11:46:47.522678+00:00,236,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg_error,1,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+2. Inn e08e9c - R1 | Bayawan | PHP 1200.00 per night | up to 2 guests
+3. Poblacion Central Suites - Executive Twin | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 3400.00 per night | up to 5 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},13,1,0,7,1
+2026-04-02T11:59:33.772748+00:00,237,QE8WW,4s81oz0p0v5pou56vnsbb8bf8c1fd1hk,get_accommodation_recommendation_init,,gemini_nlg_error,1,show default hotel suggestions,"Here are some suggested stays:
+1. Top View Inn Bayawan - Single Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 700.00 per night | up to 1 guests
+2. Riverside Travelers Lodge - Economy Single | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | PHP 850.00 per night | up to 1 guests
+3. Top View Inn Bayawan - Matrimonial Room | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | PHP 950.00 per night | up to 2 guests
+To book, send: book room <room_id> for <guests> guests from <YYYY-MM-DD> to <YYYY-MM-DD>.
+Example: book room 12 for 2 guests from 2026-03-10 to 2026-03-12.",{},13,1,0,7,1

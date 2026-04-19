@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import os
 import pickle
+import logging
 from datetime import date, datetime
 from dataclasses import dataclass
 from decimal import Decimal
@@ -23,6 +24,25 @@ from tour_app.models import Tour_Schedule
 _DECISION_TREE_MODEL_CACHE = None
 _DECISION_TREE_MODEL_PATH_CACHE = None
 _DECISION_TREE_MODEL_SOURCE_CACHE = "unknown"
+_DECISION_TREE_EXPECTED_PARAMS = {
+    "criterion": "entropy",
+    "max_depth": 8,
+    "min_samples_leaf": 5,
+    "min_samples_split": 30,
+    "max_features": None,
+}
+logger = logging.getLogger(__name__)
+
+_TOUR_PREFERENCE_ALIASES = {
+    "sea": ("sea", "beach", "coastal", "ocean", "island", "shore", "seaside"),
+    "nature": ("nature", "natural", "falls", "waterfall", "forest", "mountain", "river", "scenic"),
+    "culture": ("culture", "cultural", "heritage", "food", "culinary", "tradition", "museum"),
+    "city": ("city", "urban", "proper", "downtown", "plaza"),
+    "highlights": ("highlight", "highlights", "day tour", "must-see"),
+    "adventure": ("adventure", "hike", "trek", "trail", "outdoor", "camp"),
+    "family": ("family", "kids", "child", "children", "friendly"),
+    "river": ("river", "riverside"),
+}
 
 
 @dataclass
@@ -59,8 +79,8 @@ def _normalize(value: float, min_value: float, max_value: float) -> float:
 
 def _cnn_score(features: List[float]) -> float:
     """
-    Lightweight 1D CNN-style scorer with a fixed kernel.
-    This is intentionally simple and dependency-free.
+    Lightweight 1D convolution-style heuristic scorer with a fixed kernel.
+    This is intentionally simple and dependency-free, and is not a trained CNN model.
     """
     if not features:
         return 0.0
@@ -84,6 +104,116 @@ def _decision_tree_penalty(conditions: Iterable[bool]) -> float:
     return 0.0
 
 
+def _extract_tour_preference_tags_from_text(text: str) -> set[str]:
+    lowered = str(text or "").strip().lower()
+    if not lowered:
+        return set()
+    detected = set()
+    for canonical, markers in _TOUR_PREFERENCE_ALIASES.items():
+        if any(marker in lowered for marker in markers):
+            detected.add(canonical)
+    return detected
+
+
+def _collect_requested_tour_preferences(params: dict) -> set[str]:
+    requested = set()
+    for key in ("preference", "tour_type", "preferred_type", "interest"):
+        value = str(params.get(key) or "").strip().lower()
+        if value:
+            requested.update(_extract_tour_preference_tags_from_text(value))
+
+    tags_value = params.get("preference_tags")
+    if isinstance(tags_value, list):
+        for item in tags_value:
+            tag = str(item or "").strip().lower()
+            if tag:
+                requested.update(_extract_tour_preference_tags_from_text(tag))
+
+    # Keep only canonical tags + known explicit values derived above.
+    return {tag for tag in requested if tag}
+
+
+def _tokenize_preference_phrase(text: str) -> set[str]:
+    raw = str(text or "").strip().lower()
+    if not raw:
+        return set()
+    stopwords = {
+        "i", "we", "prefer", "want", "like", "tour", "tours", "package", "packages",
+        "day", "trip", "please", "show", "me", "a", "an", "the", "in", "near",
+        "and", "or", "how", "about", "what", "right", "now", "there", "any", "are",
+    }
+    tokens = set()
+    for token in raw.replace("/", " ").replace("-", " ").split():
+        cleaned = "".join(ch for ch in token if ch.isalnum())
+        if len(cleaned) >= 3 and cleaned not in stopwords:
+            tokens.add(cleaned)
+    return tokens
+
+
+def get_unavailable_tour_matches(params: dict, limit: int = 3) -> list[str]:
+    """
+    Return matching published tour titles that currently have no upcoming schedules.
+    This supports UX messaging when a preference appears valid but no future run exists.
+    """
+    now = timezone.now()
+    requested_preferences = _collect_requested_tour_preferences(params if isinstance(params, dict) else {})
+    requested_preference_text = str(
+        (params or {}).get("preference_text")
+        or (params or {}).get("preference")
+        or (params or {}).get("tour_type")
+        or (params or {}).get("preferred_type")
+        or (params or {}).get("interest")
+        or ""
+    ).strip().lower()
+    requested_preference_tokens = _tokenize_preference_phrase(requested_preference_text)
+    if not requested_preferences and not requested_preference_tokens:
+        return []
+
+    schedules = (
+        Tour_Schedule.objects.select_related("tour")
+        .filter(tour__publication_status="published")
+        .exclude(status="cancelled")
+    )
+    tour_availability: dict[str, bool] = {}
+    tour_objects: dict[str, object] = {}
+    for schedule in schedules:
+        tour_key = str(schedule.tour_id)
+        tour_objects[tour_key] = schedule.tour
+        has_future = bool(schedule.end_time and schedule.end_time >= now)
+        tour_availability[tour_key] = bool(tour_availability.get(tour_key)) or has_future
+
+    scored = []
+    for tour_key, tour_obj in tour_objects.items():
+        if tour_availability.get(tour_key):
+            continue
+        name = str(getattr(tour_obj, "tour_name", "") or "").lower()
+        desc = str(getattr(tour_obj, "description", "") or "").lower()
+        detected_tour_tags = _extract_tour_preference_tags_from_text(f"{name} {desc}")
+        tour_tokens = _tokenize_preference_phrase(f"{name} {desc}")
+
+        tag_match_ratio = 0.0
+        token_match_ratio = 0.0
+        if requested_preferences:
+            overlap = requested_preferences.intersection(detected_tour_tags)
+            tag_match_ratio = len(overlap) / max(1, len(requested_preferences))
+        if requested_preference_tokens:
+            token_overlap = requested_preference_tokens.intersection(tour_tokens)
+            token_match_ratio = len(token_overlap) / max(1, len(requested_preference_tokens))
+
+        match_score = max(tag_match_ratio, token_match_ratio)
+        if match_score > 0:
+            scored.append((match_score, str(getattr(tour_obj, "tour_name", "") or "").strip()))
+
+    scored.sort(key=lambda row: (-float(row[0]), row[1].lower()))
+    names = []
+    for _score, title in scored:
+        if title and title not in names:
+            names.append(title)
+        if len(names) >= max(1, int(limit or 3)):
+            break
+    return names
+
+
 def _to_bool_env(value, default=False):
     raw = str(value or "").strip().lower()
     if not raw:
@@ -95,27 +225,53 @@ def _to_bool_env(value, default=False):
     return bool(default)
 
 
+def _owner_exclusion_keywords() -> list[str]:
+    raw = str(
+        os.getenv(
+            "CHATBOT_OWNER_EXCLUDE_KEYWORDS",
+            getattr(settings, "CHATBOT_OWNER_EXCLUDE_KEYWORDS", "smoke"),
+        )
+        or ""
+    ).strip()
+    if not raw:
+        return []
+    tokens = [str(v).strip().lower() for v in raw.split(",")]
+    return [token for token in tokens if token]
+
+
 def _allow_demo_artifact_fallback():
     override = os.getenv("CHATBOT_ALLOW_DEMO_ARTIFACT_FALLBACK")
     if override not in (None, ""):
         return _to_bool_env(override, default=False)
-    return bool(getattr(settings, "DEBUG", False))
+    settings_override = getattr(settings, "CHATBOT_ALLOW_DEMO_ARTIFACT_FALLBACK", None)
+    if settings_override not in (None, ""):
+        return _to_bool_env(settings_override, default=False)
+    return False
 
 
 def _resolve_decision_tree_model_path() -> tuple[Path, str]:
-    configured = str(os.getenv("CHATBOT_DECISION_TREE_MODEL_PATH", "")).strip()
+    configured = str(
+        os.getenv(
+            "CHATBOT_DECISION_TREE_MODEL_PATH",
+            getattr(settings, "CHATBOT_DECISION_TREE_MODEL_PATH", ""),
+        )
+        or ""
+    ).strip()
     if configured:
-        return Path(configured), "configured_env"
+        configured_path = Path(configured)
+        if not configured_path.is_absolute():
+            configured_path = Path(getattr(settings, "BASE_DIR", Path.cwd())) / configured_path
+        return configured_path, "configured_env"
 
     artifacts_root = Path(__file__).resolve().parent.parent / "artifacts"
-    final_path = artifacts_root / "decision_tree_final" / "decision_tree_final.pkl"
-    if final_path.exists():
-        return final_path, "final_default"
-
     if _allow_demo_artifact_fallback():
         demo_path = artifacts_root / "decision_tree_demo" / "decision_tree_demo.pkl"
         if demo_path.exists():
             return demo_path, "demo_fallback"
+
+    final_path = artifacts_root / "decision_tree_final" / "decision_tree_final.pkl"
+    if final_path.exists():
+        return final_path, "final_default"
 
     return final_path, "final_required_missing"
 
@@ -133,6 +289,23 @@ def _load_decision_tree_model(model_path: Optional[Path] = None):
     else:
         resolved_path = Path(model_path)
         resolved_source = "manual_override"
+    exists = resolved_path.exists()
+    demo_allowed = _allow_demo_artifact_fallback()
+    fallback_used = resolved_source.startswith("demo") or resolved_source.startswith("surrogate")
+    logger.info(
+        "DecisionTree load attempt | path=%s | source=%s | file_exists=%s | demo_fallback_allowed=%s | fallback_used=%s",
+        str(resolved_path),
+        resolved_source,
+        exists,
+        demo_allowed,
+        fallback_used,
+    )
+    if resolved_source.startswith("demo") or resolved_source.startswith("final_required_missing"):
+        logger.warning(
+            "DecisionTree fallback/non-final source active | source=%s | path=%s",
+            resolved_source,
+            str(resolved_path),
+        )
     if not resolved_path.exists():
         _DECISION_TREE_MODEL_SOURCE_CACHE = resolved_source
         return None, f"model_not_found:{resolved_path}"
@@ -148,10 +321,67 @@ def _load_decision_tree_model(model_path: Optional[Path] = None):
         _DECISION_TREE_MODEL_CACHE = model
         _DECISION_TREE_MODEL_PATH_CACHE = resolved_str
         _DECISION_TREE_MODEL_SOURCE_CACHE = resolved_source
+        params = _extract_decision_tree_params(model)
+        logger.info(
+            "DecisionTree loaded | source=%s | params=%s",
+            resolved_source,
+            params,
+        )
         return model, None
     except Exception as exc:
         _DECISION_TREE_MODEL_SOURCE_CACHE = resolved_source
         return None, f"model_load_error:{exc}"
+
+
+def _extract_decision_tree_params(model) -> dict:
+    classifier = model
+    if hasattr(model, "named_steps"):
+        classifier = model.named_steps.get("model", model)
+    params = {}
+    for key in ("criterion", "max_depth", "min_samples_leaf", "min_samples_split", "max_features"):
+        params[key] = getattr(classifier, key, None)
+    return params
+
+
+def get_decision_tree_runtime_status(*, force_reload=False) -> dict:
+    resolved_path, resolved_source = _resolve_decision_tree_model_path()
+    if force_reload:
+        model, load_error = _load_decision_tree_model(model_path=resolved_path)
+    else:
+        model, load_error = _load_decision_tree_model()
+    file_exists = resolved_path.exists()
+    mtime = ""
+    if file_exists:
+        try:
+            mtime = datetime.fromtimestamp(resolved_path.stat().st_mtime).isoformat()
+        except Exception:
+            mtime = ""
+    params = _extract_decision_tree_params(model) if model is not None else {}
+    fallback_used = bool(
+        resolved_source.startswith("demo")
+        or resolved_source.startswith("final_required_missing")
+        or str(load_error or "").startswith("model_not_found")
+        or str(load_error or "").startswith("model_load_error")
+    )
+    expected_match = True
+    if params:
+        expected_match = all(params.get(k) == v for k, v in _DECISION_TREE_EXPECTED_PARAMS.items())
+
+    status = {
+        "path": str(resolved_path),
+        "source": resolved_source,
+        "file_exists": bool(file_exists),
+        "fallback_used": fallback_used,
+        "demo_fallback_allowed": bool(_allow_demo_artifact_fallback()),
+        "loaded_model_params": params,
+        "expected_pruned_params": dict(_DECISION_TREE_EXPECTED_PARAMS),
+        "expected_params_match": bool(expected_match) if params else False,
+        "file_last_modified": mtime,
+        "load_error": str(load_error or ""),
+    }
+    if fallback_used:
+        logger.warning("DecisionTree runtime status indicates fallback usage | status=%s", status)
+    return status
 
 
 def _parse_date(value):
@@ -418,6 +648,7 @@ def build_accommodation_recommendation_trace(room: Room, params: dict) -> dict:
     guests = _to_int(params.get("guests"), default=1)
     budget = _to_decimal(params.get("budget"), default=Decimal("0"))
     location = str(params.get("location") or "").strip()
+    location_anchor = str(params.get("location_anchor") or "").strip()
     company_type = str(params.get("company_type") or "").strip().lower()
 
     accom = room.accommodation
@@ -437,6 +668,9 @@ def build_accommodation_recommendation_trace(room: Room, params: dict) -> dict:
         score += 0.10
 
     location_match = True
+    if location_anchor:
+        reasons.append(f"Map anchor considered: {location_anchor} (city-proper coverage)")
+        score += 0.05
     if location:
         if location.lower() in str(accom.location or "").lower():
             reasons.append(f"Location match: {accom.location}")
@@ -502,6 +736,71 @@ def build_accommodation_recommendation_trace(room: Room, params: dict) -> dict:
             reasons.append("No amenity keyword match found in available details")
             score -= 0.15
 
+    preference_tags = (
+        params.get("preference_tags")
+        if isinstance(params.get("preference_tags"), list)
+        else []
+    )
+    normalized_preference_tags = sorted(
+        {
+            str(tag or "").strip().lower()
+            for tag in preference_tags
+            if str(tag or "").strip()
+        }
+    )
+    preference_match_ratio = 1.0
+    if normalized_preference_tags:
+        searchable_text = " ".join(
+            [
+                str(room.room_name or ""),
+                str(accom.company_name or ""),
+                str(accom.location or ""),
+                str(accom.company_type or ""),
+                str(getattr(accom, "description", "") or ""),
+                str(getattr(accom, "accommodation_amenities", "") or ""),
+            ]
+        ).lower()
+        preference_aliases = {
+            "quiet": ("quiet", "peaceful", "calm", "serene", "relax"),
+            "nature": ("nature", "green", "garden", "fresh air", "view", "scenic", "river", "mountain"),
+            "family": ("family", "kids", "children", "group", "suite", "spacious"),
+            "clean": ("clean", "hygienic", "sanitary", "well-maintained", "tidy"),
+            "accessible": ("terminal", "transport", "commute", "downtown", "highway"),
+        }
+        matched_preferences = []
+        for tag in normalized_preference_tags:
+            markers = preference_aliases.get(tag, (tag,))
+            if any(marker in searchable_text for marker in markers):
+                matched_preferences.append(tag)
+        preference_match_ratio = (
+            len(matched_preferences) / len(normalized_preference_tags)
+            if normalized_preference_tags
+            else 0.0
+        )
+        if preference_match_ratio >= 1.0:
+            reasons.append(f"Preference match: {', '.join(matched_preferences)}")
+            score += 0.18
+        elif preference_match_ratio > 0:
+            reasons.append(
+                f"Partial preference match ({len(matched_preferences)}/{len(normalized_preference_tags)}): "
+                f"{', '.join(matched_preferences)}"
+            )
+            score += 0.08
+        else:
+            reasons.append("No strong text match for your descriptive preferences yet")
+            score -= 0.10
+
+    if bool(params.get("prefer_low_price")) and budget <= 0:
+        if price <= Decimal("1500"):
+            reasons.append("Budget-friendly option")
+            score += 0.12
+        elif price <= Decimal("2500"):
+            reasons.append("Mid-range price option")
+            score += 0.05
+        else:
+            reasons.append("Premium-priced option")
+            score -= 0.08
+
     normalized_score = round(max(0.0, min(score, 1.0)), 4)
     if normalized_score >= 0.80:
         match_strength = "High"
@@ -518,6 +817,7 @@ def build_accommodation_recommendation_trace(room: Room, params: dict) -> dict:
         "type_match": type_match,
         "guest_fit": guest_fit,
         "amenity_match_ratio": round(float(amenity_match_ratio), 3),
+        "preference_match_ratio": round(float(preference_match_ratio), 3),
     }
 
 
@@ -526,12 +826,16 @@ def recommend_tours(params: dict, limit: int = 3) -> List[RecommendationResult]:
     guests = _to_int(params.get("guests"), default=1)
     budget = _to_decimal(params.get("budget"), default=Decimal("0"))
     duration = _to_int(params.get("duration_days"), default=0)
-    preference = str(
-        params.get("preference")
+    requested_preferences = _collect_requested_tour_preferences(params)
+    requested_preference_text = str(
+        params.get("preference_text")
+        or params.get("preference")
         or params.get("tour_type")
+        or params.get("preferred_type")
         or params.get("interest")
         or ""
     ).strip().lower()
+    requested_preference_tokens = _tokenize_preference_phrase(requested_preference_text)
 
     schedules = (
         Tour_Schedule.objects.select_related("tour")
@@ -557,7 +861,20 @@ def recommend_tours(params: dict, limit: int = 3) -> List[RecommendationResult]:
 
         name = (schedule.tour.tour_name or "").lower()
         desc = (schedule.tour.description or "").lower()
-        preference_fit = 1.0 if preference and (preference in name or preference in desc) else 0.3 if not preference else 0.0
+        tour_tokens = _tokenize_preference_phrase(f"{name} {desc}")
+        detected_tour_tags = _extract_tour_preference_tags_from_text(f"{name} {desc}")
+        tag_match_ratio = 0.0
+        token_match_ratio = 0.0
+        if requested_preferences:
+            overlap = requested_preferences.intersection(detected_tour_tags)
+            tag_match_ratio = len(overlap) / max(1, len(requested_preferences))
+        if requested_preference_tokens:
+            token_overlap = requested_preference_tokens.intersection(tour_tokens)
+            token_match_ratio = len(token_overlap) / max(1, len(requested_preference_tokens))
+        if requested_preferences or requested_preference_tokens:
+            preference_fit = max(tag_match_ratio, token_match_ratio)
+        else:
+            preference_fit = 0.3
         availability_fit = min(slots_left, 10) / 10.0
         price_norm = 1.0 - _normalize(price, min_price, max_price)
 
@@ -575,7 +892,17 @@ def recommend_tours(params: dict, limit: int = 3) -> List[RecommendationResult]:
                 title=schedule.tour.tour_name,
                 subtitle=f"{schedule.sched_id} | PHP {schedule.price} per guest | {schedule.duration_days} day(s)",
                 score=score,
-                meta={"sched_id": schedule.sched_id},
+                meta={
+                    "sched_id": schedule.sched_id,
+                    "detected_tour_tags": sorted(detected_tour_tags),
+                    "requested_tour_preferences": sorted(requested_preferences),
+                    "requested_preference_tokens": sorted(requested_preference_tokens),
+                    "matched_preference_tokens": sorted(
+                        requested_preference_tokens.intersection(tour_tokens)
+                    ),
+                    "tag_match_ratio": round(float(tag_match_ratio), 4),
+                    "token_match_ratio": round(float(token_match_ratio), 4),
+                },
             )
         )
 
@@ -605,7 +932,20 @@ def _build_accommodation_room_queryset(
         .filter(status="AVAILABLE")
         .filter(current_availability__gte=1)
         .filter(accommodation__approval_status="accepted")
+        .filter(accommodation__is_active=True)
+        .filter(accommodation__owner__isnull=False)
+        .filter(accommodation__owner__is_active=True)
+        .filter(accommodation__owner__groups__name__iexact="accommodation_owner")
+        .exclude(accommodation__owner__groups__name__iexact="accommodation_owner_pending")
+        .exclude(accommodation__owner__groups__name__iexact="accommodation_owner_declined")
     )
+
+    for keyword in _owner_exclusion_keywords():
+        room_qs = room_qs.exclude(accommodation__owner__email__icontains=keyword)
+        room_qs = room_qs.exclude(accommodation__owner__username__icontains=keyword)
+        room_qs = room_qs.exclude(accommodation__owner__first_name__icontains=keyword)
+        room_qs = room_qs.exclude(accommodation__owner__last_name__icontains=keyword)
+        room_qs = room_qs.exclude(accommodation__company_name__icontains=keyword)
 
     if company_type:
         if apply_company_type:
@@ -630,7 +970,7 @@ def _build_accommodation_room_queryset(
     if apply_budget and budget > 0:
         room_qs = room_qs.filter(price_per_night__lte=budget)
 
-    return room_qs, guests
+    return room_qs.distinct(), guests
 
 
 def _build_accommodation_results(room_qs, *, guests: int, params: dict) -> List[RecommendationResult]:

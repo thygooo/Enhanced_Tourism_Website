@@ -1,0 +1,7 @@
+rq_item,construct,metric_name,formula,value,n,status,notes
+4.1,Perceived Usefulness (PU),pu_mean_1_5,mean(mean(PU_Q1..PU_Q4) per complete batch),,0,available,
+4.1,Perceived Usefulness (PU),pu_sd_1_5,sample_sd(mean(PU_Q1..PU_Q4) per complete batch),,0,available,
+4.1,Perceived Usefulness (PU),pu_cronbach_alpha,Cronbach alpha across PU_Q1..PU_Q4,,0,available,Internal consistency reliability.
+4.2,Perceived Ease of Use (PEU),peu_mean_1_5,mean(mean(PEU_Q1..PEU_Q4) per complete batch),,0,available,
+4.2,Perceived Ease of Use (PEU),peu_sd_1_5,sample_sd(mean(PEU_Q1..PEU_Q4) per complete batch),,0,available,
+4.2,Perceived Ease of Use (PEU),peu_cronbach_alpha,Cronbach alpha across PEU_Q1..PEU_Q4,,0,available,Internal consistency reliability.

@@ -19,26 +19,20 @@ class GuestAuthenticationBackend(BaseBackend):
                 try:
                     user = User.objects.get(email=username)
                 except User.DoesNotExist:
-                    print(f"User with username/email {username} does not exist.")
                     return None
 
             # Verify the password against the stored hashed password
             if user.check_password(password):
-                print(f"User {username} authenticated successfully.")
                 return user  # Return the authenticated user object
-            else:
-                print(f"Invalid password for user {username}.")
-        except Exception as e:
-            print(f"Authentication error: {str(e)}")
+        except Exception:
+            return None
         return None  # Return None if authentication fails
 
     def get_user(self, user_id):
         """
         Retrieve a user by their ID.
         """
-        print(f"Fetching user with ID: {user_id}")  # Debugging
         try:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
-            print(f"User with ID {user_id} does not exist.")  # Debugging
             return None  # Return None if the user does not exist

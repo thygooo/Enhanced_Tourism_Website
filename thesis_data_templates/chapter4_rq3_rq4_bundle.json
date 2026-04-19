@@ -1,15 +1,15 @@
 {
   "metadata": {
-    "generated_at": "2026-03-23T18:40:42.629184+00:00",
-    "window_days": 3650,
-    "source": "pilot_test",
+    "generated_at": "2026-04-09T09:53:47.239073+00:00",
+    "window_days": 30,
+    "source": "all",
     "counts": {
-      "recommendation_results": 243,
-      "recommendation_events": 236,
-      "system_metric_logs": 507,
-      "chatbot_logs": 0,
-      "survey_rows": 49,
-      "survey_batches_with_batch_id": 8
+      "recommendation_results": 57,
+      "recommendation_events": 64,
+      "system_metric_logs": 246,
+      "chatbot_logs": 237,
+      "survey_rows": 2,
+      "survey_batches_with_batch_id": 2
     },
     "accuracy_disclaimer": "True recommendation accuracy is not computed from runtime logs only. Use labeled relevance evaluation dataset for true accuracy metrics.",
     "offline_true_accuracy_source": "artifacts\\decision_tree_final\\evaluation_metrics_v1.json",
@@ -33,7 +33,7 @@
       "metric_name": "queries_with_results_rate_pct",
       "formula": "queries_with_results / accommodation_queries * 100",
       "value": 100.0,
-      "n": 123,
+      "n": 19,
       "status": "available_proxy",
       "notes": "Use as online effectiveness proxy only, not true accuracy."
     },
@@ -42,8 +42,8 @@
       "indicator": "Recommendation effectiveness proxy",
       "metric_name": "avg_top1_score",
       "formula": "mean(top_1_recommendation_score)",
-      "value": 0.720871,
-      "n": 89,
+      "value": 0.736935,
+      "n": 15,
       "status": "available_proxy",
       "notes": "Model score proxy from recommendation trace."
     },
@@ -52,8 +52,8 @@
       "indicator": "System Usability Scale",
       "metric_name": "sus_mean_0_100",
       "formula": "mean(SUS batch scores)",
-      "value": 50.0,
-      "n": 1,
+      "value": "",
+      "n": 0,
       "status": "available",
       "notes": "Pair with SD and respondent count in Chapter 4."
     },
@@ -63,7 +63,7 @@
       "metric_name": "sus_sd_0_100",
       "formula": "sample_sd(SUS batch scores)",
       "value": "",
-      "n": 1,
+      "n": 0,
       "status": "available",
       "notes": ""
     },
@@ -72,8 +72,8 @@
       "indicator": "User engagement",
       "metric_name": "ctr_pct",
       "formula": "click_events / recommendation_view_events * 100",
-      "value": 27.6596,
-      "n": 94,
+      "value": 68.4211,
+      "n": 19,
       "status": "available",
       "notes": "Recommendation event funnel."
     },
@@ -82,8 +82,8 @@
       "indicator": "User engagement",
       "metric_name": "unique_recommendation_sessions",
       "formula": "count(distinct RecommendationEvent.session_id)",
-      "value": 28,
-      "n": 28,
+      "value": 16,
+      "n": 16,
       "status": "available",
       "notes": "Session-level engagement volume."
     },
@@ -92,8 +92,8 @@
       "indicator": "User engagement",
       "metric_name": "unique_chat_users",
       "formula": "count(distinct ChatbotLog.user_id)",
-      "value": 0,
-      "n": 0,
+      "value": 14,
+      "n": 14,
       "status": "available",
       "notes": "User-level chat participation."
     },
@@ -102,8 +102,8 @@
       "indicator": "Booking conversion efficiency",
       "metric_name": "book_rate_pct",
       "formula": "(book_events / recommendation_view_events) * 100",
-      "value": 45.7447,
-      "n": 94,
+      "value": 26.3158,
+      "n": 19,
       "status": "available",
       "notes": "Denominator locked to accommodation recommendation view events only."
     }
@@ -114,8 +114,8 @@
       "construct": "Perceived Usefulness (PU)",
       "metric_name": "pu_mean_1_5",
       "formula": "mean(mean(PU_Q1..PU_Q4) per complete batch)",
-      "value": 5.0,
-      "n": 1,
+      "value": "",
+      "n": 0,
       "status": "available",
       "notes": ""
     },
@@ -125,7 +125,7 @@
       "metric_name": "pu_sd_1_5",
       "formula": "sample_sd(mean(PU_Q1..PU_Q4) per complete batch)",
       "value": "",
-      "n": 1,
+      "n": 0,
       "status": "available",
       "notes": ""
     },
@@ -135,7 +135,7 @@
       "metric_name": "pu_cronbach_alpha",
       "formula": "Cronbach alpha across PU_Q1..PU_Q4",
       "value": "",
-      "n": 8,
+      "n": 2,
       "status": "available",
       "notes": "Internal consistency reliability."
     },
@@ -144,8 +144,8 @@
       "construct": "Perceived Ease of Use (PEU)",
       "metric_name": "peu_mean_1_5",
       "formula": "mean(mean(PEU_Q1..PEU_Q4) per complete batch)",
-      "value": 5.0,
-      "n": 1,
+      "value": "",
+      "n": 0,
       "status": "available",
       "notes": ""
     },
@@ -155,7 +155,7 @@
       "metric_name": "peu_sd_1_5",
       "formula": "sample_sd(mean(PEU_Q1..PEU_Q4) per complete batch)",
       "value": "",
-      "n": 1,
+      "n": 0,
       "status": "available",
       "notes": ""
     },
@@ -165,7 +165,7 @@
       "metric_name": "peu_cronbach_alpha",
       "formula": "Cronbach alpha across PEU_Q1..PEU_Q4",
       "value": "",
-      "n": 8,
+      "n": 2,
       "status": "available",
       "notes": "Internal consistency reliability."
     }
@@ -173,134 +173,134 @@
   "rq4_item_rows": [
     {
       "statement_code": "PU_Q1",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "PU_Q2",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "PU_Q3",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "PU_Q4",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "PEU_Q1",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "PEU_Q2",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "PEU_Q3",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "PEU_Q4",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "SUS_Q1",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "SUS_Q2",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "SUS_Q3",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "SUS_Q4",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "SUS_Q5",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "SUS_Q6",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "SUS_Q7",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "SUS_Q8",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "SUS_Q9",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "SUS_Q10",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "DIFF_DISCOVER",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "DIFF_MATCH",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "DIFF_PLAN",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     },
     {
       "statement_code": "DIFF_BOOKPAY",
-      "n": 1,
-      "mean_1_5": 5.0,
+      "n": 0,
+      "mean_1_5": "",
       "sd_1_5": ""
     }
   ],

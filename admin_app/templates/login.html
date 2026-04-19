@@ -374,8 +374,8 @@
               
               <div class="register-links">
                   <p>Don't have an account? <a href="{% url 'admin_app:employee-register' %}">Register as Employee</a></p>
-                  <p>Own an accommodation? <strong>Log in as Accommodation Owner</strong> using your email and password above.</p>
-                  <p>No owner account yet? <a href="{% url 'main-page' %}?owner_signup=1&next={% url 'owner_accommodation_register' %}">Sign up as Accommodation Owner</a></p>
+                  <p>No owner account yet? <a href="{% url 'register' %}?owner_signup=1&next={% url 'admin_app:login' %}">Sign up as Accommodation Owner</a></p>
+                  <p>Register as an Attraction? <a href="{% url 'register' %}?owner_signup=1&next={% url 'admin_app:login' %}">Register Attraction</a></p>
                   <p>Guest access? <a href="{% url 'login' %}">Log in as Guest</a></p>
               </div>
           </div>
@@ -394,13 +394,20 @@
         if (tokenInput.value) return;
         event.preventDefault();
         if (typeof grecaptcha === 'undefined') {
+          // Fail open on client side so server can return a clear validation message.
+          form.submit();
           return;
         }
         grecaptcha.ready(function () {
-          grecaptcha.execute(siteKey, { action: 'admin_login' }).then(function (token) {
-            tokenInput.value = token || '';
-            form.submit();
-          });
+          grecaptcha.execute(siteKey, { action: 'admin_login' })
+            .then(function (token) {
+              tokenInput.value = token || '';
+              form.submit();
+            })
+            .catch(function () {
+              // Let backend validation handle failures instead of freezing the button.
+              form.submit();
+            });
         });
       });
     });

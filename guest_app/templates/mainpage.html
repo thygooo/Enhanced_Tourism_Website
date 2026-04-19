@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,7 +22,7 @@
         body {
             background-color: #f8f9fa;
             color: #333;
-            zoom: 0.8;
+            zoom: 1;
             overflow-x: hidden;
         }
         
@@ -617,6 +618,24 @@
         }
 
         .owner-signup-login-btn {
+            display: inline;
+            padding: 0;
+            border-radius: 0;
+            border: none;
+            background: transparent;
+            color: #1d5fd0;
+            text-decoration: none;
+            font-weight: 700;
+            line-height: 1;
+            transition: color 0.2s ease;
+        }
+
+        .owner-signup-login-btn:hover {
+            color: #184fb0;
+            text-decoration: underline;
+        }
+
+        .modal.owner-signup-mode .owner-signup-login-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -626,12 +645,9 @@
             background: #fff;
             color: #875a34;
             text-decoration: none;
-            font-weight: 700;
-            line-height: 1;
-            transition: all 0.2s ease;
         }
 
-        .owner-signup-login-btn:hover {
+        .modal.owner-signup-mode .owner-signup-login-btn:hover {
             background: #fff5ec;
             color: #6f4e37;
             text-decoration: none;
@@ -977,27 +993,28 @@
 
         /* Login modal redesign (sample-inspired, system palette) */
         #loginModal .modal-content {
-            max-width: 390px;
-            border-radius: 18px;
-            padding: 22px 20px 18px;
-            background: #fffdf9;
-            border: 1px solid #e8d8c8;
-            box-shadow: 0 20px 34px rgba(56, 33, 16, 0.2);
+            max-width: 520px;
+            border-radius: 8px;
+            padding: 20px 22px 18px;
+            background: #ffffff;
+            border: 1px solid #d9dfe8;
+            box-shadow: 0 16px 36px rgba(20, 36, 62, 0.22);
         }
 
         #loginModal .close-modal {
-            top: 10px;
-            right: 14px;
-            color: #8a6a52;
+            top: 8px;
+            right: 12px;
+            color: #4b5563;
+            font-size: 1.5rem;
         }
 
         #loginModal .modal-title {
             margin-bottom: 14px;
-            padding-bottom: 0;
-            border-bottom: none;
-            text-align: left;
-            color: #6b4423;
-            font-size: 1.45rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: center;
+            color: #111827;
+            font-size: 2rem;
             font-weight: 800;
             letter-spacing: 0.01em;
         }
@@ -1012,28 +1029,114 @@
             margin-bottom: 0;
         }
 
+        /* Profile update modal alignment (Figure 28 style) */
+        #profileUpdateModal .modal-content {
+            max-width: 760px;
+            width: 94%;
+            border-radius: 10px;
+            border: 1px solid #d7d7d7;
+            background: #ffffff;
+            padding: 18px 26px 16px;
+        }
+
+        #profileUpdateModal .modal-title {
+            color: #2a2a2a;
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 0 0 14px;
+            padding: 0 0 10px;
+            border-bottom: 1px solid #ececec;
+        }
+
+        #profileUpdateModal .close-modal {
+            top: 8px;
+            right: 14px;
+            color: #555;
+            font-size: 28px;
+        }
+
+        #profileUpdateModal .form-row {
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        #profileUpdateModal .form-group {
+            margin-bottom: 12px;
+        }
+
+        #profileUpdateModal label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #444;
+            margin-bottom: 2px;
+        }
+
+        #profileUpdateModal .form-control {
+            height: 38px;
+            padding: 8px 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 0.88rem;
+        }
+
+        #profileUpdateModal textarea.form-control {
+            height: auto;
+        }
+
+        #profileUpdateModal .readonly {
+            background: #f3f3f3;
+            color: #666;
+        }
+
+        #profileUpdateModal .camera-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        #profileUpdateModal .camera-btn {
+            border: 1px solid #d2d2d2;
+            background: #f7f7f7;
+            color: #333;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #profileUpdateModal .submit-btn {
+            margin-top: 8px;
+            border-radius: 4px;
+            padding: 10px 14px;
+            background: #1f66d1;
+            box-shadow: none;
+            transform: none;
+        }
+
         #loginModal label {
             font-size: 0.84rem;
             font-weight: 700;
-            color: #3f2f26;
+            color: #4b5563;
             margin-bottom: 6px;
         }
 
         #loginModal .form-control {
             width: 100%;
-            height: 48px;
-            border-radius: 12px;
-            border: 1px solid #ddc4ae;
-            background: #fff;
-            color: #3f2f26;
+            height: 46px;
+            border-radius: 4px;
+            border: 1px solid #cfd8e3;
+            background: #edf3fe;
+            color: #1f2937;
             font-size: 0.94rem;
             padding: 10px 12px;
-            box-shadow: inset 0 1px 1px rgba(56, 33, 16, 0.05);
+            box-shadow: none;
         }
 
         #loginModal .form-control:focus {
-            border-color: #b57946;
-            box-shadow: 0 0 0 3px rgba(181, 121, 70, 0.16);
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.16);
         }
 
         #loginModal .password-wrap {
@@ -1051,24 +1154,24 @@
             transform: translateY(-50%);
             border: none;
             background: transparent;
-            color: #9a7f69;
+            color: #6b7280;
             width: 28px;
             height: 28px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
         }
 
         #loginModal .password-toggle:hover {
-            background: #f7ede4;
-            color: #6b4423;
+            background: #e8eef9;
+            color: #2563eb;
         }
 
         #loginModal .submit-btn {
-            margin-top: 4px;
-            border-radius: 10px;
-            background: linear-gradient(90deg, #875a34, #b57946);
+            margin-top: 2px;
+            border-radius: 4px;
+            background: #1d5fd0;
             box-shadow: none;
-            padding: 12px 18px;
+            padding: 11px 18px;
             font-size: 1rem;
             font-weight: 700;
             transform: none;
@@ -1077,14 +1180,14 @@
         #loginModal .submit-btn:hover {
             transform: none;
             box-shadow: none;
-            filter: brightness(0.98);
+            background: #184fb0;
         }
 
         #loginModal .login-link {
-            margin-top: 2px;
+            margin-top: 8px;
             text-align: center;
-            color: #765b48;
-            font-size: 0.92rem;
+            color: #4b5563;
+            font-size: 0.88rem;
             display: grid;
             gap: 8px;
         }
@@ -1093,23 +1196,94 @@
             margin: 0;
         }
 
+        #loginModal .login-link p a {
+            color: #1d5fd0;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        #loginModal .login-link p a:hover {
+            text-decoration: underline;
+        }
+
         #loginModal .login-link a.signup-outline-btn {
             display: inline-flex;
             justify-content: center;
             align-items: center;
             width: 100%;
-            padding: 11px 12px;
-            border-radius: 10px;
-            border: 2px solid #6f4e37;
+            padding: 10px 12px;
+            border-radius: 4px;
+            border: 1px solid #94a3b8;
             text-decoration: none;
-            color: #3f2f26;
+            color: #1f2937;
             font-weight: 700;
             background: #fff;
         }
 
         #loginModal .login-link a.signup-outline-btn:hover {
-            background: #fff7ef;
+            background: #f8fafc;
             text-decoration: none;
+        }
+
+        #loginModal .forgot-password-inline {
+            margin: 4px 0 6px;
+            text-align: left;
+        }
+
+        #loginModal .forgot-password-inline a {
+            color: #2b67c8;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        #loginModal .forgot-password-inline a:hover {
+            text-decoration: underline;
+        }
+
+        #loginModal .social-divider {
+            margin: 10px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #9ca3af;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        #loginModal .social-divider::before,
+        #loginModal .social-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e5e7eb;
+        }
+
+        #loginModal .social-login-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        #loginModal .social-btn {
+            border: 1px solid #b9c7dc;
+            border-radius: 4px;
+            background: #fff;
+            color: #334155;
+            font-size: 0.86rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            min-width: 116px;
+            cursor: pointer;
+        }
+
+        #loginModal .social-btn i {
+            margin-right: 7px;
+        }
+
+        #loginModal .social-btn:hover {
+            background: #f8fafc;
         }
 
         #loginModal .error-message {
@@ -1117,6 +1291,196 @@
             margin-top: 4px;
             margin-bottom: 0;
             font-size: 0.73rem;
+        }
+
+        /* Signup modal redesign (Figure 32 style) */
+        #signupModal .modal-content {
+            max-width: 520px;
+            border-radius: 8px;
+            padding: 20px 22px 18px;
+            background: #ffffff;
+            border: 1px solid #d9dfe8;
+            box-shadow: 0 16px 36px rgba(20, 36, 62, 0.22);
+            max-height: 86vh;
+            overflow-y: auto;
+        }
+
+        #signupModal .close-modal {
+            top: 8px;
+            right: 12px;
+            color: #4b5563;
+            font-size: 1.5rem;
+        }
+
+        #signupModal .modal-title {
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: center;
+            color: #111827;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+        }
+
+        #signupModal #signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #signupModal label {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #4b5563;
+            margin-bottom: 6px;
+        }
+
+        #signupModal .form-group {
+            margin-bottom: 0;
+        }
+
+        #signupModal .form-control {
+            width: 100%;
+            height: 44px;
+            border-radius: 4px;
+            border: 1px solid #cfd8e3;
+            background: #ffffff;
+            color: #1f2937;
+            font-size: 0.92rem;
+            padding: 10px 12px;
+            box-shadow: none;
+        }
+
+        #signupModal .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.16);
+        }
+
+        #signupModal .name-row {
+            gap: 10px;
+        }
+
+        #signupModal .name-row .form-group:nth-child(2) {
+            max-width: 76px !important;
+        }
+
+        #signupModal .signup-basic-actions {
+            margin-top: 2px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #signupModal .signup-more-btn {
+            border: 1px solid #d1d5db;
+            background: #f3f4f6;
+            color: #374151;
+            border-radius: 4px;
+            font-size: 0.86rem;
+            font-weight: 700;
+            width: fit-content;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        #signupModal .signup-more-btn:hover {
+            background: #e5e7eb;
+        }
+
+        #signupModal .signup-advanced {
+            border-top: 1px dashed #e5e7eb;
+            padding-top: 10px;
+            display: none;
+            gap: 10px;
+        }
+
+        #signupModal .signup-advanced.active {
+            display: grid;
+        }
+
+        #signupModal .submit-btn.signup-submit-btn {
+            width: 122px;
+            border-radius: 4px;
+            padding: 10px 14px;
+            font-size: 0.95rem;
+            background: #1d5fd0;
+            box-shadow: none;
+            margin-top: 0;
+        }
+
+        #signupModal .submit-btn.signup-submit-btn:hover {
+            background: #184fb0;
+            transform: none;
+            box-shadow: none;
+        }
+
+        #signupModal .social-divider {
+            margin: 6px 0 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #9ca3af;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        #signupModal .social-divider::before,
+        #signupModal .social-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e5e7eb;
+        }
+
+        #signupModal .social-login-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2px;
+        }
+
+        #signupModal .social-btn {
+            border: 1px solid #b9c7dc;
+            border-radius: 4px;
+            background: #fff;
+            color: #334155;
+            font-size: 0.86rem;
+            font-weight: 700;
+            padding: 8px 14px;
+            min-width: 116px;
+            cursor: pointer;
+        }
+
+        #signupModal .social-btn i {
+            margin-right: 7px;
+        }
+
+        #signupModal .social-btn:hover {
+            background: #f8fafc;
+        }
+
+        #signupModal .owner-signup-actions {
+            justify-content: flex-start;
+            margin-top: 0;
+        }
+
+        #signupModal .owner-signup-login-cta {
+            margin-top: 6px;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        #signupModal .owner-only-section {
+            display: none;
+        }
+
+        .modal.owner-signup-mode #signupModal .owner-only-section {
+            display: block;
+        }
+
+        .modal.owner-signup-mode .owner-only-section {
+            display: block;
         }
 
         /* Responsive adjustments */
@@ -1204,6 +1568,168 @@
         .user-profile-nav {
             position: relative;
             margin-left: 20px;
+        }
+
+        .notification-nav {
+            position: relative;
+            margin-left: 10px;
+        }
+
+        .notification-bell {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(13, 27, 45, 0.32);
+            color: #f3f6ff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .notification-bell:hover {
+            background: rgba(13, 27, 45, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            border-radius: 999px;
+            background: #ef4444;
+            color: #fff;
+            font-size: 11px;
+            line-height: 18px;
+            text-align: center;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .notification-dropdown {
+            position: absolute;
+            top: 48px;
+            right: 0;
+            width: min(460px, 92vw);
+            max-height: 430px;
+            border-radius: 12px;
+            background: #fffaf3;
+            border: 1px solid #e7d7c0;
+            box-shadow: 0 16px 26px rgba(63, 43, 23, 0.22);
+            color: #3d2b1f;
+            overflow: hidden;
+            display: none;
+            z-index: 1200;
+        }
+
+        .notification-dropdown.open {
+            display: block;
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border-bottom: 1px solid #e9dcc8;
+            background: linear-gradient(135deg, #fffaf3 0%, #f5e7d4 100%);
+        }
+
+        .notification-header h4 {
+            margin: 0;
+            font-size: 18px;
+            color: #4b2d16;
+        }
+
+        .mark-read-btn {
+            border: 1px solid #d6b187;
+            background: #fff;
+            color: #7a4c20;
+            border-radius: 8px;
+            min-height: 30px;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .mark-read-btn:hover {
+            background: #f8ebdc;
+        }
+
+        .notification-list {
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            display: flex;
+            gap: 12px;
+            padding: 14px 16px;
+            border-bottom: 1px solid #efe1ce;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .notification-item:hover {
+            background: #f7ecdd;
+        }
+
+        .notification-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            margin-top: 7px;
+            background: transparent;
+            flex-shrink: 0;
+        }
+
+        .notification-item.is-unread .notification-dot {
+            background: #ef4444;
+        }
+
+        .notification-content {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .notification-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .notification-title {
+            margin: 0;
+            font-size: 15px;
+            color: #3f2a1a;
+            font-weight: 700;
+        }
+
+        .notification-date {
+            font-size: 12px;
+            color: #896848;
+            white-space: nowrap;
+        }
+
+        .notification-message {
+            margin: 4px 0 0;
+            font-size: 14px;
+            color: #6c533d;
+            line-height: 1.35;
+        }
+
+        .notification-empty {
+            padding: 24px 16px;
+            text-align: center;
+            color: #8a6b4d;
+            font-size: 14px;
         }
         
         .user-info {
@@ -1357,6 +1883,19 @@
             padding: 60px 0;
             background-color: #f9f9f9;
         }
+
+        .bookings-shell {
+            max-width: 1020px;
+            margin: 0 auto;
+        }
+
+        .bookings-subtitle {
+            text-align: center;
+            color: #6b7280;
+            margin-top: -18px;
+            margin-bottom: 26px;
+            font-size: 0.95rem;
+        }
         
         .section-title {
             text-align: center;
@@ -1369,6 +1908,47 @@
             display: flex;
             margin-bottom: 20px;
             border-bottom: 1px solid #ddd;
+        }
+
+        .booking-filters {
+            display: grid;
+            grid-template-columns: 1fr 240px auto;
+            gap: 12px;
+            align-items: end;
+            margin-bottom: 20px;
+        }
+
+        .booking-filter-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: #4b5563;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .booking-filter-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.92rem;
+            background: #fff;
+        }
+
+        .clear-filters-btn {
+            border: 1px solid #6b7280;
+            background: #6b7280;
+            color: #fff;
+            border-radius: 6px;
+            height: 40px;
+            padding: 0 14px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .clear-filters-btn:hover {
+            background: #4b5563;
+            border-color: #4b5563;
         }
         
         .tab-button {
@@ -1485,6 +2065,12 @@
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
+
+        @media (max-width: 900px) {
+            .booking-filters {
+                grid-template-columns: 1fr;
+            }
+        }
         
         /* Additional Modal Styles for Cancellation */
         .form-actions {
@@ -1564,12 +2150,17 @@
             flex-direction: column;
             overflow: hidden;
             animation: chatPanelIn 180ms ease-out;
+            --chat-primary-blue: #1a67d2;
+            --chat-deep-blue: #0f4ea8;
+            --chat-accent-teal: #0ea5a2;
+            --chat-warm-brown: #9b6a3a;
+            --chat-warm-brown-dark: #7f542c;
         }
 
         .chat-header {
             background:
                 radial-gradient(circle at 12% 10%, rgba(255,255,255,0.25), transparent 42%),
-                linear-gradient(135deg, #0f4ea8, #1b6fd8 55%, #0ea5a2);
+                linear-gradient(135deg, var(--chat-warm-brown-dark), var(--chat-warm-brown) 48%, var(--chat-primary-blue));
             color: white;
             padding: 14px 16px;
             display: flex;
@@ -1580,7 +2171,6 @@
         }
 
         .chat-header::after {
-            content: "Hotel ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Booking ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ Billing";
             content: attr(data-chat-subtitle);
             position: absolute;
             left: 16px;
@@ -1624,33 +2214,18 @@
             padding: 14px 14px 10px;
             overflow-y: auto;
             overflow-x: hidden;
-            background: #f4f8fd;
-            position: relative;
+            background-color: #eef4fb;
+            background-image:
+                linear-gradient(180deg, rgba(244, 248, 253, 0.74), rgba(244, 248, 253, 0.74)),
+                url('/static/images/chatbot-bg.jpg');
+            background-size: auto, cover;
+            background-position: 0 0, center center;
+            background-repeat: no-repeat, no-repeat;
             display: flex;
             flex-direction: column;
             gap: 10px;
             scrollbar-width: thin;
             scrollbar-color: #b7c9e8 transparent;
-        }
-
-        .chat-messages::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            background:
-                linear-gradient(180deg, rgba(244, 248, 253, 0.84), rgba(244, 248, 253, 0.84)),
-                url('/static/images/chatbot-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 1;
-            z-index: 0;
-        }
-
-        .chat-messages > * {
-            position: relative;
-            z-index: 1;
         }
 
         .chat-messages::-webkit-scrollbar {
@@ -1675,7 +2250,7 @@
         }
 
         .message.user {
-            background: linear-gradient(135deg, #1157c4, #1f76e2);
+            background: linear-gradient(135deg, var(--chat-warm-brown-dark), var(--chat-warm-brown));
             color: white;
             margin-left: auto;
             text-align: left;
@@ -1683,16 +2258,98 @@
         }
 
         .message.bot {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.76);
             color: #1e293b;
             border: 1px solid #e5edf8;
             border-bottom-left-radius: 6px;
+            backdrop-filter: blur(1px);
+        }
+
+        .message.bot.formal-response {
+            padding: 12px 14px;
+        }
+
+        .message.bot .bot-text-heading {
+            font-weight: 800;
+            font-size: 0.88rem;
+            color: #1c3f6e;
+            margin: 0 0 6px;
+            letter-spacing: 0.01em;
+        }
+
+        .message.bot .bot-text-paragraph {
+            margin: 0 0 8px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #1f2937;
+        }
+
+        .message.bot .bot-text-paragraph:last-child {
+            margin-bottom: 0;
+        }
+
+        .message.bot .bot-text-list {
+            margin: 0 0 8px 18px;
+            padding: 0;
+            color: #1f2937;
+            line-height: 1.45;
+            font-size: 0.88rem;
+        }
+
+        .message.bot .bot-text-list:last-child {
+            margin-bottom: 0;
+        }
+
+        .message.bot .bot-text-list li {
+            margin: 0 0 4px;
+        }
+
+        .message.bot .bot-text-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .message.bot .bot-reco-summary {
+            display: grid;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .message.bot .bot-reco-title {
+            font-weight: 800;
+            font-size: 0.92rem;
+            color: #1b3a63;
+            letter-spacing: 0.01em;
+            padding: 4px 2px 0;
+        }
+
+        .message.bot .bot-reco-item {
+            border: 1px solid #d7e5f7;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(247, 251, 255, 0.85));
+            padding: 10px 11px;
+            box-shadow: 0 4px 10px rgba(15, 58, 104, 0.06);
+        }
+
+        .message.bot .bot-reco-item-head {
+            font-weight: 700;
+            color: #143457;
+            margin-bottom: 6px;
+            font-size: 0.88rem;
+            line-height: 1.35;
+        }
+
+        .message.bot .bot-reco-meta {
+            font-size: 0.81rem;
+            line-height: 1.5;
+            color: #3b4a5d;
+            border-top: 1px dashed #dce7f6;
+            padding-top: 6px;
         }
 
         .message.bot.rich-card {
             max-width: 100%;
             padding: 8px 9px;
-            background: rgba(255, 255, 255, 0.88);
+            background: rgba(255, 255, 255, 0.65);
             border: 1px solid #d8e5f5;
             box-shadow: 0 6px 16px rgba(20, 36, 62, 0.07);
         }
@@ -1740,7 +2397,7 @@
         }
 
         .chat-send {
-            background: linear-gradient(135deg, #0f4ea8, #1a67d2 60%, #0ea5a2);
+            background: linear-gradient(135deg, var(--chat-warm-brown-dark), var(--chat-warm-brown) 45%, var(--chat-primary-blue));
             color: white;
             border: none;
             border-radius: 14px;
@@ -1766,6 +2423,56 @@
             box-shadow: 0 6px 14px rgba(26, 103, 210, 0.18);
         }
 
+        .chat-feedback-dock {
+            display: none;
+            margin: 0 12px 8px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid #ead9c5;
+            background: linear-gradient(180deg, #fffaf3 0%, #fff4e8 100%);
+            box-shadow: 0 6px 14px rgba(120, 80, 40, 0.12);
+        }
+
+        .chat-feedback-dock.active {
+            display: block;
+        }
+
+        .chat-feedback-title {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: #6c4726;
+            margin-bottom: 8px;
+        }
+
+        .chat-feedback-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .chat-feedback-btn {
+            padding: 5px 10px;
+            border-radius: 999px;
+            border: 1px solid #dcbf99;
+            background: #fff;
+            color: #7b4f24;
+            font-size: 0.72rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .chat-feedback-btn:hover {
+            background: #fff4e4;
+            border-color: #c89b67;
+        }
+
+        .chat-feedback-note {
+            font-size: 0.74rem;
+            color: #3b6b4a;
+            font-weight: 700;
+        }
+
         .typing-indicator {
             display: none;
             padding: 10px 15px;
@@ -1783,7 +2490,7 @@
             border-radius: 20px;
             background:
                 radial-gradient(circle at 25% 20%, rgba(255,255,255,0.28), transparent 42%),
-                linear-gradient(135deg, #0f4ea8, #1a67d2 55%, #0ea5a2);
+                linear-gradient(135deg, #7f542c, #9b6a3a 50%, #1a67d2);
             box-shadow: 0 18px 30px rgba(15, 78, 168, 0.30);
             border: 1px solid rgba(255, 255, 255, 0.35);
             display: flex;
@@ -1859,8 +2566,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <!-- FontAwesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/guest_unified.css">
 </head>
-<body>
+<body class="guest-booking mainpage-page">
     <!-- Navigation -->
     <nav class="navbar">
         <!-- Hidden elements for language data -->
@@ -1870,7 +2578,7 @@
             {% csrf_token %}
         </div>
         <div class="logo">
-            <img src="/static/images/logo.png" alt="Ibayaw Tour Logo" onerror="this.style.display='none'; var fb=document.getElementById('ibayaw-logo-fallback'); if(fb){fb.style.display='inline-flex';}">
+            <img src="{% if active_logo_url %}{{ active_logo_url }}{% else %}/static/images/logo.png{% endif %}" alt="Ibayaw Tour Logo" onerror="this.style.display='none'; var fb=document.getElementById('ibayaw-logo-fallback'); if(fb){fb.style.display='inline-flex';}">
             <span id="ibayaw-logo-fallback" class="logo-fallback" aria-hidden="true">IT</span>
             <h1>Ibayaw Tour</h1>
         </div>
@@ -1893,6 +2601,21 @@
         </div>
         
         {% if user.is_authenticated %}
+            <div class="notification-nav">
+                <button class="notification-bell" id="guestNotificationBell" type="button" aria-label="Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span id="guestNotificationBadge" class="notification-badge" style="display:none;">0</span>
+                </button>
+                <div class="notification-dropdown" id="guestNotificationDropdown">
+                    <div class="notification-header">
+                        <h4>Notifications</h4>
+                        <button class="mark-read-btn" id="markAllNotificationsReadBtn" type="button">Mark all as read</button>
+                    </div>
+                    <div class="notification-list" id="guestNotificationList">
+                        <div class="notification-empty">Loading notifications...</div>
+                    </div>
+                </div>
+            </div>
             <div class="user-profile-nav">
                 <div class="user-info" onclick="toggleUserMenu()">
                     {% if user.picture %}
@@ -1904,7 +2627,7 @@
                     <i class="fas fa-angle-down"></i>
                 </div>
                 <div class="user-dropdown" id="userDropdown">
-                    <a href="#" onclick="alert('Profile feature coming soon!'); return false;"><i class="fas fa-user"></i> My Profile</a>
+                    <a href="{% url 'my_profile' %}" id="my-profile-link"><i class="fas fa-user"></i> My Profile</a>
                     <div class="dropdown-divider"></div>
                     <div class="settings-item">
                         <a href="#" id="update-profile-link"><i class="fas fa-user-edit"></i> Update Profile</a>
@@ -1936,7 +2659,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero"{% if hero_backgrounds %} style="background-image: url('{{ hero_backgrounds.0 }}');"{% endif %}>
         <div class="hero-content">
             <h1 class="hero-title">RIVER TOUR</h1>
             <h2 class="initiative">Initiative</h2>
@@ -2005,7 +2728,11 @@
             {% for tour in tours %}
             <div class="package-card" data-tour-id="{{ tour.tour_id }}" data-url="{% url 'guest_book' tour_id=tour.tour_id %}">
                         <div class="package-title">{{ tour.tour_name|upper }}</div>
+                {% if tour.image %}
                 <img src="{{ tour.image.url }}" alt="{{ tour.tour_name }}">
+                {% else %}
+                <img src="{% static 'images/bg.jpg' %}" alt="{{ tour.tour_name }}">
+                {% endif %}
                 <div class="package-details">
                             {% if tour.schedules.exists %}
                                 <div class="package-price">
@@ -2212,18 +2939,33 @@
     <!-- User Bookings Section - Only shown for logged in users -->
     {% if user.is_authenticated %}
     <section class="user-bookings" id="myBookings">
-        <div class="container">
-            <h2 class="section-title">My Bookings</h2>
+        <div class="container bookings-shell">
+            <h2 class="section-title">My Booked Tours</h2>
+            <p class="bookings-subtitle">Manage and track all your tour bookings in one place.</p>
             <div class="bookings-tabs">
                 <button class="tab-button active" data-tab="upcoming">Upcoming Tours</button>
                 <button class="tab-button" data-tab="current">Current Tours</button>
                 <button class="tab-button" data-tab="past">Past Tours</button>
             </div>
+
+            <div class="booking-filters">
+                <div class="booking-filter-group">
+                    <label for="bookingTourFilter">Filter by Tour Name:</label>
+                    <input id="bookingTourFilter" class="booking-filter-input" type="text" placeholder="Enter tour name...">
+                </div>
+                <div class="booking-filter-group">
+                    <label for="bookingDateFilter">Filter by Date:</label>
+                    <input id="bookingDateFilter" class="booking-filter-input" type="date">
+                </div>
+                <button type="button" id="clearBookingFilters" class="clear-filters-btn">Clear Filters</button>
+            </div>
             
             <div class="tab-content" id="upcomingToursTab">
                 <div class="bookings-grid">
                     {% for booking in upcoming_tours %}
-                    <div class="booking-card">
+                    <div class="booking-card"
+                         data-tour-name="{% if booking.tour %}{{ booking.tour.tour_name|lower }}{% else %}{{ booking.tour_id.tour_name|lower }}{% endif %}"
+                         data-tour-date="{% if booking.schedule %}{{ booking.schedule.start_time|date:'Y-m-d' }}{% else %}{{ booking.sched_id.start_time|date:'Y-m-d' }}{% endif %}">
                         <div class="booking-header">
                             {% if booking.tour %}
                             <h3>{{ booking.tour.tour_name }}</h3>
@@ -2246,11 +2988,11 @@
                             <p><strong>Guests:</strong> {{ booking.num_adults }} Adults, {{ booking.num_children }} Children</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.schedule %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.schedule.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
+                                PHP {{ booking.schedule.price|floatformat:2 }}  x  {{ booking.num_adults|add:booking.num_children }} = PHP {% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
                               {% elif booking.sched_id %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
+                                PHP {{ booking.sched_id.price|floatformat:2 }}  x  {{ booking.num_adults|add:booking.num_children }} = PHP {% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
                               {% else %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.total_amount|default:"0.00" }}
+                                PHP {{ booking.total_amount|default:"0.00" }}
                               {% endif %}
                             </p>
                             {% else %}
@@ -2258,9 +3000,9 @@
                             <p><strong>Total Guests:</strong> {{ booking.total_guests }}</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.sched_id %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.total_guests }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.total_guests %}
+                                PHP {{ booking.sched_id.price|floatformat:2 }}  x  {{ booking.total_guests }} = PHP {% widthratio booking.sched_id.price 1 booking.total_guests %}
                               {% else %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±0.00
+                                PHP 0.00
                               {% endif %}
                             </p>
                             {% endif %}
@@ -2323,7 +3065,9 @@
             <div class="tab-content" id="currentToursTab" style="display: none;">
                 <div class="bookings-grid">
                     {% for booking in current_tours %}
-                    <div class="booking-card">
+                    <div class="booking-card"
+                         data-tour-name="{% if booking.tour %}{{ booking.tour.tour_name|lower }}{% else %}{{ booking.tour_id.tour_name|lower }}{% endif %}"
+                         data-tour-date="{% if booking.schedule %}{{ booking.schedule.start_time|date:'Y-m-d' }}{% else %}{{ booking.sched_id.start_time|date:'Y-m-d' }}{% endif %}">
                         <div class="booking-header">
                             {% if booking.tour %}
                             <h3>{{ booking.tour.tour_name }}</h3>
@@ -2346,11 +3090,11 @@
                             <p><strong>Guests:</strong> {{ booking.num_adults }} Adults, {{ booking.num_children }} Children</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.schedule %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.schedule.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
+                                PHP {{ booking.schedule.price|floatformat:2 }}  x  {{ booking.num_adults|add:booking.num_children }} = PHP {% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
                               {% elif booking.sched_id %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
+                                PHP {{ booking.sched_id.price|floatformat:2 }}  x  {{ booking.num_adults|add:booking.num_children }} = PHP {% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
                               {% else %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.total_amount|default:"0.00" }}
+                                PHP {{ booking.total_amount|default:"0.00" }}
                               {% endif %}
                             </p>
                             {% else %}
@@ -2358,9 +3102,9 @@
                             <p><strong>Total Guests:</strong> {{ booking.total_guests }}</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.sched_id %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.total_guests }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.total_guests %}
+                                PHP {{ booking.sched_id.price|floatformat:2 }}  x  {{ booking.total_guests }} = PHP {% widthratio booking.sched_id.price 1 booking.total_guests %}
                               {% else %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±0.00
+                                PHP 0.00
                               {% endif %}
                             </p>
                             {% endif %}
@@ -2422,7 +3166,9 @@
             <div class="tab-content" id="pastToursTab" style="display: none;">
                 <div class="bookings-grid">
                     {% for booking in past_tours %}
-                    <div class="booking-card">
+                    <div class="booking-card"
+                         data-tour-name="{% if booking.tour %}{{ booking.tour.tour_name|lower }}{% else %}{{ booking.tour_id.tour_name|lower }}{% endif %}"
+                         data-tour-date="{% if booking.schedule %}{{ booking.schedule.start_time|date:'Y-m-d' }}{% else %}{{ booking.sched_id.start_time|date:'Y-m-d' }}{% endif %}">
                         <div class="booking-header">
                             {% if booking.tour %}
                             <h3>{{ booking.tour.tour_name }}</h3>
@@ -2445,11 +3191,11 @@
                             <p><strong>Guests:</strong> {{ booking.num_adults }} Adults, {{ booking.num_children }} Children</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.schedule %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.schedule.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
+                                PHP {{ booking.schedule.price|floatformat:2 }}  x  {{ booking.num_adults|add:booking.num_children }} = PHP {% widthratio booking.schedule.price 1 booking.num_adults|add:booking.num_children %}
                               {% elif booking.sched_id %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.num_adults|add:booking.num_children }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
+                                PHP {{ booking.sched_id.price|floatformat:2 }}  x  {{ booking.num_adults|add:booking.num_children }} = PHP {% widthratio booking.sched_id.price 1 booking.num_adults|add:booking.num_children %}
                               {% else %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.total_amount|default:"0.00" }}
+                                PHP {{ booking.total_amount|default:"0.00" }}
                               {% endif %}
                             </p>
                             {% else %}
@@ -2457,9 +3203,9 @@
                             <p><strong>Total Guests:</strong> {{ booking.total_guests }}</p>
                             <p><strong>Total Price:</strong> 
                               {% if booking.sched_id %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{{ booking.sched_id.price|floatformat:2 }} ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â {{ booking.total_guests }} = ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±{% widthratio booking.sched_id.price 1 booking.total_guests %}
+                                PHP {{ booking.sched_id.price|floatformat:2 }}  x  {{ booking.total_guests }} = PHP {% widthratio booking.sched_id.price 1 booking.total_guests %}
                               {% else %}
-                                ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±0.00
+                                PHP 0.00
                               {% endif %}
                             </p>
                             {% endif %}
@@ -2580,22 +3326,36 @@
                 <h3>Ibayaw Tour Assistant</h3>
                 <button class="chat-close">&times;</button>
             </div>
-            <div class="chat-messages" id="chatMessages">
+            <div
+                class="chat-messages"
+                id="chatMessages"
+                role="log"
+                aria-live="polite"
+                aria-relevant="additions text"
+                aria-label="Chat conversation messages"
+            >
                 <div
                     class="message bot"
                     data-chat-welcome-owner="Hello! I'm your Ibayaw Tour assistant for accommodation owners. I can help you review your rooms, availability, and booking status."
-                    data-chat-welcome-guest="Hello! I'm your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City."
+                    data-chat-welcome-guest="Hello! I'm your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City. Share your budget, location, and guest count so I can suggest better matches."
                 >
                     {% if is_accommodation_owner_user %}
                     Hello! I'm your Ibayaw Tour assistant for accommodation owners. I can help you review your rooms, availability, and booking status.
                     {% else %}
-                    Hello! I'm your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City.
+                    Hello! I'm your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City. Share your budget, location, and guest count so I can suggest better matches.
                     {% endif %}
                 </div>
             </div>
+            <div id="chatFeedbackDock" class="chat-feedback-dock" aria-live="polite"></div>
             <div class="chat-input-area">
-                <input type="text" id="chatInput" class="chat-input" placeholder="Type your message...">
-                <button id="chatSend" class="chat-send">
+                <input
+                    type="text"
+                    id="chatInput"
+                    class="chat-input"
+                    placeholder="Type your message..."
+                    aria-label="Type your message for the chat assistant"
+                >
+                <button id="chatSend" class="chat-send" aria-label="Send message to chat assistant">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
@@ -2617,6 +3377,7 @@
             const chatInput = document.getElementById('chatInput');
             const chatSend = document.getElementById('chatSend');
             const chatMessages = document.getElementById('chatMessages');
+            const chatFeedbackDock = document.getElementById('chatFeedbackDock');
             const chatSurveyOpenBtn = document.getElementById('chatSurveyOpenBtn');
             const chatSurveyModal = document.getElementById('chatSurveyModal');
             const chatSurveyCloseBtn = document.getElementById('chatSurveyCloseBtn');
@@ -2624,7 +3385,6 @@
             const chatSurveyQuestions = document.getElementById('chatSurveyQuestions');
             const chatSurveyComment = document.getElementById('chatSurveyComment');
             const myAccommodationBookingsUrl = "{% url 'my_accommodation_bookings' %}";
-            let hasLoadedInitialHotelSuggestions = false;
             const isAccommodationOwnerUser = {% if is_accommodation_owner_user %}true{% else %}false{% endif %};
             const surveyQuestionBank = [
                 { code: 'SUS_Q1', label: 'I think that I would like to use this system frequently.' },
@@ -2678,6 +3438,27 @@
                     });
                 } catch (error) {
                     console.warn('Recommendation click log failed:', error);
+                }
+            }
+
+            async function logGuestFunnelEvent(eventKey, payload = {}) {
+                const key = String(eventKey || '').trim().toLowerCase();
+                if (!key) return;
+                try {
+                    const csrfToken = getCsrfToken();
+                    await fetch('/api/chat/funnel-event/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            ...(csrfToken ? { 'X-CSRFToken': csrfToken } : {}),
+                        },
+                        body: JSON.stringify({
+                            event_key: key,
+                            detail: String(payload?.detail || '').slice(0, 160),
+                        }),
+                    });
+                } catch (error) {
+                    console.warn('Guest funnel event log failed:', error);
                 }
             }
 
@@ -2838,13 +3619,75 @@
                 if (!chip) return;
                 const replyText = String(chip.getAttribute('data-reply-text') || '').trim();
                 if (!replyText) return;
+                if (chip.getAttribute('data-quick-start') === '1') {
+                    await logGuestFunnelEvent('quick_start_clicked', { detail: replyText });
+                }
                 if (replyText.toLowerCase() === 'view my accommodation bookings') {
-                    window.location.href = myAccommodationBookingsUrl;
+                    window.open(myAccommodationBookingsUrl, '_blank');
                     return;
                 }
                 chip.setAttribute('disabled', 'disabled');
                 await requestChatbotReply(replyText, { addUserBubble: true });
             });
+
+            function renderStarterQuickActions() {
+                if (!chatMessages) return;
+                if (chatMessages.querySelector('[data-chat-starter-actions="1"]')) return;
+
+                const actions = [
+                    { label: 'Show available hotels/inns', value: 'show available hotels and inns' },
+                    { label: 'Budget under PHP 1500', value: 'suggest a hotel or inn under 1500 pesos for 2 guests near city proper' },
+                    { label: 'Room for 2 tomorrow', value: 'may available room ba for 2 persons tomorrow near city proper?' },
+                    { label: 'How to book?', value: 'what details do i need to provide for booking?' },
+                ];
+
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message bot';
+                messageDiv.setAttribute('data-chat-starter-actions', '1');
+                messageDiv.style.padding = '9px 10px';
+
+                const heading = document.createElement('div');
+                heading.textContent = 'Start with your preference';
+                heading.style.fontSize = '0.74rem';
+                heading.style.fontWeight = '800';
+                heading.style.color = '#355979';
+                heading.style.marginBottom = '7px';
+                messageDiv.appendChild(heading);
+
+                const hint = document.createElement('div');
+                hint.textContent = 'For better recommendations, include budget, location, and guest count.';
+                hint.style.fontSize = '0.72rem';
+                hint.style.color = '#5a7289';
+                hint.style.marginBottom = '7px';
+                messageDiv.appendChild(hint);
+
+                const wrap = document.createElement('div');
+                wrap.style.display = 'flex';
+                wrap.style.flexWrap = 'wrap';
+                wrap.style.gap = '7px';
+
+                actions.forEach((option) => {
+                    const chip = document.createElement('button');
+                    chip.type = 'button';
+                    chip.textContent = option.label;
+                    chip.setAttribute('data-quick-reply', '1');
+                    chip.setAttribute('data-reply-text', option.value);
+                    chip.setAttribute('data-quick-start', '1');
+                    chip.style.padding = '6px 10px';
+                    chip.style.borderRadius = '999px';
+                    chip.style.border = '1px solid #b7cbe6';
+                    chip.style.background = 'linear-gradient(180deg, #f9fcff, #ecf4ff)';
+                    chip.style.color = '#1e4f85';
+                    chip.style.fontSize = '0.78rem';
+                    chip.style.fontWeight = '700';
+                    chip.style.cursor = 'pointer';
+                    wrap.appendChild(chip);
+                });
+
+                messageDiv.appendChild(wrap);
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
 
             // Show chat modal when button is clicked
             chatButton.addEventListener('click', function() {
@@ -2857,10 +3700,8 @@
                     return;
                 }
                 chatModal.style.display = 'block';
-                if (!isAccommodationOwnerUser && !hasLoadedInitialHotelSuggestions) {
-                    hasLoadedInitialHotelSuggestions = true;
-                    requestChatbotReply('show default hotel suggestions', { addUserBubble: false, initSuggestions: true });
-                }
+                logGuestFunnelEvent('chatbot_opened', { detail: 'guest_chat_modal_opened' });
+                renderStarterQuickActions();
                 if (chatInput && typeof chatInput.focus === 'function') {
                     try {
                         chatInput.focus({ preventScroll: true });
@@ -2872,6 +3713,7 @@
 
             // Close chat modal when X is clicked
             chatClose.addEventListener('click', function() {
+                clearUxFeedbackDock();
                 chatModal.style.display = 'none';
             });
             if (chatSurveyOpenBtn && chatSurveyModal) {
@@ -2916,6 +3758,7 @@
             // Close chat modal when clicking outside
             window.addEventListener('click', function(event) {
                 if (event.target === chatModal) {
+                    clearUxFeedbackDock();
                     chatModal.style.display = 'none';
                 }
                 if (chatSurveyModal && event.target === chatSurveyModal) {
@@ -2928,6 +3771,7 @@
                 const message = chatInput.value.trim();
                 if (message) {
                     chatInput.value = '';
+                    clearUxFeedbackDock();
                     await requestChatbotReply(message, { addUserBubble: true });
                 }
             }
@@ -2941,7 +3785,10 @@
                 }
 
                 chatSend.disabled = true;
-                addMessage(getUiText('chat_thinking', 'Thinking...'), 'bot', true);
+                if (chatMessages) {
+                    chatMessages.setAttribute('aria-busy', 'true');
+                }
+                addMessage(getUiText('chat_thinking', 'Please wait while I process your request...'), 'bot', true);
 
                 try {
                     const response = await fetch('/api/chat/', {
@@ -2983,9 +3830,9 @@
                             window.location.href = String(data.redirect_url);
                             return;
                         }
-                        addMessage(data.fulfillmentText || 'No response from assistant.', 'bot', false, data);
+                        addMessage(data.fulfillmentText || 'No response was returned by the assistant.', 'bot', false, data);
                         if (Array.isArray(data.quick_replies) && data.quick_replies.length > 0) {
-                            addQuickReplies(data.quick_replies);
+                            addQuickReplies(filterQuickRepliesForPayload(data.quick_replies, data));
                         }
                         if (data.receipt_text) {
                             addDownloadMessage(
@@ -2995,17 +3842,28 @@
                             );
                         }
                         if (data.billing_link) {
+                            await logGuestFunnelEvent('billing_link_shown', { detail: resolveChatLinkLabel(data) });
+                            addMessage(
+                                'Next step: review your booking summary, then open the button below to continue to billing/payment.',
+                                'bot'
+                            );
                             addLinkMessage(resolveChatLinkLabel(data), data.billing_link);
+                        }
+                        if (data.booking_id) {
+                            await logGuestFunnelEvent('booking_completed', { detail: String(data.booking_id) });
                         }
                     } else {
                         addMessage(getUiText('chat_non_json_error', 'Chatbot returned a non-JSON response. Check server logs.'), 'bot');
                     }
                 } catch (error) {
                     removeTypingMessage();
-                    addMessage(getUiText('chat_connect_error', 'Sorry, I could not connect to the chatbot right now.'), 'bot');
+                    addMessage(getUiText('chat_connect_error', 'We are unable to connect to the chatbot at the moment. Please try again shortly.'), 'bot');
                     console.error('Chatbot error:', error);
                 } finally {
                     chatSend.disabled = false;
+                    if (chatMessages) {
+                        chatMessages.setAttribute('aria-busy', 'false');
+                    }
                     if (chatInput && typeof chatInput.focus === 'function') {
                         try {
                             chatInput.focus({ preventScroll: true });
@@ -3017,6 +3875,683 @@
             }
 
             // Add message to chat
+            function buildReadableRecommendationCard(rawText) {
+                const raw = String(rawText || "").replace(/\s+/g, " ").trim();
+                if (!raw || !/recommendation/i.test(raw)) {
+                    return null;
+                }
+
+                let heading = "Recommendations";
+                let body = raw;
+                const headerMatch = raw.match(/^([^:]+recommendations?[^:]*):\s*(.+)$/i);
+                if (headerMatch) {
+                    heading = headerMatch[1].trim();
+                    body = headerMatch[2].trim();
+                }
+
+                const matches = [...body.matchAll(/(\d+)\.\s*([\s\S]*?)(?=(?:\s+\d+\.\s)|$)/g)];
+                if (matches.length < 2) {
+                    return null;
+                }
+
+                const root = document.createElement("div");
+                root.className = "bot-reco-summary";
+
+                const title = document.createElement("div");
+                title.className = "bot-reco-title";
+                title.textContent = heading;
+                root.appendChild(title);
+
+                matches.forEach((m) => {
+                    const card = document.createElement("div");
+                    card.className = "bot-reco-item";
+
+                    const entryText = String(m[2] || "").trim();
+                    const parts = entryText.split("|").map((p) => p.trim()).filter(Boolean);
+                    const headText = parts.shift() || entryText;
+
+                    const head = document.createElement("div");
+                    head.className = "bot-reco-item-head";
+                    head.textContent = `${m[1]}. ${headText}`;
+                    card.appendChild(head);
+
+                    if (parts.length) {
+                        const meta = document.createElement("div");
+                        meta.className = "bot-reco-meta";
+                        meta.textContent = parts.join(" | ");
+                        card.appendChild(meta);
+                    }
+
+                    root.appendChild(card);
+                });
+
+                return root;
+            }
+
+            function buildCompareOptionsCard(rawText) {
+                const raw = String(rawText || '').trim();
+                if (!/^comparison of top \d+ options:/i.test(raw)) {
+                    return null;
+                }
+
+                const root = document.createElement('div');
+                root.className = 'bot-reco-summary';
+
+                const title = document.createElement('div');
+                title.className = 'bot-reco-title';
+                const titleMatch = raw.match(/^(comparison of top \d+ options:)/i);
+                title.textContent = titleMatch ? titleMatch[1] : 'Comparison of Top Options';
+                root.appendChild(title);
+
+                const body = raw.replace(/^(comparison of top \d+ options:)\s*/i, '').trim();
+                const parts = [...body.matchAll(/(\d+)\.\s*([\s\S]*?)(?=(?:\s+\d+\.\s)|(?:\s+reply with:)|$)/gi)]
+                    .map((m) => `${m[1]}. ${String(m[2] || '').trim()}`)
+                    .filter(Boolean);
+                parts.forEach((chunk) => {
+                    const compactChunk = String(chunk || '').replace(/\s+/g, ' ').trim();
+                    if (!compactChunk) return;
+
+                    const card = document.createElement('div');
+                    card.className = 'bot-reco-item';
+
+                    const head = document.createElement('div');
+                    head.className = 'bot-reco-item-head';
+                    const headMatch = compactChunk.match(/^(\d+\.\s*[^|]+?)(?=\s+[A-Za-z].*?\|\s*PHP|\s+Match:|\s+Key reason:|$)/i);
+                    head.textContent = headMatch ? headMatch[1].trim() : compactChunk;
+                    card.appendChild(head);
+
+                    const metaCandidates = [];
+                    const locationRateMatch = compactChunk.match(/([A-Za-z0-9.,\-\s()]+?\|\s*PHP\s*[0-9,]+(?:\.[0-9]{1,2})?\s*per\s*night\s*\|\s*up to\s*\d+\s*guests?)/i);
+                    if (locationRateMatch) metaCandidates.push(locationRateMatch[1].trim());
+                    const matchReasonMatch = compactChunk.match(/(Match:\s*[^.]+(?:\s+Key reason:\s*[^.]+)?)/i);
+                    if (matchReasonMatch) metaCandidates.push(matchReasonMatch[1].trim());
+                    if (!metaCandidates.length) {
+                        const fallbackLine = compactChunk.replace(/^(\d+\.\s*)/, '').trim();
+                        if (fallbackLine) metaCandidates.push(fallbackLine);
+                    }
+
+                    metaCandidates.forEach((line, idx) => {
+                        const meta = document.createElement('div');
+                        meta.className = 'bot-reco-meta';
+                        if (idx > 0 || /^match:|^key reason:/i.test(line)) {
+                            meta.style.fontWeight = '700';
+                        }
+                        meta.textContent = line;
+                        card.appendChild(meta);
+                    });
+
+                    root.appendChild(card);
+                });
+
+                if (!/reply with:\s*why option/i.test(body)) {
+                    const footerHint = document.createElement('div');
+                    footerHint.className = 'bot-reco-meta';
+                    footerHint.style.marginTop = '2px';
+                    footerHint.style.fontWeight = '700';
+                    footerHint.textContent = 'Tip: reply "why option 1" (or 2/3) for a detailed explanation.';
+                    root.appendChild(footerHint);
+                }
+
+                return root;
+            }
+
+            function buildWhyOptionCard(rawText) {
+                const raw = String(rawText || '').trim();
+                if (!/^why option \d+:/i.test(raw)) {
+                    return null;
+                }
+                const lines = raw.split(/\r?\n/).map((v) => v.trim()).filter(Boolean);
+                if (!lines.length) return null;
+
+                const root = document.createElement('div');
+                root.className = 'bot-reco-summary';
+
+                const title = document.createElement('div');
+                title.className = 'bot-reco-title';
+                title.textContent = lines[0];
+                root.appendChild(title);
+
+                const ul = document.createElement('ul');
+                ul.className = 'bot-text-list';
+                lines.slice(1).forEach((line) => {
+                    const li = document.createElement('li');
+                    li.textContent = line.replace(/^-\s*/, '');
+                    ul.appendChild(li);
+                });
+                root.appendChild(ul);
+                return root;
+            }
+
+            function buildAvailabilityOptionsCard(rawText) {
+                const raw = String(rawText || '').trim();
+                if (!raw) return null;
+
+                const hasAvailabilitySignal =
+                    /nakakita ako ng\s+\d+/i.test(raw) ||
+                    /available room/i.test(raw) ||
+                    /available options/i.test(raw) ||
+                    /mga nangungunang opsyon/i.test(raw) ||
+                    /top options/i.test(raw);
+                if (!hasAvailabilitySignal) {
+                    return null;
+                }
+
+                const flat = raw.replace(/\s+/g, ' ').trim();
+                const optionChunks = [...flat.matchAll(/(\d+)\.\s*([\s\S]*?)(?=(?:\s+\d+\.\s)|$)/g)];
+                if (optionChunks.length === 0) {
+                    return null;
+                }
+
+                const introMatch = flat.match(/^([\s\S]*?)(?=\s+\d+\.\s)/);
+                const introText = introMatch ? introMatch[1].trim() : '';
+                const tailMatch = flat.match(/(sumagot gamit[\s\S]*|reply with[\s\S]*)$/i);
+                const tailText = tailMatch ? tailMatch[1].trim() : '';
+
+                const card = document.createElement('div');
+                card.className = 'bot-reco-summary';
+
+                const title = document.createElement('div');
+                title.className = 'bot-reco-title';
+                title.textContent = 'Available Rooms';
+                card.appendChild(title);
+
+                if (introText) {
+                    const intro = document.createElement('div');
+                    intro.className = 'bot-reco-meta';
+                    intro.style.borderTop = 'none';
+                    intro.style.paddingTop = '0';
+                    intro.style.fontWeight = '700';
+                    intro.textContent = introText.replace(/mga nangungunang opsyon sa ngayon[:：]?/i, '').trim();
+                    card.appendChild(intro);
+                }
+
+                optionChunks.forEach((match) => {
+                    const rank = String(match[1] || '').trim();
+                    const optionRaw = String(match[2] || '').trim();
+                    if (!optionRaw) return;
+
+                    const item = document.createElement('div');
+                    item.className = 'bot-reco-item';
+
+                    const head = document.createElement('div');
+                    head.className = 'bot-reco-item-head';
+                    head.textContent = `${rank}. ${optionRaw}`;
+                    item.appendChild(head);
+
+                    const roomIdMatch = optionRaw.match(/room\s*(\d+)/i);
+                    const rateMatch = optionRaw.match(/php\s*([0-9][0-9,]*\.?[0-9]*)/i);
+                    const guestMatch = optionRaw.match(/hanggang\s*(\d+)\s*bisita|up to\s*(\d+)\s*guest/i);
+                    const metaParts = [];
+                    if (roomIdMatch) metaParts.push(`Room ID: ${roomIdMatch[1]}`);
+                    if (rateMatch) metaParts.push(`Rate: PHP ${rateMatch[1]}/night`);
+                    if (guestMatch) metaParts.push(`Capacity: ${guestMatch[1] || guestMatch[2]} guest(s)`);
+
+                    if (metaParts.length) {
+                        const meta = document.createElement('div');
+                        meta.className = 'bot-reco-meta';
+                        meta.textContent = metaParts.join(' | ');
+                        item.appendChild(meta);
+                    }
+
+                    if (roomIdMatch && roomIdMatch[1]) {
+                        const bookRow = document.createElement('div');
+                        bookRow.style.display = 'flex';
+                        bookRow.style.gap = '7px';
+                        bookRow.style.marginTop = '4px';
+                        bookRow.style.flexWrap = 'wrap';
+
+                        const bookBtn = document.createElement('button');
+                        bookBtn.type = 'button';
+                        bookBtn.textContent = `Book Room ${roomIdMatch[1]}`;
+                        bookBtn.style.border = '1px solid #c6daef';
+                        bookBtn.style.background = 'linear-gradient(135deg, #1f64d6, #179fc4)';
+                        bookBtn.style.color = '#ffffff';
+                        bookBtn.style.borderRadius = '10px';
+                        bookBtn.style.padding = '6px 11px';
+                        bookBtn.style.fontSize = '0.74rem';
+                        bookBtn.style.fontWeight = '800';
+                        bookBtn.style.cursor = 'pointer';
+                        bookBtn.addEventListener('click', async () => {
+                            await logGuestFunnelEvent('book_button_clicked', { detail: `room:${String(roomIdMatch[1] || '')}` });
+                            await logGuestFunnelEvent('booking_flow_started', { detail: `room:${String(roomIdMatch[1] || '')}` });
+                            await requestChatbotReply(`book room ${String(roomIdMatch[1]).trim()}`, {
+                                addUserBubble: true,
+                            });
+                        });
+                        bookRow.appendChild(bookBtn);
+
+                        const detailsHint = document.createElement('span');
+                        detailsHint.textContent = 'Then send: check-in, check-out, and guests.';
+                        detailsHint.style.fontSize = '0.71rem';
+                        detailsHint.style.fontWeight = '700';
+                        detailsHint.style.color = '#4b6078';
+                        detailsHint.style.alignSelf = 'center';
+                        bookRow.appendChild(detailsHint);
+                        item.appendChild(bookRow);
+                    }
+
+                    card.appendChild(item);
+                });
+
+                if (tailText) {
+                    const next = document.createElement('div');
+                    next.className = 'bot-reco-meta';
+                    next.style.fontWeight = '700';
+                    next.textContent = tailText;
+                    card.appendChild(next);
+                }
+
+                return card;
+            }
+
+            function buildBookingCountSnapshotCard(rawText) {
+                const raw = String(rawText || '').trim();
+                if (!raw) return null;
+
+                const firstLine = raw.split(/\r?\n/)[0] || '';
+                if (!/^booking summary for /i.test(firstLine)) {
+                    return null;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'bot-reco-summary';
+
+                const title = document.createElement('div');
+                title.className = 'bot-reco-title';
+                title.textContent = 'Booking Status Summary';
+                card.appendChild(title);
+
+                const periodMatch = firstLine.match(/^booking summary for\s+(.+?):/i);
+                if (periodMatch && periodMatch[1]) {
+                    const period = document.createElement('div');
+                    period.className = 'bot-reco-meta';
+                    period.style.borderTop = 'none';
+                    period.style.paddingTop = '0';
+                    period.style.fontWeight = '700';
+                    period.textContent = `Coverage: ${String(periodMatch[1]).trim()}`;
+                    card.appendChild(period);
+                }
+
+                const metrics = [];
+                const metricRegex = /(Total|Pending|Confirmed|Declined|Cancelled)\s+(\d+)/gi;
+                let m;
+                while ((m = metricRegex.exec(firstLine)) !== null) {
+                    metrics.push({ label: String(m[1]), value: String(m[2]) });
+                }
+
+                if (metrics.length) {
+                    const grid = document.createElement('div');
+                    grid.style.display = 'grid';
+                    grid.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
+                    grid.style.gap = '8px';
+                    metrics.forEach((item) => {
+                        const box = document.createElement('div');
+                        box.style.border = '1px solid #d7e5f7';
+                        box.style.borderRadius = '10px';
+                        box.style.padding = '7px 8px';
+                        box.style.background = 'rgba(255,255,255,0.86)';
+
+                        const label = document.createElement('div');
+                        label.textContent = item.label;
+                        label.style.fontSize = '0.72rem';
+                        label.style.fontWeight = '700';
+                        label.style.color = '#48627a';
+
+                        const value = document.createElement('div');
+                        value.textContent = item.value;
+                        value.style.fontSize = '0.95rem';
+                        value.style.fontWeight = '800';
+                        value.style.color = '#153a61';
+                        value.style.marginTop = '2px';
+
+                        box.appendChild(label);
+                        box.appendChild(value);
+                        grid.appendChild(box);
+                    });
+                    card.appendChild(grid);
+                } else {
+                    const fallback = document.createElement('div');
+                    fallback.className = 'bot-reco-meta';
+                    fallback.textContent = firstLine;
+                    card.appendChild(fallback);
+                }
+
+                return card;
+            }
+
+            function buildPaymentPolicyCard(rawText) {
+                const raw = String(rawText || '').trim();
+                if (!raw) return null;
+                const lines = raw.split(/\r?\n/).map((v) => v.trim()).filter(Boolean);
+                if (!lines.length) return null;
+
+                const joined = lines.join(' ').toLowerCase();
+                const isPaymentPolicy =
+                    joined.includes('supported payment methods') ||
+                    joined.includes('down payment policy') ||
+                    joined.includes('lgu-linked billing') ||
+                    joined.includes('billing/payment flow');
+                if (!isPaymentPolicy) {
+                    return null;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'bot-reco-summary';
+
+                const title = document.createElement('div');
+                title.className = 'bot-reco-title';
+                title.textContent = 'Payment & Billing Guide';
+                card.appendChild(title);
+
+                lines.forEach((line, index) => {
+                    const row = document.createElement('div');
+                    row.className = 'bot-reco-meta';
+                    if (index === 0) {
+                        row.style.borderTop = 'none';
+                        row.style.paddingTop = '0';
+                    }
+                    row.style.fontWeight = index === 0 ? '700' : '600';
+                    row.textContent = line;
+                    card.appendChild(row);
+                });
+
+                return card;
+            }
+
+            function buildBookingGuideCard(rawText) {
+                const raw = String(rawText || '').trim();
+                if (!raw) return null;
+
+                const compact = raw.replace(/\s+/g, ' ').trim();
+                const looksLikeBookingGuide =
+                    /booking has/i.test(compact) &&
+                    /(required details|booking details)/i.test(compact);
+                if (!looksLikeBookingGuide) {
+                    return null;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'bot-reco-summary';
+
+                const title = document.createElement('div');
+                title.className = 'bot-reco-title';
+                title.textContent = 'Booking Guide';
+                card.appendChild(title);
+
+                const introMatch = compact.match(/^(.*?)(?=\s+1[\)\.]\s*)/i);
+                if (introMatch && introMatch[1]) {
+                    const intro = document.createElement('div');
+                    intro.className = 'bot-text-paragraph';
+                    intro.style.marginBottom = '2px';
+                    intro.textContent = introMatch[1].trim();
+                    card.appendChild(intro);
+                }
+
+                const stepMatches = [...compact.matchAll(/(\d+)[\)\.]\s*(.*?)(?=\s+\d+[\)\.]\s*|(?:\s+(?:booking details|required details|optional details|after confirmation)\b)|$)/gi)];
+                if (stepMatches.length) {
+                    const stepList = document.createElement('ol');
+                    stepList.className = 'bot-text-list';
+                    stepMatches.forEach((m) => {
+                        const li = document.createElement('li');
+                        li.textContent = String(m[2] || '').trim();
+                        stepList.appendChild(li);
+                    });
+                    card.appendChild(stepList);
+                }
+
+                const requiredMatch = compact.match(/(?:booking details|required details)\s*:\s*(.*?)(?=\s+optional details\b|\s+after confirmation\b|$)/i);
+                if (requiredMatch && requiredMatch[1]) {
+                    const section = document.createElement('div');
+                    section.className = 'bot-reco-item';
+
+                    const head = document.createElement('div');
+                    head.className = 'bot-reco-item-head';
+                    head.textContent = 'Required Details';
+                    section.appendChild(head);
+
+                    const list = document.createElement('ul');
+                    list.className = 'bot-text-list';
+                    String(requiredMatch[1])
+                        .split(/\s*-\s*/)
+                        .map((v) => v.trim())
+                        .filter(Boolean)
+                        .forEach((itemText) => {
+                            const li = document.createElement('li');
+                            li.textContent = itemText;
+                            list.appendChild(li);
+                        });
+                    section.appendChild(list);
+                    card.appendChild(section);
+                }
+
+                const optionalMatch = compact.match(/optional details[^:]*:\s*(.*?)(?=\s+after confirmation\b|$)/i);
+                if (optionalMatch && optionalMatch[1]) {
+                    const section = document.createElement('div');
+                    section.className = 'bot-reco-item';
+
+                    const head = document.createElement('div');
+                    head.className = 'bot-reco-item-head';
+                    head.textContent = 'Optional Details (for better matching)';
+                    section.appendChild(head);
+
+                    const list = document.createElement('ul');
+                    list.className = 'bot-text-list';
+                    String(optionalMatch[1])
+                        .split(/\s*-\s*/)
+                        .map((v) => v.trim())
+                        .filter(Boolean)
+                        .forEach((itemText) => {
+                            const li = document.createElement('li');
+                            li.textContent = itemText;
+                            list.appendChild(li);
+                        });
+                    section.appendChild(list);
+                    card.appendChild(section);
+                }
+
+                const afterMatch = compact.match(/after confirmation[^,]*,\s*(.*)$/i);
+                if (afterMatch && afterMatch[1]) {
+                    const note = document.createElement('div');
+                    note.className = 'bot-reco-meta';
+                    note.style.fontWeight = '700';
+                    note.textContent = `After confirmation: ${String(afterMatch[1]).trim()}`;
+                    card.appendChild(note);
+                }
+
+                return card;
+            }
+
+            function buildSupportGuideCard(rawText) {
+                const raw = String(rawText || '').trim();
+                if (!raw) return null;
+                const compact = raw.replace(/\s+/g, ' ').trim();
+
+                const supportSignals = [
+                    /forgot (my )?password/i,
+                    /cannot access|can't access|dashboard not opening|login issue/i,
+                    /not showing|missing listing|record not showing/i,
+                    /what should i do/i,
+                    /\b(open|go to)\b.*\b(hub|dashboard|page)\b/i,
+                    /\bto (fix|resolve|continue)\b/i,
+                ];
+                const looksLikeSupport = supportSignals.some((rx) => rx.test(compact));
+                if (!looksLikeSupport) {
+                    return null;
+                }
+
+                const card = document.createElement('div');
+                card.className = 'bot-reco-summary';
+
+                const title = document.createElement('div');
+                title.className = 'bot-reco-title';
+                title.textContent = 'Support Guide';
+                card.appendChild(title);
+
+                const sentenceParts = compact
+                    .split(/(?<=[.!?])\s+(?=[A-Z])/)
+                    .map((v) => v.trim())
+                    .filter(Boolean);
+
+                const stepMatches = [...compact.matchAll(/(\d+)[\)\.]\s*(.*?)(?=\s+\d+[\)\.]\s*|$)/gi)];
+                if (stepMatches.length >= 2) {
+                    const list = document.createElement('ol');
+                    list.className = 'bot-text-list';
+                    stepMatches.forEach((m) => {
+                        const li = document.createElement('li');
+                        li.textContent = String(m[2] || '').trim();
+                        list.appendChild(li);
+                    });
+                    card.appendChild(list);
+                } else {
+                    const actionLines = sentenceParts.filter((line) =>
+                        /\b(open|go to|click|check|verify|reset|review|update|use)\b/i.test(line)
+                    );
+                    if (actionLines.length >= 2) {
+                        const list = document.createElement('ul');
+                        list.className = 'bot-text-list';
+                        actionLines.slice(0, 5).forEach((line) => {
+                            const li = document.createElement('li');
+                            li.textContent = line.replace(/^[\-•]\s*/, '');
+                            list.appendChild(li);
+                        });
+                        card.appendChild(list);
+                    }
+                }
+
+                const noteLine = sentenceParts.find((line) =>
+                    /\b(if|when)\b.*\b(still|doesn't|cannot|can't)\b/i.test(line)
+                );
+                if (noteLine) {
+                    const note = document.createElement('div');
+                    note.className = 'bot-reco-meta';
+                    note.style.fontWeight = '700';
+                    note.textContent = `If issue persists: ${noteLine}`;
+                    card.appendChild(note);
+                } else if (sentenceParts.length) {
+                    const fallback = document.createElement('div');
+                    fallback.className = 'bot-reco-meta';
+                    fallback.textContent = sentenceParts[0];
+                    card.appendChild(fallback);
+                }
+
+                return card;
+            }
+
+            function normalizeBotReplyText(rawText) {
+                const lines = String(rawText || '')
+                    .split(/\r?\n/)
+                    .map((line) => line.trim())
+                    .filter(Boolean);
+                if (!lines.length) return '';
+
+                const cleaned = [];
+                const seen = new Set();
+                lines.forEach((line) => {
+                    const normalized = line
+                        .toLowerCase()
+                        .replace(/\s+/g, ' ')
+                        .replace(/\?+$/, '?')
+                        .trim();
+                    if (!normalized || seen.has(normalized)) return;
+                    seen.add(normalized);
+                    cleaned.push(line);
+                });
+                return cleaned.join('\n\n');
+            }
+
+            function appendFormattedBotText(container, text) {
+                const raw = normalizeBotReplyText(text);
+                if (!raw) {
+                    container.textContent = '';
+                    return;
+                }
+
+                const recommendationCard = buildReadableRecommendationCard(raw);
+                if (recommendationCard) {
+                    container.appendChild(recommendationCard);
+                    return;
+                }
+
+                const compareCard = buildCompareOptionsCard(raw);
+                if (compareCard) {
+                    container.appendChild(compareCard);
+                    return;
+                }
+
+                const whyCard = buildWhyOptionCard(raw);
+                if (whyCard) {
+                    container.appendChild(whyCard);
+                    return;
+                }
+
+                const availabilityCard = buildAvailabilityOptionsCard(raw);
+                if (availabilityCard) {
+                    container.appendChild(availabilityCard);
+                    return;
+                }
+
+                const bookingCountCard = buildBookingCountSnapshotCard(raw);
+                if (bookingCountCard) {
+                    container.appendChild(bookingCountCard);
+                    return;
+                }
+
+                const paymentPolicyCard = buildPaymentPolicyCard(raw);
+                if (paymentPolicyCard) {
+                    container.appendChild(paymentPolicyCard);
+                    return;
+                }
+
+                const bookingGuideCard = buildBookingGuideCard(raw);
+                if (bookingGuideCard) {
+                    container.appendChild(bookingGuideCard);
+                    return;
+                }
+
+                const supportGuideCard = buildSupportGuideCard(raw);
+                if (supportGuideCard) {
+                    container.appendChild(supportGuideCard);
+                    return;
+                }
+
+                const blocks = raw.split(/\n\s*\n/).map((block) => block.trim()).filter(Boolean);
+                blocks.forEach((block) => {
+                    const lines = block.split('\n').map((line) => line.trim()).filter(Boolean);
+                    if (lines.length === 0) {
+                        return;
+                    }
+
+                    const bulletOnly = lines.every((line) => line.startsWith('- '));
+                    const numberedOnly = lines.every((line) => /^\d+[.)]\s+/.test(line));
+                    if (bulletOnly || numberedOnly) {
+                        const list = document.createElement(numberedOnly ? 'ol' : 'ul');
+                        list.className = 'bot-text-list';
+                        lines.forEach((line) => {
+                            const item = document.createElement('li');
+                            item.textContent = numberedOnly
+                                ? line.replace(/^\d+[.)]\s+/, '')
+                                : line.replace(/^-+\s*/, '');
+                            list.appendChild(item);
+                        });
+                        container.appendChild(list);
+                        return;
+                    }
+
+                    if (lines.length === 1 && /:\s*$/.test(lines[0])) {
+                        const heading = document.createElement('div');
+                        heading.className = 'bot-text-heading';
+                        heading.textContent = lines[0];
+                        container.appendChild(heading);
+                        return;
+                    }
+
+                    const paragraph = document.createElement('p');
+                    paragraph.className = 'bot-text-paragraph';
+                    paragraph.textContent = lines.join(' ');
+                    container.appendChild(paragraph);
+                });
+            }
+
             function addMessage(text, sender, isTyping = false, payload = null) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${sender}`;
@@ -3035,58 +4570,65 @@
                     messageDiv.classList.add('rich-card');
                     messageDiv.appendChild(structuredContent);
                 } else {
-                    messageDiv.textContent = text;
-                    messageDiv.style.whiteSpace = 'pre-line';
+                    if (sender === 'bot' && !isTyping) {
+                        messageDiv.classList.add('formal-response');
+                        appendFormattedBotText(messageDiv, text);
+                    } else {
+                        messageDiv.textContent = text;
+                        messageDiv.style.whiteSpace = 'pre-line';
+                    }
                 }
                 if (sender === 'bot' && !isTyping && payload?.show_feedback_prompt === true) {
-                    appendUxFeedbackControls(messageDiv);
+                    renderUxFeedbackDock();
                 }
                 chatMessages.appendChild(messageDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
 
-            function appendUxFeedbackControls(messageDiv) {
-                const row = document.createElement('div');
-                row.style.display = 'flex';
-                row.style.gap = '8px';
-                row.style.marginTop = '8px';
-                row.style.alignItems = 'center';
-                row.style.flexWrap = 'wrap';
+            function clearUxFeedbackDock() {
+                if (!chatFeedbackDock) return;
+                chatFeedbackDock.classList.remove('active');
+                chatFeedbackDock.innerHTML = '';
+            }
 
-                const label = document.createElement('span');
-                label.textContent = 'Was this helpful?';
-                label.style.fontSize = '0.72rem';
-                label.style.fontWeight = '700';
-                label.style.color = '#4b6078';
-                row.appendChild(label);
+            function renderUxFeedbackDock() {
+                if (!chatFeedbackDock) return;
+                chatFeedbackDock.innerHTML = '';
+                chatFeedbackDock.classList.add('active');
+
+                const title = document.createElement('div');
+                title.className = 'chat-feedback-title';
+                title.textContent = 'Was this chatbot response helpful?';
+                chatFeedbackDock.appendChild(title);
+
+                const actions = document.createElement('div');
+                actions.className = 'chat-feedback-actions';
 
                 const makeBtn = (text, likert) => {
                     const btn = document.createElement('button');
                     btn.type = 'button';
+                    btn.className = 'chat-feedback-btn';
                     btn.textContent = text;
-                    btn.style.padding = '4px 8px';
-                    btn.style.borderRadius = '999px';
-                    btn.style.border = '1px solid #c3d4ea';
-                    btn.style.background = '#f2f7ff';
-                    btn.style.color = '#214c7b';
-                    btn.style.fontSize = '0.71rem';
-                    btn.style.fontWeight = '700';
-                    btn.style.cursor = 'pointer';
                     btn.addEventListener('click', async () => {
-                        btn.disabled = true;
+                        actions.querySelectorAll('button').forEach((b) => {
+                            b.disabled = true;
+                        });
                         await sendUsabilityFeedback({
                             statement_code: 'CHAT_UX_HELPFULNESS',
                             likert_score: likert,
                             comment: '',
                         });
-                        row.innerHTML = '<span style="font-size:0.72rem;color:#3b6b4a;font-weight:700;">Thanks for the feedback.</span>';
+                        chatFeedbackDock.innerHTML = '<div class="chat-feedback-note">Thank you. Your feedback is recorded.</div>';
+                        setTimeout(() => {
+                            clearUxFeedbackDock();
+                        }, 1800);
                     });
                     return btn;
                 };
 
-                row.appendChild(makeBtn('Yes', 5));
-                row.appendChild(makeBtn('Needs improvement', 2));
-                messageDiv.appendChild(row);
+                actions.appendChild(makeBtn('Yes', 5));
+                actions.appendChild(makeBtn('Needs improvement', 2));
+                chatFeedbackDock.appendChild(actions);
             }
 
             function buildAccommodationRecommendationTraceCard(text, payload) {
@@ -3096,7 +4638,44 @@
                 if (!traceItems || traceItems.length === 0) {
                     return null;
                 }
+                logGuestFunnelEvent('recommendation_shown', { detail: `count:${traceItems.length}` });
                 const fallbackMode = String(payload?.recommendation_fallback || 'strict').trim().toLowerCase();
+                const preferenceSummary = String(payload?.recommendation_context_summary || '').trim().toLowerCase();
+                const prefBudgetMatch = preferenceSummary.match(/budget:\s*php\s*([0-9][0-9,]*)/i);
+                const prefGuestsMatch = preferenceSummary.match(/guests?:\s*(\d+)/i);
+                const prefLocationMatch = preferenceSummary.match(/location:\s*([^,;]+)/i);
+                const prefBudget = prefBudgetMatch ? Number(String(prefBudgetMatch[1]).replace(/,/g, '')) : 0;
+                const prefGuests = prefGuestsMatch ? Number(prefGuestsMatch[1]) : 0;
+                const prefLocation = prefLocationMatch ? String(prefLocationMatch[1] || '').trim().toLowerCase() : '';
+
+                const scoredItems = [...traceItems].sort((a, b) => {
+                    const aRate = Number(a?.price_per_night || a?.rate || 0);
+                    const bRate = Number(b?.price_per_night || b?.rate || 0);
+                    const aCapacity = Number(a?.person_limit || 0);
+                    const bCapacity = Number(b?.person_limit || 0);
+                    const aLocation = String(a?.location || '').toLowerCase();
+                    const bLocation = String(b?.location || '').toLowerCase();
+
+                    const scoreItem = (rate, capacity, location, fallbackRank) => {
+                        let score = 0;
+                        if (prefBudget > 0 && rate > 0) {
+                            score += rate <= prefBudget ? 40 : Math.max(0, 20 - Math.abs(rate - prefBudget) / 100);
+                        }
+                        if (prefGuests > 0 && capacity > 0) {
+                            score += capacity >= prefGuests ? 40 : Math.max(0, 20 - (prefGuests - capacity) * 10);
+                        }
+                        if (prefLocation && location && location.includes(prefLocation)) {
+                            score += 20;
+                        }
+                        score += Math.max(0, 10 - Number(fallbackRank || 0));
+                        return score;
+                    };
+
+                    const scoreA = scoreItem(aRate, aCapacity, aLocation, a?.rank);
+                    const scoreB = scoreItem(bRate, bCapacity, bLocation, b?.rank);
+                    if (scoreA !== scoreB) return scoreB - scoreA;
+                    return (Number(a?.rank || 999) - Number(b?.rank || 999));
+                });
 
                 const card = document.createElement('div');
                 card.className = 'chat-structured-card chat-accommodation-card';
@@ -3112,6 +4691,72 @@
                 title.style.color = '#16344a';
                 card.appendChild(title);
 
+                const nextStep = document.createElement('div');
+                nextStep.style.padding = '9px 10px';
+                nextStep.style.borderRadius = '10px';
+                nextStep.style.border = '1px solid #d7e5f5';
+                nextStep.style.background = '#f4f9ff';
+                nextStep.style.color = '#214a73';
+                nextStep.style.fontSize = '0.78rem';
+                nextStep.style.lineHeight = '1.35';
+                nextStep.style.fontWeight = '700';
+                nextStep.textContent = 'Next step: choose a room, then provide check-in/check-out dates and guest count to continue booking.';
+                card.appendChild(nextStep);
+
+                if (preferenceSummary) {
+                    const summaryBox = document.createElement('div');
+                    summaryBox.style.padding = '8px 10px';
+                    summaryBox.style.borderRadius = '10px';
+                    summaryBox.style.border = '1px solid #dfe7d3';
+                    summaryBox.style.background = '#f8fbf3';
+                    summaryBox.style.color = '#31553c';
+                    summaryBox.style.fontSize = '0.76rem';
+                    summaryBox.style.lineHeight = '1.35';
+
+                    const summaryTitle = document.createElement('div');
+                    summaryTitle.textContent = 'Preference Summary';
+                    summaryTitle.style.fontWeight = '800';
+                    summaryTitle.style.marginBottom = '3px';
+                    summaryBox.appendChild(summaryTitle);
+
+                    const summaryText = document.createElement('div');
+                    summaryText.textContent = String(payload?.recommendation_context_summary || '').trim();
+                    summaryText.style.fontWeight = '700';
+                    summaryBox.appendChild(summaryText);
+
+                    card.appendChild(summaryBox);
+                }
+
+                if (traceItems.length >= 2) {
+                    const compareRow = document.createElement('div');
+                    compareRow.style.display = 'flex';
+                    compareRow.style.justifyContent = 'flex-end';
+
+                    const compareBtn = document.createElement('button');
+                    compareBtn.type = 'button';
+                    const compareN = Math.min(3, traceItems.length);
+                    compareBtn.textContent = `Compare Top ${compareN}`;
+                    compareBtn.style.border = '1px solid #c6daef';
+                    compareBtn.style.background = '#f7fbff';
+                    compareBtn.style.color = '#1d4d89';
+                    compareBtn.style.borderRadius = '10px';
+                    compareBtn.style.padding = '5px 10px';
+                    compareBtn.style.fontSize = '0.74rem';
+                    compareBtn.style.fontWeight = '700';
+                    compareBtn.style.cursor = 'pointer';
+                    compareBtn.addEventListener('click', async () => {
+                        await logGuestFunnelEvent('recommendation_card_clicked', { detail: `compare_top_${compareN}` });
+                        compareBtn.disabled = true;
+                        compareBtn.style.opacity = '0.7';
+                        compareBtn.textContent = 'Compared';
+                        await requestChatbotReply(`compare top ${compareN}`, {
+                            addUserBubble: true,
+                        });
+                    });
+                    compareRow.appendChild(compareBtn);
+                    card.appendChild(compareRow);
+                }
+
                 if (fallbackMode && fallbackMode !== 'strict') {
                     const fallbackNotice = document.createElement('div');
                     fallbackNotice.style.padding = '8px 10px';
@@ -3121,23 +4766,28 @@
                     fallbackNotice.style.color = '#684d00';
                     fallbackNotice.style.fontSize = '0.78rem';
                     fallbackNotice.style.fontWeight = '700';
-                    fallbackNotice.textContent = 'Showing broadened matches because strict filters had limited results.';
+                    const fallbackReasonMap = {
+                        relaxed_type: 'No exact match was found with your selected accommodation type, so I included nearby hotels and inns.',
+                        relaxed_location: 'No exact match was found for your preferred location, so I included nearby Bayawan areas.',
+                        relaxed_location_and_type: 'No exact strict match was found, so I broadened both location and accommodation type to show the closest available options.',
+                    };
+                    fallbackNotice.textContent = fallbackReasonMap[fallbackMode] || 'Showing broadened matches because strict filters had limited results.';
                     card.appendChild(fallbackNotice);
                 }
 
-                traceItems.forEach((item) => {
+                scoredItems.forEach((item, idx) => {
                     const itemBox = document.createElement('div');
                     itemBox.style.border = '1px solid #c7d7e6';
                     itemBox.style.borderRadius = '14px';
                     itemBox.style.padding = '10px 12px';
-                    itemBox.style.background = 'linear-gradient(180deg, #f8fbff 0%, #f2f7fb 100%)';
+                    itemBox.style.background = 'linear-gradient(180deg, rgba(248, 251, 255, 0.68) 0%, rgba(242, 247, 251, 0.62) 100%)';
                     itemBox.style.boxShadow = '0 1px 2px rgba(12, 40, 66, 0.08)';
                     itemBox.style.display = 'grid';
                     itemBox.style.gap = '6px';
                     itemBox.style.position = 'relative';
 
                     const heading = document.createElement('div');
-                    heading.textContent = `${item.rank || ''}. ${item.title || ''}`;
+                    heading.textContent = `Option ${idx + 1}: ${item.title || ''}`;
                     heading.style.fontWeight = '700';
                     heading.style.fontSize = '0.92rem';
                     heading.style.lineHeight = '1.3';
@@ -3176,6 +4826,9 @@
                     if (item?.person_limit) {
                         metaRow.appendChild(makePill(`Capacity: ${item.person_limit} pax`));
                     }
+                    if (Number.isFinite(Number(item?.current_availability))) {
+                        metaRow.appendChild(makePill(`Available now: ${Number(item.current_availability)}`));
+                    }
                     if (metaRow.childNodes.length > 0) {
                         itemBox.appendChild(metaRow);
                     }
@@ -3200,7 +4853,7 @@
                     }
 
                     const matchStrengthRaw = String(item?.match_strength || '').trim();
-                    const matchStrength = matchStrengthRaw || 'Low';
+                    const matchStrength = matchStrengthRaw || 'General fit';
                     if (matchStrengthRaw) {
                         const matchRow = document.createElement('div');
                         matchRow.style.display = 'flex';
@@ -3209,7 +4862,7 @@
                         matchRow.style.flexWrap = 'wrap';
 
                         const strengthBadge = document.createElement('span');
-                        strengthBadge.textContent = `Match: ${matchStrength}`;
+                        strengthBadge.textContent = `Match Profile: ${matchStrength}`;
                         strengthBadge.style.display = 'inline-block';
                         strengthBadge.style.padding = '2px 8px';
                         strengthBadge.style.borderRadius = '999px';
@@ -3232,8 +4885,16 @@
                         itemBox.appendChild(matchRow);
                     }
 
-                    const reasons = Array.isArray(item?.reasons) ? item.reasons : [];
+                    const reasons = [...new Set((Array.isArray(item?.reasons) ? item.reasons : []).map((r) => String(r || '').trim()).filter(Boolean))];
                     if (reasons.length > 0) {
+                        const reasonIntro = document.createElement('div');
+                        reasonIntro.textContent = 'Why this may fit you:';
+                        reasonIntro.style.fontSize = '0.76rem';
+                        reasonIntro.style.fontWeight = '700';
+                        reasonIntro.style.color = '#2f4a63';
+                        reasonIntro.style.marginTop = '2px';
+                        itemBox.appendChild(reasonIntro);
+
                         const ul = document.createElement('ul');
                         ul.style.margin = '2px 0 0 18px';
                         ul.style.padding = '0';
@@ -3256,6 +4917,15 @@
                             } else if (lowered.includes('partial amenity match')) {
                                 li.style.color = '#835300';
                                 li.style.fontWeight = '600';
+                            } else if (lowered.includes('budget') || lowered.includes('price')) {
+                                li.style.color = '#1d5c3b';
+                                li.style.fontWeight = '700';
+                            } else if (lowered.includes('capacity') || lowered.includes('guest')) {
+                                li.style.color = '#2b4f83';
+                                li.style.fontWeight = '700';
+                            } else if (lowered.includes('location') || lowered.includes('near')) {
+                                li.style.color = '#7b4a12';
+                                li.style.fontWeight = '700';
                             }
                         ul.appendChild(li);
                     });
@@ -3270,17 +4940,21 @@
 
                         const bookBtn = document.createElement('button');
                         bookBtn.type = 'button';
-                        bookBtn.textContent = `Start booking Room ${item.room_id}`;
+                        bookBtn.textContent = `Book Room ${item.room_id}`;
                         bookBtn.style.border = '1px solid #c6daef';
-                        bookBtn.style.background = '#f7fbff';
-                        bookBtn.style.color = '#1d4d89';
+                        bookBtn.style.background = 'linear-gradient(135deg, #1f64d6, #179fc4)';
+                        bookBtn.style.color = '#ffffff';
                         bookBtn.style.borderRadius = '10px';
-                        bookBtn.style.padding = '5px 10px';
+                        bookBtn.style.padding = '6px 11px';
                         bookBtn.style.fontSize = '0.74rem';
-                        bookBtn.style.fontWeight = '700';
+                        bookBtn.style.fontWeight = '800';
                         bookBtn.style.cursor = 'pointer';
                         bookBtn.style.boxShadow = '0 6px 14px rgba(12, 53, 95, 0.10)';
                         bookBtn.addEventListener('click', async () => {
+                            await logGuestFunnelEvent('book_button_clicked', { detail: `room:${String(item.room_id || '')}` });
+                            await logGuestFunnelEvent('booking_flow_started', { detail: `room:${String(item.room_id || '')}` });
+                            bookBtn.disabled = true;
+                            bookBtn.style.opacity = '0.75';
                             await logRecommendationClick({
                                 room_id: item?.room_id || null,
                                 accom_id: item?.accom_id || null,
@@ -3294,7 +4968,7 @@
                         bookRow.appendChild(bookBtn);
 
                         const detailsHint = document.createElement('span');
-                        detailsHint.textContent = 'Add dates in the next message.';
+                        detailsHint.textContent = 'Then send: check-in, check-out, and guests.';
                         detailsHint.style.fontSize = '0.71rem';
                         detailsHint.style.fontWeight = '700';
                         detailsHint.style.color = '#4b6078';
@@ -3302,6 +4976,32 @@
                         bookRow.appendChild(detailsHint);
 
                         itemBox.appendChild(bookRow);
+                    }
+
+                    if (item && item.rank) {
+                        const whyRow = document.createElement('div');
+                        whyRow.style.display = 'flex';
+                        whyRow.style.marginTop = '2px';
+
+                        const whyBtn = document.createElement('button');
+                        whyBtn.type = 'button';
+                        whyBtn.textContent = 'Why this option?';
+                        whyBtn.style.border = '1px solid #d7dfe8';
+                        whyBtn.style.background = '#ffffff';
+                        whyBtn.style.color = '#334e68';
+                        whyBtn.style.borderRadius = '9px';
+                        whyBtn.style.padding = '4px 9px';
+                        whyBtn.style.fontSize = '0.72rem';
+                        whyBtn.style.fontWeight = '700';
+                        whyBtn.style.cursor = 'pointer';
+                        whyBtn.addEventListener('click', async () => {
+                            await logGuestFunnelEvent('recommendation_card_clicked', { detail: `why_option_${String(item.rank || '')}` });
+                            await requestChatbotReply(`why option ${item.rank}`, {
+                                addUserBubble: true,
+                            });
+                        });
+                        whyRow.appendChild(whyBtn);
+                        itemBox.appendChild(whyRow);
                     }
 
                     card.appendChild(itemBox);
@@ -3566,6 +5266,7 @@
                 actionButton.style.fontWeight = '600';
                 actionButton.style.wordBreak = 'normal';
                 actionButton.addEventListener('click', async function() {
+                    await logGuestFunnelEvent('billing_link_clicked', { detail: String(label || 'billing_link_click') });
                     await logRecommendationClick({
                         item_ref: 'chat:billing_link_click',
                         scoring_mode: 'billing_link',
@@ -3575,6 +5276,24 @@
                 messageDiv.appendChild(actionButton);
                 chatMessages.appendChild(messageDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            function filterQuickRepliesForPayload(replies, payload) {
+                if (!Array.isArray(replies)) return [];
+                const hasRecommendationTrace = Array.isArray(payload?.recommendation_trace) && payload.recommendation_trace.length > 0;
+                if (!hasRecommendationTrace) return replies;
+
+                // Recommendation cards already provide compare/why/book CTAs.
+                return replies.filter((entry) => {
+                    const value = String((entry && typeof entry === 'object') ? (entry.value || '') : entry || '')
+                        .trim()
+                        .toLowerCase();
+                    if (!value) return false;
+                    if (value.startsWith('compare top')) return false;
+                    if (value.startsWith('why option')) return false;
+                    if (value.startsWith('book room')) return false;
+                    return true;
+                });
             }
 
             function addQuickReplies(replies) {
@@ -3595,6 +5314,22 @@
                     : [];
                 if (options.length === 0) return;
 
+                const deduped = [];
+                const seen = new Set();
+                options.forEach((option) => {
+                    const key = `${String(option.label || '').trim().toLowerCase()}|${String(option.value || '').trim().toLowerCase()}`;
+                    if (!key || seen.has(key)) return;
+                    seen.add(key);
+                    deduped.push(option);
+                });
+                if (deduped.length === 0) return;
+
+                const signature = JSON.stringify(deduped.map((opt) => String(opt.value || '').trim().toLowerCase()));
+                if (window.__lastQuickReplySignature === signature) {
+                    return;
+                }
+                window.__lastQuickReplySignature = signature;
+
                 const messageDiv = document.createElement('div');
                 messageDiv.className = 'message bot';
                 messageDiv.style.padding = '9px 10px';
@@ -3604,7 +5339,7 @@
                 wrap.style.flexWrap = 'wrap';
                 wrap.style.gap = '7px';
 
-                options.slice(0, 4).forEach((option) => {
+                deduped.slice(0, 4).forEach((option) => {
                     const chip = document.createElement('button');
                     chip.type = 'button';
                     chip.textContent = option.label;
@@ -3817,7 +5552,7 @@
                 reCAPTCHA is not fully configured. Please set RECAPTCHA_SITE_KEY and RECAPTCHA_SECRET_KEY before production use.
             </div>
             {% endif %}
-            <div id="owner-signup-hero" class="owner-signup-hero" style="display:none;">
+            <div id="owner-signup-hero" class="owner-signup-hero owner-only-section" style="display:none;">
                 Accommodation Owner Registration: complete this form and we will bring you straight to accommodation registration.
             </div>
             
@@ -3832,6 +5567,8 @@
             <form id="signup-form" method="post" action="{% url 'register' %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <input type="hidden" id="signup_next" name="next" value="">
+                <input type="hidden" id="register_as_accommodation_owner" name="register_as_accommodation_owner" value="0">
+                <input type="hidden" id="owner_signup_intent" name="owner_signup_intent" value="0">
                 
                 <div class="form-row name-row">
                     <div class="form-group" style="flex: 2;">
@@ -3858,17 +5595,44 @@
                     <input type="email" id="email" name="email" class="form-control" required>
                     <div class="error-message" id="email-error"></div>
                 </div>
-                
+
+                <div class="form-group">
+                    <label for="phone_number" class="required">Contact Number</label>
+                    <input type="tel" id="phone_number" name="phone_number" class="form-control" required>
+                    <div class="error-message" id="phone-error"></div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password" class="required">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                        <div class="error-message" id="password-error"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm_password" class="required">Confirm Password</label>
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                        <div class="error-message" id="confirm-password-error"></div>
+                    </div>
+                </div>
+
+                <div class="signup-basic-actions">
+                    <button type="button" id="toggle-signup-more" class="signup-more-btn">
+                        <i class="fas fa-chevron-down"></i> Show more details
+                    </button>
+                </div>
+
+                <div id="signup-advanced" class="signup-advanced">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="country_of_origin" class="required">Country of Origin</label>
-                        <input type="text" id="country_of_origin" name="country_of_origin" class="form-control" required>
+                        <input type="text" id="country_of_origin" name="country_of_origin" class="form-control">
                         <div class="error-message" id="country_of_origin-error"></div>
                     </div>
                     
                     <div class="form-group">
                         <label for="city" class="required">City</label>
-                        <input type="text" id="city" name="city" class="form-control" required>
+                        <input type="text" id="city" name="city" class="form-control">
                         <div class="error-message" id="city-error"></div>
                     </div>
                 </div>
@@ -3876,7 +5640,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="birthday" class="required">Birthday</label>
-                        <input type="date" id="birthday" name="birthday" class="form-control" required>
+                        <input type="date" id="birthday" name="birthday" class="form-control">
                         <div class="error-message" id="birthday-error"></div>
                     </div>
                     
@@ -3894,14 +5658,8 @@
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="phone_number" class="required">Phone Number</label>
-                        <input type="tel" id="phone_number" name="phone_number" class="form-control" required>
-                        <div class="error-message" id="phone-error"></div>
-                    </div>
-                    
-                    <div class="form-group">
                         <label for="sex" class="required">Sex</label>
-                        <select id="sex" name="sex" class="form-control" required>
+                        <select id="sex" name="sex" class="form-control">
                             <option value="">-- Select --</option>
                             <option value="M">Male</option>
                             <option value="F">Female</option>
@@ -3910,18 +5668,13 @@
                     </div>
                 </div>
                 
-                <div class="form-group">
+                <div class="form-group owner-only-section">
                     <label for="company_name">Company Name <small>(Optional)</small></label>
                     <input type="text" id="company_name" name="company_name" class="form-control">
                     <div class="error-message" id="company_name-error"></div>
                 </div>
                 
-                <div class="form-group checkbox-group">
-                    <input type="checkbox" id="register_as_accommodation_owner" name="register_as_accommodation_owner" class="form-check-input">
-                    <label for="register_as_accommodation_owner" class="form-check-label">I am signing up as an Accommodation Owner</label>
-                </div>
-                
-                <div class="form-group">
+                <div class="form-group owner-only-section">
                     <label for="credentials">Credentials (Passport, Valid ID, etc.)</label>
                     <input type="file" id="credentials" name="credentials" class="form-control" multiple accept="image/*">
                     <small>You can upload multiple files by selecting them together</small>
@@ -3976,23 +5729,20 @@
                         <div class="error-message" id="disability_documents-error"></div>
                     </div>
                 </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="password" class="required">Password</label>
-                        <input type="password" id="password" name="password" class="form-control" required>
-                        <div class="error-message" id="password-error"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="confirm_password" class="required">Confirm Password</label>
-                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
-                        <div class="error-message" id="confirm-password-error"></div>
-                    </div>
                 </div>
                 
                 <div class="button-group owner-signup-actions">
-                    <button type="submit" id="owner-signup-submit" class="btn btn-primary owner-signup-submit">Create Owner Account</button>
+                    <button type="submit" id="owner-signup-submit" class="btn btn-primary owner-signup-submit signup-submit-btn">Sign Up</button>
+                </div>
+
+                <div class="social-divider">Or continue with</div>
+                <div class="social-login-row">
+                    <button type="button" class="social-btn" onclick="alert('Google signup is not enabled yet.')">
+                        <i class="fab fa-google"></i>Google
+                    </button>
+                    <button type="button" class="social-btn" onclick="alert('Facebook signup is not enabled yet.')">
+                        <i class="fab fa-facebook"></i>Facebook
+                    </button>
                 </div>
             </form>
             
@@ -4041,12 +5791,25 @@
                     </div>
                     <div class="error-message" id="login-password-error"></div>
                 </div>
+
+                <div class="forgot-password-inline">
+                    <a href="{% url 'admin_app:forgot_password' %}">Forgot Password?</a>
+                </div>
                 
                 <button type="submit" class="submit-btn">Log In</button>
+
+                <div class="social-divider">Or continue with</div>
+                <div class="social-login-row">
+                    <button type="button" class="social-btn" onclick="alert('Google login is not enabled yet.')">
+                        <i class="fab fa-google"></i>Google
+                    </button>
+                    <button type="button" class="social-btn" onclick="alert('Facebook login is not enabled yet.')">
+                        <i class="fab fa-facebook"></i>Facebook
+                    </button>
+                </div>
                 
                 <div class="login-link">
-                    <p>Don't have an account?</p>
-                    <a href="#" id="show-signup" class="signup-outline-btn">Sign up</a>
+                    <p>Don't have an account? <a href="#" id="show-signup">Sign up here</a></p>
                 </div>
             </form>
         </div>
@@ -4087,62 +5850,72 @@
                 
                 <div class="form-row name-row">
                     <div class="form-group" style="flex: 2;">
-                        <label for="first_name" class="required">First Name</label>
-                        <input type="text" id="first_name" name="first_name" class="form-control" required>
+                        <label for="profile_first_name" class="required">First Name</label>
+                        <input type="text" id="profile_first_name" name="first_name" class="form-control" required>
                         <div class="error-message" id="first_name-error"></div>
                     </div>
                     
                     <div class="form-group" style="flex: 1; max-width: 80px;">
-                        <label for="middle_initial">M.I.</label>
-                        <input type="text" id="middle_initial" name="middle_initial" class="form-control" maxlength="1">
+                        <label for="profile_middle_initial">M.I.</label>
+                        <input type="text" id="profile_middle_initial" name="middle_initial" class="form-control" maxlength="1">
                         <div class="error-message" id="middle_initial-error"></div>
                     </div>
                     
                     <div class="form-group" style="flex: 2;">
-                        <label for="last_name" class="required">Last Name</label>
-                        <input type="text" id="last_name" name="last_name" class="form-control" required>
+                        <label for="profile_last_name" class="required">Last Name</label>
+                        <input type="text" id="profile_last_name" name="last_name" class="form-control" required>
                         <div class="error-message" id="last_name-error"></div>
+                    </div>
+
+                    <div class="form-group" style="flex: 2;">
+                        <label for="profile_birthday">Birthday</label>
+                        <input type="date" id="profile_birthday" name="birthday" class="form-control">
+                        <div class="error-message" id="birthday-error"></div>
+                    </div>
+
+                    <div class="form-group" style="flex: 2;">
+                        <label for="profile_age">Age <small>(Auto-calculated)</small></label>
+                        <input type="text" id="profile_age" name="age" class="form-control readonly" readonly>
+                        <div class="error-message" id="age-error"></div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group" style="flex: 2;">
+                        <label for="profile_email" class="required">Email Address</label>
+                        <input type="email" id="profile_email" name="email" class="form-control" required>
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+                    
+                    <div class="form-group" style="flex: 2;">
+                        <label for="profile_age_label">Age Category <small>(Auto-calculated)</small></label>
+                        <input type="text" id="profile_age_label" name="age_label" class="form-control readonly" readonly>
+                        <div class="error-message" id="age_label-error"></div>
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="country_of_origin" class="required">Country of Origin</label>
-                        <input type="text" id="country_of_origin" name="country_of_origin" class="form-control" required>
+                        <label for="profile_country_of_origin" class="required">Country of Origin</label>
+                        <input type="text" id="profile_country_of_origin" name="country_of_origin" class="form-control" required>
                         <div class="error-message" id="country_of_origin-error"></div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="city" class="required">City</label>
-                        <input type="text" id="city" name="city" class="form-control" required>
+                        <label for="profile_city" class="required">City</label>
+                        <input type="text" id="profile_city" name="city" class="form-control" required>
                         <div class="error-message" id="city-error"></div>
                     </div>
-                </div>
-                
-                <div class="form-row">
+
                     <div class="form-group">
-                        <label for="age">Age</label>
-                        <input type="number" id="age" name="age" class="form-control">
-                        <div class="error-message" id="age-error"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone_number" class="required">Phone Number</label>
-                        <input type="text" id="phone_number" name="phone_number" class="form-control" required>
+                        <label for="profile_phone_number" class="required">Phone Number</label>
+                        <input type="text" id="profile_phone_number" name="phone_number" class="form-control" required>
                         <div class="error-message" id="phone_number-error"></div>
                     </div>
-                </div>
-                
-                <div class="form-row">
+
                     <div class="form-group">
-                        <label for="company_name">Company Name <small>(Optional)</small></label>
-                        <input type="text" id="company_name" name="company_name" class="form-control">
-                        <div class="error-message" id="company_name-error"></div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="sex" class="required">Sex</label>
-                        <select id="sex" name="sex" class="form-control" required>
+                        <label for="profile_sex" class="required">Sex</label>
+                        <select id="profile_sex" name="sex" class="form-control" required>
                             <option value="M">Male</option>
                             <option value="F">Female</option>
                         </select>
@@ -4150,14 +5923,38 @@
                     </div>
                 </div>
                 
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profile_company_name">Company Name <small>(Optional)</small></label>
+                        <input type="text" id="profile_company_name" name="company_name" class="form-control">
+                        <div class="error-message" id="company_name-error"></div>
+                    </div>
+                    
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <div style="display:flex; align-items:center; gap:8px; padding-bottom:8px;">
+                            <input type="checkbox" id="profile_has_disability" name="has_disability">
+                            <label for="profile_has_disability" style="margin:0;">I have a disability</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row" id="profile_disability_row" style="display:none;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="profile_disability_type">Disability Type</label>
+                        <input type="text" id="profile_disability_type" name="disability_type" class="form-control">
+                    </div>
+                </div>
+                
                 <div class="form-group">
-                    <label for="picture">Profile Picture</label>
-                    <div class="image-upload-container">
-                        <input type="file" id="picture" name="picture" accept="image/*">
-                        <button type="button" id="camera-button" class="btn">
-                            <i class="fas fa-camera"></i> Use Camera
-                        </button>
-                        <img id="image-preview" style="display: none; max-width: 100%; margin-top: 10px;">
+                    <label for="profile_picture">Profile Picture</label>
+                    <div class="image-upload-container" style="display:block;">
+                        <input type="file" id="profile_picture" name="picture" accept="image/*">
+                        <div class="camera-row">
+                            <button type="button" id="profile_camera_button" class="camera-btn">
+                                <i class="fas fa-camera"></i> Use Camera
+                            </button>
+                        </div>
+                        <img id="profile_image_preview" style="display: none; max-width: 100%; margin-top: 10px;">
                     </div>
                 </div>
                 
@@ -4185,7 +5982,11 @@
             if (ownerSignupIntent) {
                 const ownerCheckbox = document.getElementById('register_as_accommodation_owner');
                 if (ownerCheckbox) {
-                    ownerCheckbox.checked = true;
+                    ownerCheckbox.value = '1';
+                }
+                const ownerIntentField = document.getElementById('owner_signup_intent');
+                if (ownerIntentField) {
+                    ownerIntentField.value = '1';
                 }
             }
             const signupNextInput = document.getElementById('signup_next');
@@ -4287,17 +6088,21 @@
         });
     </script>
 
+    {{ hero_backgrounds|json_script:"hero-backgrounds-data" }}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Enhanced carousel functionality with crossfade
             let currentSlide = 0;
             let nextSlide = 0;
             const hero = document.querySelector('.hero');
-            const backgrounds = [
+            const dynamicBackgrounds = JSON.parse(document.getElementById('hero-backgrounds-data').textContent || '[]');
+            const backgrounds = (Array.isArray(dynamicBackgrounds) && dynamicBackgrounds.length > 0)
+                ? dynamicBackgrounds
+                : [
                     '/static/images/5_CityLandscape_Estremos_Entry2.jpg',
                     '/static/images/4 LANDSCAPE_DAYTO.jpg',
-                '/static/images/1 Landscape_Espartero_Entry2.jpg',
-                '/static/images/2 VERANO.jpg',
+                    '/static/images/1 Landscape_Espartero_Entry2.jpg',
+                    '/static/images/2 VERANO.jpg',
                     '/static/images/3 LANDSCAPE_ARTAJO.jpg'
                 ];
                 
@@ -4328,7 +6133,8 @@
                     hero.style.backgroundImage = `url('${backgrounds[index]}')`;
                     
                     // Set the appropriate positioning based on the image
-                    hero.style.backgroundPosition = positionStyles[index];
+                    const position = positionStyles[index] || 'center center';
+                    hero.style.backgroundPosition = position;
                     
                     // Update dots
                     allDots.forEach(d => d.classList.remove('active'));
@@ -4646,21 +6452,79 @@
                     flashEl.className = 'modal-flash';
                 };
                 clearSignupFlash();
-                
+
                 // Clear previous error messages
                 document.querySelectorAll('.error-message').forEach(el => {
                     el.textContent = '';
                 });
+
+                const setFieldError = (fieldId, errorId, message) => {
+                    const inputEl = document.getElementById(fieldId);
+                    const errorEl = document.getElementById(errorId);
+                    if (errorEl) {
+                        errorEl.textContent = message || '';
+                    }
+                    if (message && inputEl) {
+                        inputEl.setAttribute('aria-invalid', 'true');
+                    } else if (inputEl) {
+                        inputEl.removeAttribute('aria-invalid');
+                    }
+                };
+
+                const focusFirstErrorField = () => {
+                    const firstError = document.querySelector('#signup-form .error-message:not(:empty)');
+                    if (!firstError) return;
+                    const errorId = firstError.id || '';
+                    const fieldId = errorId.replace(/-error$/, '').replace('phone', 'phone_number').replace('confirm-password', 'confirm_password');
+                    const fieldEl = document.getElementById(fieldId);
+                    if (fieldEl) {
+                        fieldEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        fieldEl.focus();
+                    } else {
+                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                };
                 
                 // Basic form validation
                 let isValid = true;
+
+                // Required profile fields
+                const firstName = (document.getElementById('first_name')?.value || '').trim();
+                if (!firstName) {
+                    setFieldError('first_name', 'first_name-error', 'First name is required.');
+                    isValid = false;
+                }
+
+                const lastName = (document.getElementById('last_name')?.value || '').trim();
+                if (!lastName) {
+                    setFieldError('last_name', 'last_name-error', 'Last name is required.');
+                    isValid = false;
+                }
+
+                const country = (document.getElementById('country_of_origin')?.value || '').trim();
+                if (!country) {
+                    setFieldError('country_of_origin', 'country_of_origin-error', 'Country of origin is required.');
+                    isValid = false;
+                }
+
+                const city = (document.getElementById('city')?.value || '').trim();
+                if (!city) {
+                    setFieldError('city', 'city-error', 'City is required.');
+                    isValid = false;
+                }
+
+                const birthday = (document.getElementById('birthday')?.value || '').trim();
+                if (!birthday) {
+                    setFieldError('birthday', 'birthday-error', 'Birthday is required.');
+                    isValid = false;
+                }
                 
                 // Password validation
                 const password = document.getElementById('password').value;
                 const confirmPassword = document.getElementById('confirm_password').value;
                 
                 if (password !== confirmPassword) {
-                    document.getElementById('confirm-password-error').textContent = 'Passwords do not match.';
+                    setFieldError('confirm_password', 'confirm-password-error', 'Passwords do not match.');
                     isValid = false;
                 }
                 
@@ -4668,7 +6532,7 @@
                 const email = document.getElementById('email').value;
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
-                    document.getElementById('email-error').textContent = 'Please enter a valid email address.';
+                    setFieldError('email', 'email-error', 'Please enter a valid email address.');
                     isValid = false;
                 }
                 
@@ -4676,21 +6540,21 @@
                 const phone = document.getElementById('phone_number').value;
                 const phoneRegex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s.]?[0-9]{1,3}[-\s.]?[0-9]{1,4}[-\s.]?[0-9]{1,4}$/;
                 if (!phoneRegex.test(phone)) {
-                    document.getElementById('phone-error').textContent = 'Please enter a valid phone number.';
+                    setFieldError('phone_number', 'phone-error', 'Please enter a valid phone number.');
                     isValid = false;
                 }
                 
                 // Age validation
                 const age = document.getElementById('age').value;
                 if (age < 18) {
-                    document.getElementById('age-error').textContent = 'You must be at least 18 years old.';
+                    setFieldError('age', 'age-error', 'You must be at least 18 years old.');
                     isValid = false;
                 }
                 
                 // Sex validation
                 const sex = document.getElementById('sex').value;
                 if (!sex) {
-                    document.getElementById('sex-error').textContent = 'Please select your sex.';
+                    setFieldError('sex', 'sex-error', 'Please select your sex.');
                     isValid = false;
                 }
                 
@@ -4714,6 +6578,14 @@
                 }
                 
                 if (!isValid) {
+                    if (typeof setAdvancedVisibility === 'function') {
+                        setAdvancedVisibility(true);
+                    } else {
+                        const advancedSection = document.getElementById('signup-advanced');
+                        if (advancedSection) advancedSection.classList.add('active');
+                    }
+                    setSignupFlash('Please complete the required fields before signing up.', 'error');
+                    focusFirstErrorField();
                     return;
                 }
                 
@@ -4721,7 +6593,20 @@
                 if (ownerSignupIntent) {
                     const ownerCheckbox = document.getElementById('register_as_accommodation_owner');
                     if (ownerCheckbox) {
-                        ownerCheckbox.checked = true;
+                        ownerCheckbox.value = '1';
+                    }
+                    const ownerIntentField = document.getElementById('owner_signup_intent');
+                    if (ownerIntentField) {
+                        ownerIntentField.value = '1';
+                    }
+                } else {
+                    const ownerCheckbox = document.getElementById('register_as_accommodation_owner');
+                    if (ownerCheckbox) {
+                        ownerCheckbox.value = '0';
+                    }
+                    const ownerIntentField = document.getElementById('owner_signup_intent');
+                    if (ownerIntentField) {
+                        ownerIntentField.value = '0';
                     }
                 }
                 const formData = new FormData(this);
@@ -4746,10 +6631,20 @@
                     }
                 })
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                    const contentType = (response.headers.get('content-type') || '').toLowerCase();
+                    if (!contentType.includes('application/json')) {
+                        if (!response.ok) {
+                            throw new Error('Registration request failed.');
+                        }
+                        return {};
                     }
-                    return response.json();
+                    return response.json().then((data) => {
+                        if (!response.ok) {
+                            const serverMessage = String(data.message || 'Registration request failed.').trim();
+                            throw new Error(serverMessage);
+                        }
+                        return data;
+                    });
                 })
                 .then(data => {
                     signupResponseData = data;
@@ -4856,7 +6751,10 @@
                             setSignupFlash(signupResponseData.message, 'error');
                         }
                     } else {
-                        setSignupFlash('Registration failed. Please try again.', 'error');
+                        const fallbackMessage = (error && error.message)
+                            ? error.message
+                            : 'Registration failed. Please try again.';
+                        setSignupFlash(fallbackMessage, 'error');
                     }
                     return;
                 });
@@ -5061,16 +6959,59 @@
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('profileUpdateModal');
             const updateProfileLink = document.getElementById('update-profile-link');
+            if (!modal || !updateProfileLink) return;
             const closeBtn = modal.querySelector('.close-modal');
             const form = document.getElementById('profileUpdateForm');
             const successMessage = document.getElementById('profile-update-success');
+            const birthdayField = document.getElementById('profile_birthday');
+            const ageField = document.getElementById('profile_age');
+            const ageLabelField = document.getElementById('profile_age_label');
+            const hasDisabilityField = document.getElementById('profile_has_disability');
+            const disabilityRow = document.getElementById('profile_disability_row');
+            const profileCameraBtn = document.getElementById('profile_camera_button');
+            const profilePictureInput = document.getElementById('profile_picture');
+            const profileImagePreview = document.getElementById('profile_image_preview');
             
             // Function to clear all error messages
             function clearErrors() {
-                document.querySelectorAll('.error-message').forEach(el => {
+                form.querySelectorAll('.error-message').forEach(el => {
                     el.textContent = '';
                 });
                 successMessage.style.display = 'none';
+            }
+
+            function calculateAgeAndLabel(birthdayValue) {
+                if (!birthdayValue) {
+                    ageField.value = '';
+                    ageLabelField.value = '';
+                    return;
+                }
+                const b = new Date(birthdayValue);
+                if (Number.isNaN(b.getTime())) {
+                    ageField.value = '';
+                    ageLabelField.value = '';
+                    return;
+                }
+                const t = new Date();
+                let age = t.getFullYear() - b.getFullYear();
+                const m = t.getMonth() - b.getMonth();
+                if (m < 0 || (m === 0 && t.getDate() < b.getDate())) age--;
+                ageField.value = String(Math.max(age, 0));
+
+                let label = '';
+                if (age <= 1) label = 'Infant';
+                else if (age <= 4) label = 'Toddler';
+                else if (age <= 12) label = 'Child';
+                else if (age <= 19) label = 'Teen';
+                else if (age <= 39) label = 'Adult';
+                else if (age <= 59) label = 'Middle Adult';
+                else label = 'Senior';
+                ageLabelField.value = label;
+            }
+
+            function toggleDisabilityRow() {
+                if (!hasDisabilityField || !disabilityRow) return;
+                disabilityRow.style.display = hasDisabilityField.checked ? 'flex' : 'none';
             }
             
             // Open modal when clicking update profile link
@@ -5106,16 +7047,21 @@
                         const user = data.user;
                         
                         // Set form field values
-                        document.getElementById('first_name').value = user.first_name || '';
-                        document.getElementById('middle_initial').value = user.middle_initial || '';
-                        document.getElementById('last_name').value = user.last_name || '';
-                        document.getElementById('username').value = user.username || '';
-                        document.getElementById('country_of_origin').value = user.country_of_origin || '';
-                        document.getElementById('city').value = user.city || '';
-                        document.getElementById('phone_number').value = user.phone_number || '';
-                        document.getElementById('age').value = user.age || '';
-                        document.getElementById('company_name').value = user.company_name || '';
-                        document.getElementById('sex').value = user.sex || 'M';
+                        document.getElementById('profile_first_name').value = user.first_name || '';
+                        document.getElementById('profile_middle_initial').value = user.middle_initial || '';
+                        document.getElementById('profile_last_name').value = user.last_name || '';
+                        document.getElementById('profile_email').value = user.email || '';
+                        document.getElementById('profile_country_of_origin').value = user.country_of_origin || '';
+                        document.getElementById('profile_city').value = user.city || '';
+                        document.getElementById('profile_phone_number').value = user.phone_number || '';
+                        document.getElementById('profile_company_name').value = user.company_name || '';
+                        document.getElementById('profile_sex').value = user.sex || 'M';
+                        birthdayField.value = user.birthday || '';
+                        ageField.value = user.age || '';
+                        ageLabelField.value = user.age_label || '';
+                        hasDisabilityField.checked = !!user.has_disability;
+                        document.getElementById('profile_disability_type').value = user.disability_type || '';
+                        toggleDisabilityRow();
                     } else {
                         console.error('Failed to load user profile data');
                     }
@@ -5169,6 +7115,39 @@
                     alert('Error updating profile. Please try again.');
                 });
             });
+
+            if (birthdayField) {
+                birthdayField.addEventListener('change', function() {
+                    calculateAgeAndLabel(this.value);
+                });
+            }
+            if (hasDisabilityField) {
+                hasDisabilityField.addEventListener('change', toggleDisabilityRow);
+            }
+
+            if (profileCameraBtn && profilePictureInput) {
+                profileCameraBtn.addEventListener('click', function() {
+                    const cameraInput = document.createElement('input');
+                    cameraInput.type = 'file';
+                    cameraInput.accept = 'image/*';
+                    cameraInput.capture = 'environment';
+                    cameraInput.click();
+                    cameraInput.addEventListener('change', function() {
+                        if (!cameraInput.files || !cameraInput.files[0]) return;
+                        const dt = new DataTransfer();
+                        dt.items.add(cameraInput.files[0]);
+                        profilePictureInput.files = dt.files;
+                        if (profileImagePreview) {
+                            const reader = new FileReader();
+                            reader.onload = function(ev) {
+                                profileImagePreview.src = ev.target.result;
+                                profileImagePreview.style.display = 'block';
+                            };
+                            reader.readAsDataURL(cameraInput.files[0]);
+                        }
+                    });
+                });
+            }
         });
     </script>
 
@@ -5178,7 +7157,140 @@
         // Function to toggle user dropdown menu
         function toggleUserMenu() {
             const dropdown = document.getElementById('userDropdown');
+            const notifDropdown = document.getElementById('guestNotificationDropdown');
+            if (notifDropdown) notifDropdown.classList.remove('open');
             dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function escapeHtml(value) {
+            const text = String(value || '');
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function renderGuestNotifications(payload) {
+            const listEl = document.getElementById('guestNotificationList');
+            const badgeEl = document.getElementById('guestNotificationBadge');
+            if (!listEl || !badgeEl) return;
+
+            const rows = Array.isArray(payload.notifications) ? payload.notifications : [];
+            const unreadCount = Number(payload.unread_count || 0);
+
+            if (unreadCount > 0) {
+                badgeEl.textContent = unreadCount > 99 ? '99+' : String(unreadCount);
+                badgeEl.style.display = 'inline-block';
+            } else {
+                badgeEl.style.display = 'none';
+            }
+
+            if (!rows.length) {
+                listEl.innerHTML = '<div class="notification-empty">No notifications yet.</div>';
+                return;
+            }
+
+            listEl.innerHTML = rows.map(item => {
+                const href = item.link || '#';
+                const isUnreadClass = item.is_unread ? ' is-unread' : '';
+                return `
+                    <a class="notification-item${isUnreadClass}" data-notification-id="${escapeHtml(item.id || '')}" href="${escapeHtml(href)}">
+                        <span class="notification-dot"></span>
+                        <div class="notification-content">
+                            <div class="notification-title-row">
+                                <p class="notification-title">${escapeHtml(item.title)}</p>
+                                <span class="notification-date">${escapeHtml(item.display_date || '')}</span>
+                            </div>
+                            <p class="notification-message">${escapeHtml(item.message)}</p>
+                        </div>
+                    </a>
+                `;
+            }).join('');
+        }
+
+        function getGuestNotificationsEndpoint() {
+            // Supports both URL layouts:
+            // - /guest_app/notifications/ (tourism_project urls.py)
+            // - /notifications/ (IBAYAW urls.py style include at root)
+            return window.location.pathname.startsWith('/guest_app/')
+                ? '/guest_app/notifications/'
+                : '/notifications/';
+        }
+
+        function loadGuestNotifications() {
+            const endpoint = getGuestNotificationsEndpoint();
+            fetch(endpoint, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.success) {
+                    renderGuestNotifications(data);
+                }
+            })
+            .catch(error => {
+                console.error('Failed to load guest notifications:', error);
+            });
+        }
+
+        function markGuestNotificationsRead() {
+            const endpoint = getGuestNotificationsEndpoint();
+            const visibleIds = Array.from(
+                document.querySelectorAll('#guestNotificationList .notification-item[data-notification-id]')
+            )
+            .map(node => String(node.getAttribute('data-notification-id') || '').trim())
+            .filter(Boolean);
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'mark_all_read', notification_ids: visibleIds })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.success) {
+                    loadGuestNotifications();
+                }
+            })
+            .catch(error => {
+                console.error('Failed to mark notifications as read:', error);
+            });
+        }
+
+        function markSingleNotificationRead(notificationId) {
+            if (!notificationId) return;
+            const endpoint = getGuestNotificationsEndpoint();
+            fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ notification_id: notificationId }),
+                keepalive: true
+            }).catch(error => {
+                console.error('Failed to mark a notification as read:', error);
+            });
+        }
+
+        function toggleGuestNotifications() {
+            const dropdown = document.getElementById('guestNotificationDropdown');
+            const userDropdown = document.getElementById('userDropdown');
+            if (!dropdown) return;
+            if (userDropdown) userDropdown.style.display = 'none';
+            dropdown.classList.toggle('open');
+            if (dropdown.classList.contains('open')) {
+                loadGuestNotifications();
+            }
         }
         
         // Function to logout user
@@ -5299,7 +7411,7 @@
             const userDropdown = document.getElementById('userDropdown');
             if (userDropdown) {
                 setDropdownLinkText(
-                    userDropdown.querySelector('a[onclick*="Profile feature coming soon"]'),
+                    userDropdown.querySelector('#my-profile-link'),
                     translations['my_profile'] || 'My Profile'
                 );
                 setDropdownLinkText(
@@ -5543,7 +7655,7 @@
                             'ilog': 'river',
                             'suba': 'river',
                             'rio': 'river',
-                            'rÃ­o': 'river',
+                            'rio': 'river',
                             'sea': 'sea',
                             'dagat': 'sea',
                             'mar': 'sea',
@@ -5551,7 +7663,7 @@
                             'bundok': 'mountain',
                             'bukid': 'mountain',
                             'montana': 'mountain',
-                            'montaÃ±a': 'mountain',
+                            'montana': 'mountain',
                             'sunset': 'sunset',
                             'paglubog ng araw': 'sunset',
                             'pagsalop sa adlaw': 'sunset',
@@ -5698,6 +7810,40 @@
             // Tab switching functionality
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
+            const tourFilterInput = document.getElementById('bookingTourFilter');
+            const dateFilterInput = document.getElementById('bookingDateFilter');
+            const clearFiltersBtn = document.getElementById('clearBookingFilters');
+
+            function applyBookingFilters() {
+                const tourNeedle = (tourFilterInput?.value || '').trim().toLowerCase();
+                const dateNeedle = (dateFilterInput?.value || '').trim();
+                const activeTab = document.querySelector('.tab-button.active')?.getAttribute('data-tab') || 'upcoming';
+                const activePanel = document.getElementById(activeTab + 'ToursTab');
+                if (!activePanel) return;
+
+                const cards = activePanel.querySelectorAll('.booking-card');
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const cardTour = (card.dataset.tourName || '').toLowerCase();
+                    const cardDate = card.dataset.tourDate || '';
+                    const tourMatch = !tourNeedle || cardTour.includes(tourNeedle);
+                    const dateMatch = !dateNeedle || cardDate === dateNeedle;
+                    const show = tourMatch && dateMatch;
+                    card.style.display = show ? '' : 'none';
+                    if (show) visibleCount += 1;
+                });
+
+                let filteredEmpty = activePanel.querySelector('.filtered-empty-message');
+                if (!filteredEmpty) {
+                    filteredEmpty = document.createElement('div');
+                    filteredEmpty.className = 'no-bookings-message filtered-empty-message';
+                    filteredEmpty.style.display = 'none';
+                    filteredEmpty.innerHTML = '<p>No tours match your current filters.</p>';
+                    activePanel.querySelector('.bookings-grid')?.appendChild(filteredEmpty);
+                }
+                filteredEmpty.style.display = visibleCount === 0 && (tourNeedle || dateNeedle) ? 'block' : 'none';
+            }
             
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
@@ -5715,8 +7861,23 @@
                     // Show the selected tab content
                     const tabName = button.getAttribute('data-tab');
                     document.getElementById(tabName + 'ToursTab').style.display = 'block';
+                    applyBookingFilters();
                 });
             });
+
+            if (tourFilterInput) {
+                tourFilterInput.addEventListener('input', applyBookingFilters);
+            }
+            if (dateFilterInput) {
+                dateFilterInput.addEventListener('change', applyBookingFilters);
+            }
+            if (clearFiltersBtn) {
+                clearFiltersBtn.addEventListener('click', function() {
+                    if (tourFilterInput) tourFilterInput.value = '';
+                    if (dateFilterInput) dateFilterInput.value = '';
+                    applyBookingFilters();
+                });
+            }
             
             // Cancellation modal functionality
             const modal = document.getElementById('cancellationModal');
@@ -5872,6 +8033,9 @@
                     });
                 });
             }
+
+            // Initial filter pass
+            applyBookingFilters();
         });
     </script>
 
@@ -6644,6 +8808,88 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const toggleMoreBtn = document.getElementById('toggle-signup-more');
+        const signupAdvanced = document.getElementById('signup-advanced');
+        const submitBtn = document.getElementById('owner-signup-submit');
+
+        function setAdvancedVisibility(show) {
+            if (!signupAdvanced || !toggleMoreBtn) return;
+            signupAdvanced.classList.toggle('active', !!show);
+            toggleMoreBtn.innerHTML = show
+                ? '<i class="fas fa-chevron-up"></i> Hide more details'
+                : '<i class="fas fa-chevron-down"></i> Show more details';
+        }
+
+        const bell = document.getElementById('guestNotificationBell');
+        const markReadBtn = document.getElementById('markAllNotificationsReadBtn');
+        const notifDropdown = document.getElementById('guestNotificationDropdown');
+        const userDropdown = document.getElementById('userDropdown');
+        const userProfileNav = document.querySelector('.user-profile-nav');
+        const notifNav = document.querySelector('.notification-nav');
+
+        if (bell) {
+            bell.addEventListener('click', function (e) {
+                e.stopPropagation();
+                toggleGuestNotifications();
+            });
+            loadGuestNotifications();
+            setInterval(loadGuestNotifications, 45000);
+        }
+
+            if (markReadBtn) {
+                markReadBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    markGuestNotificationsRead();
+                });
+            }
+
+            const notificationListEl = document.getElementById('guestNotificationList');
+            if (notificationListEl) {
+                notificationListEl.addEventListener('click', function (e) {
+                    const item = e.target.closest('.notification-item');
+                    if (!item) return;
+                    const notifId = item.getAttribute('data-notification-id') || '';
+                    if (item.classList.contains('is-unread')) {
+                        item.classList.remove('is-unread');
+                        const badgeEl = document.getElementById('guestNotificationBadge');
+                        if (badgeEl && badgeEl.style.display !== 'none') {
+                            const current = parseInt(badgeEl.textContent || '0', 10);
+                            const next = Math.max(0, (isNaN(current) ? 0 : current) - 1);
+                            if (next <= 0) {
+                                badgeEl.style.display = 'none';
+                            } else {
+                                badgeEl.textContent = String(next);
+                            }
+                        }
+                    }
+                    markSingleNotificationRead(notifId);
+                });
+            }
+
+        document.addEventListener('click', function (e) {
+            if (notifDropdown && notifNav && !notifNav.contains(e.target)) {
+                notifDropdown.classList.remove('open');
+            }
+            if (userDropdown && userProfileNav && !userProfileNav.contains(e.target)) {
+                userDropdown.style.display = 'none';
+            }
+        });
+
+        if (toggleMoreBtn) {
+            toggleMoreBtn.addEventListener('click', function() {
+                const isVisible = signupAdvanced && signupAdvanced.classList.contains('active');
+                setAdvancedVisibility(!isVisible);
+            });
+        }
+
+        if (submitBtn) submitBtn.textContent = 'Sign Up';
+        setAdvancedVisibility(false);
+    });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
         const params = new URLSearchParams(window.location.search);
         const ownerSignupIntent = params.get('owner_signup') === '1';
         if (!ownerSignupIntent) return;
@@ -6666,7 +8912,15 @@
         if (ownerHero) ownerHero.style.display = 'block';
 
         const ownerCheckbox = document.getElementById('register_as_accommodation_owner');
-        if (ownerCheckbox) ownerCheckbox.checked = true;
+        if (ownerCheckbox) ownerCheckbox.value = '1';
+        const ownerIntentField = document.getElementById('owner_signup_intent');
+        if (ownerIntentField) ownerIntentField.value = '1';
+        const toggleMoreBtn = document.getElementById('toggle-signup-more');
+        const signupAdvanced = document.getElementById('signup-advanced');
+        if (signupAdvanced) signupAdvanced.classList.add('active');
+        if (toggleMoreBtn) {
+            toggleMoreBtn.innerHTML = '<i class="fas fa-chevron-up"></i> Hide more details';
+        }
 
         // Hide links that switch back to login while in owner-signup mode.
         document.querySelectorAll('.show-login, #show-signup').forEach(function(el) {
@@ -6676,13 +8930,14 @@
         const signupForm = document.getElementById('signup-form');
         const submitBtn = document.getElementById('owner-signup-submit');
         if (!signupForm) return;
+        if (submitBtn) submitBtn.textContent = 'Create Owner Account';
 
         // In owner mode, bypass fragile AJAX listeners and perform a direct POST.
         signupForm.addEventListener('submit', function(e) {
             e.preventDefault();
             e.stopImmediatePropagation();
 
-            if (ownerCheckbox) ownerCheckbox.checked = true;
+            if (ownerCheckbox) ownerCheckbox.value = '1';
 
             const pw = document.getElementById('password');
             const cpw = document.getElementById('confirm_password');
@@ -6706,6 +8961,83 @@
         }, true);
     });
     </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const signupForm = document.getElementById('signup-form');
+        if (!signupForm) return;
+
+        const submitBtn = document.getElementById('owner-signup-submit');
+        const ownerCheckbox = document.getElementById('register_as_accommodation_owner');
+        const ownerSignupIntent = (new URLSearchParams(window.location.search)).get('owner_signup') === '1';
+        const ownerIntentField = document.getElementById('owner_signup_intent');
+
+        const setFlash = (message) => {
+            const modalContent = document.querySelector('#signupModal .modal-content');
+            if (!modalContent) return;
+            let flashEl = document.getElementById('signup-modal-failsafe-flash');
+            if (!flashEl) {
+                flashEl = document.createElement('div');
+                flashEl.id = 'signup-modal-failsafe-flash';
+                flashEl.className = 'modal-flash error';
+                const modalTitle = modalContent.querySelector('.modal-title');
+                if (modalTitle && modalTitle.nextSibling) {
+                    modalContent.insertBefore(flashEl, modalTitle.nextSibling);
+                } else {
+                    modalContent.insertBefore(flashEl, modalContent.firstChild);
+                }
+            }
+            flashEl.textContent = message;
+            flashEl.style.display = 'block';
+        };
+
+        // Capture-phase failsafe: guarantees submit path even when earlier JS handlers fail.
+        signupForm.addEventListener('submit', function(e) {
+            if (signupForm.dataset.submitting === '1') {
+                return;
+            }
+
+            const pw = document.getElementById('password');
+            const cpw = document.getElementById('confirm_password');
+            if (pw && cpw && pw.value !== cpw.value) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                const cpwError = document.getElementById('confirm-password-error');
+                if (cpwError) cpwError.textContent = 'Passwords do not match.';
+                setFlash('Please correct the highlighted fields before signing up.');
+                cpw.focus();
+                return;
+            }
+
+            if (!signupForm.checkValidity()) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                signupForm.reportValidity();
+                setFlash('Please complete all required fields before signing up.');
+                return;
+            }
+
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            if (ownerCheckbox) {
+                ownerCheckbox.value = ownerSignupIntent ? '1' : '0';
+            }
+            if (ownerIntentField) {
+                ownerIntentField.value = ownerSignupIntent ? '1' : '0';
+            }
+
+            signupForm.dataset.submitting = '1';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = ownerSignupIntent ? 'Creating owner account...' : 'Creating account...';
+            }
+            HTMLFormElement.prototype.submit.call(signupForm);
+        }, true);
+    });
+    </script>
 </body>
 </html>
+
+
 

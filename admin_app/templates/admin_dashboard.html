@@ -9,6 +9,7 @@
   <!-- Add jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+  <link rel="stylesheet" href="{% static 'css/admin_page_polish.css' %}">
   <style>
     /* Root Variables */
     :root {
@@ -1890,7 +1891,7 @@
     }
   </style>
 </head>
-<body>
+<body class="admin-dashboard-page">
   <!-- Main container with sidebar and content -->
   <div class="dashboard-container">
     <!-- Sidebar -->
@@ -1901,7 +1902,10 @@
     <!-- Main content -->
     <div class="content">
       <div class="dashboard-header">
-        <h1>ADMIN DASHBOARD</h1>
+        <div class="dashboard-heading-group">
+          <p class="dashboard-kicker">Operations Panel</p>
+          <h1>Admin Dashboard</h1>
+        </div>
         <div class="user-info">Welcome, {{ request.session.first_name }}</div>
       </div>
       
@@ -2174,6 +2178,14 @@
         </div>
       </div>
       
+      <!-- Total Survey Responses -->
+      <div class="stats-container">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; border:1px solid #d8e7ff; border-left:3px solid #2f80ed; border-radius:8px; background:#fff; padding:10px 12px;">
+          <div style="font-size:15px; font-weight:600; color:#1f2937;">Total Survey Responses</div>
+          <a href="{% url 'admin_app:survey_results_dashboard' %}" class="view-itinerary-btn">View Details</a>
+        </div>
+      </div>
+
       <!-- Additional cards can be added for different statistics -->
       <div class="stat-card" style="background-color: #f8f9fa; border-left: 4px solid #3498db;">
         <div class="stat-info">
@@ -2196,13 +2208,16 @@
       <div class="stats-container">
         <div class="header-with-filter">
           <h2>Tour Booking Status</h2>
-          <select id="booking-period-filter" class="period-select">
-            <option value="all-time">All Tours</option>
-            <option value="low">Low Booking</option>
-            <option value="moderate">Moderate Booking</option>
-            <option value="almost-full">Almost Full</option>
-            <option value="full">Fully Booked</option>
-          </select>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <a href="{% url 'tour_app:pending_view' %}" class="view-itinerary-btn">Show Details</a>
+            <select id="booking-period-filter" class="period-select">
+              <option value="all-time">All Tours</option>
+              <option value="low">Low Booking</option>
+              <option value="moderate">Moderate Booking</option>
+              <option value="almost-full">Almost Full</option>
+              <option value="full">Fully Booked</option>
+            </select>
+          </div>
         </div>
         
         <div class="booking-viz-container">
@@ -2304,33 +2319,15 @@
           <!-- Modern circular visualization -->
           <div style="max-width: 500px; margin: 0 auto;">
             <svg viewBox="0 0 400 400" style="width: 100%; height: auto;">
-              <!-- Main circular segments representing tour percentages -->
-              {% with circumference=942 %}
-                {% for booking in tour_bookings|slice:":4" %}
-                  {% with dash_array=booking.percentage|mul:circumference|div:100 %}
-                    {% with remain=circumference|sub:dash_array %}
-                      {% with offset=forloop.counter0|mul:dash_array %}
-                        <circle cx="200" cy="200" r="150" fill="transparent" 
-                          stroke="{% if forloop.counter == 1 %}#000{% elif forloop.counter == 2 %}#777{% elif forloop.counter == 3 %}#e6c672{% else %}#999{% endif %}" 
-                          stroke-width="30" 
-                          stroke-dasharray="{{ dash_array }} {{ remain }}" 
-                          stroke-dashoffset="{{ offset }}" 
-                          transform="rotate(-90 200 200)" />
-                      {% endwith %}
-                    {% endwith %}
-                  {% endwith %}
-                {% empty %}
-                  <!-- Fallback values if no tour data is available -->
-                  <circle cx="200" cy="200" r="150" fill="transparent" stroke="#000" stroke-width="30" stroke-dasharray="236.5 707.5" stroke-dashoffset="0" transform="rotate(-90 200 200)" />
-                  <circle cx="200" cy="200" r="150" fill="transparent" stroke="#777" stroke-width="30" stroke-dasharray="236.5 707.5" stroke-dashoffset="236.5" transform="rotate(-90 200 200)" />
-                  <circle cx="200" cy="200" r="150" fill="transparent" stroke="#e6c672" stroke-width="30" stroke-dasharray="251.5 692.5" stroke-dashoffset="473" transform="rotate(-90 200 200)" />
-                  <circle cx="200" cy="200" r="150" fill="transparent" stroke="#999" stroke-width="30" stroke-dasharray="125.7 818.3" stroke-dashoffset="724.5" transform="rotate(-90 200 200)" />
-                {% endfor %}
-              {% endwith %}
+              <!-- Main circular segments -->
+              <circle cx="200" cy="200" r="150" fill="transparent" stroke="#000" stroke-width="30" stroke-dasharray="236.5 707.5" stroke-dashoffset="0" transform="rotate(-90 200 200)" />
+              <circle cx="200" cy="200" r="150" fill="transparent" stroke="#777" stroke-width="30" stroke-dasharray="236.5 707.5" stroke-dashoffset="236.5" transform="rotate(-90 200 200)" />
+              <circle cx="200" cy="200" r="150" fill="transparent" stroke="#e6c672" stroke-width="30" stroke-dasharray="251.5 692.5" stroke-dashoffset="473" transform="rotate(-90 200 200)" />
+              <circle cx="200" cy="200" r="150" fill="transparent" stroke="#999" stroke-width="30" stroke-dasharray="125.7 818.3" stroke-dashoffset="724.5" transform="rotate(-90 200 200)" />
               
               <!-- Center circle with airplane icon -->
               <circle cx="200" cy="200" r="100" fill="#e6c672" />
-              <text x="200" y="200" text-anchor="middle" dominant-baseline="middle" font-size="40">✈️</text>
+              <text x="200" y="200" text-anchor="middle" dominant-baseline="middle" font-size="40">&#9992;&#65039;</text>
             </svg>
           </div>
           
@@ -2854,7 +2851,7 @@
           {% for schedule in active_tours %}
           <div class="ongoing-tour-card" data-tour-id="{{ schedule.sched_id }}">
             <div class="tour-left-info">
-              <div class="tour-name-number">{{ schedule.tour_id.tour_name }}</div>
+              <div class="tour-name-number">{{ schedule.tour.tour_name }}</div>
               <!-- Fix 1: Calculate the actual day number based on start date -->
               <div class="tour-day-indicator">Day <span class="day-number" id="day-number-{{ schedule.sched_id }}">1</span></div>
               <div class="tour-capacity">
@@ -2873,7 +2870,7 @@
               </div>
               <button class="view-itinerary-btn" data-tour-id="{{ schedule.sched_id }}">View Itinerary</button>
               <!-- Add Assign Employee button -->
-              <button class="assign-employee-btn" data-tour-id="{{ schedule.sched_id }}" data-tour-name="{{ schedule.tour_id.tour_name }}" onclick="showAssignModal(this)">Assign Employee</button>
+              <button class="assign-employee-btn" data-tour-id="{{ schedule.sched_id }}" data-tour-name="{{ schedule.tour.tour_name }}" onclick="showAssignModal(this)">Assign Employee</button>
             </div>
             
             <div class="tour-timeline">
@@ -3193,7 +3190,7 @@
               {% for schedule in active_tours %}
               {
                 tourId: "{{ schedule.sched_id }}",
-                tourName: "{{ schedule.tour_id.tour_name }}",
+                tourName: "{{ schedule.tour.tour_name }}",
                 capacity: "{{ schedule.slots_booked }}/{% with total_slots=schedule.slots_booked|add:schedule.slots_available %}{{ total_slots }}{% endwith %}",
                 booked: {{ schedule.slots_booked }},
                 available: {{ schedule.slots_available }},
@@ -3203,7 +3200,7 @@
                 endTime: new Date("{{ schedule.end_time|date:'Y-m-d' }}T{{ schedule.end_time|time:'H:i:s' }}"),
                 startLocation: "{{ schedule.start_location|default:'Starting Point' }}",
                 endLocation: "{{ schedule.end_location|default:'Destination' }}",
-                itinerary: [
+                itinerary: 
                   {% for event in schedule.events.all %}
                   {
                     event: "{{ event.event_name }}",
@@ -3777,13 +3774,13 @@
         {% for schedule in active_tours %}
           "{{ schedule.start_time|date:'j' }}": [
             {
-              "tourName": "{{ schedule.tour_id.tour_name }}",
+              "tourName": "{{ schedule.tour.tour_name }}",
               "start": "{{ schedule.start_time|date:'Y-m-d' }}",
               "end": "{{ schedule.end_time|date:'Y-m-d' }}",
               "price": "₱{{ schedule.price|floatformat:2 }}",
               "confirmedBookings": {{ schedule.slots_booked }},
               "color": "#875a34",
-              "description": "{{ schedule.tour_id.description|truncatechars:100|escapejs }}",
+              "description": "{{ schedule.tour.description|truncatechars:100|escapejs }}",
               "sched_id": "{{ schedule.sched_id }}",
               "slots_available": {{ schedule.slots_available }},
               "slots_booked": {{ schedule.slots_booked }}
@@ -5002,8 +4999,190 @@
       margin: 15px 0;
     }
   </style>
+  <style>
+    /* UI polish pass for presentation consistency */
+    .dashboard-header {
+      background: linear-gradient(135deg, #ffffff 0%, #f7fbff 100%);
+      border: 1px solid #e3ebf7;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 18px rgba(36, 66, 112, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .dashboard-heading-group {
+      min-width: 0;
+    }
+
+    .dashboard-kicker {
+      margin: 0 0 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #5f7593;
+    }
+
+    .dashboard-header h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      color: #1f2f46;
+      text-transform: none;
+    }
+
+    .dashboard-header .user-info {
+      margin: 0;
+      font-size: 1rem;
+      color: #475569;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 860px) {
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+      }
+
+      .dashboard-header .user-info {
+        white-space: normal;
+      }
+    }
+
+    .stats-container {
+      border: 1px solid #eee3d8;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(60, 38, 18, 0.06);
+      margin-bottom: 22px;
+    }
+
+    .header-with-filter h2 {
+      font-size: 1.35rem;
+      letter-spacing: 0.2px;
+      color: #2e241b;
+    }
+
+    .tour-pack-container {
+      background: linear-gradient(180deg, #f9f6f2 0%, #f3ece4 100%);
+      border: 1px solid #eadfce;
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .insights-grid {
+      gap: 16px;
+    }
+
+    .insight-card {
+      border: 1px solid #eadfce;
+      border-radius: 12px;
+      background: #fffdfa;
+      box-shadow: 0 4px 12px rgba(74, 44, 15, 0.05);
+    }
+
+    .comparison-tabs {
+      border-bottom: 1px solid #eadfce;
+      margin-top: 6px;
+    }
+
+    .comparison-tab {
+      padding: 9px 12px;
+      border-radius: 8px 8px 0 0;
+      font-weight: 600;
+      color: #5f4a37;
+    }
+
+    .comparison-tab.active {
+      color: #875a34;
+      background: #f6efe7;
+      border-bottom: 2px solid #875a34;
+    }
+
+    .forecast-section {
+      border: 1px solid #eadfce;
+      border-radius: 12px;
+      background: #fffdfa;
+      padding: 14px 16px;
+    }
+
+    .forecast-tour {
+      padding: 8px 0;
+      border-bottom: 1px dashed #eee2d2;
+    }
+
+    .forecast-tour:last-child {
+      border-bottom: none;
+    }
+
+    .calendar-layout {
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .calendar-container {
+      border: 1px solid #e7d8c8;
+      border-radius: 12px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .tour-list-container {
+      border: 1px solid #eadfce;
+      border-radius: 12px;
+      min-height: 345px;
+      background: #fffdfa;
+      box-shadow: 0 4px 12px rgba(56, 34, 14, 0.04);
+    }
+
+    .ongoing-tours-container {
+      gap: 14px;
+    }
+
+    .ongoing-tour-card {
+      border: 1px solid #eadfce;
+      border-radius: 14px;
+      background: #fffdfa;
+      box-shadow: 0 6px 14px rgba(60, 38, 18, 0.06);
+      padding: 14px;
+    }
+
+    .view-itinerary-btn,
+    .assign-employee-btn {
+      border-radius: 8px;
+      font-weight: 600;
+      letter-spacing: 0.1px;
+      min-height: 34px;
+    }
+
+    .assign-employee-btn {
+      background: linear-gradient(135deg, #875a34 0%, #a27046 100%);
+    }
+
+    .assign-employee-btn:hover {
+      background: linear-gradient(135deg, #744a27 0%, #8d5e36 100%);
+    }
+
+    @media (max-width: 1200px) {
+      .calendar-layout {
+        flex-direction: column;
+      }
+
+      .calendar-container,
+      .tour-list-container {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  </style>
 </body>
 </html>
+
 
 
 

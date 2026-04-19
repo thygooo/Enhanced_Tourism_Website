@@ -1,0 +1,75 @@
+{
+  "generated_at": "2026-04-10T10:02:14.558878",
+  "summary": {
+    "pass_count": 8,
+    "warn_count": 0,
+    "fail_count": 0,
+    "overall": "CONDITIONALLY_READY"
+  },
+  "checks": [
+    {
+      "check": "DEBUG flag",
+      "status": "PASS",
+      "current": "DEBUG=False",
+      "target": "DEBUG=False",
+      "notes": "Production must not run with DEBUG=True."
+    },
+    {
+      "check": "SECRET_KEY strength",
+      "status": "PASS",
+      "current": "custom value set",
+      "target": "Non-default secret from environment",
+      "notes": "Rotate immediately if key was exposed."
+    },
+    {
+      "check": "ALLOWED_HOSTS production host",
+      "status": "PASS",
+      "current": "127.0.0.1, testserver, defense-demo.local",
+      "target": "Include deployed domain/IP",
+      "notes": "Local-only hosts are okay for development only."
+    },
+    {
+      "check": "Secure cookies",
+      "status": "PASS",
+      "current": "SESSION_COOKIE_SECURE=True, CSRF_COOKIE_SECURE=True",
+      "target": "Both True under HTTPS",
+      "notes": "Enable before internet deployment."
+    },
+    {
+      "check": "CSRF trusted origins",
+      "status": "PASS",
+      "current": "https://defense-demo.local",
+      "target": "Include deployed https:// domain",
+      "notes": "Required for secure cross-site POST forms."
+    },
+    {
+      "check": "STATIC_ROOT configured",
+      "status": "PASS",
+      "current": "C:\\Users\\Shenna Mae\\SoftEngr\\Tourism-2026\\staticfiles",
+      "target": "Set STATIC_ROOT for collectstatic in deployment",
+      "notes": "Current setup may still work in dev but not ideal for production serving."
+    },
+    {
+      "check": "Database credential handling",
+      "status": "PASS",
+      "current": "ENGINE=django.db.backends.mysql, HOST=127.0.0.1, NAME=project_db, PASSWORD=set",
+      "target": "Credentials from environment variables",
+      "notes": "DB password sourced from environment."
+    },
+    {
+      "check": "reCAPTCHA secret configured",
+      "status": "PASS",
+      "current": "set",
+      "target": "Secret key present in environment",
+      "notes": "Needed if captcha validation is enabled in forms."
+    }
+  ],
+  "next_actions": [
+    "Set DEBUG=False in production settings profile.",
+    "Set non-default SECRET_KEY from environment and rotate if exposed.",
+    "Set SESSION_COOKIE_SECURE=True and CSRF_COOKIE_SECURE=True under HTTPS.",
+    "Add deployed HTTPS domain to ALLOWED_HOSTS and CSRF_TRUSTED_ORIGINS.",
+    "Set STATIC_ROOT and run collectstatic during deployment.",
+    "Move DB password to environment variable and remove hardcoded literal."
+  ]
+}

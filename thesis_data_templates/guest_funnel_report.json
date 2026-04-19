@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-04-14T04:48:11.776119+00:00",
+  "window_days": 30,
+  "stage_rows": [
+    {
+      "stage": "chatbot_opened",
+      "event_refs": "chat:funnel_chatbot_opened",
+      "count": 55,
+      "unique_sessions": 15,
+      "unique_users": 5,
+      "step_conversion_pct": 0.0,
+      "overall_from_chat_open_pct": 100.0,
+      "dropoff_from_previous": 0
+    },
+    {
+      "stage": "quick_start_clicked",
+      "event_refs": "chat:funnel_quick_start_clicked",
+      "count": 14,
+      "unique_sessions": 8,
+      "unique_users": 4,
+      "step_conversion_pct": 25.4545,
+      "overall_from_chat_open_pct": 25.4545,
+      "dropoff_from_previous": 41
+    },
+    {
+      "stage": "recommendation_shown",
+      "event_refs": "chat:funnel_recommendation_shown | chat:accommodation_recommendation_rendered",
+      "count": 26,
+      "unique_sessions": 13,
+      "unique_users": 5,
+      "step_conversion_pct": 185.7143,
+      "overall_from_chat_open_pct": 47.2727,
+      "dropoff_from_previous": 0
+    },
+    {
+      "stage": "recommendation_card_clicked",
+      "event_refs": "chat:funnel_recommendation_card_clicked",
+      "count": 2,
+      "unique_sessions": 2,
+      "unique_users": 1,
+      "step_conversion_pct": 7.6923,
+      "overall_from_chat_open_pct": 3.6364,
+      "dropoff_from_previous": 24
+    },
+    {
+      "stage": "book_button_clicked",
+      "event_refs": "chat:funnel_book_button_clicked",
+      "count": 8,
+      "unique_sessions": 8,
+      "unique_users": 5,
+      "step_conversion_pct": 400.0,
+      "overall_from_chat_open_pct": 14.5455,
+      "dropoff_from_previous": 0
+    },
+    {
+      "stage": "booking_flow_started",
+      "event_refs": "chat:funnel_booking_flow_started | chat:accommodation_booking_draft_or_pending",
+      "count": 9,
+      "unique_sessions": 8,
+      "unique_users": 5,
+      "step_conversion_pct": 112.5,
+      "overall_from_chat_open_pct": 16.3636,
+      "dropoff_from_previous": 0
+    },
+    {
+      "stage": "billing_link_shown",
+      "event_refs": "chat:funnel_billing_link_shown | chat:lgu_payment_handoff_ready",
+      "count": 9,
+      "unique_sessions": 8,
+      "unique_users": 5,
+      "step_conversion_pct": 100.0,
+      "overall_from_chat_open_pct": 16.3636,
+      "dropoff_from_previous": 0
+    },
+    {
+      "stage": "billing_link_clicked",
+      "event_refs": "chat:funnel_billing_link_clicked | chat:billing_link_click",
+      "count": 4,
+      "unique_sessions": 4,
+      "unique_users": 4,
+      "step_conversion_pct": 44.4444,
+      "overall_from_chat_open_pct": 7.2727,
+      "dropoff_from_previous": 5
+    },
+    {
+      "stage": "booking_completed",
+      "event_refs": "chat:funnel_booking_completed | chat:accommodation_booking_confirmed",
+      "count": 8,
+      "unique_sessions": 8,
+      "unique_users": 5,
+      "step_conversion_pct": 200.0,
+      "overall_from_chat_open_pct": 14.5455,
+      "dropoff_from_previous": 0
+    }
+  ],
+  "headline_metrics": {
+    "chatbot_opened_count": 55,
+    "recommendation_shown_count": 26,
+    "book_button_clicked_count": 8,
+    "booking_completed_count": 8,
+    "recommendation_show_rate_from_chat_open_pct": 47.2727,
+    "booking_completion_from_chat_open_pct": 14.5455,
+    "booking_completion_from_recommendation_shown_pct": 30.7692
+  }
+}

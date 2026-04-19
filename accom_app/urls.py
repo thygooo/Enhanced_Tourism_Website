@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 app_name = 'accom_app'
 
 urlpatterns = [
+    path('reports-analytics/', views.owner_reports_analytics, name='owner_reports_analytics'),
     path('other-estab/create/', views.other_estab_create, name='other_estab_create'),
     path('other-estab-create-pt2/', views.other_estab_create_pt2, name='other_estab_create_pt2'),
     path('register_room/', views.register_room, name='register_room'),

@@ -1,0 +1,125 @@
+{
+  "dataset_csv": "thesis_data_templates/accommodation_reco_training_final_v1.csv",
+  "rows": 2400,
+  "model_params": {
+    "algorithm": "DecisionTreeClassifier",
+    "criterion": "entropy",
+    "max_depth": null,
+    "min_samples_leaf": 3,
+    "min_samples_split": 2,
+    "max_features": null,
+    "class_weight": "balanced",
+    "random_state": 42
+  },
+  "cross_validation": {
+    "strategy": "RepeatedStratifiedKFold",
+    "n_splits": 5,
+    "n_repeats": 3,
+    "total_runs": 15,
+    "train_metrics": {
+      "accuracy": {
+        "mean": 0.9703472222222224,
+        "std": 0.0033434710670880775,
+        "min": 0.9645833333333333,
+        "max": 0.9744791666666667
+      },
+      "precision_macro": {
+        "mean": 0.9534800241727527,
+        "std": 0.004712724986448346,
+        "min": 0.9453285302741121,
+        "max": 0.9592482032983904
+      },
+      "recall_macro": {
+        "mean": 0.9763222898745423,
+        "std": 0.003160362001944068,
+        "min": 0.9710082121730841,
+        "max": 0.9817690840935192
+      },
+      "f1_macro": {
+        "mean": 0.9639348228399902,
+        "std": 0.003981393393204257,
+        "min": 0.9570977354071181,
+        "max": 0.9689701472895549
+      }
+    },
+    "validation_metrics": {
+      "accuracy": {
+        "mean": 0.8826388888888886,
+        "std": 0.01185505495737273,
+        "min": 0.8604166666666667,
+        "max": 0.9104166666666667
+      },
+      "precision_macro": {
+        "mean": 0.8494917531042511,
+        "std": 0.014628194389300657,
+        "min": 0.8219776380153738,
+        "max": 0.8833027752312692
+      },
+      "recall_macro": {
+        "mean": 0.8685943966544603,
+        "std": 0.013012877309348617,
+        "min": 0.8486273320188078,
+        "max": 0.8986262486186648
+      },
+      "f1_macro": {
+        "mean": 0.857709571413942,
+        "std": 0.01336756647568223,
+        "min": 0.8360647381164776,
+        "max": 0.8904313205043133
+      }
+    },
+    "generalization_gap": {
+      "accuracy": {
+        "mean_gap": 0.08770833333333372,
+        "std_gap_proxy": 0.01185505495737273
+      },
+      "precision_macro": {
+        "mean_gap": 0.10398827106850161,
+        "std_gap_proxy": 0.014628194389300657
+      },
+      "recall_macro": {
+        "mean_gap": 0.10772789322008203,
+        "std_gap_proxy": 0.013012877309348617
+      },
+      "f1_macro": {
+        "mean_gap": 0.10622525142604822,
+        "std_gap_proxy": 0.01336756647568223
+      }
+    }
+  },
+  "class_balance": {
+    "distribution": {
+      "relevant": 1735,
+      "not_relevant": 665
+    },
+    "ratio": 2.6090225563909772,
+    "severity": "moderate"
+  },
+  "data_quality_audit": {
+    "rows": 2400,
+    "duplicate_rows": 0,
+    "missing_cells_total": 0,
+    "class_distribution": {
+      "relevant": 1735,
+      "not_relevant": 665
+    },
+    "class_imbalance_ratio": 2.6090225563909772,
+    "feature_label_conflict_rows": 0
+  },
+  "stability_checks": {
+    "split_instability_flag": false,
+    "overfitting_concern_flag": true,
+    "leakage_risk_flag": false,
+    "notes": {
+      "split_instability_rule": "Flag true if validation F1 std > 0.03.",
+      "overfitting_rule": "Flag true if mean train-validation F1 gap > 0.05.",
+      "leakage_rule": "Flag true if duplicate rows or conflicting labels for identical feature keys are detected."
+    }
+  },
+  "thesis_alignment": {
+    "cnn": "Intent classification only (unchanged).",
+    "decision_tree": "Recommendation/refinement algorithm (retained).",
+    "backend_database": "Operational logic and data retrieval (unchanged).",
+    "gemini": "Phrasing/clarification only (unchanged)."
+  }
+}

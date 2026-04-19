@@ -1,7 +1,7 @@
 from .forms import TourAddForm
 from django.forms import formset_factory
 from .forms import TourScheduleForm, TourAdmissionForm
-from .models import Tour_Add, Tour_Event, Tour_Schedule, Tour_Admission, Admission_Rates
+from .models import Tour_Add, Tour_Event, Tour_Schedule, Tour_Admission, Admission_Rates, Tour_SupportingImage
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib import messages
 from django.views.generic.edit import UpdateView
@@ -68,7 +68,10 @@ def add_tour(request, tour_id=None):
             form = TourAddForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()  # Save the tour pack
+            tour_obj = form.save()  # Save the tour pack
+            for image_file in request.FILES.getlist('supporting_images'):
+                if image_file:
+                    Tour_SupportingImage.objects.create(tour=tour_obj, image=image_file)
             return redirect('tour_app:home')  # Redirect to home after saving
 
     else:
@@ -78,9 +81,14 @@ def add_tour(request, tour_id=None):
         else:
             form = TourAddForm()
 
+    existing_supporting_images = []
+    if tour_id:
+        existing_supporting_images = Tour_SupportingImage.objects.filter(tour_id=tour_id)
+
     return render(request, 'add_tour.html', {
         'form': form,
-        'tour_id': tour_id  # Ensure tour_id is passed to the template
+        'tour_id': tour_id,  # Ensure tour_id is passed to the template
+        'existing_supporting_images': existing_supporting_images,
     })
 
 
@@ -97,7 +105,7 @@ def create_schedule(request, tour_id):
         if form.is_valid() and formset.is_valid():
             # Create a new schedule and associate it with the current tour
             schedule = form.save(commit=False)
-            schedule.tour_id = tour  # Explicitly set the tour_id ForeignKey
+            schedule.tour = tour  # Set ForeignKey relation correctly
             schedule.slots_booked = 0  # Set booked slots to 0 for new schedules
             
             # Calculate duration in days if not done by model
@@ -112,7 +120,7 @@ def create_schedule(request, tour_id):
             for admission_form in formset:
                 if admission_form.cleaned_data:
                     admission = admission_form.save(commit=False)
-                    admission.schedule = schedule
+                    admission.sched_id = schedule
                     admission.save()
 
             # Redirect to itinerary page
@@ -136,7 +144,7 @@ def create_schedule(request, tour_id):
 @admin_employee_required
 def itinerary(request, sched_id):
     schedule = get_object_or_404(Tour_Schedule, sched_id=sched_id)
-    tour = schedule.tour_id  # Get the tour associated with the schedule
+    tour = schedule.tour  # Get the related tour object
     
     # Get the duration of the tour in days
     duration_days = schedule.duration_days
@@ -148,6 +156,7 @@ def itinerary(request, sched_id):
         event_time = request.POST.get('event_time')
         event_name = request.POST.get('event_name')
         event_description = request.POST.get('event_description')
+        event_location = request.POST.get('event_location', '').strip()
         image = request.FILES.get('image')
         
         # Validate day number is within duration
@@ -162,6 +171,7 @@ def itinerary(request, sched_id):
             event_time=event_time,
             event_name=event_name,
             event_description=event_description,
+            event_location=event_location,
             image=image
         )
         new_event.save()
@@ -190,10 +200,22 @@ def itinerary(request, sched_id):
 
 @admin_employee_required
 def home(request):
-    tours = Tour_Add.objects.all()  # Query all tours from the database
+    selected_status = (request.GET.get('status') or 'all').strip().lower()
+    tours_qs = Tour_Add.objects.all().order_by('tour_name')
+    if selected_status in {'draft', 'published', 'archived'}:
+        tours_qs = tours_qs.filter(publication_status=selected_status)
+
+    tours = list(tours_qs)
+    welcome_name = request.session.get('company_name') or "User"
+    pending_suggestions_count = Pending.objects.filter(status="Pending").count()
+
     context = {
         'tours': tours,
         'request': request,  # Add request object to context
+        'selected_status': selected_status,
+        'tour_count': len(tours),
+        'pending_suggestions_count': pending_suggestions_count,
+        'welcome_name': welcome_name,
     }
     return render(request, 'home.html', context)
 
@@ -201,7 +223,7 @@ def home(request):
 @admin_employee_required
 def tour_detail(request, tour_id):
     tour = get_object_or_404(Tour_Add, tour_id=tour_id)
-    schedules = Tour_Schedule.objects.filter(tour_id=tour)
+    schedules = Tour_Schedule.objects.filter(tour=tour)
     events = Tour_Event.objects.filter(sched_id__in=schedules)
 
     # Generate the calendar
@@ -431,11 +453,69 @@ class StatusUpdateView(UpdateView):
 
 @admin_employee_required
 def add_admission_rate(request):
+    age_categories = ["Infant", "Toddler", "Child", "Teen", "Adult", "Middle Adult", "Senior"]
+    disability_categories = ["PWD", "Visually Impaired", "Hearing Impaired", "Mobility Impaired"]
+
+    def _discount_label(group_name, category_name):
+        return f"{group_name} Discount - {category_name}"
+
+    def _upsert_discount(group_name, category_name, percentage, status):
+        label = _discount_label(group_name, category_name)
+        pct_value = Decimal(str(percentage or 0))
+        if str(status).lower() != "active":
+            pct_value = Decimal("0")
+        rate_obj, _ = Admission_Rates.objects.get_or_create(
+            tour_id=None,
+            payables=label,
+            defaults={"price": pct_value},
+        )
+        rate_obj.price = pct_value
+        rate_obj.tour_id = None
+        rate_obj.save()
+
     if request.method == "POST":
         rate_id = request.POST.get("rate_id")
         action = request.POST.get("action")
 
-        if action == "delete":
+        if action == "save_all_age":
+            count = int(request.POST.get("age_count", 0) or 0)
+            for idx in range(count):
+                category = request.POST.get(f"age_category_{idx}", "").strip()
+                percentage = request.POST.get(f"age_percentage_{idx}", "0").strip() or "0"
+                status = request.POST.get(f"age_status_{idx}", "active").strip().lower()
+                if category:
+                    _upsert_discount("Age", category, percentage, status)
+            messages.success(request, "Age discounts updated successfully.")
+
+        elif action == "save_all_disability":
+            count = int(request.POST.get("disability_count", 0) or 0)
+            for idx in range(count):
+                category = request.POST.get(f"disability_category_{idx}", "").strip()
+                percentage = request.POST.get(f"disability_percentage_{idx}", "0").strip() or "0"
+                status = request.POST.get(f"disability_status_{idx}", "active").strip().lower()
+                if category:
+                    _upsert_discount("Disability", category, percentage, status)
+            messages.success(request, "Disability discounts updated successfully.")
+
+        elif action == "seed_age":
+            for category in age_categories:
+                Admission_Rates.objects.get_or_create(
+                    tour_id=None,
+                    payables=_discount_label("Age", category),
+                    defaults={"price": Decimal("0")},
+                )
+            messages.success(request, "Age discount categories prepared.")
+
+        elif action == "seed_disability":
+            for category in disability_categories:
+                Admission_Rates.objects.get_or_create(
+                    tour_id=None,
+                    payables=_discount_label("Disability", category),
+                    defaults={"price": Decimal("0")},
+                )
+            messages.success(request, "Disability discount categories prepared.")
+
+        elif action == "delete":
             # Handle deletion
             try:
                 rate = Admission_Rates.objects.get(rate_id=rate_id)
@@ -478,9 +558,43 @@ def add_admission_rate(request):
         return redirect("tour_app:admission_rate")  # Redirect to refresh the table
 
     # Get all tours to populate the dropdown
-    tours = Tour_Add.objects.all()
-    admission_rates = Admission_Rates.objects.all()  # Fetch all records
-    return render(request, "admission_rate.html", {"admission_rates": admission_rates, "tours": tours})
+    tours = Tour_Add.objects.all().order_by("tour_name")
+    admission_rates = Admission_Rates.objects.select_related("tour_id").all().order_by("rate_id")
+
+    rates_by_payable = {row.payables: row for row in admission_rates if row.tour_id_id is None}
+
+    age_discount_rows = []
+    for category in age_categories:
+        key = _discount_label("Age", category)
+        row = rates_by_payable.get(key)
+        price = float(row.price) if row else 0.0
+        age_discount_rows.append({
+            "category": category,
+            "price": price,
+            "status": "active" if price > 0 else "inactive",
+        })
+
+    disability_discount_rows = []
+    for category in disability_categories:
+        key = _discount_label("Disability", category)
+        row = rates_by_payable.get(key)
+        price = float(row.price) if row else 0.0
+        disability_discount_rows.append({
+            "category": category,
+            "price": price,
+            "status": "active" if price > 0 else "inactive",
+        })
+
+    return render(
+        request,
+        "admission_rate.html",
+        {
+            "admission_rates": admission_rates,
+            "tours": tours,
+            "age_discount_rows": age_discount_rows,
+            "disability_discount_rows": disability_discount_rows,
+        },
+    )
 
 
 @admin_employee_required
@@ -508,7 +622,7 @@ def cancel_tour_view(request):
                 booking.status = "Cancelled"
                 booking.save()
                 
-            messages.success(request, f"Tour {tour_schedule.tour_id.tour_name} ({tour_schedule.sched_id}) has been cancelled successfully.")
+            messages.success(request, f"Tour {tour_schedule.tour.tour_name} ({tour_schedule.sched_id}) has been cancelled successfully.")
             
             # Send cancellation emails
             for booking in pending_bookings:
@@ -518,13 +632,13 @@ def cancel_tour_view(request):
                 # Once you create the tour_cancellation.html template:
                 html_message = render_to_string('email/tour_cancellation.html', {
                     'name': guest_name,
-                    'tour': tour_schedule.tour_id.tour_name,
+                    'tour': tour_schedule.tour.tour_name,
                     'reason': cancellation_reason,
                     'start_time': tour_schedule.start_time.strftime("%B %d, %Y, %I:%M %p"),
                 })
                 plain_message = strip_tags(html_message)
                 
-                subject = f"Important: Your Booking for {tour_schedule.tour_id.tour_name} has been Cancelled"
+                subject = f"Important: Your Booking for {tour_schedule.tour.tour_name} has been Cancelled"
                 
                 try:
                     send_mail(
@@ -546,9 +660,9 @@ def cancel_tour_view(request):
         return redirect('tour_app:cancel_tour')
     
     # For GET requests, show active and completed tours that can be cancelled
-    active_tours = Tour_Schedule.objects.filter(status='active').select_related('tour_id')
-    completed_tours = Tour_Schedule.objects.filter(status='completed').select_related('tour_id')
-    cancelled_tours = Tour_Schedule.objects.filter(status='cancelled').select_related('tour_id')
+    active_tours = Tour_Schedule.objects.filter(status='active').select_related('tour')
+    completed_tours = Tour_Schedule.objects.filter(status='completed').select_related('tour')
+    cancelled_tours = Tour_Schedule.objects.filter(status='cancelled').select_related('tour')
     
     context = {
         'active_tours': active_tours,
@@ -566,7 +680,7 @@ def update_schedules(request, tour_id):
     tour = get_object_or_404(Tour_Add, tour_id=tour_id)
     
     # Get all schedules for this tour
-    schedules = Tour_Schedule.objects.filter(tour_id=tour)
+    schedules = Tour_Schedule.objects.filter(tour=tour)
     
     # Handle POST request (when updating a schedule)
     if request.method == 'POST':
@@ -599,7 +713,7 @@ def update_schedules(request, tour_id):
             messages.success(request, f"Schedule {schedule_id} deleted successfully!")
     
     # Refresh the schedules list
-    schedules = Tour_Schedule.objects.filter(tour_id=tour)
+    schedules = Tour_Schedule.objects.filter(tour=tour)
     
     # Render the update schedules template
     return render(request, 'update_schedules.html', {
@@ -615,7 +729,7 @@ def update_itinerary(request, tour_id):
     tour = get_object_or_404(Tour_Add, tour_id=tour_id)
     
     # Get all schedules for this tour
-    schedules = Tour_Schedule.objects.filter(tour_id=tour)
+    schedules = Tour_Schedule.objects.filter(tour=tour)
     
     selected_schedule_id = request.GET.get('schedule_id')
     
@@ -641,6 +755,7 @@ def update_itinerary(request, tour_id):
             event.event_time = request.POST.get('event_time', event.event_time)
             event.event_name = request.POST.get('event_name', event.event_name)
             event.event_description = request.POST.get('event_description', event.event_description)
+            event.event_location = request.POST.get('event_location', event.event_location)
             
             # Handle image update if provided
             if 'image' in request.FILES:
@@ -661,6 +776,7 @@ def update_itinerary(request, tour_id):
             event_time = request.POST.get('event_time')
             event_name = request.POST.get('event_name')
             event_description = request.POST.get('event_description')
+            event_location = request.POST.get('event_location', '').strip()
             image = request.FILES.get('image')
             
             # Create and save the new event
@@ -669,6 +785,7 @@ def update_itinerary(request, tour_id):
                 event_time=event_time,
                 event_name=event_name,
                 event_description=event_description,
+                event_location=event_location,
                 image=image
             )
             new_event.save()
@@ -693,7 +810,7 @@ def update_itinerary(request, tour_id):
 def get_tour_schedules_api(request, tour_id):
     """API to get all schedules for a specific tour in JSON format"""
     tour = get_object_or_404(Tour_Add, tour_id=tour_id)
-    schedules = Tour_Schedule.objects.filter(tour_id=tour)
+    schedules = Tour_Schedule.objects.filter(tour=tour)
     
     schedules_data = []
     for schedule in schedules:
@@ -718,8 +835,8 @@ def get_schedule_details(request, schedule_id):
         
         schedule_data = {
             'schedule_id': schedule.sched_id,
-            'tour_id': schedule.tour_id.tour_id,
-            'tour_name': schedule.tour_id.tour_name,
+            'tour_id': schedule.tour.tour_id,
+            'tour_name': schedule.tour.tour_name,
             'start_time': schedule.start_time.isoformat(),
             'end_time': schedule.end_time.isoformat(),
             'total_slots': schedule.slots_available + schedule.slots_booked,
@@ -909,6 +1026,7 @@ def get_schedule_events(request, schedule_id):
             'event_name': event.event_name,
             'event_time': event.event_time.strftime('%H:%M'),
             'event_description': event.event_description,
+            'event_location': event.event_location,
             'has_image': bool(event.image)
         }
         if event.image:
@@ -928,6 +1046,7 @@ def get_event_details(request, event_id):
         'event_name': event.event_name,
         'event_time': event.event_time.strftime('%H:%M'),
         'event_description': event.event_description,
+        'event_location': event.event_location,
         'has_image': bool(event.image)
     }
     
@@ -946,6 +1065,7 @@ def update_event(request, event_id):
         event_time = request.POST.get('event_time')
         event_name = request.POST.get('event_name')
         event_description = request.POST.get('event_description')
+        event_location = request.POST.get('event_location')
         day_number = request.POST.get('day_number')
         
         if event_time:
@@ -954,6 +1074,8 @@ def update_event(request, event_id):
             event.event_name = event_name
         if event_description:
             event.event_description = event_description
+        if event_location is not None:
+            event.event_location = event_location
         if day_number:
             event.day_number = int(day_number)
         
@@ -977,13 +1099,15 @@ def add_event(request, schedule_id):
             event_time = request.POST.get('event_time')
             event_name = request.POST.get('event_name')
             event_description = request.POST.get('event_description')
+            event_location = request.POST.get('event_location', '').strip()
             
             # Create new event
             event = Tour_Event(
                 sched_id=schedule,
                 event_time=event_time,
                 event_name=event_name,
-                event_description=event_description
+                event_description=event_description,
+                event_location=event_location
             )
             
             # Handle image if provided

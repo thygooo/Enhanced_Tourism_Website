@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-04-10T02:02:12.993797+00:00",
+  "source": "all",
+  "target_complete_batches": 30,
+  "totals": {
+    "survey_rows": 51,
+    "distinct_batches": 30,
+    "complete_full_batches": 1,
+    "complete_sus_batches": 1,
+    "complete_pu_batches": 1,
+    "complete_peu_batches": 1,
+    "complete_difficulty_batches": 1
+  },
+  "gaps_to_target": {
+    "full_batches_needed": 29,
+    "sus_batches_needed": 29,
+    "pu_batches_needed": 29,
+    "peu_batches_needed": 29,
+    "difficulty_batches_needed": 29
+  },
+  "notes": [
+    "Use this audit to prioritize collection of complete survey batches.",
+    "A complete full batch contains SUS + PU + PEU + difficulty codes."
+  ]
+}

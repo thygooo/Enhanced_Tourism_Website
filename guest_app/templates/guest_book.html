@@ -7,8 +7,10 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Add Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <!-- Add reCAPTCHA API -->
+  {% if recaptcha_required %}
+  <!-- Add reCAPTCHA API only when required by backend policy -->
   <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+  {% endif %}
   <style>
     /* Global Styles */
     body {
@@ -129,6 +131,14 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       max-width: 400px;
       width: 90%;
+      max-height: 85vh;
+      overflow: hidden;
+    }
+    #bookingModal .modal-content,
+    #confirmationDialog .modal-content {
+      max-height: calc(85vh - 20px);
+      overflow-y: auto;
+      padding-right: 4px;
     }
     #itineraryModal {
       max-width: 600px;
@@ -512,8 +522,9 @@
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/guest_unified.css">
 </head>
-<body>
+<body class="guest-booking">
   <!-- Hidden elements for language data -->
   <div style="display: none;">
     <div id="translations-data">{{ translations_json|default:'{}' }}</div>
@@ -704,9 +715,16 @@
     var recaptchaWidgetId;
     var selectedCompanions = []; // Array to track selected companions
     var userCompanions = []; // Array to store all companions
+    const recaptchaRequired = {{ recaptcha_required|yesno:"true,false" }};
 
     // reCAPTCHA callback to render widget explicitly
     var onloadCallback = function() {
+      if (!recaptchaRequired) {
+        captchaCompleted = true;
+        $("#captchaError").hide();
+        $("#yesButton").prop('disabled', false);
+        return;
+      }
       console.log("reCAPTCHA callback triggered");
       // Explicit render of reCAPTCHA
       try {
@@ -1020,13 +1038,13 @@
         
         $("#selectedCompanionsList").html(companionsListHtml);
         
-        // Reset CAPTCHA if it exists
-        if (typeof grecaptcha !== 'undefined') {
+        // Reset CAPTCHA if it exists and is required
+        if (recaptchaRequired && typeof grecaptcha !== 'undefined') {
           grecaptcha.reset(recaptchaWidgetId);
         }
         $("#captchaError").hide();
-        captchaCompleted = false;
-        $("#yesButton").prop('disabled', true);
+        captchaCompleted = !recaptchaRequired;
+        $("#yesButton").prop('disabled', recaptchaRequired);
         
         $("#bookingModal").hide();
         $("#confirmationDialog").show();
@@ -1089,8 +1107,8 @@
       // Handle Yes button in confirmation dialog
       $("#yesButton").click(function() {
         console.log("Yes button clicked, captchaCompleted:", captchaCompleted);
-        // Check if CAPTCHA is completed
-        if (!captchaCompleted) {
+        // Check if CAPTCHA is completed only when required
+        if (recaptchaRequired && !captchaCompleted) {
           $("#captchaError").show();
           return;
         }
@@ -1119,11 +1137,13 @@
         
         // Get the reCAPTCHA response
         var captchaResponse = "";
-        try {
-          captchaResponse = grecaptcha.getResponse(recaptchaWidgetId);
-          console.log("reCAPTCHA response length:", captchaResponse.length);
-        } catch (e) {
-          console.error("Error getting reCAPTCHA response:", e);
+        if (recaptchaRequired) {
+          try {
+            captchaResponse = grecaptcha.getResponse(recaptchaWidgetId);
+            console.log("reCAPTCHA response length:", captchaResponse.length);
+          } catch (e) {
+            console.error("Error getting reCAPTCHA response:", e);
+          }
         }
         
         // Prepare selected companions data
@@ -1323,3 +1343,4 @@
   </script>
 </body>
 </html>
+

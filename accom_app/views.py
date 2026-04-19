@@ -1,5 +1,6 @@
 import json
 import datetime
+import json
 from decimal import Decimal, InvalidOperation
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
@@ -22,6 +23,7 @@ from .models import (
     AuthoritativeRoomDetails,
 )
 from guest_app.models import Guest
+from guest_app.models import AccommodationBooking
 from django.http import JsonResponse, HttpResponseForbidden
 from django.conf import settings
 from django.views.decorators.http import require_POST
@@ -787,3 +789,201 @@ def delete_room_ajax(request):
         return JsonResponse({'status': 'error', 'message': 'Room not found or not authorized to delete.'}, status=404)
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+
+def _classify_guest_nationality(country_text):
+    value = str(country_text or "").strip().lower()
+    if not value:
+        return "Unknown"
+    local_tokens = {
+        "philippines",
+        "philippine",
+        "ph",
+        "filipino",
+        "pilipinas",
+    }
+    if value in local_tokens or "philipp" in value:
+        return "Philippine Residents (Filipino)"
+    return "Foreign Residents"
+
+
+def owner_reports_analytics(request):
+    accommodation, _legacy_mode, auth_error = _resolve_room_management_accommodation(request)
+    if accommodation is None:
+        return HttpResponseForbidden(auth_error or "Unauthorized.")
+
+    today = timezone.localdate()
+    month_raw = request.GET.get("month")
+    year_raw = request.GET.get("year")
+    has_month_filter = str(month_raw or "").strip() != ""
+    has_year_filter = str(year_raw or "").strip() != ""
+
+    default_month = today.month
+    default_year = today.year
+    if not has_month_filter and not has_year_filter:
+        latest_confirmed = (
+            AccommodationBooking.objects.filter(
+                accommodation=accommodation,
+                status="confirmed",
+            )
+            .order_by("-check_in")
+            .values_list("check_in", flat=True)
+            .first()
+        )
+        if latest_confirmed:
+            default_month = latest_confirmed.month
+            default_year = latest_confirmed.year
+
+    try:
+        selected_month = int(month_raw) if has_month_filter else default_month
+    except (TypeError, ValueError):
+        selected_month = default_month
+    if selected_month < 1 or selected_month > 12:
+        selected_month = default_month
+
+    try:
+        selected_year = int(year_raw) if has_year_filter else default_year
+    except (TypeError, ValueError):
+        selected_year = default_year
+    if selected_year < 2000 or selected_year > 2100:
+        selected_year = default_year
+
+    first_day = datetime.date(selected_year, selected_month, 1)
+    _, last_day_num = calendar.monthrange(selected_year, selected_month)
+    last_day = datetime.date(selected_year, selected_month, last_day_num)
+
+    room_count = AdminRoom.objects.filter(accommodation=accommodation).count()
+
+    period_bookings = (
+        AccommodationBooking.objects.select_related("guest", "room")
+        .filter(
+            accommodation=accommodation,
+            status="confirmed",
+            check_in__lte=last_day,
+            check_out__gte=first_day,
+        )
+        .order_by("check_in")
+    )
+    period_bookings_list = list(period_bookings)
+
+    total_checkins = len(period_bookings_list)
+    total_guest_nights = sum((booking.nights() or 0) * (booking.num_guests or 0) for booking in period_bookings_list)
+    occupied_room_ids = {booking.room_id for booking in period_bookings_list if booking.room_id}
+    rooms_occupied = len(occupied_room_ids)
+    occupancy_rate = (rooms_occupied / room_count * 100.0) if room_count > 0 else 0.0
+
+    # Last 6-month trend data.
+    def _shift_month(year_value, month_value, diff):
+        absolute = (year_value * 12 + (month_value - 1)) + diff
+        return absolute // 12, (absolute % 12) + 1
+
+    trend_labels = []
+    trend_checkins = []
+    trend_guest_nights = []
+    trend_rooms_occupied = []
+    for offset in range(-5, 1):
+        y, m = _shift_month(selected_year, selected_month, offset)
+        month_cursor = datetime.date(y, m, 1)
+        _, end_day_num = calendar.monthrange(y, m)
+        month_end = datetime.date(y, m, end_day_num)
+
+        month_bookings = AccommodationBooking.objects.filter(
+            accommodation=accommodation,
+            status="confirmed",
+            check_in__lte=month_end,
+            check_out__gte=month_cursor,
+        )
+        month_list = list(month_bookings)
+        trend_labels.append(month_cursor.strftime("%b %Y"))
+        trend_checkins.append(len(month_list))
+        trend_guest_nights.append(sum((b.nights() or 0) * (b.num_guests or 0) for b in month_list))
+        trend_rooms_occupied.append(len({b.room_id for b in month_list if b.room_id}))
+    trend_rows = list(zip(trend_labels, trend_checkins, trend_guest_nights, trend_rooms_occupied))
+    trend_max = max(trend_checkins + trend_guest_nights + trend_rooms_occupied + [1])
+
+    # Nationality breakdown (selected period).
+    nationality_counts = {
+        "Philippine Residents (Filipino)": 0,
+        "Philippine Residents (Foreign)": 0,
+        "Foreign Residents": 0,
+        "Unknown": 0,
+    }
+    for booking in period_bookings_list:
+        category = _classify_guest_nationality(getattr(booking.guest, "country_of_origin", ""))
+        nationality_counts[category] = nationality_counts.get(category, 0) + 1
+
+    # Keep the middle bucket visible for parity with original table.
+    if nationality_counts["Philippine Residents (Filipino)"] > 0:
+        nationality_counts["Philippine Residents (Foreign)"] = 0
+
+    nationality_total = sum(nationality_counts.values())
+    percentage_denominator = nationality_total if nationality_total > 0 else 1
+    nationality_labels = list(nationality_counts.keys())
+    nationality_values = [nationality_counts[k] for k in nationality_labels]
+    nationality_percentages = [round((v / percentage_denominator) * 100.0, 2) for v in nationality_values]
+    pie_colors = ["#3b82f6", "#22c55e", "#f59e0b", "#94a3b8"]
+    if nationality_total > 0:
+        pie_parts = []
+        running = 0.0
+        for idx, pct in enumerate(nationality_percentages):
+            next_value = running + pct
+            pie_parts.append(f"{pie_colors[idx % len(pie_colors)]} {running:.2f}% {next_value:.2f}%")
+            running = next_value
+        nationality_pie_style = "conic-gradient(" + ", ".join(pie_parts) + ")"
+    else:
+        nationality_pie_style = "conic-gradient(#cbd5e1 0% 100%)"
+
+    # Daily room occupancy for selected month.
+    days_in_month = list(range(1, last_day_num + 1))
+    daily_room_occupancy = []
+    for day in days_in_month:
+        day_date = datetime.date(selected_year, selected_month, day)
+        day_rooms = set()
+        for booking in period_bookings_list:
+            if booking.room_id and booking.check_in <= day_date < booking.check_out:
+                day_rooms.add(booking.room_id)
+        daily_room_occupancy.append(len(day_rooms))
+    daily_rows = list(zip(days_in_month, daily_room_occupancy))
+    daily_max = max(daily_room_occupancy + [1])
+    chart_y_max = max(room_count, daily_max, 2)
+    guide_values = [chart_y_max * step / 5 for step in range(5, -1, -1)]
+    daily_guides = [
+        {
+            "label": f"{value:.1f}".rstrip("0").rstrip("."),
+            "percent": (value / chart_y_max) * 100 if chart_y_max else 0,
+        }
+        for value in guide_values
+    ]
+
+    context = {
+        "accommodation": accommodation,
+        "selected_month": selected_month,
+        "selected_year": selected_year,
+        "month_options": [(i, calendar.month_name[i]) for i in range(1, 13)],
+        "year_options": list(range(today.year - 2, today.year + 2)),
+        "first_day": first_day,
+        "last_day": last_day,
+        "total_checkins": total_checkins,
+        "total_guest_nights": total_guest_nights,
+        "rooms_occupied": rooms_occupied,
+        "room_count": room_count,
+        "occupancy_rate": round(occupancy_rate, 2),
+        "trend_labels_json": json.dumps(trend_labels),
+        "trend_checkins_json": json.dumps(trend_checkins),
+        "trend_guest_nights_json": json.dumps(trend_guest_nights),
+        "trend_rooms_occupied_json": json.dumps(trend_rooms_occupied),
+        "trend_rows": trend_rows,
+        "trend_max": trend_max,
+        "nationality_labels_json": json.dumps(nationality_labels),
+        "nationality_values_json": json.dumps(nationality_values),
+        "nationality_rows": list(zip(nationality_labels, nationality_values, nationality_percentages)),
+        "nationality_pie_style": nationality_pie_style,
+        "nationality_total": nationality_total,
+        "daily_days_json": json.dumps(days_in_month),
+        "daily_occupancy_json": json.dumps(daily_room_occupancy),
+        "daily_rows": daily_rows,
+        "daily_max": daily_max,
+        "chart_y_max": chart_y_max,
+        "daily_guides": daily_guides,
+    }
+    return render(request, "owner_reports_analytics.html", context)

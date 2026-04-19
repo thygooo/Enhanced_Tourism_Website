@@ -5,11 +5,15 @@ import datetime
 from datetime import timedelta
 
 
+def current_month_name():
+    return datetime.datetime.now().strftime("%B")
+
+
 class Other_Estab(models.Model):
     estab_id = models.AutoField(primary_key=True)
     accom_id = models.ForeignKey(Accomodation, on_delete=models.CASCADE)
     month = models.CharField(max_length=20)  # Month the document is to be sent
-    intended_month = models.CharField(max_length=20, default=datetime.datetime.now().strftime('%B'))  # Default to current month
+    intended_month = models.CharField(max_length=20, default=current_month_name)  # Default to current month
     date = models.DateField(null=True, blank=True)  # Date the report is created
     region = models.CharField(max_length=50)
     country = models.CharField(max_length=50)

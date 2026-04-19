@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Ibaway Tours</title>
+    <title>Welcome to Ibayaw Tours</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Add Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -249,6 +249,63 @@
             color: #6b523f;
         }
 
+        .page-kicker {
+            text-align: center;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 8px;
+        }
+
+        .hero-chips {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .hero-tabs {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .hero-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 11px;
+            border-radius: 999px;
+            font-size: 0.77rem;
+            font-weight: 700;
+            border: 1px solid #dec4aa;
+            background: #fff7ee;
+            color: #734a2d;
+            text-decoration: none;
+        }
+
+        .hero-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #ef4444;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25);
+            display: inline-block;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            border: 1px solid #e4c7aa;
+            background: #fff5e9;
+            color: #7b5131;
+        }
+
         .welcome-actions {
             display: flex;
             gap: 10px;
@@ -295,6 +352,61 @@
             width: 100%;
             margin-top: 14px;
         }
+
+        .tour-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 8px 0 14px;
+        }
+
+        .tour-toolbar form {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .tour-toolbar label {
+            font-size: 0.86rem;
+            color: #6b523f;
+            font-weight: 600;
+        }
+
+        .tour-toolbar select {
+            height: 34px;
+            border: 1px solid #d9c1aa;
+            border-radius: 8px;
+            padding: 0 10px;
+            color: #3f2f26;
+            background: #fff;
+        }
+
+        .toolbar-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .toolbar-btn.apply { background: #875a34; color: #fff; }
+        .toolbar-btn.pending { background: #fbbc05; color: #4a3a14; }
 
         .tour-item {
             background-color: #fff;
@@ -369,25 +481,25 @@
             text-align: center;
         }
 
-        /* Stylish Add Schedule button */
+        /* Action buttons */
         .add-schedule-btn {
-            background: linear-gradient(135deg, #00bcd4, #ff9800);  /* Gradient effect */
+            background: #1f77d0;
             color: white;
             border: none;
-            padding: 12px 25px;
-            font-size: 16px;
-            border-radius: 50px;  /* Rounded edges */
+            padding: 10px 14px;
+            font-size: 13px;
+            border-radius: 6px;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.12);
             display: inline-block;
         }
 
         .add-schedule-btn:hover {
-            background: linear-gradient(135deg, #0097a7, #ff5722);  /* Darker gradient on hover */
+            background: #1762ac;
             transform: translateY(-2px);  /* Lift effect */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
         }
 
         .add-schedule-btn:focus {
@@ -398,8 +510,15 @@
         .button-container {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
             margin-top: 15px;
         }
+
+        .btn-edit-tour { background: #1ca55a !important; }
+        .btn-edit-tour:hover { background: #158347 !important; }
+        .btn-delete-tour { background: #d64545 !important; }
+        .btn-delete-tour:hover { background: #b93333 !important; }
 
         /* Responsive Styling */
         @media (max-width: 768px) {
@@ -946,20 +1065,42 @@
         </div>
         <div class="main-container">
             <div class="container">
+                <div class="page-kicker">Welcome, {{ welcome_name }} to TOUR MANAGEMENT</div>
                 <div class="welcome-hero">
                     <div class="welcome-copy">
-                        <h1>Welcome to Ibaway Tours!</h1>
+                        <h1>Welcome to Ibayaw Tours!</h1>
                         <p>Explore your tour catalog, manage schedules, and keep itineraries ready for guests.</p>
+                        <div class="hero-tabs">
+                            <a href="{% url 'tour_app:home' %}" class="hero-tab"><i class="fas fa-map-signs"></i> Tours</a>
+                            <a href="{% url 'tour_app:pending_view' %}" class="hero-tab"><i class="fas fa-lightbulb"></i> Guest Suggestions {% if pending_suggestions_count %}<span class="hero-dot" title="{{ pending_suggestions_count }} pending"></span>{% endif %}</a>
+                        </div>
                     </div>
                     <div class="welcome-actions">
-                        {% if request.session.is_admin %}
-                        <a href="{% url 'tour_app:add_tour' %}" class="welcome-btn primary">
-                            <i class="fas fa-plus-circle"></i> Create Tour
-                        </a>
-                        {% endif %}
-                        <a href="{% url 'admin_app:tour_calendar' %}" class="welcome-btn secondary">
+                        <a href="{% if request.session.is_admin %}{% url 'admin_app:tour_calendar' %}{% else %}{% url 'admin_app:employee_tour_calendar' %}{% endif %}" class="welcome-btn secondary">
                             <i class="far fa-calendar-alt"></i> View Calendar
                         </a>
+                    </div>
+                </div>
+
+                <div class="tour-toolbar">
+                    <form method="get" action="{% url 'tour_app:home' %}">
+                        <label for="status">Status:</label>
+                        <select id="status" name="status">
+                            <option value="all" {% if selected_status == 'all' %}selected{% endif %}>All Tours</option>
+                            <option value="published" {% if selected_status == 'published' %}selected{% endif %}>Published</option>
+                            <option value="draft" {% if selected_status == 'draft' %}selected{% endif %}>Draft</option>
+                            <option value="archived" {% if selected_status == 'archived' %}selected{% endif %}>Archived</option>
+                        </select>
+                        <label for="tour_type">Tour Type:</label>
+                        <select id="tour_type" name="tour_type" disabled>
+                            <option>All Tours</option>
+                        </select>
+                    </form>
+                    <div class="toolbar-actions">
+                        {% if request.session.user_type == 'employee' %}
+                        <a href="{% url 'tour_app:add_tour' %}" class="toolbar-btn apply">Add Tour</a>
+                        {% endif %}
+                        <a href="{% url 'tour_app:pending_view' %}" class="toolbar-btn pending">View Pending Suggestions</a>
                     </div>
                 </div>
 
@@ -967,7 +1108,11 @@
                 <div class="tour-list">
                     {% for tour in tours %}
                         <div class="tour-item">
+                            {% if tour.image %}
                             <img src="{{ tour.image.url }}" alt="{{ tour.tour_name }}">
+                            {% else %}
+                            <img src="{% static 'images/logo.png' %}" alt="{{ tour.tour_name }}">
+                            {% endif %}
                             <h2>{{ tour.tour_name }}</h2>
                             <p><strong>Details:</strong> {{ tour.description }}</p>
                             <!-- Buttons for each tour -->
@@ -975,11 +1120,11 @@
                                 <a href="{% url 'tour_app:create_schedule' tour_id=tour.tour_id %}" class="add-schedule-btn">
                                     Add Schedule
                                 </a>
-                                <button onclick="openUpdateModal('{{ tour.tour_id }}')" class="add-schedule-btn" style="margin-left: 10px; background: linear-gradient(135deg, #2ecc71, #27ae60);">
+                                <button onclick="openUpdateModal('{{ tour.tour_id }}')" class="add-schedule-btn btn-edit-tour">
                                     Edit Tour
                                 </button>
                                 {% if request.session.is_admin %}
-                                <button onclick="confirmDeleteTour('{{ tour.tour_id }}')" class="add-schedule-btn" style="margin-left: 10px; background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                                <button onclick="confirmDeleteTour('{{ tour.tour_id }}')" class="add-schedule-btn btn-delete-tour">
                                     Delete Tour
                                 </button>
                                 {% endif %}

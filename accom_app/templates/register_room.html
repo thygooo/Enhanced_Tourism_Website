@@ -1,79 +1,143 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Room</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Room Management</title>
+    <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
     <style>
         * { box-sizing: border-box; }
 
         :root {
-            --bg: #f8f5f1;
-            --panel: #fffdf9;
-            --panel-alt: #fff7ef;
-            --ink: #3f2f26;
-            --muted: #765b48;
-            --line: #e6d7c8;
-            --brand-900: #6f4e37;
-            --brand-700: #b1743f;
-            --brand-500: #d09b6c;
+            --bg: #f4f7fc;
+            --panel: #ffffff;
+            --panel-alt: #ffffff;
+            --ink: #1f2937;
+            --muted: #6b7280;
+            --line: #e4e8ef;
+            --brand-900: #875a34;
+            --brand-700: #6d4827;
+            --brand-500: #bf824d;
             --success-700: #0f5132;
             --danger-700: #842029;
         }
 
         body {
-            font-family: "Poppins", "Segoe UI", Tahoma, Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             color: var(--ink);
-            background:
-                radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
-                radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
-                var(--bg);
+            background: var(--bg);
         }
         .page {
-            max-width: 1150px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 18px;
+            padding: 24px;
             box-sizing: border-box;
         }
         .page-header {
-            background: linear-gradient(135deg, var(--brand-900), var(--brand-700));
-            color: #fff;
-            border-radius: 16px;
-            padding: 22px 20px;
-            box-shadow: 0 10px 26px rgba(56, 33, 16, 0.16);
+            background: #ffffff;
+            border: 1px solid #e4e8ef;
+            border-radius: 10px;
+            padding: 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
             margin-bottom: 14px;
-            position: relative;
-            overflow: hidden;
-        }
-        .page-header::after {
-            content: "";
-            position: absolute;
-            right: -90px;
-            top: -80px;
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.18), rgba(255,255,255,0));
-            pointer-events: none;
         }
         .page-header h1 {
             margin: 0;
-            font-size: 1.5rem;
-            letter-spacing: 0.01em;
+            font-size: 30px;
+            color: #6b4423;
+            font-weight: 800;
         }
         .page-header p {
-            margin: 8px 0 0;
-            color: rgba(255,255,255,0.92);
-            font-size: 0.94rem;
+            margin: 4px 0 0;
+            color: #6b7280;
+            font-size: 14px;
         }
         .panel {
             background: var(--panel);
-            border: 1px solid rgba(111, 78, 55, 0.12);
-            border-radius: 16px;
+            border: 1px solid #e4e8ef;
+            border-radius: 10px;
             padding: 16px;
-            box-shadow: 0 10px 24px rgba(56, 33, 16, 0.08);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+        .rooms-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .rooms-header h2 {
+            margin: 0;
+            color: #6b4423;
+            font-size: 22px;
+            font-weight: 800;
+        }
+        .rooms-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rooms-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+        }
+        .rooms-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+        .rooms-table th,
+        .rooms-table td {
+            padding: 11px 12px;
+            border-bottom: 1px solid #eee1d5;
+            font-size: 0.92rem;
+            vertical-align: middle;
+        }
+        .rooms-table th {
+            background: #f9fafb;
+            color: #374151;
+            font-weight: 700;
+            text-align: left;
+        }
+        .rooms-table tbody tr:hover {
+            background: #fcfcfd;
+        }
+        .rooms-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .status-pill {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .status-available {
+            background: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+        }
+        .status-occupied {
+            background: #cff4fc;
+            color: #055160;
+            border: 1px solid #b6effb;
+        }
+        .status-unavailable {
+            background: #f8d7da;
+            color: #842029;
+            border: 1px solid #f1b0b7;
+        }
+        .room-actions {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
         }
         ul {
             list-style-type: none;
@@ -112,10 +176,10 @@
         }
         .register-btn {
             padding: 7px 11px;
-            background: linear-gradient(135deg, #1f7a47, #2f9e61);
+            background: #1f7a47;
             color: white;
             border: none;
-            border-radius: 9px;
+            border-radius: 10px;
             cursor: pointer;
             margin-right: 5px;
             font-weight: 600;
@@ -125,20 +189,20 @@
         }
         .edit-btn {
             padding: 7px 11px;
-            background: linear-gradient(135deg, #875a34, #b57946);
+            background: #875a34;
             color: white;
             border: none;
-            border-radius: 9px;
+            border-radius: 10px;
             cursor: pointer;
             margin-right: 5px;
             font-weight: 600;
         }
         .delete-btn {
             padding: 7px 11px;
-            background: linear-gradient(135deg, #8f1f1f, #c43131);
+            background: #c43131;
             color: white;
             border: none;
-            border-radius: 9px;
+            border-radius: 10px;
             cursor: pointer;
             font-weight: 600;
         }
@@ -180,12 +244,11 @@
             color: #233e55;
         }
         .add-room-btn {
-            margin-top: 20px;
             padding: 10px 16px;
-            background: linear-gradient(135deg, var(--brand-900), var(--brand-700));
+            background: var(--brand-900);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 999px;
             cursor: pointer;
             display: block;
             font-weight: 700;
@@ -230,9 +293,9 @@
         .back-btn {
             display: inline-block;
             padding: 9px 13px;
-            background: #f2e4d6;
-            color: #6b4423;
-            border: 1px solid #e0c9b2;
+            background: #f9fafb;
+            color: #374151;
+            border: 1px solid #d1d5db;
             border-radius: 999px;
             cursor: pointer;
             margin-bottom: 20px;
@@ -241,7 +304,7 @@
             font-size: 0.9rem;
         }
         .back-btn:hover {
-            background: #fcf0e3;
+            background: #f3f4f6;
         }
         .error-message {
             color: var(--danger-700);
@@ -271,6 +334,42 @@
             border-radius: 10px;
             padding: 8px 10px;
         }
+        .toast-stack {
+            position: fixed;
+            right: 18px;
+            bottom: 18px;
+            z-index: 2200;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+        }
+        .toast-note {
+            min-width: 240px;
+            max-width: 360px;
+            color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+            padding: 10px 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 180ms ease, transform 180ms ease;
+        }
+        .toast-note.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .toast-note.success {
+            background: linear-gradient(135deg, #1f7a47, #2f9e61);
+        }
+        .toast-note.error {
+            background: linear-gradient(135deg, #8f1f1f, #c43131);
+        }
+        .toast-note.info {
+            background: linear-gradient(135deg, #6f4e37, #b57946);
+        }
         @media (max-width: 680px) {
             .page {
                 padding: 12px;
@@ -296,38 +395,69 @@
     </style>
 </head>
 <body>
+    <div class="dashboard-container">
+    <div class="navigation">
+        {% include 'components/owner_navigation.html' %}
+    </div>
+    <main class="content">
     <div class="page">
     <div class="page-header">
-        <h1>Registered Rooms</h1>
+        <h1>Room Management</h1>
         <p>Manage room inventory, pricing, and room guest registration entries.</p>
     </div>
     <div class="panel">
-    <div class="action-row">
-        <a class="back-btn" href="{% url 'admin_app:accommodation_dashboard' %}">Back</a>
+    <div class="rooms-header">
+        <h2>Accommodation Rooms</h2>
+        <div class="rooms-meta">
+            <a class="back-btn" href="{% url 'admin_app:accommodation_dashboard' %}" style="margin-bottom:0;">Back</a>
+            <button class="add-room-btn" id="openAddRoomModalBtn" type="button">+ Add Room</button>
+        </div>
     </div>
     {% if hotel_rooms %}
-        <ul id="roomsList">
-            {% for room in hotel_rooms %}
-                <li data-room-id="{{ room.room_id }}">
-                    <span class="room-summary">Room: {{ room.room_name }} - Capacity: {{ room.person_limit }} - Available: {{ room.current_availability }}</span>
-                    <div>
-                        <!-- Register button with a data attribute holding the room id -->
-                        <button class="register-btn" data-room-id="{{ room.room_id }}">Register</button>
-                        <!-- Edit button -->
-                        <button class="edit-btn" data-room-id="{{ room.room_id }}">Edit</button>
-                        <!-- Delete button -->
-                        <button class="delete-btn" data-room-id="{{ room.room_id }}">Delete</button>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="rooms-table-wrap">
+            <table class="rooms-table">
+                <thead>
+                    <tr>
+                        <th>Room Name</th>
+                        <th>Guest Range</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="roomsList">
+                    {% for room in hotel_rooms %}
+                        <tr data-room-id="{{ room.room_id }}">
+                            <td class="room-summary">{{ room.room_name }}</td>
+                            <td class="room-range">1 - {{ room.person_limit }} guests</td>
+                            <td class="room-status">
+                                {% with room_status=room.status|default:'AVAILABLE' %}
+                                    {% if room_status == 'AVAILABLE' %}
+                                        <span class="status-pill status-available">Available</span>
+                                    {% elif room_status == 'OCCUPIED' %}
+                                        <span class="status-pill status-occupied">Reserved</span>
+                                    {% else %}
+                                        <span class="status-pill status-unavailable">{{ room_status|title }}</span>
+                                    {% endif %}
+                                {% endwith %}
+                            </td>
+                            <td>
+                                <div class="room-actions">
+                                    <button class="register-btn" data-room-id="{{ room.room_id }}">Bookings</button>
+                                    <button class="edit-btn" data-room-id="{{ room.room_id }}">Edit</button>
+                                    <button class="delete-btn" data-room-id="{{ room.room_id }}">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% else %}
         <p class="no-rooms" id="noRoomsMsg">No rooms have been registered yet.</p>
     {% endif %}
-
-    <!-- Button to open the "Add Room" modal (existing functionality) -->
-    <button class="add-room-btn" id="openAddRoomModalBtn">Add Room</button>
     </div>
+    </div>
+    </main>
     </div>
     <!-- Add Room Modal (existing) -->
     <div id="addRoomModal" class="modal">
@@ -349,6 +479,48 @@
                 <input type="text" id="roomAmenities" name="amenities" placeholder="WiFi, Aircon, Parking">
                 <br>
                 <button type="submit" class="add-room-btn">Add Room</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Room Modal -->
+    <div id="editRoomModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeEditRoomModalBtn">&times;</span>
+            <h2>Edit Room</h2>
+            <form id="editRoomForm" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="editRoomId" name="room_id">
+
+                <label for="editRoomName">Room Name:</label><br>
+                <input type="text" id="editRoomName" name="room_name" required>
+                <br>
+
+                <label for="editPersonLimit">Capacity (pax):</label><br>
+                <input type="number" id="editPersonLimit" name="person_limit" min="0" required>
+                <br>
+
+                <label for="editPricePerNight">Price per Night (PHP):</label><br>
+                <input type="number" id="editPricePerNight" name="price_per_night" min="0" step="0.01" required>
+                <br>
+
+                <label for="editAvailabilityStatus">Availability Status:</label><br>
+                <select id="editAvailabilityStatus" name="availability_status" required>
+                    <option value="AVAILABLE">Available</option>
+                    <option value="OCCUPIED">Reserved</option>
+                    <option value="UNAVAILABLE">Unavailable</option>
+                </select>
+                <br>
+
+                <label for="editCurrentAvailability">Current Availability:</label><br>
+                <input type="number" id="editCurrentAvailability" name="current_availability" min="0" required>
+                <br>
+
+                <label for="editAmenities">Amenities (comma-separated):</label><br>
+                <input type="text" id="editAmenities" name="amenities" placeholder="WiFi, Aircon, Parking">
+                <br>
+
+                <button type="submit" class="add-room-btn">Save Changes</button>
             </form>
         </div>
     </div>
@@ -404,6 +576,8 @@
         </div>
     </div>
 
+    <div id="toastStack" class="toast-stack" aria-live="polite" aria-atomic="true"></div>
+
     <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
@@ -437,10 +611,35 @@
     </script>
     
     <script>
+        function showToast(message, type) {
+            var stack = document.getElementById("toastStack");
+            if (!stack) {
+                return;
+            }
+            var tone = (type || "info").toLowerCase();
+            var note = document.createElement("div");
+            note.className = "toast-note " + (tone === "success" || tone === "error" ? tone : "info");
+            note.textContent = String(message || "Done.");
+            stack.appendChild(note);
+            requestAnimationFrame(function() {
+                note.classList.add("show");
+            });
+            setTimeout(function() {
+                note.classList.remove("show");
+                setTimeout(function() {
+                    if (note.parentNode) {
+                        note.parentNode.removeChild(note);
+                    }
+                }, 220);
+            }, 2800);
+        }
+
         // Existing Add Room modal logic
         var addRoomModal = document.getElementById("addRoomModal");
+        var editRoomModal = document.getElementById("editRoomModal");
         var openAddRoomModalBtn = document.getElementById("openAddRoomModalBtn");
         var closeAddRoomModalBtn = document.getElementById("closeAddRoomModalBtn");
+        var closeEditRoomModalBtn = document.getElementById("closeEditRoomModalBtn");
 
         openAddRoomModalBtn.onclick = function() {
             addRoomModal.style.display = "block";
@@ -448,9 +647,16 @@
         closeAddRoomModalBtn.onclick = function() {
             addRoomModal.style.display = "none";
         };
+
+        closeEditRoomModalBtn.onclick = function() {
+            editRoomModal.style.display = "none";
+        };
         window.onclick = function(event) {
             if (event.target == addRoomModal) {
                 addRoomModal.style.display = "none";
+            }
+            if (event.target == editRoomModal) {
+                editRoomModal.style.display = "none";
             }
             if (event.target == registerGuestModal) {
                 registerGuestModal.style.display = "none";
@@ -482,36 +688,50 @@
                         var capacity = room.person_limit || room.capacity || 0;
                         var available = room.current_availability || room.availability || capacity;
 
-                        var newRoomHTML = "<li data-room-id='" + roomId + "'>" +
-                            "<span class='room-summary'>Room: " + roomNameText + " - Capacity: " + capacity + " - Available: " + available + "</span>" +
-                            "<div>" +
-                            "<button class='register-btn' data-room-id='" + roomId + "'>Register</button> " +
+                        var statusClass = "status-available";
+                        var statusText = "Available";
+                        if (String(room.status || "").toUpperCase() === "OCCUPIED") {
+                            statusClass = "status-occupied";
+                            statusText = "Reserved";
+                        } else if (String(room.status || "").toUpperCase() === "UNAVAILABLE") {
+                            statusClass = "status-unavailable";
+                            statusText = "Unavailable";
+                        }
+                        var guestRange = "1 - " + capacity + " guest" + (parseInt(capacity, 10) > 1 ? "s" : "");
+                        var newRoomHTML = "<tr data-room-id='" + roomId + "'>" +
+                            "<td class='room-summary'>" + roomNameText + "</td>" +
+                            "<td class='room-range'>" + guestRange + "</td>" +
+                            "<td class='room-status'><span class='status-pill " + statusClass + "'>" + statusText + "</span></td>" +
+                            "<td><div class='room-actions'>" +
+                            "<button class='register-btn' data-room-id='" + roomId + "'>Bookings</button> " +
                             "<button class='edit-btn' data-room-id='" + roomId + "'>Edit</button> " +
                             "<button class='delete-btn' data-room-id='" + roomId + "'>Delete</button>" +
-                            "</div>" +
-                            "</li>";
+                            "</div></td>" +
+                            "</tr>";
                         if($("#roomsList").length) {
                             $("#roomsList").append(newRoomHTML);
                         } else {
                             $("#noRoomsMsg").remove();
-                            $("#openAddRoomModalBtn").before("<ul id='roomsList'>" + newRoomHTML + "</ul>");
+                            var emptyTable = "<div class='rooms-table-wrap'><table class='rooms-table'><thead><tr><th>Room Name</th><th>Guest Range</th><th>Status</th><th>Actions</th></tr></thead><tbody id='roomsList'>" + newRoomHTML + "</tbody></table></div>";
+                            $(".rooms-header").after(emptyTable);
                         }
                         addRoomModal.style.display = "none";
                         $("#roomName").val(""); // Clear input field
                         $("#personLimit").val("0");
                         $("#pricePerNight").val("0.00");
                         $("#roomAmenities").val("");
+                        showToast("Room added successfully.", "success");
                     } else {
-                        alert("Error: " + response.message);
+                        showToast("Error: " + response.message, "error");
                     }
                 },
                 error: function(xhr, status, error) {
-                    alert("An error occurred: " + error);
+                    showToast("An error occurred: " + error, "error");
                 }
             });
         });
 
-        // Handle room edit via AJAX
+        // Open edit room modal and populate values
         $(document).on("click", ".edit-btn", function() {
             var roomId = $(this).data("room-id");
             $.ajax({
@@ -519,7 +739,7 @@
                 type: "GET",
                 success: function(response) {
                     if (response.status !== "success" || !response.rooms) {
-                        alert("Unable to load room details.");
+                        showToast("Unable to load room details.", "error");
                         return;
                     }
 
@@ -527,83 +747,87 @@
                         return String(r.id || r.room_id) === String(roomId);
                     });
                     if (!room) {
-                        alert("Room not found.");
+                        showToast("Room not found.", "error");
                         return;
                     }
-
-                    var roomName = prompt("Room name:", room.room_name || room.name || "");
-                    if (roomName === null) return;
-                    roomName = String(roomName).trim();
-                    if (!roomName) {
-                        alert("Room name is required.");
-                        return;
-                    }
-
-                    var capacity = prompt("Capacity (pax):", String(room.person_limit || room.capacity || 0));
-                    if (capacity === null) return;
-
-                    var price = prompt("Price per night:", String(room.price_per_night || "0.00"));
-                    if (price === null) return;
-
-                    var status = prompt(
-                        "Status (AVAILABLE/OCCUPIED/UNAVAILABLE):",
-                        String(room.availability_status || room.status || "AVAILABLE")
-                    );
-                    if (status === null) return;
-
-                    var currentAvailability = prompt(
-                        "Current available units:",
-                        String(room.current_availability || room.availability || 0)
-                    );
-                    if (currentAvailability === null) return;
-
-                    var amenities = prompt(
-                        "Amenities (comma-separated):",
-                        Array.isArray(room.amenities) ? room.amenities.join(", ") : ""
-                    );
-                    if (amenities === null) return;
-
-                    $.ajax({
-                        type: "POST",
-                        url: "{% url 'accom_app:update_room_ajax' %}",
-                        data: {
-                            room_id: roomId,
-                            room_name: roomName,
-                            room_type: roomName,
-                            person_limit: capacity,
-                            price_per_night: price,
-                            availability_status: status,
-                            current_availability: currentAvailability,
-                            amenities: amenities
-                        },
-                        success: function(updateResp) {
-                            if (updateResp.status !== "success" || !updateResp.room) {
-                                alert("Error: " + (updateResp.message || "Unable to update room."));
-                                return;
-                            }
-
-                            var updated = updateResp.room;
-                            var updatedName = updated.room_name || updated.name || roomName;
-                            var updatedCap = updated.person_limit || updated.capacity || capacity;
-                            var updatedAvail = updated.current_availability || updated.availability || currentAvailability;
-                            var $li = $("#roomsList li[data-room-id='" + roomId + "']");
-                            $li.find(".room-summary").text(
-                                "Room: " + updatedName + " - Capacity: " + updatedCap + " - Available: " + updatedAvail
-                            );
-                            alert("Room updated successfully.");
-                        },
-                        error: function(xhr, status, error) {
-                            try {
-                                var payload = JSON.parse(xhr.responseText || "{}");
-                                alert("Error: " + (payload.message || error));
-                            } catch (e) {
-                                alert("An error occurred: " + error);
-                            }
-                        }
-                    });
+                    $("#editRoomId").val(roomId);
+                    $("#editRoomName").val(room.room_name || room.name || "");
+                    $("#editPersonLimit").val(room.person_limit || room.capacity || 0);
+                    $("#editPricePerNight").val(room.price_per_night || "0.00");
+                    $("#editAvailabilityStatus").val(String(room.availability_status || room.status || "AVAILABLE").toUpperCase());
+                    $("#editCurrentAvailability").val(room.current_availability || room.availability || 0);
+                    $("#editAmenities").val(Array.isArray(room.amenities) ? room.amenities.join(", ") : "");
+                    editRoomModal.style.display = "block";
                 },
                 error: function(xhr, status, error) {
-                    alert("Unable to load rooms for editing: " + error);
+                    showToast("Unable to load rooms for editing: " + error, "error");
+                }
+            });
+        });
+
+        // Submit edit room form
+        $("#editRoomForm").submit(function(e) {
+            e.preventDefault();
+            var roomId = $("#editRoomId").val();
+            var roomName = String($("#editRoomName").val() || "").trim();
+            var capacity = $("#editPersonLimit").val();
+            var price = $("#editPricePerNight").val();
+            var status = $("#editAvailabilityStatus").val();
+            var currentAvailability = $("#editCurrentAvailability").val();
+            var amenities = $("#editAmenities").val();
+
+            if (!roomName) {
+                showToast("Room name is required.", "error");
+                return false;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'accom_app:update_room_ajax' %}",
+                data: {
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                    room_id: roomId,
+                    room_name: roomName,
+                    room_type: roomName,
+                    person_limit: capacity,
+                    price_per_night: price,
+                    availability_status: status,
+                    current_availability: currentAvailability,
+                    amenities: amenities
+                },
+                success: function(updateResp) {
+                    if (updateResp.status !== "success" || !updateResp.room) {
+                        showToast("Error: " + (updateResp.message || "Unable to update room."), "error");
+                        return;
+                    }
+
+                    var updated = updateResp.room;
+                    var updatedName = updated.room_name || updated.name || roomName;
+                    var updatedCap = updated.person_limit || updated.capacity || capacity;
+                    var updatedStatus = String(updated.availability_status || updated.status || "AVAILABLE").toUpperCase();
+                    var statusClass = "status-available";
+                    var statusText = "Available";
+                    if (updatedStatus === "OCCUPIED") {
+                        statusClass = "status-occupied";
+                        statusText = "Reserved";
+                    } else if (updatedStatus === "UNAVAILABLE") {
+                        statusClass = "status-unavailable";
+                        statusText = "Unavailable";
+                    }
+                    var $row = $("#roomsList tr[data-room-id='" + roomId + "']");
+                    $row.find(".room-summary").text(updatedName);
+                    $row.find(".room-range").text("1 - " + updatedCap + " guest" + (parseInt(updatedCap, 10) > 1 ? "s" : ""));
+                    $row.find(".room-status").html("<span class='status-pill " + statusClass + "'>" + statusText + "</span>");
+                    editRoomModal.style.display = "none";
+                    showToast("Room updated successfully.", "success");
+                },
+                error: function(xhr, status, error) {
+                    try {
+                        var payload = JSON.parse(xhr.responseText || "{}");
+                        showToast("Error: " + (payload.message || error), "error");
+                    } catch (e) {
+                        showToast("An error occurred: " + error, "error");
+                    }
                 }
             });
         });
@@ -622,21 +846,21 @@
                     success: function(response) {
                         if(response.status === "success") {
                             // Remove the room from the list
-                            $(".delete-btn[data-room-id='" + roomId + "']").closest("li").remove();
+                            $(".delete-btn[data-room-id='" + roomId + "']").closest("tr").remove();
                             
                             // If no rooms left, show the no rooms message
-                            if($("#roomsList li").length === 0) {
+                            if($("#roomsList tr").length === 0) {
                                 $("#roomsList").after("<p class='no-rooms' id='noRoomsMsg'>No rooms have been registered yet.</p>");
-                                $("#roomsList").remove();
+                                $("#roomsList").closest(".rooms-table-wrap").remove();
                             }
                             
-                            alert("Room deleted successfully!");
+                            showToast("Room deleted successfully.", "success");
                         } else {
-                            alert("Error: " + response.message);
+                            showToast("Error: " + response.message, "error");
                         }
                     },
                     error: function(xhr, status, error) {
-                        alert("An error occurred: " + error);
+                        showToast("An error occurred: " + error, "error");
                     }
                 });
             }
@@ -765,7 +989,7 @@
                         entriesAdded++;
                         $("#entriesCounter").text("Entries added in this session: " + entriesAdded).show();
                         
-                        alert("Guest registration added successfully! You can add another entry or close the form.");
+                        showToast("Guest registration added successfully! You can add another entry or close the form.", "success");
                         
                         // Clear form for next entry but keep room_id and month
                         var roomId = $("#regRoomId").val();
@@ -785,7 +1009,7 @@
                         $("#checkedOut").val("");
                         $("#nights").val("");
                     } else {
-                        alert("Error: " + response.message);
+                        showToast("Error: " + response.message, "error");
                     }
                 },
                 error: function(xhr, status, error) {
@@ -793,7 +1017,7 @@
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         errorMsg = xhr.responseJSON.message;
                     }
-                    alert("Error: " + errorMsg);
+                    showToast("Error: " + errorMsg, "error");
                 }
             });
         });
@@ -836,11 +1060,11 @@
                         // Increment the entries counter before closing
                         entriesAdded++;
                         
-                        alert("Guest registration added successfully!");
+                        showToast("Guest registration added successfully.", "success");
                         registerGuestModal.style.display = "none";
                         $("#registerGuestForm")[0].reset();
                     } else {
-                        alert("Error: " + response.message);
+                        showToast("Error: " + response.message, "error");
                     }
                 },
                 error: function(xhr, status, error) {
@@ -848,7 +1072,7 @@
                     if (xhr.responseJSON && xhr.responseJSON.message) {
                         errorMsg = xhr.responseJSON.message;
                     }
-                    alert("Error: " + errorMsg);
+                    showToast("Error: " + errorMsg, "error");
                 }
             });
         });

@@ -165,8 +165,8 @@
         <tbody>
           {% for tour in active_tours %}
           <tr>
-            <td>{{ tour.tour_id.tour_id }}</td>
-            <td>{{ tour.tour_id.tour_name }}</td>
+            <td>{{ tour.tour.tour_id }}</td>
+            <td>{{ tour.tour.tour_name }}</td>
             <td>{{ tour.sched_id }}</td>
             <td>{{ tour.start_time }}</td>
             <td>{{ tour.end_time }}</td>
@@ -212,8 +212,8 @@
         <tbody>
           {% for tour in completed_tours %}
           <tr>
-            <td>{{ tour.tour_id.tour_id }}</td>
-            <td>{{ tour.tour_id.tour_name }}</td>
+            <td>{{ tour.tour.tour_id }}</td>
+            <td>{{ tour.tour.tour_name }}</td>
             <td>{{ tour.sched_id }}</td>
             <td>{{ tour.start_time }}</td>
             <td>{{ tour.end_time }}</td>
@@ -251,8 +251,8 @@
         <tbody>
           {% for tour in cancelled_tours %}
           <tr>
-            <td>{{ tour.tour_id.tour_id }}</td>
-            <td>{{ tour.tour_id.tour_name }}</td>
+            <td>{{ tour.tour.tour_id }}</td>
+            <td>{{ tour.tour.tour_name }}</td>
             <td>{{ tour.sched_id }}</td>
             <td>{{ tour.start_time }}</td>
             <td>{{ tour.end_time }}</td>

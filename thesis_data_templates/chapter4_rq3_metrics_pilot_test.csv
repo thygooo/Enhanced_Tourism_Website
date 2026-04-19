@@ -1,0 +1,10 @@
+rq_item,indicator,metric_name,formula,value,n,status,notes
+3.1,Recommendation accuracy (true metric),true_accuracy_labeled,correct_predictions / total_labeled_samples * 100,75.0,480,available_offline_eval,Offline labeled evaluation artifact: artifacts\decision_tree_final\evaluation_metrics_v1.json
+3.1,Recommendation effectiveness proxy,queries_with_results_rate_pct,queries_with_results / accommodation_queries * 100,100.0,2,available_proxy,"Use as online effectiveness proxy only, not true accuracy."
+3.1,Recommendation effectiveness proxy,avg_top1_score,mean(top_1_recommendation_score),0.89396,2,available_proxy,Model score proxy from recommendation trace.
+3.2,System Usability Scale,sus_mean_0_100,mean(SUS batch scores),,0,available,Pair with SD and respondent count in Chapter 4.
+3.2,System Usability Scale,sus_sd_0_100,sample_sd(SUS batch scores),,0,available,
+3.3,User engagement,ctr_pct,click_events / recommendation_view_events * 100,150.0,2,available,Recommendation event funnel.
+3.3,User engagement,unique_recommendation_sessions,count(distinct RecommendationEvent.session_id),4,4,available,Session-level engagement volume.
+3.3,User engagement,unique_chat_users,count(distinct ChatbotLog.user_id),0,0,available,User-level chat participation.
+3.4,Booking conversion efficiency,book_rate_pct,(book_events / recommendation_view_events) * 100,50.0,2,available,Denominator locked to accommodation recommendation view events only.

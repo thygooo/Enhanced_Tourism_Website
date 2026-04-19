@@ -1,0 +1,41 @@
+id,category,prompt,expected_intents,needs_clarification_expected
+1,tourism_information,What tourist spots can I visit in Bayawan City?,get_tourism_information|get_recommendation,no
+2,tourism_information,Are there any beaches or nature spots in Bayawan?,get_tourism_information|get_recommendation,no
+3,tourism_information,What are the best places to visit for first-time tourists?,get_tourism_information|get_recommendation,no
+4,tourism_information,Is there an entrance fee for this tourist destination?,get_tourism_information|calculate_billing,yes
+5,tourism_information,What time does the tourist spot open?,get_tourism_information,yes
+6,tourist_recommendation,Can you recommend a place for relaxation in Bayawan?,get_recommendation|get_tourism_information,no
+7,tourist_recommendation,Suggest a tourist spot for a family trip.,get_recommendation|get_tourism_information,no
+8,tourist_recommendation,Recommend a place for a solo traveler.,get_recommendation|get_tourism_information,no
+9,tourist_recommendation,Where should I go if I want a budget-friendly trip?,get_recommendation|get_tourism_information,no
+10,tourist_recommendation,Can you suggest a place near the city proper?,get_recommendation|get_tourism_information,yes
+11,accommodation_recommendation,Can you recommend a place to stay in Bayawan?,get_accommodation_recommendation|gethotelrecommendation,no
+12,accommodation_recommendation,Suggest a hotel or inn under 1500 pesos.,get_accommodation_recommendation|gethotelrecommendation,no
+13,accommodation_recommendation,I need a room for 2 people near the city proper.,get_accommodation_recommendation|book_accommodation,yes
+14,accommodation_recommendation,Do you have accommodation with Wi-Fi and aircon?,get_accommodation_recommendation|gethotelrecommendation,no
+15,accommodation_recommendation,Recommend a place to stay for a family of 4.,get_accommodation_recommendation|gethotelrecommendation,no
+16,booking,I want to book a room for tomorrow.,book_accommodation|bookhotel,yes
+17,booking,Can I reserve a room for 2 nights?,book_accommodation|bookhotel,yes
+18,booking,Help me book accommodation for this weekend.,book_accommodation|bookhotel,yes
+19,booking,Are there available rooms today?,get_accommodation_recommendation|book_accommodation,yes
+20,booking,What details do I need to provide for booking?,book_accommodation|get_accommodation_recommendation,no
+21,billing_payment,How much will I pay for 2 nights?,calculate_accommodation_billing|calculatehotelbilling,yes
+22,billing_payment,Calculate the total bill for 3 guests.,calculate_accommodation_billing|calculatehotelbilling,yes
+23,billing_payment,How much is the accommodation fee for one night?,calculate_accommodation_billing|calculatehotelbilling,yes
+24,billing_payment,Is down payment required for booking?,calculate_accommodation_billing|book_accommodation,no
+25,billing_payment,What payment methods are available?,calculate_accommodation_billing|book_accommodation,no
+26,reservation_support,Can you check my booking status?,view_my_accommodation_bookings|book_accommodation,no
+27,reservation_support,Is my reservation already confirmed?,view_my_accommodation_bookings|book_accommodation,no
+28,reservation_support,I want to cancel my booking.,view_my_accommodation_bookings|book_accommodation,no
+29,reservation_support,Can I change my check-in date?,view_my_accommodation_bookings|book_accommodation,no
+30,reservation_support,I forgot my password. How can I log in again?,guest_password_help|out_of_scope,no
+31,mixed_filipino_english,May available room ba for 2 persons tomorrow?,get_accommodation_recommendation|book_accommodation,yes
+32,mixed_filipino_english,Can you recommend a place to stay na affordable?,get_accommodation_recommendation|gethotelrecommendation,no
+33,mixed_filipino_english,Magkano ang total if 2 nights kami?,calculate_accommodation_billing|calculatehotelbilling,yes
+34,mixed_filipino_english,Saan magandang gumala sa Bayawan?,get_recommendation|get_tourism_information,no
+35,mixed_filipino_english,Pwede ba mag-book online and pay later?,book_accommodation|calculate_accommodation_billing,no
+36,short_messy,cheap hotel pls,get_accommodation_recommendation|gethotelrecommendation,no
+37,short_messy,room for 2 how much,calculate_accommodation_billing|get_accommodation_recommendation,yes
+38,short_messy,available pa tomorrow?,get_accommodation_recommendation|book_accommodation,yes
+39,short_messy,book room now,book_accommodation|bookhotel,yes
+40,short_messy,tourist spot near city,get_tourism_information|get_recommendation,yes

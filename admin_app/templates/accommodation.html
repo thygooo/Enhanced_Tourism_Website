@@ -291,7 +291,7 @@
     <div class="container">
       <h2>Business Details</h2>
       {% if not request.session.is_admin and request.session.user_type != 'employee' %}
-        <a class="owner-hub-link" href="{% url 'admin_app:owner_hub' %}">Back to Owner Hub</a>
+        <a class="owner-hub-link" href="{% url 'admin_app:owner_hub' %}">Back to Accommodation Owner Hub</a>
       {% endif %}
       <p class="hint">Fill out the form below. Once approved, you can manage your room inventory and bookings from the Owner Hub.</p>
 
@@ -320,7 +320,7 @@
           {% elif request.session.user_type == 'employee' %}
             <a href="{% url 'admin_app:employee_dashboard' %}" class="button">Back to Dashboard</a>
           {% else %}
-            <a href="/guest_app/main-page/" class="button">Back</a>
+            <a href="{% url 'admin_app:owner_hub' %}" class="button">Back to Accommodation Owner Hub</a>
           {% endif %}
         </div>
       </form>

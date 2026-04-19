@@ -1,0 +1,130 @@
+﻿AI-Powered Tourism Reservation System
+Pilot Testing Data Pack (for Manual Encoding)
+Version: 2026-03-24
+
+Notes
+- Use this pack for pilot testing/demo encoding.
+- Label as pilot_test unless each row is source-verified for real_world.
+- Keep owner/account approvals and accommodation approvals aligned in admin workflows.
+
+====================================================================
+1) ACCOMMODATION OWNER ACCOUNTS (Guest Sign-Up Form)
+====================================================================
+Format:
+first_name | middle_initial | last_name | email | password | country_of_origin | city | birthday | phone_number | sex | company_name | register_as_accommodation_owner
+
+Maria | L | Torres | topviewinn.bayawan@gmail.com | Bayawan#Owner2026! | Philippines | Bayawan City | 1991-08-14 | +63 917 654 2231 | F | Top View Inn Bayawan | yes
+John Paul | D | Reyes | riversidelodge.bayawan@gmail.com | Bayawan#Owner2026! | Philippines | Bayawan City | 1988-11-03 | +63 918 112 4407 | M | Riverside Travelers Lodge | yes
+Carla | M | Seno | poblacionsuites@gmail.com | Bayawan#Owner2026! | Philippines | Bayawan City | 1994-02-27 | +63 919 881 2305 | F | Poblacion Central Suites | yes
+Edwin | A | Villarta | terminalstay.inn@gmail.com | Bayawan#Owner2026! | Philippines | Bayawan City | 1985-06-19 | +63 917 300 5401 | M | Terminal Stay Inn | yes
+Liza | T | Cabang | subalodgehotel@gmail.com | Bayawan#Owner2026! | Philippines | Bayawan City | 1990-12-09 | +63 920 441 1188 | F | Suba Lodge Hotel | yes
+Mark | P | Loquias | highlandviewresort.bayawan@gmail.com | Bayawan#Owner2026! | Philippines | Bayawan City | 1987-04-16 | +63 921 552 9076 | M | Highland View Resort Bayawan | yes
+
+====================================================================
+2) ACCOMMODATION REGISTRATION (Owner/Admin Encoding Form)
+====================================================================
+Format:
+owner_email | business_name | business_type | address | contact_number | contact_email | business_description | accommodation_amenities | status_for_admin
+
+topviewinn.bayawan@gmail.com | Top View Inn Bayawan | Inn | H. Bollos St., Brgy. Poblacion, Bayawan City, Negros Oriental | +63 917 654 2231 | topviewinn.bayawan@gmail.com | Affordable inn in the city center with quick access to transport and dining. | WiFi, Air-conditioned rooms, Cable TV, Private bathroom, Parking | accepted
+riversidelodge.bayawan@gmail.com | Riverside Travelers Lodge | Hotel | Riverside Rd., Brgy. Villareal, Bayawan City, Negros Oriental | +63 918 112 4407 | riversidelodge.bayawan@gmail.com | Mid-range lodge near riverside access points, ideal for short and family stays. | WiFi, Hot shower, TV, Parking, Front desk assistance | accepted
+poblacionsuites@gmail.com | Poblacion Central Suites | Hotel | National Highway, Brgy. Poblacion, Bayawan City, Negros Oriental | +63 919 881 2305 | poblacionsuites@gmail.com | Business-friendly suites near transport and commercial establishments. | WiFi, Work desk, Smart TV, Elevator access, Parking | accepted
+terminalstay.inn@gmail.com | Terminal Stay Inn | Inn | Terminal Area, Bayawan City, Negros Oriental | +63 917 300 5401 | terminalstay.inn@gmail.com | Budget inn near transport terminal for travelers with early departure schedules. | WiFi, Fan/Aircon mix, Shared lounge, 24/7 reception | accepted
+subalodgehotel@gmail.com | Suba Lodge Hotel | Hotel | Suba, Bayawan City, Negros Oriental | +63 920 441 1188 | subalodgehotel@gmail.com | Quiet accommodation for longer stays with family-friendly room options. | WiFi, Private CR, Family rooms, Laundry service, Parking | accepted
+highlandviewresort.bayawan@gmail.com | Highland View Resort Bayawan | Resort | Brgy. Nangka Highlands, Bayawan City, Negros Oriental | +63 921 552 9076 | highlandviewresort.bayawan@gmail.com | Upland resort with scenic views suited for groups and weekend retreats. | WiFi, Pool access, View deck, Restaurant, Event area | accepted
+
+====================================================================
+3) ROOM INVENTORY (Per Accommodation)
+====================================================================
+Format:
+business_name | room_name | price_per_night | person_limit_pax | current_availability | status | amenities
+
+Top View Inn Bayawan | Single Room | 700 | 1 | 4 | AVAILABLE | Aircon, TV, Private CR, WiFi
+Top View Inn Bayawan | Matrimonial Room | 950 | 2 | 3 | AVAILABLE | Aircon, TV, Private CR, WiFi
+Top View Inn Bayawan | Family Room | 1400 | 4 | 2 | AVAILABLE | Aircon, TV, Private CR, WiFi, Extra bed
+
+Riverside Travelers Lodge | Economy Single | 850 | 1 | 5 | AVAILABLE | Fan/Aircon option, Private CR, WiFi
+Riverside Travelers Lodge | Standard Double | 1300 | 2 | 4 | AVAILABLE | Aircon, TV, Private CR, WiFi
+Riverside Travelers Lodge | Quad Room | 2200 | 4 | 2 | AVAILABLE | Aircon, TV, Private CR, WiFi, Mini fridge
+
+Poblacion Central Suites | Deluxe Twin | 1800 | 2 | 3 | AVAILABLE | Aircon, Smart TV, Work desk, WiFi
+Poblacion Central Suites | Premium Family Suite | 3400 | 5 | 2 | AVAILABLE | Aircon, Smart TV, Sofa, WiFi, Mini pantry
+Poblacion Central Suites | Executive Queen | 2400 | 2 | 2 | AVAILABLE | Aircon, Smart TV, Work desk, WiFi
+
+Terminal Stay Inn | Budget Single | 550 | 1 | 6 | AVAILABLE | Fan, Shared lounge, WiFi
+Terminal Stay Inn | Standard Double | 900 | 2 | 4 | AVAILABLE | Aircon, Private CR, WiFi
+Terminal Stay Inn | Barkada Room | 1600 | 4 | 2 | AVAILABLE | Aircon, Bunk setup, Private CR, WiFi
+
+Suba Lodge Hotel | Standard Queen | 1500 | 2 | 3 | AVAILABLE | Aircon, TV, Private CR, WiFi
+Suba Lodge Hotel | Triple Room | 2000 | 3 | 3 | AVAILABLE | Aircon, TV, Private CR, WiFi
+Suba Lodge Hotel | Family Deluxe | 2800 | 5 | 2 | AVAILABLE | Aircon, TV, WiFi, Dining table
+
+Highland View Resort Bayawan | Garden Cabin | 2600 | 3 | 3 | AVAILABLE | Aircon, View deck, WiFi
+Highland View Resort Bayawan | Panorama Suite | 4200 | 5 | 2 | AVAILABLE | Aircon, Balcony, WiFi, Mini bar
+Highland View Resort Bayawan | Group Villa | 6500 | 8 | 1 | AVAILABLE | 2 BR, Living area, WiFi, Kitchenette
+
+====================================================================
+4) TOURISM INFORMATION (Admin Tourism Management)
+====================================================================
+Format:
+spot_name | location | contact_information | operating_hours | publication_status | description
+
+Bayawan Boulevard | Bayawan City Proper | Bayawan Tourism Office | 24 hours | published | Waterfront area for walking, local food trips, and evening leisure.
+Bayawan City Plaza | Brgy. Poblacion, Bayawan City | Bayawan LGU | 24 hours | published | Central plaza for community events and city activities.
+Malabugas Falls Jump-off Info | Bayawan City tourism corridor | Bayawan Tourism Office | 08:00-17:00 | published | Visitor info point for routes and safety reminders to Malabugas Falls.
+Danapa Nature Park Info Desk | Bayawan City tourism corridor | Bayawan Tourism Office | 08:00-17:00 | published | Information reference for nature-oriented visits and activities.
+Villareal Riverside Walk | Brgy. Villareal, Bayawan City | Barangay Office | 06:00-21:00 | published | Riverside walking stretch ideal for light recreation and sightseeing.
+Bayawan Public Market Food Strip | City Proper | City Market Admin | 05:00-20:00 | published | Local food area popular for budget-friendly meals and produce.
+Nangka Highland Viewpoint Access | Brgy. Nangka, Bayawan City | Bayawan Tourism Office | 06:00-18:00 | published | Scenic upland viewpoint area for sunrise/sunset visits.
+Suba Community Eco Area | Brgy. Suba, Bayawan City | Barangay Office | 07:00-18:00 | published | Community-managed eco area for casual outdoor visits.
+
+====================================================================
+5) TOUR PACKAGES (Tour Module)
+====================================================================
+Format:
+tour_name | publication_status | description
+
+Bayawan City Highlights Day Tour | published | City-center cultural and leisure route for first-time visitors.
+Riverside and Local Food Trail | published | Villareal riverside plus local food stops within Bayawan.
+Upland Scenic Experience | published | Highland route focused on viewpoints and outdoor scenery.
+Bayawan Heritage and Community Tour | published | Community-based route with local history and landmark stops.
+
+====================================================================
+6) TOUR SCHEDULES (Tour Schedule)
+====================================================================
+Format:
+tour_name | start_time | end_time | price | slots_available | status
+
+Bayawan City Highlights Day Tour | 2026-04-05 08:00 | 2026-04-05 17:00 | 1200 | 20 | active
+Bayawan City Highlights Day Tour | 2026-04-12 08:00 | 2026-04-12 17:00 | 1200 | 20 | active
+Riverside and Local Food Trail | 2026-04-06 09:00 | 2026-04-06 16:00 | 950 | 15 | active
+Riverside and Local Food Trail | 2026-04-13 09:00 | 2026-04-13 16:00 | 950 | 15 | active
+Upland Scenic Experience | 2026-04-07 06:00 | 2026-04-07 15:00 | 1500 | 12 | active
+Bayawan Heritage and Community Tour | 2026-04-09 08:30 | 2026-04-09 16:30 | 1100 | 18 | active
+
+====================================================================
+7) ADMISSION RATES (Tour Billing)
+====================================================================
+Format:
+rate_type | amount
+
+Adult | 100
+Child | 60
+Senior/PWD | 80
+
+====================================================================
+8) QUICK POST-ENCODING CHECKLIST
+====================================================================
+[ ] Owner accounts approved in pending owner accounts page
+[ ] Accommodations approved (status=accepted)
+[ ] Rooms have AVAILABLE status + availability >= 1 + prices + pax
+[ ] Tourism information set to published
+[ ] Tours set to published with future schedules
+
+Recommended chatbot smoke tests:
+1) recommend a hotel in villareal for 2 guests under 1500
+2) show tourism information in bayawan
+3) book room <room_id> for 2 guests from 2026-04-12 to 2026-04-14
+4) show my bookings (guest)
+5) show my rooms (owner)
+6) show pending accommodations (admin)

@@ -92,8 +92,9 @@
             text-decoration: underline;
         }
     </style>
+  <link rel="stylesheet" href="/static/css/guest_unified.css">
 </head>
-<body>
+<body class="guest-auth">
 
     <div class="container">
         <h2>Registration Form</h2>
@@ -110,6 +111,7 @@
 
         <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data" id="registration-form">
             {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next_url }}">
 
             <div class="form-group">
                 <label for="first_name" class="required">First Name</label>
@@ -196,7 +198,7 @@
 
             <div class="form-group">
                 <label for="register_as_accommodation_owner">
-                    <input type="checkbox" id="register_as_accommodation_owner" name="register_as_accommodation_owner" {% if request.POST.register_as_accommodation_owner %}checked{% endif %}>
+                    <input type="checkbox" id="register_as_accommodation_owner" name="register_as_accommodation_owner" {% if request.POST.register_as_accommodation_owner or owner_signup_intent %}checked{% endif %}>
                     Register as Accommodation Owner
                 </label>
                 {% if form.register_as_accommodation_owner.errors %}
@@ -332,3 +334,4 @@
     </script>
 </body>
 </html>
+

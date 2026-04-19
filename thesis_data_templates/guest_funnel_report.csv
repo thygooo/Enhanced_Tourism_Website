@@ -1,0 +1,10 @@
+stage,event_refs,count,unique_sessions,unique_users,step_conversion_pct,overall_from_chat_open_pct,dropoff_from_previous
+chatbot_opened,chat:funnel_chatbot_opened,55,15,5,0.0,100.0,0
+quick_start_clicked,chat:funnel_quick_start_clicked,14,8,4,25.4545,25.4545,41
+recommendation_shown,chat:funnel_recommendation_shown | chat:accommodation_recommendation_rendered,26,13,5,185.7143,47.2727,0
+recommendation_card_clicked,chat:funnel_recommendation_card_clicked,2,2,1,7.6923,3.6364,24
+book_button_clicked,chat:funnel_book_button_clicked,8,8,5,400.0,14.5455,0
+booking_flow_started,chat:funnel_booking_flow_started | chat:accommodation_booking_draft_or_pending,9,8,5,112.5,16.3636,0
+billing_link_shown,chat:funnel_billing_link_shown | chat:lgu_payment_handoff_ready,9,8,5,100.0,16.3636,0
+billing_link_clicked,chat:funnel_billing_link_clicked | chat:billing_link_click,4,4,4,44.4444,7.2727,5
+booking_completed,chat:funnel_booking_completed | chat:accommodation_booking_confirmed,8,8,5,200.0,14.5455,0

@@ -4,235 +4,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission Rates</title>
+    <title>Manage Discounts</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
     <style>
         :root {
-            --primary-color: #875a34;
-            --primary-dark: #6d4827;
-            --primary-soft: #f6eee6;
-            --error-color: #c84d3a;
-            --info-color: #1f75cc;
-            --text-dark: #3f2f26;
-            --text-medium: #6b523f;
-            --white: #fff;
+            --bg: #f8f5f1;
+            --text: #3f2f26;
+            --muted: #6b523f;
+            --line: #ead9c9;
+            --card: #fffefc;
+            --brown: #875a34;
+            --brown-dark: #6d4827;
+            --info: #dff6f9;
+            --blue: #1f75cc;
+            --green: #2f8f4e;
+            --danger: #c84d3a;
         }
 
+        * { box-sizing: border-box; }
+
         body {
-            font-family: "Poppins", 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            font-family: "Poppins", "Segoe UI", Roboto, Arial, sans-serif;
+            color: var(--text);
             background:
                 radial-gradient(circle at 85% -10%, rgba(177, 116, 63, 0.2), transparent 32%),
                 radial-gradient(circle at -5% 35%, rgba(111, 78, 55, 0.15), transparent 26%),
-                #f8f5f1;
-            margin: 0;
-            padding: 0;
-            color: var(--text-dark);
+                var(--bg);
         }
-        
+
         .dashboard-container {
             display: flex;
             min-height: 100vh;
         }
-        
+
         .content {
             flex: 1;
             padding: 32px;
-            box-sizing: border-box;
         }
-        
+
         .container {
-            max-width: 1000px;
-            margin: 20px auto;
+            max-width: 1180px;
+            margin: 0 auto;
+            border: 1px solid var(--line);
+            border-radius: 16px;
             background: linear-gradient(180deg, #fffefc 0%, #fff9f2 100%);
-            border: 1px solid #ead9c9;
-            padding: 26px;
-            border-radius: 18px;
             box-shadow: 0 14px 28px rgba(56, 33, 16, 0.12);
-            position: relative;
-            overflow: hidden;
+            padding: 18px;
         }
 
-        .container::after {
-            content: "";
-            position: absolute;
-            right: -100px;
-            top: -110px;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(224, 164, 109, 0.26), rgba(224, 164, 109, 0));
-            pointer-events: none;
+        .title {
+            margin: 0 0 2px;
+            color: #2e5cb8;
+            font-size: 1.6rem;
         }
 
-        .page-hero {
-            position: relative;
-            z-index: 1;
-            margin-bottom: 18px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid #efdfcf;
-        }
-        
-        h1, h2 {
-            color: var(--text-dark);
-            margin: 0 0 12px;
+        .subtitle {
+            margin: 0 0 10px;
+            color: var(--muted);
+            font-size: 0.88rem;
         }
 
-        .page-hero h1 {
-            font-size: clamp(1.4rem, 2.4vw, 1.95rem);
-            margin-bottom: 4px;
-            font-weight: 700;
+        .top-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
-        .page-hero p {
-            margin: 0;
-            color: var(--text-medium);
-            font-size: 0.95rem;
-        }
+        .top-actions form { margin: 0; }
 
-        h2 {
-            margin-top: 22px;
-            border-bottom: 1px solid #efdfcf;
-            padding-bottom: 8px;
-            font-size: 1.15rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        form {
-            max-width: 600px;
-            margin: 20px auto 28px;
-            padding: 20px;
-            border: 1px solid #ead9c9;
-            border-radius: 14px;
-            background: #fffdfa;
-            position: relative;
-            z-index: 1;
-        }
-        
-        label, input, select {
-            display: block;
-            width: 100%;
-            margin-bottom: 15px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #decab7;
-            border-radius: 10px;
-            color: var(--text-dark);
+        .small-btn {
+            border: 1px solid #dbc7b4;
+            border-radius: 8px;
             background: #fff;
+            color: var(--text);
+            font-weight: 600;
+            padding: 7px 10px;
+            cursor: pointer;
+            font-size: 0.82rem;
         }
-        
+
+        .small-btn.active {
+            background: #f4eadf;
+            color: var(--brown-dark);
+            border-color: #d5b89e;
+        }
+
+        .small-btn.save {
+            background: var(--green);
+            color: #fff;
+            border-color: var(--green);
+        }
+
+        .messages {
+            margin: 8px 0 10px;
+        }
+
+        .message {
+            border: 1px solid #d8c4b2;
+            border-radius: 8px;
+            background: #fff;
+            color: var(--muted);
+            padding: 8px 10px;
+            font-size: 0.84rem;
+            margin-bottom: 8px;
+        }
+
+        .tip {
+            border: 1px solid #bfe9ef;
+            background: var(--info);
+            color: #2a5860;
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin-bottom: 10px;
+            font-size: 0.84rem;
+        }
+
+        .discount-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .discount-card {
+            border: 1px solid #e6d8cb;
+            border-radius: 10px;
+            background: #fff;
+            padding: 10px;
+        }
+
+        .discount-card h3 {
+            margin: 0 0 8px;
+            font-size: 0.95rem;
+            color: var(--text);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hint-badge {
+            font-size: 0.68rem;
+            background: #e4f5ea;
+            color: #2f8f4e;
+            border: 1px solid #bfe3cb;
+            border-radius: 999px;
+            padding: 2px 7px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.76rem;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            height: 36px;
+            border: 1px solid #decab7;
+            border-radius: 8px;
+            padding: 0 10px;
+            margin-bottom: 8px;
+            background: #fff;
+            color: var(--text);
+        }
+
         input:focus, select:focus {
-            border-color: var(--primary-color);
             outline: none;
+            border-color: var(--brown);
             box-shadow: 0 0 0 3px rgba(137, 90, 52, 0.16);
         }
-        
-        button {
-            background: linear-gradient(135deg, #875a34, #b77744);
-            color: white;
-            padding: 10px 15px;
+
+        .card-save-btn {
+            width: 100%;
+            height: 34px;
             border: none;
-            border-radius: 11px;
+            border-radius: 8px;
+            background: var(--blue);
+            color: #fff;
+            font-weight: 700;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s ease;
+            font-size: 0.8rem;
         }
-        
-        button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 16px rgba(122, 79, 45, 0.22);
+
+        .section-actions {
+            margin-bottom: 14px;
         }
-        
+
+        .generic-rates {
+            margin-top: 14px;
+            border-top: 1px solid #eadccc;
+            padding-top: 12px;
+        }
+
+        .generic-rates h2 {
+            margin: 0 0 10px;
+            font-size: 1.05rem;
+        }
+
+        .generic-form {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr auto;
+            gap: 8px;
+            align-items: end;
+            margin-bottom: 10px;
+        }
+
+        .generic-form .full {
+            grid-column: span 4;
+        }
+
+        .generic-form button {
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--brown), #b77744);
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
         table {
             width: 100%;
-            margin: 20px 0;
             border-collapse: collapse;
             background: #fff;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
-            position: relative;
-            z-index: 1;
+            border: 1px solid #ebddd0;
         }
-        
+
         th, td {
-            border: 1px solid #e8d7c7;
-            padding: 12px;
+            padding: 10px;
+            border-bottom: 1px solid #f1e4d7;
+            font-size: 0.84rem;
             text-align: left;
         }
-        
+
         th {
             background: #efe1d4;
             color: #5d4332;
-            font-weight: 600;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #fff9f2;
-        }
-        
-        /* Style for action buttons */
-        .action-column {
-            width: 150px;
-            white-space: nowrap;
+            font-weight: 700;
         }
 
-        .action-container {
+        .actions {
             display: flex;
-            justify-content: space-between;
-            gap: 8px;
+            gap: 6px;
         }
 
-        td button {
-            min-width: 80px;
-            padding: 8px;
-            font-size: 13px;
+        .btn-update, .btn-delete {
+            border: none;
+            border-radius: 7px;
+            padding: 6px 9px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
         }
-        
-        /* Delete button */
-        button[value="delete"] {
-            background: #f5d8d3;
-            color: #8a2f25;
-            border: 1px solid #e6b9b1;
-            box-shadow: none;
-        }
-        
-        button[value="delete"]:hover {
-            background: #efc7be;
-            transform: none;
-        }
-        
-        /* Update button */
-        .update-btn {
+
+        .btn-update {
             background: #e3effc;
             color: #155da4;
             border: 1px solid #b8d6f6;
-            box-shadow: none;
-        }
-        
-        .update-btn:hover {
-            background: #d2e6fb;
-            transform: none;
         }
 
-        @media (max-width: 900px) {
-            .content {
-                padding: 14px;
-            }
-            .container {
-                padding: 16px;
-                border-radius: 14px;
-            }
-            form {
-                margin: 14px 0 20px;
-                padding: 14px;
-            }
-            .action-container {
-                flex-direction: column;
-            }
-            td button {
-                width: 100%;
-            }
+        .btn-delete {
+            background: #f5d8d3;
+            color: #8a2f25;
+            border: 1px solid #e6b9b1;
+        }
+
+        @media (max-width: 1080px) {
+            .discount-grid { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+            .generic-form { grid-template-columns: 1fr; }
+            .generic-form .full { grid-column: span 1; }
+            .content { padding: 14px; }
+        }
+
+        @media (max-width: 700px) {
+            .discount-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -249,90 +301,173 @@
             {% include 'components/navigation.html' %}
         {% endif %}
     </div>
+
     <div class="content">
         <div class="container">
-            <div class="page-hero">
-                <h1>Admission Rates</h1>
-                <p>Manage payables and pricing used when building tour schedules.</p>
+            <h1 class="title">Manage Discounts</h1>
+            <p class="subtitle">Create and manage discounts for tours and accommodations.</p>
+
+            <div class="top-actions">
+                <form method="POST" action="{% url 'tour_app:admission_rate' %}">
+                    {% csrf_token %}
+                    <button class="small-btn active" type="submit" name="action" value="seed_age">Age Discounts</button>
+                </form>
+                <form method="POST" action="{% url 'tour_app:admission_rate' %}">
+                    {% csrf_token %}
+                    <button class="small-btn" type="submit" name="action" value="seed_disability">Disability Discount</button>
+                </form>
             </div>
-            
+
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="message">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="tip">Set discount percentages for each category. Setting status to inactive will save the discount as 0%.</div>
+
             <form method="POST" action="{% url 'tour_app:admission_rate' %}">
                 {% csrf_token %}
-                <input type="hidden" id="rate_id" name="rate_id">
-                <h2>Add/Edit Admission Rate</h2>
-                <label for="tour_id">Tour Name:</label>
-                <select id="tour_id" name="tour_id" required>
-                    <option value="">Select a Tour</option>
-                    {% for tour in tours %}
-                    <option value="{{ tour.tour_id }}">{{ tour.tour_name }}</option>
+                <input type="hidden" name="action" value="save_all_age">
+                <input type="hidden" name="age_count" value="{{ age_discount_rows|length }}">
+
+                <div class="discount-grid">
+                    {% for row in age_discount_rows %}
+                    <div class="discount-card">
+                        <h3>{{ row.category }} <span class="hint-badge">Age</span></h3>
+                        <input type="hidden" name="age_category_{{ forloop.counter0 }}" value="{{ row.category }}">
+
+                        <label for="age_percentage_{{ forloop.counter0 }}">Discount Percentage</label>
+                        <input id="age_percentage_{{ forloop.counter0 }}" type="number" step="0.01" min="0" max="100" name="age_percentage_{{ forloop.counter0 }}" value="{{ row.price }}">
+
+                        <label for="age_status_{{ forloop.counter0 }}">Status</label>
+                        <select id="age_status_{{ forloop.counter0 }}" name="age_status_{{ forloop.counter0 }}">
+                            <option value="active" {% if row.status == 'active' %}selected{% endif %}>Active</option>
+                            <option value="inactive" {% if row.status == 'inactive' %}selected{% endif %}>Inactive</option>
+                        </select>
+                    </div>
                     {% endfor %}
-                </select>
+                </div>
 
-                <label for="payables">Payables:</label>
-                <input type="text" id="payables" name="payables" required>
-
-                <label for="price">Price:</label>
-                <input type="number" id="price" name="price" step="0.01" required>
-
-                <button type="submit" name="action" value="add">Submit</button>
+                <div class="section-actions">
+                    <button class="small-btn save" type="submit">Save All Age Discounts</button>
+                </div>
             </form>
 
-            <h2>Current Admission Rates</h2>
-            <table id="admissionRatesTable">
-                <thead>
-                    <tr>
-                        <th>Rate ID</th>
-                        <th>Tour Name</th>
-                        <th>Payables</th>
-                        <th>Price</th>
-                        <th class="action-column">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for rate in admission_rates %}
-                    <tr data-id="{{ rate.rate_id }}">
-                        <td>{{ rate.rate_id }}</td>
-                        <td>{{ rate.tour_id.tour_name|default:"N/A" }}</td>
-                        <td>{{ rate.payables }}</td>
-                        <td>PHP {{ rate.price }}</td>
-                        <td class="action-column">
-                            <div class="action-container">
-                                <button class="update-btn" onclick="populateUpdateForm('{{ rate.rate_id }}', '{% if rate.tour_id %}{{ rate.tour_id.tour_id }}{% else %}{% endif %}', '{{ rate.payables }}', '{{ rate.price }}')">Update</button>
-                                <form method="POST" action="{% url 'tour_app:admission_rate' %}" style="display:inline; padding:0; margin:0; border:none; background:none;">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="rate_id" value="{{ rate.rate_id }}">
-                                    <button type="submit" name="action" value="delete">Delete</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="5">No admission rates available.</td>
-                    </tr>
+            <form method="POST" action="{% url 'tour_app:admission_rate' %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="save_all_disability">
+                <input type="hidden" name="disability_count" value="{{ disability_discount_rows|length }}">
+
+                <div class="discount-grid">
+                    {% for row in disability_discount_rows %}
+                    <div class="discount-card">
+                        <h3>{{ row.category }} <span class="hint-badge">Disability</span></h3>
+                        <input type="hidden" name="disability_category_{{ forloop.counter0 }}" value="{{ row.category }}">
+
+                        <label for="disability_percentage_{{ forloop.counter0 }}">Discount Percentage</label>
+                        <input id="disability_percentage_{{ forloop.counter0 }}" type="number" step="0.01" min="0" max="100" name="disability_percentage_{{ forloop.counter0 }}" value="{{ row.price }}">
+
+                        <label for="disability_status_{{ forloop.counter0 }}">Status</label>
+                        <select id="disability_status_{{ forloop.counter0 }}" name="disability_status_{{ forloop.counter0 }}">
+                            <option value="active" {% if row.status == 'active' %}selected{% endif %}>Active</option>
+                            <option value="inactive" {% if row.status == 'inactive' %}selected{% endif %}>Inactive</option>
+                        </select>
+                    </div>
                     {% endfor %}
-                </tbody>
-            </table>
+                </div>
+
+                <div class="section-actions">
+                    <button class="small-btn save" type="submit">Save Disability Discounts</button>
+                </div>
+            </form>
+
+            <div class="generic-rates">
+                <h2>Other Admission Rates</h2>
+
+                <form class="generic-form" method="POST" action="{% url 'tour_app:admission_rate' %}">
+                    {% csrf_token %}
+                    <input type="hidden" id="rate_id" name="rate_id">
+
+                    <div>
+                        <label for="tour_id">Tour</label>
+                        <select id="tour_id" name="tour_id">
+                            <option value="">General (not tour-specific)</option>
+                            {% for tour in tours %}
+                            <option value="{{ tour.tour_id }}">{{ tour.tour_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="payables">Payables</label>
+                        <input type="text" id="payables" name="payables" placeholder="e.g. Environmental Fee" required>
+                    </div>
+
+                    <div>
+                        <label for="price">Price</label>
+                        <input type="number" id="price" name="price" step="0.01" required>
+                    </div>
+
+                    <div>
+                        <button type="submit" name="action" value="add" id="rate-submit-btn">Add</button>
+                    </div>
+                </form>
+
+                <table id="admissionRatesTable">
+                    <thead>
+                        <tr>
+                            <th>Rate ID</th>
+                            <th>Tour Name</th>
+                            <th>Payables</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rate in admission_rates %}
+                        <tr data-id="{{ rate.rate_id }}">
+                            <td>{{ rate.rate_id }}</td>
+                            <td>{{ rate.tour_id.tour_name|default:"General" }}</td>
+                            <td>{{ rate.payables }}</td>
+                            <td>{{ rate.price }}</td>
+                            <td>
+                                <div class="actions">
+                                    <button class="btn-update" type="button" onclick="populateUpdateForm('{{ rate.rate_id }}', '{% if rate.tour_id %}{{ rate.tour_id.tour_id }}{% else %}{% endif %}', '{{ rate.payables|escapejs }}', '{{ rate.price }}')">Update</button>
+                                    <form method="POST" action="{% url 'tour_app:admission_rate' %}" style="display:inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="rate_id" value="{{ rate.rate_id }}">
+                                        <button class="btn-delete" type="submit" name="action" value="delete">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">No rates available yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Populate the form with the existing rate data for updating
-    function populateUpdateForm(rateId, tourId, payables, price) {
-        document.getElementById("rate_id").value = rateId;
-        document.getElementById("tour_id").value = tourId;
-        document.getElementById("payables").value = payables;
-        document.getElementById("price").value = price;
-        // Change button text to "Update" when updating
-        const submitButton = document.querySelector("form button");
-        submitButton.textContent = "Update";
-        submitButton.value = "update";
-        
-        // Scroll to form
-        document.querySelector("form").scrollIntoView({ behavior: 'smooth' });
-    }
+function populateUpdateForm(rateId, tourId, payables, price) {
+    document.getElementById("rate_id").value = rateId;
+    document.getElementById("tour_id").value = tourId;
+    document.getElementById("payables").value = payables;
+    document.getElementById("price").value = price;
+    const submitBtn = document.getElementById("rate-submit-btn");
+    submitBtn.textContent = "Update";
+    submitBtn.value = "update";
+    submitBtn.name = "action";
+    submitBtn.form.scrollIntoView({behavior: "smooth", block: "start"});
+}
 </script>
-
 </body>
 </html>

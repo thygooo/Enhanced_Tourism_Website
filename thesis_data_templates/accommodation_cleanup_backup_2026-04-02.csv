@@ -1,0 +1,8 @@
+accom_id,company_name,email,owner_id,approval_status,is_active,location,company_type,room_count,booking_count
+5,Noemi Store,noemigrafe@gmail.com,,declined,True,Dumaguete City,Establishment,0,0
+9,Smoke Hotel,hotel.smoke@example.com,,accepted,True,Bayawan,Hotel,1,0
+10,Smoke Establishment,estab.smoke@example.com,,accepted,True,Bayawan,Establishment,0,0
+50,Test Inn 67035638,accom_67035638@mail.com,0R7CC,accepted,True,Bayawan,hotel,0,0
+51,Test Inn c75a82,accom_c75a82@mail.com,Q56QE,accepted,True,Bayawan,hotel,0,0
+52,Inn e08e9c,i2_e08e9c@mail.com,0PN0C,accepted,True,Bayawan,hotel,1,1
+54,Repeat Fix Hotel,repeat-fix-hotel@example.com,,accepted,True,"National Highway, Brgy. Poblacion, Bayawan City",hotel,1,1

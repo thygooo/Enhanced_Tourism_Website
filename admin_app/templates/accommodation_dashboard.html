@@ -3,8 +3,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Accommodation Dashboard</title>
   <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
       :root {
           /* Brand Colors */
@@ -105,6 +107,131 @@
           display: flex;
           flex-direction: column;
       }
+
+      .hotel-dashboard-shell {
+          background: transparent;
+          box-shadow: none;
+          padding: 0;
+      }
+
+      .hotel-topbar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: #ffffff;
+          border: 1px solid #e4e8ef;
+          border-radius: 8px;
+          padding: 12px 16px;
+          margin-bottom: 14px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      }
+
+      .hotel-topbar h2 {
+          margin: 0;
+          color: #6b4423;
+          font-size: 28px;
+          font-weight: 800;
+      }
+
+      .logout-chip {
+          background: #ef4444;
+          color: #fff !important;
+          border-radius: 999px;
+          padding: 7px 12px;
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 700;
+      }
+
+      .hotel-welcome-card {
+          background: #ffffff;
+          border: 1px solid #e4e8ef;
+          border-radius: 8px;
+          padding: 22px 18px;
+          text-align: center;
+          margin-bottom: 14px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      }
+
+      .hotel-welcome-card h3 {
+          margin: 0;
+          color: #6b4423;
+          font-size: 38px;
+          font-weight: 800;
+      }
+
+      .hotel-welcome-card p {
+          margin: 8px 0 0;
+          color: #5f6470;
+          font-size: 14px;
+      }
+
+      .hotel-quick-grid {
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 14px;
+          margin-bottom: 18px;
+      }
+
+      .hotel-quick-card {
+          background: #ffffff;
+          border: 1px solid #e4e8ef;
+          border-radius: 8px;
+          padding: 14px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      }
+
+      .hotel-quick-card h4 {
+          margin: 0 0 10px;
+          color: #1f2937;
+          font-size: 16px;
+          font-weight: 800;
+      }
+
+      .hotel-quick-card h4 i {
+          margin-right: 6px;
+          color: #7a4d2b;
+      }
+
+      .hotel-quick-card p {
+          margin: 0 0 12px;
+          color: #6b7280;
+          font-size: 13px;
+          line-height: 1.45;
+          min-height: 52px;
+      }
+
+      .hotel-quick-btn {
+          display: inline-block;
+          border: none;
+          border-radius: 999px;
+          padding: 8px 12px;
+          background: #875a34;
+          color: #fff !important;
+          text-decoration: none;
+          font-size: 12px;
+          font-weight: 700;
+          cursor: pointer;
+      }
+
+      .hotel-quick-btn:hover {
+          background: #6d4827;
+      }
+
+      .hotel-detail-wrap {
+          background: #ffffff;
+          border: 1px solid #e4e8ef;
+          border-radius: 8px;
+          padding: 16px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      }
+
+      .hotel-footer-note {
+          text-align: center;
+          margin-top: 14px;
+          color: #7a7f89;
+          font-size: 12px;
+      }
       
       .dashboard-header {
           margin-bottom: 20px;
@@ -113,6 +240,59 @@
       .dashboard-content {
           display: flex;
           gap: 30px;
+      }
+
+      @media (max-width: 1100px) {
+          .hotel-quick-grid {
+              grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+      }
+
+      @media (max-width: 760px) {
+          .hotel-quick-grid {
+              grid-template-columns: 1fr;
+          }
+          .hotel-topbar h2 { font-size: 22px; }
+          .hotel-welcome-card h3 { font-size: 28px; }
+          .dashboard-content { flex-direction: column; }
+      }
+
+      @media (max-width: 768px) {
+          .container {
+              margin: 14px auto;
+              padding: 14px;
+          }
+
+          .room-list-panel,
+          .guest-panel {
+              flex: 1 1 auto;
+              width: 100%;
+          }
+
+          .panel-header {
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 8px;
+          }
+
+          .room-selector {
+              flex-wrap: wrap;
+              gap: 8px;
+          }
+
+          .filter-controls {
+              justify-content: flex-start;
+          }
+
+          .guest-grid {
+              grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+          }
+
+          .action-buttons {
+              flex-wrap: wrap;
+              justify-content: flex-start;
+              gap: 10px;
+          }
       }
       
       /* Room List Panel */
@@ -553,35 +733,61 @@
   </style>
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <a href="#" class="navbar-brand">{{ request.session.company_name }} Dashboard</a>
-    <div class="navbar-links">
-      <a href="{% url 'accom_app:other_estab_create' %}" class="navbar-link">Monthly Summary</a>
-      <a href="#" class="navbar-link" id="roomNavBtn">Rooms</a>
-      <div class="profile-container">
-        {% if request.session.profile_pic %}
-          <img src="{{ request.session.profile_pic }}" alt="Profile Picture" class="profile-pic">
-        {% else %}
-          <img src="{% static 'images/default-profile.png' %}" alt="Default Profile" class="profile-pic">
-        {% endif %}
-        <span class="profile-name">{{ request.session.company_name }}</span>
-        <a href="{% url 'admin_app:admin_logout' %}" class="navbar-link">Logout</a>
+  <div class="dashboard-container">
+    <div class="navigation">
+      {% include 'components/owner_navigation.html' %}
+    </div>
+    <main class="content">
+  <div class="container hotel-dashboard-shell">
+    <div class="hotel-topbar">
+      <h2>Accommodation Dashboard</h2>
+    </div>
+
+    <div class="hotel-welcome-card">
+      <h3>Welcome to {{ company_name|default:'Accommodation' }} Accommodation Dashboard</h3>
+      <p>Manage your hotel operations efficiently with Ibayaw Tour.</p>
+      <p>
+        <strong>Location:</strong>
+        {{ company_location|default:'Bayawan City' }}
+      </p>
+    </div>
+
+    <div class="hotel-quick-grid">
+      <div class="hotel-quick-card">
+        <h4><i class="fa-solid fa-bed"></i>Room Management</h4>
+        <p>Manage your hotel rooms, check availability, and handle room records.</p>
+        <a href="{% url 'accom_app:register_room' %}" class="hotel-quick-btn">Manage Rooms</a>
+      </div>
+      <div class="hotel-quick-card">
+        <h4><i class="fa-solid fa-users"></i>Guest Management</h4>
+        <p>View guest details, check-ins, and room assignments from this dashboard.</p>
+        <a href="#guest-management-panel" class="hotel-quick-btn">Manage Guests</a>
+      </div>
+      <div class="hotel-quick-card">
+        <h4><i class="fa-solid fa-chart-line"></i>Reports &amp; Analytics</h4>
+        <p>Review monthly establishment summaries and operational reports.</p>
+        <a href="{% url 'accom_app:owner_reports_analytics' %}" class="hotel-quick-btn">View Reports</a>
+      </div>
+      <div class="hotel-quick-card">
+        <h4><i class="fa-solid fa-id-card-clip"></i>Registration Management</h4>
+        <p>Add or update accommodation records linked to your owner account.</p>
+        <a href="{% url 'admin_app:owner_hub' %}" class="hotel-quick-btn">Open Accommodation Owner Hub</a>
       </div>
     </div>
-  </nav>
-  
-  <div class="container">
-    <div class="dashboard-header">
-        <h1>Welcome {{ request.session.company_name }} to Accommodation Dashboard</h1>
-        <p>Manage your accommodations and guest assignments below.</p>
+
+    <div class="hotel-detail-wrap">
+      <div class="dashboard-header">
+        <h1>Manage Accommodation Operations</h1>
+        <p>Use the tools below to manage room availability and guest records.</p>
         <a href="{% url 'accom_app:register_room' %}" class="button">Manage Rooms</a>
-        <button id="createSampleRoomsBtn" class="button" style="background-color: var(--info-color);">Create Sample Rooms</button>
+        <button id="roomNavBtn" class="button" type="button">Rooms</button>
+        <button id="createSampleRoomsBtn" class="button" style="background-color: var(--info-color);" type="button">Create Sample Rooms</button>
         
         <!-- Hidden form with CSRF token for AJAX requests -->
         <form id="csrfForm" style="display:none;">
-            {% csrf_token %}
+          {% csrf_token %}
         </form>
+      </div>
     </div>
     
     <div class="dashboard-content">
@@ -603,7 +809,7 @@
         </div>
         
         <!-- Guest Panel (Right Side) -->
-        <div class="guest-panel">
+        <div class="guest-panel" id="guest-management-panel">
             <div class="room-selector" id="currentRoomDisplay">
                 <span class="current-room">ROOM 101</span>
                 <span class="dropdown-arrow">▼</span>
@@ -611,7 +817,7 @@
             
             <div class="filter-controls">
                 <div class="group-filter" id="groupFilter">
-                    <span class="filter-name">FAMILY</span>
+                    <span class="filter-name">ALL</span>
                     <span class="dropdown-arrow">▼</span>
                 </div>
             </div>
@@ -627,6 +833,9 @@
             </div>
         </div>
     </div>
+    <div class="hotel-footer-note">&copy; {% now "Y" %} Ibayaw Tour - Hotel Management System</div>
+  </div>
+    </main>
   </div>
   
   <!-- The Room Management Modal -->
@@ -857,7 +1066,9 @@
     // Current selected room and group filter
     var currentRoomId = null;
     var currentRoom = "ROOM 101";
-    var currentGroupFilter = "FAMILY";
+    var currentGroupFilter = "ALL";
+    var roomBookingsUrlTemplate = "{% url 'admin_app:owner_room_bookings_json' 0 %}";
+    var roomCheckInUrl = "{% url 'admin_app:owner_room_bookings_check_in' %}";
     var selectedGuests = [];
     
     // Track entries added in current session
@@ -909,9 +1120,37 @@
             
             // Disable button to prevent multiple clicks
             $(this).prop('disabled', true).text('Checking in...');
-            
-            alert("Direct group check-in endpoint is currently disabled in the revised room flow. Use room registration per selected room.");
-            $('#checkInBtn').prop('disabled', false).text('CHECK IN');
+
+            $.ajax({
+                type: "POST",
+                url: roomCheckInUrl,
+                data: {
+                    room_id: currentRoomId,
+                    booking_ids: selectedGuests
+                },
+                success: function(response) {
+                    var skipped = Array.isArray(response.skipped) ? response.skipped.length : 0;
+                    var details = response.message || "Check-in completed.";
+                    if (skipped > 0) {
+                        details += " Some selected bookings were skipped due to status/date rules.";
+                    }
+                    alert(details);
+                    selectedGuests = [];
+                    loadGuestsForRoom(currentRoomId);
+                    loadRooms();
+                },
+                error: function(xhr, status, error) {
+                    try {
+                        var payload = JSON.parse(xhr.responseText || "{}");
+                        alert(payload.message || "Unable to process check-in right now.");
+                    } catch (e) {
+                        alert("Unable to process check-in right now.");
+                    }
+                },
+                complete: function() {
+                    $('#checkInBtn').prop('disabled', false).text('CHECK IN');
+                }
+            });
         });
         
         console.log("Dashboard initialization complete.");
@@ -1235,11 +1474,23 @@
         
         // Show loading indicator
         $('#guestGrid').html('<div class="empty-state">Loading guests...</div>');
-        
-        $('#guestGrid').html(
-            '<div class="empty-state">Per-room guest listing endpoint is not enabled in the revised room module. ' +
-            'Room CRUD remains active.</div>'
-        );
+
+        var endpoint = roomBookingsUrlTemplate.replace('/0/', '/' + roomId + '/');
+        $.ajax({
+            url: endpoint,
+            type: "GET",
+            success: function(response) {
+                if (response.status !== "success") {
+                    $('#guestGrid').html('<div class="empty-state">Unable to load room bookings right now.</div>');
+                    return;
+                }
+                displayGuests(response.guests || []);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading room bookings:", error);
+                $('#guestGrid').html('<div class="empty-state">Failed to load room bookings. Please try again.</div>');
+            }
+        });
     }
     
     // Display guests in the guest grid
@@ -1281,6 +1532,7 @@
                     <div class="guest-info">
                         <div class="guest-name">${guest.first_name} ${guest.last_name}</div>
                         <div class="guest-role">${guest.role}</div>
+                        <div class="guest-role">${guest.check_in || '-'} to ${guest.check_out || '-'} | ${guest.guests || 0} guest(s)</div>
                         ${statusBadge}
                     </div>
                 </div>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Page Content Management</title>
+  <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+  <style>
+    body { font-family: 'Segoe UI', Roboto, Arial, sans-serif; margin: 0; background: #f4f7fc; color: #2f2418; }
+    .dashboard-container { display: flex; min-height: 100vh; }
+    .content { flex: 1; padding: 24px; }
+    .panel { background: #fff; border: 1px solid #eadfce; border-radius: 10px; box-shadow: 0 4px 14px rgba(30,20,12,0.05); padding: 16px; margin-bottom: 16px; }
+    h1 { margin: 0 0 14px; text-align: center; font-size: 34px; }
+    h2 { margin: 0 0 10px; font-size: 22px; color: #5f3e1f; border-bottom: 1px solid #efe5d8; padding-bottom: 8px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { margin-bottom: 10px; }
+    .field label { display: block; font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+    .field input[type="text"], .field input[type="number"], .field input[type="file"] { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #d8dfe6; border-radius: 6px; }
+    .btn { border: none; border-radius: 6px; padding: 8px 12px; font-weight: 700; cursor: pointer; }
+    .btn-primary { background: #875a34; color: #fff; }
+    .btn-secondary { background: #f0f0f0; color: #2d3748; }
+    .btn-danger { background: #dc3545; color: #fff; }
+    .btn-success { background: #198754; color: #fff; }
+    .list { display: grid; gap: 10px; }
+    .item { border: 1px solid #eee1d3; border-radius: 8px; padding: 10px; display: grid; grid-template-columns: 86px 1fr auto; gap: 10px; align-items: center; }
+    .thumb { width: 86px; height: 64px; border-radius: 6px; object-fit: cover; background: #f2f2f2; border: 1px solid #e5e5e5; }
+    .meta { font-size: 13px; color: #4a5568; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; margin-left: 6px; background: #e8f5e9; color: #1b5e20; }
+    .actions { display: flex; gap: 6px; }
+    .messages { margin-bottom: 10px; }
+    .msg { padding: 8px 10px; border-radius: 6px; margin-bottom: 6px; font-size: 13px; }
+    .msg.success { background: #e8f5e9; color: #1b5e20; }
+    .msg.error { background: #ffebee; color: #b71c1c; }
+    @media (max-width: 1000px) { .grid-2 { grid-template-columns: 1fr; } .item { grid-template-columns: 1fr; } .actions { justify-content: flex-start; } }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="navigation">
+      {% include 'components/navigation.html' %}
+    </div>
+    <div class="content">
+      <h1>Main Page Content Management</h1>
+
+      {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="msg {% if message.tags == 'success' %}success{% else %}error{% endif %}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="panel">
+        <h2>Logo Management</h2>
+        <div class="grid-2">
+          <div>
+            <h3>Upload New Logo</h3>
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="upload_logo">
+              <div class="field">
+                <label>Title</label>
+                <input type="text" name="logo_title" value="Website Logo">
+              </div>
+              <div class="field">
+                <label>Logo Image</label>
+                <input type="file" name="logo_image" accept="image/*" required>
+              </div>
+              <div class="field">
+                <label><input type="checkbox" name="logo_set_active" value="1"> Set as active logo</label>
+              </div>
+              <button class="btn btn-primary" type="submit">Upload Logo</button>
+            </form>
+          </div>
+          <div>
+            <h3>Current Logos</h3>
+            <div class="list">
+              {% for row in logos %}
+              <div class="item">
+                <img class="thumb" src="{{ row.url }}" alt="{{ row.title }}">
+                <div class="meta">
+                  <div><strong>{{ row.title }}</strong>{% if row.is_active %}<span class="badge">Active</span>{% endif %}</div>
+                  <div>{{ row.path }}</div>
+                </div>
+                <div class="actions">
+                  <form method="post">{% csrf_token %}<input type="hidden" name="action" value="set_active_logo"><input type="hidden" name="logo_id" value="{{ row.id }}"><button class="btn btn-success" type="submit">Set Active</button></form>
+                  <form method="post" onsubmit="return confirm('Delete this logo?');">{% csrf_token %}<input type="hidden" name="action" value="delete_logo"><input type="hidden" name="logo_id" value="{{ row.id }}"><button class="btn btn-danger" type="submit">Delete</button></form>
+                </div>
+              </div>
+              {% empty %}
+              <p>No logos uploaded yet.</p>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Hero Images</h2>
+        <div class="grid-2">
+          <div>
+            <h3>Upload New Hero Image</h3>
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="upload_hero">
+              <div class="field">
+                <label>Title</label>
+                <input type="text" name="hero_title" value="Main Hero">
+              </div>
+              <div class="field">
+                <label>Display Order</label>
+                <input type="number" name="hero_display_order" value="1" min="1">
+              </div>
+              <div class="field">
+                <label>Image</label>
+                <input type="file" name="hero_image" accept="image/*" required>
+              </div>
+              <div class="field">
+                <label><input type="checkbox" name="hero_set_active" value="1"> Set as active hero</label>
+              </div>
+              <button class="btn btn-primary" type="submit">Upload Hero Image</button>
+            </form>
+          </div>
+          <div>
+            <h3>Current Hero Images</h3>
+            <div class="list">
+              {% for row in heroes %}
+              <div class="item">
+                <img class="thumb" src="{{ row.url }}" alt="{{ row.title }}">
+                <div class="meta">
+                  <div><strong>{{ row.title }}</strong>{% if row.is_active %}<span class="badge">Active</span>{% endif %}</div>
+                  <div>Order: {{ row.display_order }}</div>
+                </div>
+                <div class="actions">
+                  <form method="post">{% csrf_token %}<input type="hidden" name="action" value="set_active_hero"><input type="hidden" name="hero_id" value="{{ row.id }}"><button class="btn btn-success" type="submit">Set Active</button></form>
+                  <form method="post" onsubmit="return confirm('Delete this hero image?');">{% csrf_token %}<input type="hidden" name="action" value="delete_hero"><input type="hidden" name="hero_id" value="{{ row.id }}"><button class="btn btn-danger" type="submit">Delete</button></form>
+                </div>
+              </div>
+              {% empty %}
+              <p>No hero images uploaded yet.</p>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+

@@ -4,23 +4,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bayawan City Map{% if map_mode == 'admin' %} - Admin{% endif %}</title>
+  <title>
+    Bayawan City Map
+    {% if map_mode == 'admin' %} - Admin{% elif map_mode == 'employee' %} - Employee{% endif %}
+  </title>
   
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/admin_page_polish.css' %}">
   
   <style>
+    :root {
+      --map-nav-height: 60px;
+      --panel-bg: rgba(255, 255, 255, 0.92);
+      --panel-border: #dbe3ef;
+      --panel-shadow: 0 10px 24px rgba(9, 30, 66, 0.16);
+      --ui-primary: #1f67d2;
+      --ui-primary-hover: #1557bb;
+    }
+
     body, html {
       margin: 0;
       padding: 0;
       height: 100%;
       font-family: 'Poppins', sans-serif;
+      background: #d9e7f6;
+    }
+
+    * {
+      box-sizing: border-box;
     }
     #map {
       width: 100%;
-      height: calc(100vh - 60px);
-      margin-top: 60px;
+      height: calc(100vh - var(--map-nav-height));
+      margin-top: var(--map-nav-height);
+    }
+    .leaflet-container {
+      background: #a8d3d8;
     }
     .navbar {
       position: fixed;
@@ -28,16 +50,16 @@
       left: 0;
       width: 100%;
       box-sizing: border-box;
-      background-color: #104CBA;
+      background: linear-gradient(90deg, #1147aa, #1f67d2);
       color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
       padding: 0 20px;
-      height: 60px;
+      height: var(--map-nav-height);
       z-index: 1001;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 16px rgba(9, 30, 66, 0.22);
     }
     .navbar-title {
       flex: 1;
@@ -57,15 +79,17 @@
     .navbar-links a {
       color: white;
       text-decoration: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      transition: background-color 0.2s;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      transition: background-color 0.2s, border-color 0.2s;
     }
     .navbar-links a:hover {
       background-color: rgba(255,255,255,0.2);
+      border-color: rgba(255, 255, 255, 0.48);
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1100px) {
       .navbar {
         padding: 0 12px;
         gap: 8px;
@@ -83,12 +107,26 @@
       .search-box {
         width: min(280px, calc(100vw - 24px));
       }
+      .custom-marker-controls {
+        width: min(420px, calc(100vw - 24px));
+        right: 12px;
+      }
+      .gps-controls {
+        right: 12px;
+      }
+      .legend,
+      .route-info {
+        left: 12px;
+      }
     }
 
     @media (max-width: 640px) {
+      :root {
+        --map-nav-height: 88px;
+      }
       .navbar {
         height: auto;
-        min-height: 60px;
+        min-height: var(--map-nav-height);
         padding: 8px 10px;
         align-items: flex-start;
         flex-direction: column;
@@ -106,24 +144,37 @@
         justify-content: flex-end;
       }
       #map {
-        height: calc(100vh - 88px);
-        margin-top: 88px;
+        height: calc(100vh - var(--map-nav-height));
+        margin-top: var(--map-nav-height);
       }
       .search-box {
-        top: 98px;
+        top: calc(var(--map-nav-height) + 10px);
         left: 12px;
         transform: none;
         width: calc(100vw - 24px);
         max-width: none;
       }
       .route-info {
-        top: 150px;
+        top: calc(var(--map-nav-height) + 64px);
         left: 12px;
         max-width: calc(100vw - 24px);
       }
+      .legend {
+        left: 12px;
+        bottom: 12px;
+        max-width: calc(100vw - 24px);
+      }
       .gps-controls {
-        top: 150px;
+        top: calc(var(--map-nav-height) + 64px);
         right: 12px;
+        width: min(220px, calc(100vw - 24px));
+      }
+      .custom-marker-controls {
+        right: 12px;
+        left: 12px;
+        width: auto;
+        max-height: 44vh;
+        bottom: 12px;
       }
     }
     .back-button {
@@ -144,50 +195,90 @@
     }
     .custom-marker-controls {
       position: absolute;
-      bottom: 100px;
+      bottom: 20px;
       right: 20px;
       z-index: 1000;
-      background: white;
-      padding: 15px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      width: min(460px, calc(100vw - 40px));
+      max-height: 52vh;
+      overflow-y: auto;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(6px);
+      padding: 14px;
+      border-radius: 12px;
+      box-shadow: var(--panel-shadow);
+    }
+    .custom-marker-controls h4 {
+      margin: 4px 0 12px;
+      font-size: 1.05rem;
+      color: #1f2f46;
     }
     .control-button {
       display: block;
       width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      background-color: #1A67D2;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      background-color: var(--ui-primary);
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
       font-weight: bold;
+      font-size: 0.95rem;
+      transition: transform 0.18s ease, background-color 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
     .control-button:hover {
-      background-color: #1558b3;
+      background-color: var(--ui-primary-hover);
+      transform: translateY(-1px);
+    }
+    .control-button.purple {
+      background-color: #8e44ad;
+    }
+    .control-button.purple:hover {
+      background-color: #7a3597;
+    }
+    .control-button.orange {
+      background-color: #f39c12;
+    }
+    .control-button.orange:hover {
+      background-color: #d9880d;
+    }
+    .control-button.ghost {
+      background-color: #f8fafc;
+      color: #2f3a49;
+      border: 1px solid #cfd7e5;
+    }
+    .control-button.ghost:hover {
+      background-color: #f0f4fb;
     }
     .custom-input {
       width: 100%;
-      padding: 8px;
+      padding: 10px 12px;
       margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      border: 1px solid #cfd7e5;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      background: #fff;
     }
     .search-box {
       position: absolute;
-      top: 70px;
+      top: calc(var(--map-nav-height) + 12px);
       left: 50%;
       transform: translateX(-50%);
       z-index: 1000;
-      width: 300px;
+      width: min(420px, calc(100vw - 34px));
     }
     .search-box input {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      padding: 12px 14px;
+      border: 1px solid #cfd7e5;
+      border-radius: 12px;
+      box-shadow: var(--panel-shadow);
+      font-size: 0.95rem;
     }
     .edit-form button {
       padding: 8px;
@@ -210,15 +301,19 @@
       bottom: 20px;
       left: 20px;
       z-index: 1000;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 10px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      font-size: 0.85rem;
+      background-color: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(6px);
+      padding: 12px;
+      border-radius: 12px;
+      box-shadow: var(--panel-shadow);
+      font-size: 0.86rem;
+      max-width: min(280px, calc(100vw - 40px));
     }
     .legend h4 {
       margin-top: 0;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
+      color: #1f2f46;
     }
     .legend-item {
       display: flex;
@@ -237,13 +332,16 @@
     /* GPS Controls */
     .gps-controls {
       position: absolute;
-      top: 120px;
+      top: calc(var(--map-nav-height) + 64px);
       right: 20px;
       z-index: 1002;
-      background: white;
+      width: min(220px, calc(100vw - 40px));
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(6px);
       padding: 10px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      box-shadow: var(--panel-shadow);
     }
     
     .user-location {
@@ -259,13 +357,14 @@
     
     .route-info {
       position: absolute;
-      top: 70px;
+      top: calc(var(--map-nav-height) + 12px);
       left: 20px;
       z-index: 1000;
-      background: white;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
       padding: 15px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      box-shadow: var(--panel-shadow);
       max-width: 300px;
       display: none;
     }
@@ -295,7 +394,7 @@
     .calibration-mode {
       background-color: rgba(255, 0, 0, 0.1);
       position: fixed;
-      top: 60px;
+      top: var(--map-nav-height);
       left: 0;
       right: 0;
       padding: 15px;
@@ -313,23 +412,103 @@
     .calibration-point:hover {
       transform: scale(1.2);
     }
+    .map-status-banner {
+      position: fixed;
+      top: var(--map-nav-height);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1100;
+      max-width: min(96vw, 780px);
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: #fff3cd;
+      color: #7a4b00;
+      border: 1px solid #f4d38a;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.14);
+      font-size: 0.92rem;
+      line-height: 1.35;
+      display: none;
+    }
+    .leaflet-div-icon.category-pin {
+      background: transparent;
+      border: none;
+    }
+    .category-pin-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.28), 0 2px 8px rgba(0,0,0,0.3);
+      display: block;
+    }
+    @media (max-width: 640px) {
+      .map-status-banner {
+        top: var(--map-nav-height);
+        left: 12px;
+        right: 12px;
+        transform: none;
+      }
+    }
+  </style>
+  <style>
+    /* Map-page override: keep chatbot away from top-right map controls */
+    body.map-page .staff-chat-fab {
+      top: auto;
+      bottom: 22px;
+      right: 20px;
+      z-index: 2105;
+    }
+
+    body.map-page .staff-chat-modal {
+      top: auto;
+      bottom: 96px;
+      right: 20px;
+      z-index: 2106;
+    }
+
+    @media (max-width: 768px) {
+      body.map-page .staff-chat-fab {
+        top: auto;
+        bottom: 16px;
+        right: 14px;
+      }
+
+      body.map-page .staff-chat-modal {
+        top: auto;
+        bottom: 82px;
+        right: 12px;
+        width: calc(100vw - 24px);
+      }
+    }
   </style>
 </head>
-<body>
+<body class="map-page admin-map-page">
   <!-- Navigation Bar -->
   <div class="navbar">
-    <div class="navbar-title">Bayawan City - Interactive Tourist Map {% if map_mode == 'admin' %}(Admin View){% else %}(Guest View){% endif %}</div>
+    <div class="navbar-title">
+      Bayawan City - Interactive Tourist Map
+      {% if map_mode == 'admin' %}(Admin View){% elif map_mode == 'employee' %}(Employee View){% else %}(Guest View){% endif %}
+    </div>
     <div class="navbar-links">
       {% if map_mode == 'admin' %}
       <a href="{% url 'admin_app:admin_dashboard' %}">Dashboard</a>
+      {% elif map_mode == 'employee' %}
+      <a href="{% url 'admin_app:employee_dashboard' %}">Dashboard</a>
       {% else %}
       <a href="{% url 'main-page' %}">Main Page</a>
       {% endif %}
-      <a href="#">Map</a>
+      {% if map_mode == 'admin' %}
+      <a href="{% url 'admin_app:map' %}">Map</a>
+      {% elif map_mode == 'employee' %}
+      <a href="{% url 'admin_app:employee_map' %}">Map</a>
+      {% else %}
+      <a href="{% url 'map' %}">Map</a>
+      {% endif %}
     </div>
   </div>
   
   <!-- Map Container -->
+  <div id="map-status-banner" class="map-status-banner"></div>
   <div id="map"></div>
   
   <!-- Search Box -->
@@ -399,10 +578,25 @@
     <button class="control-button" id="locate-me">
       <i class="fas fa-location-arrow"></i> Find My Location
     </button>
+    <button class="control-button purple" id="show-calibration-points">
+      <i class="fas fa-map-pin"></i> Show Calibration Points
+    </button>
+    <button class="control-button orange" id="deploy-bookmarks">
+      <i class="fas fa-thumbtack"></i> Deploy Bookmarks
+    </button>
+    <button class="control-button ghost" id="reset-map-view">
+      <i class="fas fa-expand"></i> Reset View
+    </button>
+    <button class="control-button ghost" id="clear-search">
+      <i class="fas fa-eraser"></i> Clear Search
+    </button>
+    <button class="control-button" id="start-calibration">
+      <i class="fas fa-compass"></i> Calibrate Map
+    </button>
     <button class="control-button" id="start-navigation" style="display: none;">
       <i class="fas fa-directions"></i> Navigate
     </button>
-    <button class="control-button" id="stop-navigation" style="display: none;">
+    <button class="control-button ghost" id="stop-navigation" style="display: none;">
       <i class="fas fa-times"></i> Stop Navigation
     </button>
     <div id="gps-status" style="margin-top: 10px; font-size: 0.9em;"></div>
@@ -418,13 +612,32 @@
   </div>
   
   <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js';"></script>
   <script>
     // Include the CSRF token directly in the template
     const csrftoken = "{{ csrf_token }}";
     const MAP_MODE = "{{ map_mode|default:'guest' }}";
     const CAN_EDIT_BOOKMARKS = {{ can_edit_bookmarks|yesno:"true,false" }};
-    console.log("CSRF Token from template:", csrftoken ? "✓ Success" : "✗ Failed");
+    const statusBanner = document.getElementById('map-status-banner');
+    function setStatusMessage(message, tone = 'info') {
+      if (!statusBanner) return;
+      const tones = {
+        info: ['#e7f1ff', '#114a9f', '#bcd7ff'],
+        warn: ['#fff3cd', '#7a4b00', '#f4d38a'],
+        error: ['#fde8e8', '#8a2020', '#f4b8b8']
+      };
+      const [bg, fg, border] = tones[tone] || tones.info;
+      statusBanner.style.background = bg;
+      statusBanner.style.color = fg;
+      statusBanner.style.borderColor = border;
+      statusBanner.textContent = message;
+      statusBanner.style.display = message ? 'block' : 'none';
+    }
+    if (!window.L) {
+      setStatusMessage("Map library failed to load. Please refresh the page or check your internet connection.", "error");
+      throw new Error("Leaflet library is not available.");
+    }
+    console.log("CSRF Token from template:", csrftoken ? "OK: Success" : "ERROR: Missing");
     
     // Initialize map
     var map = L.map('map', {
@@ -437,81 +650,26 @@
     L.imageOverlay("{% static 'images/bayawan_map.png' %}", bounds).addTo(map);
     map.fitBounds(bounds);
     
+    // Local visual pin icons (no external marker image dependencies)
+    function createCategoryIcon(colorHex) {
+      return L.divIcon({
+        className: 'category-pin',
+        html: `<span class="category-pin-dot" style="background:${colorHex};"></span>`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+        popupAnchor: [0, -12]
+      });
+    }
+
     // Custom icons for different categories
     var icons = {
-      restaurant: L.icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      }),
-      hotel: L.icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-gold.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      }),
-      public: L.icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      }),
-      shopping: L.icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      }),
-      landmark: L.icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      }),
-      custom: L.icon({
-        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
-        shadowSize: [41, 41]
-      })
+      restaurant: createCategoryIcon('#e25562'),
+      hotel: createCategoryIcon('#f4b400'),
+      public: createCategoryIcon('#2A81CB'),
+      shopping: createCategoryIcon('#2AAD27'),
+      landmark: createCategoryIcon('#f49630'),
+      custom: createCategoryIcon('#6b7280')
     };
-    
-    // Add CSS for colored markers
-    var style = document.createElement('style');
-    style.innerHTML = `
-      .restaurant-marker {
-        filter: hue-rotate(0deg) saturate(1.5) brightness(1.2) !important;  /* Red */
-      }
-      .hotel-marker {
-        filter: hue-rotate(45deg) saturate(1.5) brightness(1.2) !important;  /* Gold */
-      }
-      .public-marker {
-        filter: hue-rotate(210deg) saturate(1.5) brightness(1.2) !important;  /* Blue */
-      }
-      .shopping-marker {
-        filter: hue-rotate(90deg) saturate(1.5) brightness(1.2) !important;  /* Green */
-      }
-      .landmark-marker {
-        filter: hue-rotate(30deg) saturate(1.5) brightness(1.2) !important;  /* Orange */
-      }
-      .custom-marker {
-        filter: hue-rotate(210deg) saturate(1.5) brightness(1.2) !important;  /* Blue */
-      }
-    `;
-    document.head.appendChild(style);
     
     // Track markers by ID for editing
     var markersById = {};
@@ -724,8 +882,14 @@
     });
     
     // API functions for bookmark management
+    function clearBookmarkMarkers() {
+      Object.values(markerLayers).forEach(layer => layer.clearLayers());
+      markersById = {};
+    }
+
     function loadBookmarks() {
       console.log("Starting to load bookmarks...");
+      clearBookmarkMarkers();
       fetch('{% url "bookmark_list" %}', {
         headers: {
           'X-Requested-With': 'XMLHttpRequest',
@@ -756,6 +920,7 @@
       .catch(error => {
         console.error("Error loading bookmarks:", error);
         console.warn("Error loading bookmarks. Map will continue without saved bookmarks.");
+        setStatusMessage("Could not load saved bookmarks. You can still use the map.", "warn");
       });
     }
     
@@ -1093,18 +1258,16 @@
     // Search functionality
     document.getElementById('search-input').addEventListener('input', function(e) {
       var searchTerm = e.target.value.toLowerCase();
-      if (searchTerm.length < 2) return;
+      if (searchTerm.length < 2) {
+        setStatusMessage("");
+        return;
+      }
       
       // Search in our markers
       var results = [];
       
       Object.entries(markersById).forEach(([id, marker]) => {
-        const popup = marker.getPopup();
-        const content = popup.getContent();
-        
-        // Extract name from popup content
-        const nameMatch = content.match(/<b>(.*?)<\/b>/);
-        const name = nameMatch ? nameMatch[1] : '';
+        const name = marker.options.locationName || '';
         
         if (name.toLowerCase().includes(searchTerm)) {
           results.push({
@@ -1120,6 +1283,9 @@
         const result = results[0];
         map.setView(result.marker.getLatLng(), 1);
         result.marker.openPopup();
+        setStatusMessage("");
+      } else {
+        setStatusMessage(`No matching place found for "${e.target.value}".`, "warn");
       }
     });
     
@@ -1851,14 +2017,7 @@
           
           destinationMarker = L.marker(e.latlng, {
             draggable: true,
-            icon: L.icon({
-              iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-              shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-              iconSize: [25, 41],
-              iconAnchor: [12, 41],
-              popupAnchor: [1, -34],
-              shadowSize: [41, 41]
-            })
+            icon: createCategoryIcon('#dc2626')
           }).addTo(map);
           
           // Update route when destination is dragged
@@ -1896,7 +2055,13 @@
     
     // Optional: Add a calibration tool to help set up reference points
     // This could be enabled in development mode to help calibrate the map
+    let calibrationMarkersLayer = null;
     function showCalibrationPoints() {
+      if (calibrationMarkersLayer) {
+        map.removeLayer(calibrationMarkersLayer);
+      }
+      calibrationMarkersLayer = L.layerGroup().addTo(map);
+
       referencePoints.forEach(point => {
         L.marker(point.map, {
           icon: L.divIcon({
@@ -1906,7 +2071,7 @@
             iconAnchor: [7, 7]
           })
         })
-        .addTo(map)
+        .addTo(calibrationMarkersLayer)
         .bindPopup(`${point.name}<br>Map: ${point.map.lat}, ${point.map.lng}<br>GPS: ${point.gps.lat}, ${point.gps.lng}`);
       });
     }
@@ -1924,6 +2089,24 @@
     document.getElementById('stop-navigation').addEventListener('click', stopNavigationMode);
     document.getElementById('close-route').addEventListener('click', function() {
       document.getElementById('route-info').style.display = 'none';
+    });
+    document.getElementById('show-calibration-points').addEventListener('click', function() {
+      showCalibrationPoints();
+      document.getElementById('gps-status').textContent = "Calibration points displayed";
+    });
+    document.getElementById('deploy-bookmarks').addEventListener('click', function() {
+      loadBookmarks();
+      document.getElementById('gps-status').textContent = "Bookmarks reloaded";
+    });
+    document.getElementById('reset-map-view').addEventListener('click', function() {
+      map.fitBounds(bounds);
+      setStatusMessage("");
+      document.getElementById('gps-status').textContent = "Map view reset";
+    });
+    document.getElementById('clear-search').addEventListener('click', function() {
+      document.getElementById('search-input').value = '';
+      setStatusMessage("");
+      map.fitBounds(bounds);
     });
     
     // Uncomment this line to show calibration points:
@@ -1964,14 +2147,6 @@
   <script>
     // Calibration system
     document.addEventListener('DOMContentLoaded', function() {
-      // Add the calibration button to GPS Controls
-      const gpsControls = document.querySelector('.gps-controls');
-      const calibrationBtn = document.createElement('button');
-      calibrationBtn.className = 'control-button';
-      calibrationBtn.id = 'start-calibration';
-      calibrationBtn.innerHTML = '<i class="fas fa-compass"></i> Calibrate Map';
-      gpsControls.appendChild(calibrationBtn);
-      
       const calibrationPanel = document.querySelector('.calibration-panel');
       const referencePointsList = document.querySelector('.reference-points-list');
       
@@ -2228,5 +2403,12 @@
       }
     }
   </script>
+  {% if map_mode == 'admin' %}
+  {% include 'components/chat_widget.html' with chat_role='admin' %}
+  {% elif map_mode == 'employee' %}
+  {% include 'components/chat_widget.html' with chat_role='employee' %}
+  {% else %}
+  {% include 'components/chat_widget.html' with chat_role='guest' %}
+  {% endif %}
 </body>
 </html>

@@ -1,0 +1,570 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel Reports & Analytics</title>
+  <link rel="stylesheet" href="{% static 'css/navigation.css' %}">
+  <style>
+    :root {
+      --bg: #f4f7fc;
+      --panel: #ffffff;
+      --line: #e5e7eb;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --brand: #875a34;
+      --brand-dark: #6d4827;
+      --ok: #16a34a;
+      --accent-a: #3b82f6;
+      --accent-b: #10b981;
+      --accent-c: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+    .dashboard-container { display: flex; min-height: 100vh; }
+    .content { flex: 1; padding: 24px; }
+    .shell {
+      max-width: 1240px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+      padding: 14px;
+    }
+    .filters {
+      border: 1px solid #dbe3ef;
+      border-radius: 10px;
+      padding: 10px;
+      background: #fff;
+      display: grid;
+      gap: 10px;
+      grid-template-columns: 140px 120px auto;
+      align-items: end;
+    }
+    .field label {
+      display: block;
+      font-size: 0.78rem;
+      color: #475569;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    .field select {
+      width: 100%;
+      height: 36px;
+      border: 1px solid #d3dbe7;
+      border-radius: 6px;
+      padding: 0 8px;
+      background: #fff;
+    }
+    .btn {
+      height: 36px;
+      border-radius: 6px;
+      border: 0;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 700;
+      padding: 0 16px;
+      cursor: pointer;
+    }
+    .btn:hover { background: var(--brand-dark); }
+    .range {
+      margin: 10px 0 8px;
+      color: #475569;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .cards {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      padding: 12px;
+      position: relative;
+    }
+    .card::after {
+      content: "";
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      opacity: 0.75;
+    }
+    .card.checkins::after { background: #cfd8e3; }
+    .card.nights::after { background: #dcfce7; }
+    .card.rooms::after { background: #dbeafe; }
+    .card.rate::after { background: #fef3c7; }
+    .card h4 {
+      margin: 0 0 8px;
+      color: #64748b;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .card .value {
+      font-size: 1.8rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .card .sub {
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+    .section {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      padding: 12px;
+    }
+    .section h3 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+      color: #6b4423;
+    }
+    .trend-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .mini-tabs {
+      display: inline-flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .mini-tab {
+      border: 1px solid #d3dbe7;
+      border-radius: 4px;
+      background: #fff;
+      color: #475569;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      line-height: 1.3;
+    }
+    .mini-tab.active {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #fff;
+    }
+    .trend-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+      border: 1px solid #e6ebf3;
+      border-radius: 8px;
+      padding: 10px;
+      background:
+        linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px) 0 0 / 56px 100%,
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px) 0 0 / 100% 28px,
+        #fff;
+    }
+    .trend-row {
+      display: grid;
+      grid-template-columns: 95px 1fr;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .trend-label {
+      color: #334155;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+    .bars {
+      display: grid;
+      gap: 5px;
+    }
+    .bar-line {
+      height: 8px;
+      background: #eef2f7;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+    }
+    .bar-fill.checkins { background: var(--accent-a); }
+    .bar-fill.nights { background: var(--accent-b); }
+    .bar-fill.rooms { background: var(--accent-c); }
+    .bar-values {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      color: #475569;
+      font-size: 0.75rem;
+      margin-top: 2px;
+    }
+    .trend-legend {
+      display: inline-flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+      color: #475569;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .legend-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .dot {
+      width: 14px;
+      height: 4px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+    .dot.checkins { background: var(--accent-a); }
+    .dot.nights { background: var(--accent-b); }
+    .dot.rooms { background: var(--accent-c); }
+    .split {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+    .pie-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .pie {
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      border: 1px solid #dce3ee;
+      background: {{ nationality_pie_style }};
+      position: relative;
+    }
+    .pie::after {
+      content: "";
+      position: absolute;
+      inset: 32%;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+    }
+    .pie-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #334155;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border-bottom: 1px solid #eef1f4;
+      padding: 8px;
+      font-size: 0.84rem;
+      text-align: left;
+    }
+    th { background: #f8fafc; color: #334155; font-weight: 700; }
+    .daily-legend {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.76rem;
+      color: #475569;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .daily-chart {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #fff;
+      padding: 8px 10px 10px;
+    }
+    .daily-layout {
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 8px;
+      align-items: end;
+    }
+    .daily-y {
+      height: 220px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 0.7rem;
+      color: #64748b;
+      padding-bottom: 18px;
+    }
+    .daily-y span { line-height: 1; }
+    .daily-plot {
+      position: relative;
+      height: 220px;
+      border-left: 1px solid #d1d9e6;
+      border-bottom: 1px solid #d1d9e6;
+      overflow-x: auto;
+      background:
+        linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px) 0 0 / 28px 100%,
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px) 0 0 / 100% 44px,
+        #fff;
+    }
+    .daily-bars {
+      height: 200px;
+      min-width: 860px;
+      display: grid;
+      grid-template-columns: repeat(31, minmax(20px, 1fr));
+      gap: 4px;
+      align-items: end;
+      padding: 6px 6px 0;
+    }
+    .daily-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      min-width: 20px;
+    }
+    .daily-col {
+      width: 16px;
+      background: #e9c08c;
+      border: 1px solid #dfac6e;
+      border-bottom: none;
+      border-radius: 3px 3px 0 0;
+      min-height: 2px;
+    }
+    .daily-day {
+      font-size: 0.68rem;
+      color: #64748b;
+    }
+    .daily-x-title {
+      text-align: center;
+      font-size: 0.72rem;
+      color: #64748b;
+      margin-top: 3px;
+    }
+    .daily-y-title {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 0.72rem;
+      color: #64748b;
+      margin: 0 auto 4px;
+    }
+    .empty-note {
+      color: #64748b;
+      font-size: 0.9rem;
+      font-style: italic;
+      margin-top: 8px;
+    }
+    @media (max-width: 1024px) {
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .split { grid-template-columns: 1fr; }
+      .filters { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      .content { padding: 12px; }
+      .cards { grid-template-columns: 1fr; }
+      .filters { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div class="navigation">
+      {% include 'components/owner_navigation.html' %}
+    </div>
+
+    <main class="content">
+      <div class="shell">
+        <form method="get" class="filters">
+          <div class="field">
+            <label for="month">Month</label>
+            <select id="month" name="month">
+              {% for month_value, month_label in month_options %}
+                <option value="{{ month_value }}" {% if selected_month == month_value %}selected{% endif %}>{{ month_label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field">
+            <label for="year">Year</label>
+            <select id="year" name="year">
+              {% for y in year_options %}
+                <option value="{{ y }}" {% if selected_year == y %}selected{% endif %}>{{ y }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <button class="btn" type="submit">Apply Filter</button>
+          </div>
+        </form>
+
+        <div class="range">
+          Showing data for: {{ first_day|date:"F j, Y" }} - {{ last_day|date:"F j, Y" }}
+        </div>
+        <div class="range" style="margin-top: 0; font-size: 0.82rem; color: #64748b; font-weight: 500;">
+          Metrics are based on guest stay dates (check-in/check-out) within the selected period.
+        </div>
+
+        <div class="cards">
+          <div class="card checkins">
+            <h4>Total Check-ins</h4>
+            <div class="value">{{ total_checkins }}</div>
+            <div class="sub">confirmed bookings</div>
+          </div>
+          <div class="card nights">
+            <h4>Guest Nights</h4>
+            <div class="value">{{ total_guest_nights }}</div>
+            <div class="sub">total nights stayed</div>
+          </div>
+          <div class="card rooms">
+            <h4>Rooms Occupied</h4>
+            <div class="value">{{ rooms_occupied }}</div>
+            <div class="sub">out of {{ room_count }} rooms</div>
+          </div>
+          <div class="card rate">
+            <h4>Occupancy Rate</h4>
+            <div class="value">{{ occupancy_rate }}%</div>
+            <div class="sub">for the selected period</div>
+          </div>
+        </div>
+
+        <section class="section">
+          <div class="trend-head">
+            <h3>Monthly Occupancy Trend</h3>
+            <div class="mini-tabs" aria-hidden="true">
+              <span class="mini-tab active">6 Months</span>
+              <span class="mini-tab">1 Year</span>
+              <span class="mini-tab">2 Years</span>
+            </div>
+          </div>
+          <div class="trend-head" style="margin-top:-2px;">
+            <div class="mini-tabs" aria-hidden="true">
+              <span class="mini-tab active">Guests</span>
+              <span class="mini-tab">Nights</span>
+              <span class="mini-tab">Rooms</span>
+              <span class="mini-tab">All</span>
+            </div>
+            <div class="trend-legend">
+              <span class="legend-chip"><i class="dot checkins"></i>Guest Check-ins</span>
+              <span class="legend-chip"><i class="dot nights"></i>Guest Nights</span>
+              <span class="legend-chip"><i class="dot rooms"></i>Rooms Occupied</span>
+            </div>
+          </div>
+          <div class="trend-grid">
+            {% for label, checkins, nights, rooms in trend_rows %}
+              <div class="trend-row">
+                <div class="trend-label">{{ label }}</div>
+                <div class="bars">
+                  <div class="bar-line">
+                    <span class="bar-fill checkins" style="width:{% widthratio checkins trend_max 100 %}%"></span>
+                  </div>
+                  <div class="bar-line">
+                    <span class="bar-fill nights" style="width:{% widthratio nights trend_max 100 %}%"></span>
+                  </div>
+                  <div class="bar-line">
+                    <span class="bar-fill rooms" style="width:{% widthratio rooms trend_max 100 %}%"></span>
+                  </div>
+                  <div class="bar-values">
+                    <span>Check-ins: {{ checkins }}</span>
+                    <span>Guest Nights: {{ nights }}</span>
+                    <span>Rooms: {{ rooms }}</span>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="split">
+            <div>
+              <h3>Guest Nationality Breakdown</h3>
+              <div class="pie-wrap">
+                <div class="pie">
+                  <div class="pie-center">{{ nationality_total }}<br>Guests</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3>Nationality Table</h3>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Nationality Type</th>
+                    <th>Count</th>
+                    <th>Percentage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for label, value, pct in nationality_rows %}
+                    <tr>
+                      <td>{{ label }}</td>
+                      <td>{{ value }}</td>
+                      <td>{{ pct }}%</td>
+                    </tr>
+                  {% empty %}
+                    <tr><td colspan="3">No records yet.</td></tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h3>Daily Room Occupancy</h3>
+          <div class="daily-legend"><span class="dot rooms"></span>Rooms Occupied</div>
+          <div class="daily-chart">
+            <div class="daily-layout">
+              <div class="daily-y">
+                <div class="daily-y-title">Number of Rooms</div>
+                {% for guide in daily_guides %}
+                  <span>{{ guide.label }}</span>
+                {% endfor %}
+              </div>
+              <div class="daily-plot">
+                <div class="daily-bars">
+                  {% for day, val in daily_rows %}
+                    <div class="daily-item" title="Day {{ day }}: {{ val }} rooms">
+                      <div class="daily-col" style="height:{% widthratio val chart_y_max 190 %}px;"></div>
+                      <div class="daily-day">{{ day }}</div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="daily-x-title">Day of Month</div>
+          </div>
+          {% if not total_checkins %}
+            <div class="empty-note">No confirmed accommodation bookings in the selected period yet.</div>
+          {% endif %}
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

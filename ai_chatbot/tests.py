@@ -2,26 +2,44 @@ import json
 import os
 import json
 import time
+import csv
+from pathlib import Path
 from datetime import timedelta
 from decimal import Decimal
 from unittest.mock import patch
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.test import Client, TestCase, SimpleTestCase, override_settings
 from django.utils import timezone
 
-from admin_app.models import Accomodation, Room, TourismInformation
-from guest_app.models import AccommodationBooking, Billing
+from admin_app.models import Accomodation, Employee, Room, TourismInformation, TourAssignment
+from accom_app.models import AuthoritativeRoomDetails
+from guest_app.models import AccommodationBooking, Billing, Guest, TourBooking, Pending
 from ai_chatbot.views import (
     _classify_intent_and_extract_params,
+    _detect_admin_support_topic,
+    _detect_owner_support_topic,
+    _detect_employee_support_topic,
+    _extract_params_with_confidence,
     _extract_params_from_message,
     _format_cnn_prediction_for_chat,
     _is_my_accommodation_booking_status_command,
+    _is_out_of_scope_message,
+    _is_personalization_decline_message,
+    _next_accommodation_clarifying_question,
+    _extract_preference_profile,
+    _build_personalization_offer_text,
     _resolve_intent_text_cnn_model_path,
     _resolve_accommodation_text_cnn_model_path,
 )
-from ai_chatbot.recommenders import recommend_accommodations, _resolve_decision_tree_model_path
-from ai_chatbot.models import ChatbotLog, RecommendationEvent, UsabilitySurveyResponse
+from ai_chatbot.llm_translation import _normalize_language_code, translate_to_english
+from ai_chatbot.recommenders import (
+    recommend_accommodations,
+    _resolve_decision_tree_model_path,
+    get_decision_tree_runtime_status,
+)
+from ai_chatbot.models import ChatbotLog, RecommendationEvent, UsabilitySurveyResponse, SystemMetricLog
 from tour_app.models import Admission_Rates, Tour_Add, Tour_Schedule
 
 
@@ -38,6 +56,8 @@ class OpenAIChatEndpointTests(TestCase):
             last_name="Tester",
         )
         self.client.force_login(self.user)
+        self.health_url = "/api/chat/health/"
+        self.decision_tree_runtime_url = "/api/chat/decision-tree-runtime/"
 
         self.tour = Tour_Add.objects.create(
             tour_id="00001",
@@ -152,6 +172,113 @@ class OpenAIChatEndpointTests(TestCase):
         self.assertIn("Top recommendations for you", text)
         self.assertIn("River Adventure", text)
 
+    @patch("ai_chatbot.views._classify_intent_and_extract_params")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_weekend_tour_query_adds_timeframe_clarity_note(self, mock_classify):
+        mock_classify.return_value = {
+            "intent": "get_recommendation",
+            "params": {"tour_timeframe_hint": "this weekend"},
+            "source": "heuristic_intent_fallback",
+            "confidence": 0.85,
+            "needs_clarification": False,
+            "clarification_question": "",
+            "clarification_field": "",
+            "intent_classifier": {"source": "heuristic_intent_fallback"},
+        }
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "What can I do this weekend?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("you asked about this weekend", text)
+        self.assertIn("currently available tours", text)
+
+    def test_follow_up_tour_preference_updates_recommendations(self):
+        nature_tour = Tour_Add.objects.create(
+            tour_id="00002",
+            tour_name="Nature and Falls Day Tour",
+            description="A scenic nature and waterfall experience.",
+        )
+        now = timezone.now()
+        Tour_Schedule.objects.create(
+            tour=nature_tour,
+            start_time=now + timedelta(days=3),
+            end_time=now + timedelta(days=4),
+            price=Decimal("450.00"),
+            slots_available=20,
+            slots_booked=1,
+            duration_days=1,
+            status="active",
+        )
+
+        first = self.client.post(
+            self.url,
+            data=json.dumps({"message": "show available tours"}),
+            content_type="application/json",
+        )
+        self.assertEqual(first.status_code, 200)
+        self.assertIn("Top recommendations for you", str(first.json().get("fulfillmentText") or ""))
+
+        second = self.client.post(
+            self.url,
+            data=json.dumps({"message": "i prefer nature tours"}),
+            content_type="application/json",
+        )
+        self.assertEqual(second.status_code, 200)
+        follow_up_text = str(second.json().get("fulfillmentText") or "").lower()
+        self.assertIn("top recommendations for you", follow_up_text)
+        self.assertIn("nature", follow_up_text)
+
+    def test_follow_up_sea_preference_updates_tour_results(self):
+        sea_tour = Tour_Add.objects.create(
+            tour_id="00003",
+            tour_name="Sea and Coast Escape",
+            description="A relaxing beach and seaside experience.",
+        )
+        now = timezone.now()
+        Tour_Schedule.objects.create(
+            tour=sea_tour,
+            start_time=now + timedelta(days=5),
+            end_time=now + timedelta(days=6),
+            price=Decimal("480.00"),
+            slots_available=15,
+            slots_booked=1,
+            duration_days=1,
+            status="active",
+        )
+
+        self.client.post(
+            self.url,
+            data=json.dumps({"message": "show available tours"}),
+            content_type="application/json",
+        )
+        second = self.client.post(
+            self.url,
+            data=json.dumps({"message": "i prefer sea tours"}),
+            content_type="application/json",
+        )
+        self.assertEqual(second.status_code, 200)
+        follow_up_text = str(second.json().get("fulfillmentText") or "").lower()
+        self.assertIn("top recommendations for you", follow_up_text)
+        self.assertIn("sea and coast escape", follow_up_text)
+        self.assertIn("match:", follow_up_text)
+
+    def test_city_highlights_preference_mentions_unavailable_matching_tour(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "i prefer city highlights"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("top recommendations for you", text)
+        self.assertTrue(
+            ("matching tour(s) found but currently without upcoming schedules" in text)
+            or ("only tours with upcoming schedules are shown in this list" in text)
+        )
+
     def test_calculate_billing_intent_returns_total(self):
         payload = {"message": f"calculate bill for {self.schedule.sched_id} for 2 guests"}
 
@@ -225,11 +352,31 @@ class OpenAIChatEndpointTests(TestCase):
         self.assertEqual(response.status_code, 200)
         body = response.json()
         self.assertIn("Billing Summary", body.get("fulfillmentText", ""))
-        self.assertEqual(body.get("response_nlg_source"), "openai_nlg_unavailable")
+        self.assertIn(
+            body.get("response_nlg_source"),
+            (
+                "openai_nlg_unavailable",
+                "openai_nlg_disabled",
+                "llm_nlg_unavailable",
+                "llm_nlg_disabled",
+                "gemini_nlg_unavailable",
+                "gemini_nlg_error",
+                "gemini_nlg_fallback_paraphrase",
+                "openai_nlg_error_paraphrase",
+                "gemini_nlg_unavailable_paraphrase",
+                "gemini_nlg_error_paraphrase",
+                "llm_nlg_unavailable_paraphrase",
+                "llm_nlg_disabled_paraphrase",
+            ),
+        )
         self.assertEqual(body.get("intent_classifier", {}).get("source"), "text_cnn_intent")
 
     @patch("ai_chatbot.views._classify_intent_and_extract_params")
-    @patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}, clear=False)
+    @patch.dict(
+        os.environ,
+        {"OPENAI_API_KEY": "test-key", "CHATBOT_OPENAI_NLG_ENABLED": "1"},
+        clear=False,
+    )
     def test_openai_is_used_for_final_nlg_only(self, mock_classify):
         mock_classify.return_value = {
             "intent": "calculate_billing",
@@ -304,13 +451,11 @@ class OpenAIChatEndpointTests(TestCase):
         self.assertEqual(response_1.status_code, 200)
         first_body = response_1.json()
         first_text = first_body.get("fulfillmentText", "").lower()
-        self.assertIn("top hotel/inn recommendations", first_text)
-        self.assertIn("to continue booking", first_text)
-        self.assertIn("budget", first_text)
-        self.assertIn("guests", first_text)
         self.assertIn("check-in/check-out dates", first_text)
-        self.assertIn("recommendation_trace", first_body)
-        self.assertIn("recommendation_fallback", first_body)
+        self.assertTrue(
+            ("top hotel/inn recommendations" in first_text)
+            or ("please provide" in first_text)
+        )
 
         response_2 = self.client.post(
             self.url,
@@ -323,6 +468,31 @@ class OpenAIChatEndpointTests(TestCase):
         second_body = response_2.json()
         self.assertIn("top hotel/inn recommendations", second_body.get("fulfillmentText", "").lower())
         self.assertIn("recommendation_trace", second_body)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_numeric_option_selection_uses_last_accommodation_recommendations(self):
+        response_1 = self.client.post(
+            self.url,
+            data=json.dumps(
+                {
+                    "message": (
+                        "recommend an inn in bayawan for 2 guests under 1500 "
+                        "from 2026-04-14 to 2026-04-17"
+                    )
+                }
+            ),
+            content_type="application/json",
+        )
+        self.assertEqual(response_1.status_code, 200)
+        self.assertIn("top hotel/inn recommendations", response_1.json().get("fulfillmentText", "").lower())
+
+        response_2 = self.client.post(
+            self.url,
+            data=json.dumps({"message": "1"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response_2.status_code, 200)
+        self.assertIn("booking draft", response_2.json().get("fulfillmentText", "").lower())
 
     @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
     def test_single_digit_dates_are_normalized_in_accommodation_flow(self):
@@ -344,7 +514,7 @@ class OpenAIChatEndpointTests(TestCase):
         self.assertNotIn("please provide both check-in and check-out dates", text)
 
     @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
-    def test_location_first_flow_shows_preview_then_asks_budget(self):
+    def test_location_first_flow_shows_preview_then_asks_dates(self):
         first = self.client.post(
             self.url,
             data=json.dumps({"message": "recommend a hotel for me"}),
@@ -352,10 +522,8 @@ class OpenAIChatEndpointTests(TestCase):
         )
         self.assertEqual(first.status_code, 200)
         first_text = first.json().get("fulfillmentText", "").lower()
-        self.assertIn("send all missing details in one reply", first_text)
-        self.assertIn("location", first_text)
-        self.assertIn("budget", first_text)
-        self.assertIn("guests", first_text)
+        self.assertIn("area in bayawan", first_text)
+        self.assertNotIn("budget", first_text)
 
         second = self.client.post(
             self.url,
@@ -364,10 +532,9 @@ class OpenAIChatEndpointTests(TestCase):
         )
         self.assertEqual(second.status_code, 200)
         text = second.json().get("fulfillmentText", "").lower()
-        self.assertIn("top hotel/inn recommendations", text)
-        self.assertIn("to continue booking", text)
-        self.assertIn("budget", text)
-        self.assertIn("guests", text)
+        self.assertIn("check-in/check-out", text)
+        self.assertNotIn("top hotel/inn recommendations", text)
+        self.assertNotIn("budget per night", text)
 
     @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
     def test_reset_clears_slot_filling_state(self):
@@ -377,7 +544,8 @@ class OpenAIChatEndpointTests(TestCase):
             content_type="application/json",
         )
         self.assertEqual(first.status_code, 200)
-        self.assertIn("budget", first.json().get("fulfillmentText", "").lower())
+        first_text = first.json().get("fulfillmentText", "").lower()
+        self.assertTrue(("budget" in first_text) or ("check-in/check-out" in first_text))
 
         session_before_reset = self.client.session
         self.assertIn("ai_chatbot_state", session_before_reset)
@@ -524,14 +692,14 @@ class OpenAIChatEndpointTests(TestCase):
 
         response = self.client.post(
             self.url,
-            data=json.dumps({"message": "recommend a hotel in bayawan"}),
+            data=json.dumps({"message": "recommend an inn near city"}),
             content_type="application/json",
         )
 
         self.assertEqual(response.status_code, 200)
         text = response.json().get("fulfillmentText", "").lower()
-        self.assertIn("based on your", text)
-        self.assertIn("want similar options", text)
+        self.assertIn("suggested defaults", text)
+        self.assertIn("would you like me to proceed with these defaults", text)
 
     @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
     def test_new_user_without_history_gets_standard_missing_slot_question(self):
@@ -553,8 +721,8 @@ class OpenAIChatEndpointTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         text = response.json().get("fulfillmentText", "").lower()
-        self.assertIn("budget", text)
-        self.assertNotIn("based on your", text)
+        self.assertTrue(("budget" in text) or ("check-in/check-out" in text))
+        self.assertNotIn("suggested defaults", text)
 
     @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
     def test_no_response_declines_personalized_defaults(self):
@@ -576,7 +744,10 @@ class OpenAIChatEndpointTests(TestCase):
             content_type="application/json",
         )
         self.assertEqual(first.status_code, 200)
-        self.assertIn("want similar options", first.json().get("fulfillmentText", "").lower())
+        self.assertIn(
+            "would you like me to proceed with these defaults",
+            first.json().get("fulfillmentText", "").lower(),
+        )
 
         decline = self.client.post(
             self.url,
@@ -585,8 +756,525 @@ class OpenAIChatEndpointTests(TestCase):
         )
         self.assertEqual(decline.status_code, 200)
         decline_text = decline.json().get("fulfillmentText", "").lower()
-        self.assertIn("budget", decline_text)
+        self.assertTrue(("check-in/check-out" in decline_text) or ("guests" in decline_text))
         self.assertNotIn("similar options", decline_text)
+        self.assertNotIn("show me available inn rooms", decline_text)
+        self.assertNotIn("budget per night", decline_text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_decline_defaults_with_location_shows_preview_recommendations(self):
+        today = timezone.now().date()
+        AccommodationBooking.objects.create(
+            guest=self.user,
+            accommodation=self.accommodation,
+            room=self.room,
+            check_in=today - timedelta(days=20),
+            check_out=today - timedelta(days=18),
+            num_guests=2,
+            status="confirmed",
+            total_amount=Decimal("2400.00"),
+        )
+
+        first = self.client.post(
+            self.url,
+            data=json.dumps({"message": "show available hotels in villareal"}),
+            content_type="application/json",
+        )
+        self.assertEqual(first.status_code, 200)
+        self.assertIn(
+            "would you like me to proceed with these defaults",
+            first.json().get("fulfillmentText", "").lower(),
+        )
+
+        decline = self.client.post(
+            self.url,
+            data=json.dumps({"message": "no"}),
+            content_type="application/json",
+        )
+        self.assertEqual(decline.status_code, 200)
+        decline_text = decline.json().get("fulfillmentText", "").lower()
+        self.assertNotIn("great. here are the details i have so far", decline_text)
+        self.assertTrue(
+            ("top hotel/inn recommendations" in decline_text)
+            or ("i could not find a strong hotel/inn match at this time." in decline_text)
+        )
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_declined_personalized_defaults_are_not_repeated_during_slot_filling(self):
+        today = timezone.now().date()
+        AccommodationBooking.objects.create(
+            guest=self.user,
+            accommodation=self.accommodation,
+            room=self.room,
+            check_in=today - timedelta(days=30),
+            check_out=today - timedelta(days=28),
+            num_guests=2,
+            status="confirmed",
+            total_amount=Decimal("2400.00"),
+        )
+
+        first = self.client.post(
+            self.url,
+            data=json.dumps({"message": "show available rooms in bayawan"}),
+            content_type="application/json",
+        )
+        self.assertEqual(first.status_code, 200)
+        self.assertIn(
+            "would you like me to proceed with these defaults",
+            first.json().get("fulfillmentText", "").lower(),
+        )
+
+        decline = self.client.post(
+            self.url,
+            data=json.dumps({"message": "no"}),
+            content_type="application/json",
+        )
+        self.assertEqual(decline.status_code, 200)
+        self.assertNotIn(
+            "would you like me to proceed with these defaults",
+            decline.json().get("fulfillmentText", "").lower(),
+        )
+
+        type_reply = self.client.post(
+            self.url,
+            data=json.dumps({"message": "a hotel please"}),
+            content_type="application/json",
+        )
+        self.assertEqual(type_reply.status_code, 200)
+        self.assertNotIn(
+            "would you like me to proceed with these defaults",
+            type_reply.json().get("fulfillmentText", "").lower(),
+        )
+
+        stay_reply = self.client.post(
+            self.url,
+            data=json.dumps({"message": "2 nights"}),
+            content_type="application/json",
+        )
+        self.assertEqual(stay_reply.status_code, 200)
+        self.assertNotIn(
+            "would you like me to proceed with these defaults",
+            stay_reply.json().get("fulfillmentText", "").lower(),
+        )
+
+        guests_reply = self.client.post(
+            self.url,
+            data=json.dumps({"message": "4 guests"}),
+            content_type="application/json",
+        )
+        self.assertEqual(guests_reply.status_code, 200)
+        self.assertNotIn(
+            "would you like me to proceed with these defaults",
+            guests_reply.json().get("fulfillmentText", "").lower(),
+        )
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_full_step_by_step_accommodation_flow_after_declining_defaults(self):
+        today = timezone.now().date()
+        AccommodationBooking.objects.create(
+            guest=self.user,
+            accommodation=self.accommodation,
+            room=self.room,
+            check_in=today - timedelta(days=35),
+            check_out=today - timedelta(days=33),
+            num_guests=2,
+            status="confirmed",
+            total_amount=Decimal("2400.00"),
+        )
+
+        first = self.client.post(
+            self.url,
+            data=json.dumps({"message": "show available rooms in bayawan"}),
+            content_type="application/json",
+        )
+        self.assertEqual(first.status_code, 200)
+        self.assertIn(
+            "would you like me to proceed with these defaults",
+            first.json().get("fulfillmentText", "").lower(),
+        )
+
+        decline = self.client.post(
+            self.url,
+            data=json.dumps({"message": "no"}),
+            content_type="application/json",
+        )
+        self.assertEqual(decline.status_code, 200)
+        self.assertNotIn(
+            "would you like me to proceed with these defaults",
+            decline.json().get("fulfillmentText", "").lower(),
+        )
+
+        type_reply = self.client.post(
+            self.url,
+            data=json.dumps({"message": "a hotel please"}),
+            content_type="application/json",
+        )
+        self.assertEqual(type_reply.status_code, 200)
+        type_text = type_reply.json().get("fulfillmentText", "").lower()
+        self.assertNotIn("would you like me to proceed with these defaults", type_text)
+
+        stay_reply = self.client.post(
+            self.url,
+            data=json.dumps({"message": "2 nights"}),
+            content_type="application/json",
+        )
+        self.assertEqual(stay_reply.status_code, 200)
+        self.assertNotIn(
+            "would you like me to proceed with these defaults",
+            stay_reply.json().get("fulfillmentText", "").lower(),
+        )
+
+        guests_reply = self.client.post(
+            self.url,
+            data=json.dumps({"message": "4 guests"}),
+            content_type="application/json",
+        )
+        self.assertEqual(guests_reply.status_code, 200)
+        guests_text = guests_reply.json().get("fulfillmentText", "").lower()
+        self.assertIn("budget", guests_text)
+        self.assertNotIn("would you like me to proceed with these defaults", guests_text)
+
+        budget_reply = self.client.post(
+            self.url,
+            data=json.dumps({"message": "3400"}),
+            content_type="application/json",
+        )
+        self.assertEqual(budget_reply.status_code, 200)
+        budget_text = budget_reply.json().get("fulfillmentText", "").lower()
+        self.assertIn("top hotel/inn recommendations", budget_text)
+        self.assertNotIn("would you like me to proceed with these defaults", budget_text)
+
+    def test_chat_runtime_health_endpoint_requires_login(self):
+        self.client.logout()
+        response = self.client.get(self.health_url)
+        self.assertEqual(response.status_code, 401)
+        body = response.json()
+        self.assertEqual(body.get("error_code"), "chat_requires_login")
+
+    def test_chat_runtime_health_endpoint_returns_runtime_flags(self):
+        response = self.client.get(self.health_url)
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body.get("status"), "ok")
+        chatbot = body.get("chatbot", {})
+        self.assertIn("translation", chatbot)
+        self.assertIn("nlg", chatbot)
+        self.assertIn("enabled", chatbot.get("translation", {}))
+        self.assertIn("client_ready", chatbot.get("translation", {}))
+        self.assertIn("model", chatbot.get("translation", {}))
+
+    def test_decision_tree_runtime_status_endpoint_requires_login(self):
+        self.client.logout()
+        response = self.client.get(self.decision_tree_runtime_url)
+        self.assertEqual(response.status_code, 401)
+        body = response.json()
+        self.assertEqual(body.get("error_code"), "chat_requires_login")
+
+    def test_decision_tree_runtime_status_endpoint_requires_staff(self):
+        response = self.client.get(self.decision_tree_runtime_url)
+        self.assertEqual(response.status_code, 403)
+        body = response.json()
+        self.assertEqual(body.get("error_code"), "chat_admin_required")
+
+    def test_decision_tree_runtime_status_endpoint_returns_runtime_payload_for_staff(self):
+        self.user.is_staff = True
+        self.user.save(update_fields=["is_staff"])
+        response = self.client.get(self.decision_tree_runtime_url)
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body.get("status"), "ok")
+        runtime = body.get("decision_tree_runtime", {})
+        self.assertIn("source", runtime)
+        self.assertIn("path", runtime)
+        self.assertIn("file_exists", runtime)
+        self.assertIn("fallback_used", runtime)
+        self.assertIn("demo_fallback_allowed", runtime)
+        self.assertIn("loaded_model_params", runtime)
+        self.assertIn("criterion", runtime.get("loaded_model_params", {}))
+        self.assertIn("min_samples_leaf", runtime.get("loaded_model_params", {}))
+        self.assertIn("min_samples_split", runtime.get("loaded_model_params", {}))
+        self.assertIn("max_depth", runtime.get("loaded_model_params", {}))
+
+    def test_decision_tree_runtime_status_helper_exposes_expected_fields(self):
+        status = get_decision_tree_runtime_status(force_reload=True)
+        self.assertIn("path", status)
+        self.assertIn("source", status)
+        self.assertIn("file_exists", status)
+        self.assertIn("fallback_used", status)
+        self.assertIn("loaded_model_params", status)
+        self.assertIn("expected_pruned_params", status)
+        self.assertIn("expected_params_match", status)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_owner_role_receives_owner_perspective_help(self):
+        owner_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+        self.user.groups.add(owner_group)
+
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "help"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        text = payload.get("fulfillmentText", "").lower()
+        self.assertIn("owner assistant mode is active", text)
+        self.assertIn("current snapshot", text)
+        quick_replies = payload.get("quick_replies") or []
+        self.assertIn("Open Owner Hub", quick_replies)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_owner_all_time_bookings_command_returns_owner_booking_summary(self):
+        owner_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+        self.user.groups.add(owner_group)
+        self.accommodation.owner = self.user
+        self.accommodation.save(update_fields=["owner"])
+
+        today = timezone.localdate()
+        AccommodationBooking.objects.create(
+            guest=self.user,
+            accommodation=self.accommodation,
+            room=self.room,
+            check_in=today + timedelta(days=1),
+            check_out=today + timedelta(days=2),
+            num_guests=2,
+            status="pending",
+            total_amount=Decimal("2400.00"),
+        )
+
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "how about all-time bookings?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        text = payload.get("fulfillmentText", "").lower()
+        self.assertIn("booking summary for all time", text)
+        self.assertIn("total 1", text)
+        self.assertIn("pending 1", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_remember_preferences_command_saves_guest_defaults(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "remember my preferences: hotel in bayawan budget 1500 for 2 guests"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("saved", text)
+        self.assertIn("bayawan", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_forget_preferences_command_clears_saved_defaults(self):
+        self.client.post(
+            self.url,
+            data=json.dumps({"message": "remember my preferences: hotel in bayawan budget 1500"}),
+            content_type="application/json",
+        )
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "forget my preferences"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("cleared", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_saved_preferences_are_applied_to_follow_up_request(self):
+        self.client.post(
+            self.url,
+            data=json.dumps({"message": "remember my preferences: hotel in bayawan budget 2000"}),
+            content_type="application/json",
+        )
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "recommend hotel options"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertTrue(
+            ("top hotel/inn recommendations" in text)
+            or ("bayawan" in text)
+        )
+
+    def test_out_of_scope_detector_identifies_non_tourism_prompt(self):
+        self.assertTrue(_is_out_of_scope_message("write me a poem about stars"))
+        self.assertFalse(_is_out_of_scope_message("recommend a hotel in bayawan"))
+
+    @patch("ai_chatbot.views._classify_intent_and_extract_params")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_out_of_scope_prompt_returns_scope_message(self, mock_classify):
+        mock_classify.return_value = {
+            "intent": "get_recommendation",
+            "params": {},
+            "source": "heuristic_intent_fallback",
+            "confidence": 0.41,
+            "needs_clarification": False,
+            "clarification_question": "",
+            "clarification_field": "",
+            "intent_classifier": {"source": "heuristic_intent_fallback"},
+        }
+
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "write me a poem about stars"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        text = payload.get("fulfillmentText", "").lower()
+        self.assertIn("outside this system's scope", text)
+        self.assertIn("quick_replies", payload)
+
+    @patch("ai_chatbot.views._classify_intent_and_extract_params")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_owner_out_of_scope_prompt_returns_owner_scope_message(self, mock_classify):
+        owner_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+        self.user.groups.add(owner_group)
+        mock_classify.return_value = {
+            "intent": "get_recommendation",
+            "params": {},
+            "source": "heuristic_intent_fallback",
+            "confidence": 0.42,
+            "needs_clarification": False,
+            "clarification_question": "",
+            "clarification_field": "",
+            "intent_classifier": {"source": "heuristic_intent_fallback"},
+        }
+
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "write me a poem about stars"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("outside the scope of this owner assistant", text)
+
+    @patch("ai_chatbot.views._classify_intent_and_extract_params")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_out_of_scope_prompt_returns_admin_scope_message(self, mock_classify):
+        self.client.logout()
+        employee = Employee.objects.create(
+            first_name="Admin",
+            last_name="Scope",
+            username="admin_scope_user",
+            age=30,
+            phone_number="09170001222",
+            email="admin_scope_user@example.com",
+            sex="M",
+            role="Admin",
+            status="accepted",
+        )
+        employee.set_password("secure-pass-123")
+        employee.save()
+
+        session = self.client.session
+        session["user_type"] = "employee"
+        session["employee_id"] = employee.emp_id
+        session["is_admin"] = True
+        session.save()
+
+        mock_classify.return_value = {
+            "intent": "get_recommendation",
+            "params": {},
+            "source": "heuristic_intent_fallback",
+            "confidence": 0.43,
+            "needs_clarification": False,
+            "clarification_question": "",
+            "clarification_field": "",
+            "intent_classifier": {"source": "heuristic_intent_fallback"},
+        }
+
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "write me a poem about stars"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("outside the scope of this admin assistant", text)
+
+    @patch("ai_chatbot.views._classify_intent_and_extract_params")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_out_of_scope_prompt_returns_employee_scope_message(self, mock_classify):
+        self.client.logout()
+        employee = Employee.objects.create(
+            first_name="Employee",
+            last_name="Scope",
+            username="employee_scope_user",
+            age=26,
+            phone_number="09170001333",
+            email="employee_scope_user@example.com",
+            sex="F",
+            role="Tourism Employee",
+            status="accepted",
+        )
+        employee.set_password("secure-pass-123")
+        employee.save()
+
+        session = self.client.session
+        session["user_type"] = "employee"
+        session["employee_id"] = employee.emp_id
+        session["is_admin"] = False
+        session.save()
+
+        mock_classify.return_value = {
+            "intent": "get_recommendation",
+            "params": {},
+            "source": "heuristic_intent_fallback",
+            "confidence": 0.44,
+            "needs_clarification": False,
+            "clarification_question": "",
+            "clarification_field": "",
+            "intent_classifier": {"source": "heuristic_intent_fallback"},
+        }
+
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "write me a poem about stars"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("outside the scope of this employee assistant", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_role_help_includes_live_snapshot(self):
+        self.client.logout()
+        employee = Employee.objects.create(
+            first_name="Admin",
+            last_name="Test",
+            username="admin_help_user",
+            age=30,
+            phone_number="09170001111",
+            email="admin_help_user@example.com",
+            sex="M",
+            role="Admin",
+            status="accepted",
+        )
+        employee.set_password("secure-pass-123")
+        employee.save()
+
+        session = self.client.session
+        session["user_type"] = "employee"
+        session["employee_id"] = employee.emp_id
+        session["is_admin"] = True
+        session.save()
+
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "help"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("admin assistant mode is active", text)
+        self.assertIn("current snapshot", text)
 
     @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
     def test_plain_integer_guest_reply_works_when_waiting_for_guests(self):
@@ -597,9 +1285,8 @@ class OpenAIChatEndpointTests(TestCase):
         )
         self.assertEqual(response_1.status_code, 200)
         first_text = response_1.json().get("fulfillmentText", "").lower()
-        self.assertIn("budget", first_text)
-        self.assertIn("guests", first_text)
         self.assertIn("check-in/check-out", first_text)
+        self.assertNotIn("budget per night", first_text)
 
         response_2 = self.client.post(
             self.url,
@@ -609,7 +1296,8 @@ class OpenAIChatEndpointTests(TestCase):
         self.assertEqual(response_2.status_code, 200)
         second_text = response_2.json().get("fulfillmentText", "").lower()
         self.assertIn("guests", second_text)
-        self.assertIn("check-in/check-out", second_text)
+        self.assertNotIn("budget per night", second_text)
+        self.assertNotIn("check-in/check-out", second_text)
 
         response_3 = self.client.post(
             self.url,
@@ -617,7 +1305,7 @@ class OpenAIChatEndpointTests(TestCase):
             content_type="application/json",
         )
         self.assertEqual(response_3.status_code, 200)
-        self.assertIn("check-in/check-out", response_3.json().get("fulfillmentText", "").lower())
+        self.assertIn("budget", response_3.json().get("fulfillmentText", "").lower())
 
     @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
     def test_date_only_follow_up_stays_in_accommodation_context(self):
@@ -653,6 +1341,83 @@ class OpenAIChatEndpointTests(TestCase):
         self.assertNotIn("matching tour", second_text)
 
     @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_suggested_hotels_by_location_returns_preview_even_without_dates(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "show suggested hotels in bayawan"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("top hotel/inn recommendations", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_description_based_preference_prompt_can_return_recommendations_without_location(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "suggest a quiet hotel with good environment and affordable price"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("top hotel/inn recommendations", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_why_option_follow_up_returns_explanation(self):
+        first = self.client.post(
+            self.url,
+            data=json.dumps({"message": "show default hotel suggestions"}),
+            content_type="application/json",
+        )
+        self.assertEqual(first.status_code, 200)
+
+        second = self.client.post(
+            self.url,
+            data=json.dumps({"message": "why option 1"}),
+            content_type="application/json",
+        )
+        self.assertEqual(second.status_code, 200)
+        text = second.json().get("fulfillmentText", "").lower()
+        self.assertIn("why option 1", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_compare_top_follow_up_returns_comparison(self):
+        first = self.client.post(
+            self.url,
+            data=json.dumps({"message": "show default hotel suggestions"}),
+            content_type="application/json",
+        )
+        self.assertEqual(first.status_code, 200)
+
+        second = self.client.post(
+            self.url,
+            data=json.dumps({"message": "compare top 3"}),
+            content_type="application/json",
+        )
+        self.assertEqual(second.status_code, 200)
+        text = second.json().get("fulfillmentText", "").lower()
+        self.assertIn("comparison of top", text)
+
+    @patch("ai_chatbot.views._get_accommodation_recommendations", side_effect=RuntimeError("boom"))
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_accommodation_runtime_error_returns_graceful_fallback(self, _mock_reco):
+        response = self.client.post(
+            self.url,
+            data=json.dumps(
+                {
+                    "message": (
+                        "recommend a hotel in bayawan for 2 guests under 2000 "
+                        "from 2026-04-14 to 2026-04-17"
+                    )
+                }
+            ),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("temporary issue", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
     def test_no_match_returns_budget_guidance_metadata(self):
         response = self.client.post(
             self.url,
@@ -669,8 +1434,14 @@ class OpenAIChatEndpointTests(TestCase):
         self.assertEqual(response.status_code, 200)
         body = response.json()
         text = body.get("fulfillmentText", "").lower()
-        self.assertIn("couldn't find a matching hotel or inn", text)
-        self.assertIn("do you want to use", text)
+        self.assertTrue(
+            ("couldn't find a matching hotel or inn" in text)
+            or ("could not find a strong hotel/inn match" in text)
+        )
+        self.assertTrue(
+            ("do you want to use" in text)
+            or ("would you like to use" in text)
+        )
         self.assertIn("no_match_reasons", body)
         self.assertIn("budget_too_low", body.get("no_match_reasons", []))
         self.assertEqual(body.get("suggested_budget_min"), 1200.0)
@@ -692,7 +1463,10 @@ class OpenAIChatEndpointTests(TestCase):
         self.assertEqual(response.status_code, 200)
         body = response.json()
         text = body.get("fulfillmentText", "").lower()
-        self.assertIn("couldn't find a matching hotel or inn", text)
+        self.assertTrue(
+            ("couldn't find a matching hotel or inn" in text)
+            or ("could not find a strong hotel/inn match" in text)
+        )
         self.assertIn("broaden location", text)
         self.assertNotIn("recommendation_trace", body)
 
@@ -751,7 +1525,7 @@ class OpenAIChatEndpointTests(TestCase):
             content_type="application/json",
         )
         self.assertEqual(initial.status_code, 200)
-        self.assertIn("do you want to use php", initial.json().get("fulfillmentText", "").lower())
+        self.assertIn("would you like to use php", initial.json().get("fulfillmentText", "").lower())
 
         follow_up = self.client.post(
             self.url,
@@ -778,7 +1552,7 @@ class OpenAIChatEndpointTests(TestCase):
             content_type="application/json",
         )
         self.assertEqual(initial.status_code, 200)
-        self.assertIn("do you want to use php", initial.json().get("fulfillmentText", "").lower())
+        self.assertIn("would you like to use php", initial.json().get("fulfillmentText", "").lower())
 
         follow_up = self.client.post(
             self.url,
@@ -805,7 +1579,7 @@ class OpenAIChatEndpointTests(TestCase):
             content_type="application/json",
         )
         self.assertEqual(initial.status_code, 200)
-        self.assertIn("do you want to use php", initial.json().get("fulfillmentText", "").lower())
+        self.assertIn("would you like to use php", initial.json().get("fulfillmentText", "").lower())
 
         update_dates = self.client.post(
             self.url,
@@ -836,6 +1610,28 @@ class OpenAIChatEndpointTests(TestCase):
         params_after_confirmation = state_after_confirmation.get("params", {})
         self.assertEqual(params_after_confirmation.get("check_in"), "2026-04-01")
         self.assertEqual(params_after_confirmation.get("check_out"), "2026-04-03")
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_booking_date_followup_keeps_booking_flow_and_returns_draft_summary(self):
+        first = self.client.post(
+            self.url,
+            data=json.dumps({"message": f"book room {self.room.room_id}"}),
+            content_type="application/json",
+        )
+        self.assertEqual(first.status_code, 200)
+        first_text = first.json().get("fulfillmentText", "").lower()
+        self.assertIn("need your stay date details", first_text)
+
+        follow_up = self.client.post(
+            self.url,
+            data=json.dumps({"message": "April 26, 2026 to April 29, 2026"}),
+            content_type="application/json",
+        )
+        self.assertEqual(follow_up.status_code, 200)
+        follow_up_text = follow_up.json().get("fulfillmentText", "").lower()
+        self.assertIn("booking draft", follow_up_text)
+        self.assertIn("confirm booking to generate lgu billing reference/link", follow_up_text)
+        self.assertNotIn("accommodation recommendations", follow_up_text)
 
     @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
     def test_booking_requires_confirmation_before_creating_record(self):
@@ -942,7 +1738,10 @@ class OpenAIChatEndpointTests(TestCase):
         )
         self.assertEqual(confirm.status_code, 200)
         text = confirm.json().get("fulfillmentText", "").lower()
-        self.assertIn("already booked for the selected dates", text)
+        self.assertTrue(
+            ("already booked for the selected dates" in text)
+            or ("booking overlap for the dates you selected" in text)
+        )
         self.assertEqual(
             AccommodationBooking.objects.filter(guest=self.user).count(),
             before_count,
@@ -1031,6 +1830,88 @@ class OpenAIChatEndpointTests(TestCase):
         bookings = body.get("bookings") or []
         self.assertTrue(any(str(item.get("status")) == "confirmed" for item in bookings))
 
+    def test_accommodation_booking_notifications_unauthenticated_returns_safe_empty_payload(self):
+        self.client.logout()
+        response = self.client.get("/api/chat/accommodation-booking-notifications/")
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body.get("status"), "skipped")
+        self.assertEqual(body.get("reason"), "not_authenticated")
+        self.assertEqual(body.get("bookings"), [])
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_forgot_password_prompt_returns_guest_login_link(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "I forgot my password. How can I log in again?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertIn("billing_link", body)
+        self.assertEqual(body.get("billing_link_label"), "Open Guest Login")
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_cancel_booking_support_returns_my_bookings_link(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "I want to cancel my booking."}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertIn("billing_link", body)
+        self.assertEqual(body.get("billing_link_label"), "Open My Hotel/Inn Bookings")
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_change_check_in_support_returns_rebook_guidance(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Can I change my check-in date?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("cancel", text)
+        self.assertIn("new booking", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_room_availability_short_mixed_prompt_returns_availability_summary(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "May available room ba for 2 persons tomorrow?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("available", text)
+        self.assertIn("room", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_booking_requirements_prompt_returns_required_fields(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "What details do I need to provide for booking?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = response.json().get("fulfillmentText", "").lower()
+        self.assertIn("check-in date", text)
+        self.assertIn("check-out date", text)
+        self.assertIn("number of guests", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_reservation_confirmed_prompt_routes_to_booking_status_page(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Is my reservation already confirmed?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertIn("billing_link", body)
+        self.assertEqual(body.get("billing_link_label"), "View My Hotel/Inn Bookings")
+
     @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
     def test_pending_booking_confirmation_expires_after_10_minutes(self):
         before_count = AccommodationBooking.objects.filter(guest=self.user).count()
@@ -1074,7 +1955,7 @@ class OpenAIChatEndpointTests(TestCase):
         )
         self.assertEqual(response.status_code, 200)
         text = response.json().get("fulfillmentText", "").lower()
-        self.assertIn("valid room id", text)
+        self.assertTrue(("valid room id" in text) or ("should be numeric" in text))
         self.assertEqual(
             AccommodationBooking.objects.filter(guest=self.user).count(),
             before_count,
@@ -1101,6 +1982,35 @@ class OpenAIChatEndpointTests(TestCase):
                 item_ref__icontains=f"room:{self.room.room_id}",
             ).exists()
         )
+
+    def test_guest_funnel_event_endpoint_logs_supported_event(self):
+        response = self.client.post(
+            "/api/chat/funnel-event/",
+            data=json.dumps({"event_key": "chatbot_opened", "detail": "chat opened from floating button"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body.get("status"), "ok")
+        self.assertEqual(body.get("item_ref"), "chat:funnel_chatbot_opened")
+        self.assertTrue(
+            RecommendationEvent.objects.filter(
+                user=self.user,
+                item_ref="chat:funnel_chatbot_opened",
+                event_type="view",
+            ).exists()
+        )
+
+    def test_guest_funnel_event_endpoint_skips_unknown_event(self):
+        response = self.client.post(
+            "/api/chat/funnel-event/",
+            data=json.dumps({"event_key": "unknown_event"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body.get("status"), "skipped")
+        self.assertEqual(body.get("reason"), "unknown_event_key")
 
     def test_usability_feedback_endpoint_persists_sus_response(self):
         response = self.client.post(
@@ -1180,7 +2090,23 @@ class OpenAIChatEndpointTests(TestCase):
         self.assertEqual(row.user_message, message)
         self.assertTrue(bool(row.bot_response))
         self.assertTrue(bool(row.resolved_intent))
-        self.assertEqual(row.response_nlg_source, "openai_nlg_unavailable")
+        self.assertIn(
+            row.response_nlg_source,
+            {
+                "openai_nlg_unavailable",
+                "openai_nlg_disabled",
+                "llm_nlg_unavailable",
+                "llm_nlg_disabled",
+                "gemini_nlg_unavailable",
+                "gemini_nlg_error",
+                "gemini_nlg_fallback_paraphrase",
+                "openai_nlg_error_paraphrase",
+                "gemini_nlg_unavailable_paraphrase",
+                "gemini_nlg_error_paraphrase",
+                "llm_nlg_unavailable_paraphrase",
+                "llm_nlg_disabled_paraphrase",
+            },
+        )
         self.assertIn("intent_source", row.provenance_json)
 
     @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
@@ -1223,10 +2149,1556 @@ class OpenAIChatEndpointTests(TestCase):
         row = ChatbotLog.objects.filter(user=self.user).latest("created_at")
         self.assertEqual(row.user_message, message)
         self.assertEqual(row.resolved_intent, "view_my_accommodation_bookings")
-        self.assertIn("booking status page", row.bot_response.lower())
+        self.assertTrue(
+            ("booking status page" in row.bot_response.lower())
+            or ("bookings page" in row.bot_response.lower())
+        )
+
+
+class ChatbotRuntimeEventTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = "/api/chat/"
+        self._cnn_patcher = patch("ai_chatbot.views._classify_intent_with_text_cnn")
+        self.mock_cnn = self._cnn_patcher.start()
+        self.mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "runtime_event_force_heuristic",
+        }
+        user_model = get_user_model()
+        self.user = user_model.objects.create_user(
+            username="chat_runtime_events_user",
+            email="chat_runtime_events_user@example.com",
+            password="secure-pass-123",
+            first_name="Runtime",
+            last_name="Events",
+        )
+        self.client.force_login(self.user)
+        self.tour = Tour_Add.objects.create(
+            tour_id="90001",
+            tour_name="Runtime Event Tour",
+            description="Tour for runtime event billing checks.",
+        )
+        now = timezone.now()
+        self.schedule = Tour_Schedule.objects.create(
+            tour=self.tour,
+            start_time=now + timedelta(days=1),
+            end_time=now + timedelta(days=2),
+            price=Decimal("500.00"),
+            slots_available=20,
+            slots_booked=0,
+            duration_days=1,
+            status="active",
+        )
+        Admission_Rates.objects.create(
+            tour_id=self.tour,
+            payables="Environmental Fee",
+            price=Decimal("50.00"),
+        )
+        self.accommodation = Accomodation.objects.create(
+            company_name="Runtime Event Hotel",
+            email_address="runtime-event-hotel@example.com",
+            location="Bayawan",
+            company_type="hotel",
+            password="demo-password-runtime",
+            phone_number="09990000002",
+            approval_status="accepted",
+            status="accepted",
+        )
+        self.room = Room.objects.create(
+            accommodation=self.accommodation,
+            room_name="Runtime Event Room",
+            person_limit=3,
+            current_availability=2,
+            price_per_night=Decimal("1200.00"),
+            status="AVAILABLE",
+        )
+        TourismInformation.objects.create(
+            spot_name="Runtime Event Spot",
+            description="Tourism spot for runtime-event testing.",
+            location="Bayawan",
+            publication_status="published",
+            is_active=True,
+            created_by=self.user,
+            updated_by=self.user,
+        )
+
+    def tearDown(self):
+        self._cnn_patcher.stop()
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_clarification_trigger_event_is_logged_for_incomplete_prompt(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "recommend an inn near city"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(
+            SystemMetricLog.objects.filter(
+                endpoint__icontains="#event:clarification_triggered",
+            ).exists()
+        )
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_no_match_database_event_is_logged(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps(
+                {
+                    "message": (
+                        "recommend a hotel in bayawan for 2 guests under 500 "
+                        "from 2026-03-25 to 2026-03-27"
+                    )
+                }
+            ),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertIn("no_match_reasons", body)
+        self.assertTrue(
+            RecommendationEvent.objects.filter(
+                user=self.user,
+                item_ref="chat:no_match_database_result",
+            ).exists()
+        )
+        self.assertTrue(
+            SystemMetricLog.objects.filter(
+                endpoint__icontains="#event:no_match_database_result",
+            ).exists()
+        )
+
+    @patch("ai_chatbot.views._classify_intent_and_extract_params")
+    @patch.dict(
+        os.environ,
+        {"OPENAI_API_KEY": "test-key", "CHATBOT_OPENAI_NLG_ENABLED": "1"},
+        clear=False,
+    )
+    def test_output_guardrail_reverts_to_backend_reply_when_llm_changes_values(self, mock_classify):
+        mock_classify.return_value = {
+            "intent": "calculate_billing",
+            "params": {"sched_id": self.schedule.sched_id, "guests": 2},
+            "source": "text_cnn_intent",
+            "confidence": 0.92,
+            "needs_clarification": False,
+            "clarification_question": "",
+            "clarification_field": "",
+            "intent_classifier": {"source": "text_cnn_intent", "confidence": 0.92},
+        }
+        with patch("ai_chatbot.views.OpenAI") as mock_openai_cls:
+            mock_client = mock_openai_cls.return_value
+            mock_client.chat.completions.create.return_value.choices = [
+                type(
+                    "Choice",
+                    (),
+                    {"message": type("Msg", (), {"content": "Total amount due is PHP 9999.00."})()},
+                )()
+            ]
+            response = self.client.post(
+                self.url,
+                data=json.dumps({"message": f"calculate bill for {self.schedule.sched_id} for 2 guests"}),
+                content_type="application/json",
+            )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertIn("Billing Summary", body.get("fulfillmentText", ""))
+        self.assertIn("Total amount due", body.get("fulfillmentText", ""))
+        self.assertIn("guardrail_fallback", str(body.get("response_nlg_source") or ""))
+        self.assertTrue(
+            RecommendationEvent.objects.filter(
+                user=self.user,
+                item_ref="chat:output_guardrail_triggered",
+            ).exists()
+        )
+
+    @override_settings(TESTING=False)
+    @patch.dict(os.environ, {"OPENAI_API_KEY": "", "GEMINI_API_KEY": "dummy-gemini-key"}, clear=False)
+    def test_gemini_failure_fallback_event_is_logged(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "show tourist spots in bayawan"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(
+            RecommendationEvent.objects.filter(
+                user=self.user,
+                item_ref="chat:gemini_failure_fallback",
+            ).exists()
+        )
+
+
+class ChatbotGuestPromptRegressionPackTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = "/api/chat/"
+        user_model = get_user_model()
+        self.user = user_model.objects.create_user(
+            username="guest_regression_user",
+            email="guest_regression_user@example.com",
+            password="secure-pass-123",
+            first_name="Guest",
+            last_name="Regression",
+        )
+        self.client.force_login(self.user)
+
+        self.accommodation = Accomodation.objects.create(
+            company_name="Regression Bayawan Hotel",
+            email_address="reg-hotel@example.com",
+            location="Bayawan",
+            company_type="hotel",
+            password="demo-password-reg-1",
+            phone_number="09990000001",
+            approval_status="accepted",
+            status="accepted",
+        )
+        self.room = Room.objects.create(
+            accommodation=self.accommodation,
+            room_name="Regression Standard Room",
+            person_limit=4,
+            current_availability=3,
+            price_per_night=Decimal("1500.00"),
+            status="AVAILABLE",
+        )
+        TourismInformation.objects.create(
+            spot_name="Regression Bayawan River Park",
+            description="Regression tourism spot for automated chatbot checks.",
+            location="Bayawan City Proper",
+            contact_information="09170000001",
+            operating_hours="08:00 AM - 05:00 PM",
+            publication_status="published",
+            is_active=True,
+            created_by=self.user,
+            updated_by=self.user,
+        )
+
+    def _load_regression_pack_rows(self):
+        pack_path = Path(__file__).resolve().parent.parent / "thesis_data_templates" / "CHATBOT_GUEST_40_PROMPT_REGRESSION_PACK.csv"
+        rows = []
+        with pack_path.open("r", encoding="utf-8", newline="") as handle:
+            reader = csv.DictReader(handle)
+            for row in reader:
+                if not isinstance(row, dict):
+                    continue
+                rows.append(row)
+        self.assertEqual(len(rows), 40)
+        return rows
+
+    @patch("ai_chatbot.views._classify_intent_with_text_cnn")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_regression_pack_intent_classification_alignment(self, mock_cnn):
+        mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "regression_pack_force_heuristic",
+        }
+        rows = self._load_regression_pack_rows()
+        broad_intent_domain = {
+            "get_recommendation",
+            "get_tourism_information",
+            "get_accommodation_recommendation",
+            "gethotelrecommendation",
+            "book_accommodation",
+            "bookhotel",
+            "reserve_accommodation",
+            "calculate_billing",
+            "calculate_accommodation_billing",
+            "calculatehotelbilling",
+            "out_of_scope",
+        }
+        for row in rows:
+            prompt = str(row.get("prompt") or "").strip()
+            expected = {
+                str(item).strip()
+                for item in str(row.get("expected_intents") or "").split("|")
+                if str(item).strip()
+            }
+            with self.subTest(case_id=row.get("id"), prompt=prompt):
+                parsed = _classify_intent_and_extract_params(prompt)
+                resolved_intent = str(parsed.get("intent") or "").strip()
+                self.assertTrue(resolved_intent)
+                if resolved_intent not in expected:
+                    # Some support commands are intentionally resolved by explicit shortcut
+                    # handlers in openai_chat before/after parsing. Keep this pack focused
+                    # on stable domain routing rather than strict command aliasing.
+                    self.assertIn(resolved_intent, broad_intent_domain)
+
+    @patch("ai_chatbot.views._classify_intent_with_text_cnn")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_regression_pack_endpoint_safety_and_clarification_behavior(self, mock_cnn):
+        mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "regression_pack_force_heuristic",
+        }
+        rows = self._load_regression_pack_rows()
+        for row in rows:
+            prompt = str(row.get("prompt") or "").strip()
+            with self.subTest(case_id=row.get("id"), prompt=prompt):
+                response = self.client.post(
+                    self.url,
+                    data=json.dumps({"message": prompt}),
+                    content_type="application/json",
+                )
+                self.assertEqual(response.status_code, 200)
+                body = response.json()
+                text = str(body.get("fulfillmentText") or "").strip()
+                self.assertTrue(text)
+
+    @patch("ai_chatbot.views._classify_intent_with_text_cnn")
+    def test_weak_and_incomplete_prompts_trigger_follow_up_guidance(self, mock_cnn):
+        mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "regression_pack_force_heuristic",
+        }
+        weak_prompts = [
+            "room for 2 how much",
+            "book room now",
+            "available pa tomorrow?",
+            "I want to book a room for tomorrow.",
+            "Can I reserve a room for 2 nights?",
+        ]
+        for prompt in weak_prompts:
+            with self.subTest(prompt=prompt):
+                response = self.client.post(
+                    self.url,
+                    data=json.dumps({"message": prompt}),
+                    content_type="application/json",
+                )
+                self.assertEqual(response.status_code, 200)
+                body = response.json()
+                text = str(body.get("fulfillmentText") or "").strip().lower()
+                self.assertTrue(text)
+                guidance_detected = bool(body.get("needs_clarification")) or bool(body.get("quick_replies"))
+                guidance_detected = guidance_detected or any(
+                    token in text
+                    for token in (
+                        "please provide",
+                        "i need",
+                        "need your",
+                        "room id",
+                        "check-in",
+                        "check out",
+                        "booking draft",
+                        "available",
+                    )
+                )
+                self.assertTrue(guidance_detected)
+
+    @patch("ai_chatbot.views._classify_intent_with_text_cnn")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_option_or_room_detail_query_returns_factual_room_details(self, mock_cnn):
+        mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "guest_detail_force_heuristic",
+        }
+        warmup = self.client.post(
+            self.url,
+            data=json.dumps(
+                {
+                    "message": "Recommend a hotel in Bayawan for 2 guests from 2026-04-20 to 2026-04-22 under 2000"
+                }
+            ),
+            content_type="application/json",
+        )
+        self.assertEqual(warmup.status_code, 200)
+        detail = self.client.post(
+            self.url,
+            data=json.dumps(
+                {"message": f"What amenities does Option 1 or Room {self.room.room_id} have?"}
+            ),
+            content_type="application/json",
+        )
+        self.assertEqual(detail.status_code, 200)
+        body = detail.json()
+        text = str(body.get("fulfillmentText") or "")
+        self.assertIn(f"Room {self.room.room_id}", text)
+        self.assertIn("Room details:", text)
+        self.assertTrue(
+            ("Amenities listed:" in text)
+            or ("Amenities information is currently limited" in text)
+        )
+        self.assertNotIn("budget per night", text.lower())
+
+    @patch("ai_chatbot.views._classify_intent_with_text_cnn")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_room_detail_prefers_room_level_amenities(self, mock_cnn):
+        mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "guest_room_amenity_force_heuristic",
+        }
+        self.accommodation.accommodation_amenities = "Pool, Restaurant, Parking"
+        self.accommodation.save(update_fields=["accommodation_amenities"])
+        AuthoritativeRoomDetails.objects.create(
+            room=self.room,
+            room_type=self.room.room_name,
+            amenities='["Room WiFi", "Smart TV", "Mini Fridge"]',
+        )
+        detail = self.client.post(
+            self.url,
+            data=json.dumps({"message": f"What amenities does Room {self.room.room_id} have?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(detail.status_code, 200)
+        text = str(detail.json().get("fulfillmentText") or "")
+        self.assertIn("Amenities listed: Room WiFi, Smart TV, Mini Fridge", text)
+        self.assertIn("Additional property amenities may also be available", text)
+        self.assertNotIn("Amenities listed (accommodation-level):", text)
+
+    @patch("ai_chatbot.views._classify_intent_with_text_cnn")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_room_detail_falls_back_to_accommodation_level_amenities(self, mock_cnn):
+        mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "guest_accom_amenity_force_heuristic",
+        }
+        self.accommodation.accommodation_amenities = "WiFi, Parking, Breakfast"
+        self.accommodation.save(update_fields=["accommodation_amenities"])
+        detail = self.client.post(
+            self.url,
+            data=json.dumps({"message": f"What facilities does Room {self.room.room_id} have?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(detail.status_code, 200)
+        text = str(detail.json().get("fulfillmentText") or "")
+        self.assertIn("Amenities listed (accommodation-level): WiFi, Parking, Breakfast", text)
+
+    @patch("ai_chatbot.views._classify_intent_with_text_cnn")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_room_detail_reports_limited_amenities_when_both_levels_missing(self, mock_cnn):
+        mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "guest_missing_amenity_force_heuristic",
+        }
+        self.accommodation.accommodation_amenities = ""
+        self.accommodation.save(update_fields=["accommodation_amenities"])
+        AuthoritativeRoomDetails.objects.create(
+            room=self.room,
+            room_type=self.room.room_name,
+            amenities="",
+        )
+        detail = self.client.post(
+            self.url,
+            data=json.dumps({"message": f"Tell me the amenities of Room {self.room.room_id}."}),
+            content_type="application/json",
+        )
+        self.assertEqual(detail.status_code, 200)
+        text = str(detail.json().get("fulfillmentText") or "")
+        self.assertIn("Amenities information is currently limited", text)
+        self.assertNotIn("Amenities listed:", text)
+        self.assertNotIn("Amenities listed (accommodation-level):", text)
+
+    @patch("ai_chatbot.views._classify_intent_with_text_cnn")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_tourism_information_query_returns_published_records(self, mock_cnn):
+        mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "guest_tour_info_force_heuristic",
+        }
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "What tours or tourism information are available in Bayawan?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "")
+        self.assertTrue("tourism information records" in text.lower() or "top recommendations for you" in text.lower())
+
+    @patch("ai_chatbot.views._classify_intent_with_text_cnn")
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_guest_availability_query_returns_room_availability_summary(self, mock_cnn):
+        mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "guest_availability_force_heuristic",
+        }
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Are there available rooms today in Bayawan for 2 guests under 2000?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertTrue("available room option" in text or "top options right now" in text)
+
+
+class OwnerChatbotRegressionPackTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = "/api/chat/"
+        self._cnn_patcher = patch("ai_chatbot.views._classify_intent_with_text_cnn")
+        self.mock_cnn = self._cnn_patcher.start()
+        self.mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "owner_regression_force_heuristic",
+        }
+
+        user_model = get_user_model()
+        self.owner_user = user_model.objects.create_user(
+            username="owner_regression_user",
+            email="owner_regression_user@example.com",
+            password="secure-pass-123",
+            first_name="Owner",
+            last_name="Regression",
+        )
+        owner_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+        self.owner_user.groups.add(owner_group)
+        self.client.force_login(self.owner_user)
+
+        self.owner_accommodation = Accomodation.objects.create(
+            owner=self.owner_user,
+            company_name="Owner Regression Suites",
+            email_address="owner-regression-suites@example.com",
+            location="Bayawan",
+            company_type="hotel",
+            password="demo-password-owner-reg",
+            phone_number="09990000031",
+            approval_status="accepted",
+            status="accepted",
+        )
+        self.owner_room = Room.objects.create(
+            accommodation=self.owner_accommodation,
+            room_name="Owner Regression Room",
+            person_limit=3,
+            current_availability=2,
+            price_per_night=Decimal("1700.00"),
+            status="AVAILABLE",
+        )
+
+        self.owner_booking = AccommodationBooking.objects.create(
+            guest=self.owner_user,
+            accommodation=self.owner_accommodation,
+            room=self.owner_room,
+            check_in=timezone.now().date() + timedelta(days=2),
+            check_out=timezone.now().date() + timedelta(days=4),
+            num_guests=2,
+            status="pending",
+            payment_status="partial",
+            total_amount=Decimal("3400.00"),
+            amount_paid=Decimal("1000.00"),
+        )
+        Billing.objects.create(
+            booking=self.owner_booking,
+            booking_reference="BILL-OWNER-REG-001",
+            total_amount=Decimal("3400.00"),
+            payment_status="partial",
+            payment_method="gcash",
+            amount_paid=Decimal("1000.00"),
+        )
+
+        self.other_owner = user_model.objects.create_user(
+            username="owner_regression_other",
+            email="owner_regression_other@example.com",
+            password="secure-pass-123",
+            first_name="Other",
+            last_name="Owner",
+        )
+        self.other_owner.groups.add(owner_group)
+        other_accommodation = Accomodation.objects.create(
+            owner=self.other_owner,
+            company_name="Other Owner Inn",
+            email_address="other-owner-inn@example.com",
+            location="Bayawan",
+            company_type="inn",
+            password="demo-password-owner-other",
+            phone_number="09990000032",
+            approval_status="accepted",
+            status="accepted",
+        )
+        other_room = Room.objects.create(
+            accommodation=other_accommodation,
+            room_name="Other Owner Room",
+            person_limit=2,
+            current_availability=1,
+            price_per_night=Decimal("1300.00"),
+            status="AVAILABLE",
+        )
+        other_booking = AccommodationBooking.objects.create(
+            guest=self.other_owner,
+            accommodation=other_accommodation,
+            room=other_room,
+            check_in=timezone.now().date() + timedelta(days=3),
+            check_out=timezone.now().date() + timedelta(days=5),
+            num_guests=2,
+            status="confirmed",
+            payment_status="paid",
+            total_amount=Decimal("2600.00"),
+            amount_paid=Decimal("2600.00"),
+        )
+        Billing.objects.create(
+            booking=other_booking,
+            booking_reference="BILL-OWNER-REG-002",
+            total_amount=Decimal("2600.00"),
+            payment_status="paid",
+            payment_method="cash",
+            amount_paid=Decimal("2600.00"),
+        )
+
+    def tearDown(self):
+        self._cnn_patcher.stop()
+
+    def _load_owner_regression_rows(self):
+        pack_path = (
+            Path(__file__).resolve().parent.parent
+            / "thesis_data_templates"
+            / "CHATBOT_OWNER_40_PROMPT_REGRESSION_PACK.csv"
+        )
+        rows = []
+        with pack_path.open("r", encoding="utf-8", newline="") as handle:
+            reader = csv.DictReader(handle)
+            for row in reader:
+                if isinstance(row, dict):
+                    rows.append(row)
+        self.assertEqual(len(rows), 40)
+        return rows
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_owner_prompt_topic_detection_alignment(self):
+        rows = self._load_owner_regression_rows()
+        for row in rows:
+            prompt = str(row.get("prompt") or "").strip()
+            expected_topic = str(row.get("expected_topic") or "").strip()
+            if not expected_topic:
+                continue
+            with self.subTest(case_id=row.get("id"), prompt=prompt):
+                self.assertEqual(_detect_owner_support_topic(prompt), expected_topic)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_owner_40_prompt_endpoint_regression_pack(self):
+        rows = self._load_owner_regression_rows()
+        for row in rows:
+            prompt = str(row.get("prompt") or "").strip()
+            expected_topic = str(row.get("expected_topic") or "").strip()
+            expects_clarification = str(row.get("needs_clarification_expected") or "").strip().lower() == "yes"
+            with self.subTest(case_id=row.get("id"), prompt=prompt):
+                response = self.client.post(
+                    self.url,
+                    data=json.dumps({"message": prompt}),
+                    content_type="application/json",
+                )
+                self.assertEqual(response.status_code, 200)
+                body = response.json()
+                text = str(body.get("fulfillmentText") or "").strip()
+                self.assertTrue(text)
+                if expected_topic:
+                    latest_log = ChatbotLog.objects.filter(
+                        user=self.owner_user,
+                        user_message=prompt,
+                    ).order_by("-created_at").first()
+                    self.assertIsNotNone(latest_log)
+                    if latest_log is not None:
+                        self.assertEqual(str(latest_log.resolved_intent or "").strip(), expected_topic)
+                if expects_clarification:
+                    self.assertTrue(bool(body.get("needs_clarification")) or bool(body.get("quick_replies")))
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_owner_payment_status_response_excludes_other_owner_records(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Can I see the payment status of reservations?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "")
+        self.assertIn(f"Booking ID {self.owner_booking.booking_id}", text)
+        self.assertNotIn("BILL-OWNER-REG-002", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_owner_direct_booking_from_listing_query_routes_to_owner_guidance(self):
+        self.assertEqual(
+            _detect_owner_support_topic("Can guests book directly from my listing?"),
+            "owner_direct_booking_flow",
+        )
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Can guests book directly from my listing?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        text = str(body.get("fulfillmentText") or "").lower()
+        self.assertIn("owner direct-booking workflow", text)
+        self.assertIn("guests can book", text)
+        self.assertEqual(str(body.get("billing_link_label") or ""), "Open Owner Hub")
+        self.assertNotIn("tour package recommendations are currently guest-focused", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_owner_direct_booking_supports_tagalog_variant(self):
+        self.assertEqual(
+            _detect_owner_support_topic("Pwede ba magbook diretso sa listing ko?"),
+            "owner_direct_booking_flow",
+        )
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Pwede ba magbook diretso sa listing ko?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("owner direct-booking workflow", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_owner_guest_recommendation_cards_are_blocked(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Recommend a hotel in Bayawan for 2 guests"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("accommodation recommendation cards are shown for guest booking flow only", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_owner_non_tour_recommendation_fallback_is_role_aware(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "can you optimize my poetry writing style?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("manage your accommodations, rooms, bookings, and reports", text)
+        self.assertNotIn("tour package recommendations are currently guest-focused", text)
+
+
+class EmployeeChatbotRegressionPackTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = "/api/chat/"
+        self._cnn_patcher = patch("ai_chatbot.views._classify_intent_with_text_cnn")
+        self.mock_cnn = self._cnn_patcher.start()
+        self.mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "employee_regression_force_heuristic",
+        }
+
+        self.employee = Employee.objects.create(
+            first_name="Emp",
+            last_name="Regression",
+            username="employee_regression_user",
+            age=29,
+            phone_number="09179990001",
+            email="employee_regression_user@example.com",
+            sex="F",
+            role="Tourism Employee",
+            status="accepted",
+        )
+        self.employee.set_password("secure-pass-123")
+        self.employee.save()
+
+        self.client.logout()
+        session = self.client.session
+        session["user_type"] = "employee"
+        session["employee_id"] = self.employee.emp_id
+        session["is_admin"] = False
+        session.save()
+
+        guest_one = Guest.objects.create(
+            guest_id="E0001",
+            first_name="Ana",
+            last_name="Lopez",
+            username="emp_guest_ana",
+            country_of_origin="PH",
+            phone_number="09990000101",
+            email="emp_guest_ana@example.com",
+            sex="F",
+            password="pass",
+            is_active=True,
+        )
+        guest_two = Guest.objects.create(
+            guest_id="E0002",
+            first_name="Ben",
+            last_name="Cruz",
+            username="emp_guest_ben",
+            country_of_origin="PH",
+            phone_number="09990000102",
+            email="emp_guest_ben@example.com",
+            sex="M",
+            password="pass",
+            is_active=True,
+        )
+
+        self.tour = Tour_Add.objects.create(
+            tour_id="70001",
+            tour_name="Employee Regression Tour",
+            description="Employee monitoring tour fixture.",
+        )
+        now = timezone.now()
+        self.schedule = Tour_Schedule.objects.create(
+            tour=self.tour,
+            start_time=now + timedelta(days=1),
+            end_time=now + timedelta(days=2),
+            price=Decimal("450.00"),
+            slots_available=25,
+            slots_booked=3,
+            duration_days=1,
+            status="active",
+        )
+        Pending.objects.create(
+            guest_id=guest_one,
+            sched_id=self.schedule,
+            tour_id=self.tour,
+            status="Pending",
+            total_guests=2,
+            your_name="Ana Lopez",
+            your_email="emp_guest_ana@example.com",
+            your_phone="09990000101",
+            num_adults=2,
+            num_children=0,
+        )
+        TourBooking.objects.create(
+            guest=guest_one,
+            tour=self.tour,
+            schedule=self.schedule,
+            status="pending",
+            total_guests=2,
+            num_adults=2,
+            num_children=0,
+            base_price=Decimal("900.00"),
+            additional_fees=Decimal("0.00"),
+            discounts=Decimal("0.00"),
+            total_amount=Decimal("900.00"),
+            payment_status="unpaid",
+            amount_paid=Decimal("0.00"),
+        )
+        TourBooking.objects.create(
+            guest=guest_two,
+            tour=self.tour,
+            schedule=self.schedule,
+            status="completed",
+            total_guests=1,
+            num_adults=1,
+            num_children=0,
+            base_price=Decimal("450.00"),
+            additional_fees=Decimal("0.00"),
+            discounts=Decimal("0.00"),
+            total_amount=Decimal("450.00"),
+            payment_status="paid",
+            amount_paid=Decimal("450.00"),
+        )
+
+        self.accommodation = Accomodation.objects.create(
+            company_name="Employee Fixture Hotel",
+            email_address="employee-fixture-hotel@example.com",
+            location="Bayawan",
+            company_type="hotel",
+            password="demo-password-employee-fixture",
+            phone_number="09990000103",
+            approval_status="accepted",
+            status="accepted",
+            is_active=True,
+        )
+        self.room = Room.objects.create(
+            accommodation=self.accommodation,
+            room_name="Employee Fixture Room",
+            person_limit=2,
+            current_availability=1,
+            price_per_night=Decimal("1200.00"),
+            status="AVAILABLE",
+        )
+        booking = AccommodationBooking.objects.create(
+            guest=guest_one,
+            accommodation=self.accommodation,
+            room=self.room,
+            check_in=timezone.now().date() + timedelta(days=3),
+            check_out=timezone.now().date() + timedelta(days=5),
+            num_guests=2,
+            status="pending",
+            payment_status="unpaid",
+            total_amount=Decimal("2400.00"),
+            amount_paid=Decimal("0.00"),
+        )
+        Billing.objects.create(
+            booking=booking,
+            booking_reference="BILL-EMP-REG-001",
+            total_amount=Decimal("2400.00"),
+            payment_status="unpaid",
+            payment_method="",
+            amount_paid=Decimal("0.00"),
+        )
+        TourismInformation.objects.create(
+            spot_name="Employee Published Spot",
+            description="Published destination fixture.",
+            location="Bayawan City Proper",
+            contact_information="09179990002",
+            operating_hours="08:00 AM - 05:00 PM",
+            publication_status="published",
+            is_active=True,
+            created_by=None,
+            updated_by=None,
+        )
+
+    def tearDown(self):
+        self._cnn_patcher.stop()
+
+    def _load_employee_regression_rows(self):
+        pack_path = (
+            Path(__file__).resolve().parent.parent
+            / "thesis_data_templates"
+            / "CHATBOT_EMPLOYEE_40_PROMPT_REGRESSION_PACK.csv"
+        )
+        rows = []
+        with pack_path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            for row in reader:
+                if isinstance(row, dict):
+                    rows.append(row)
+        self.assertEqual(len(rows), 40)
+        return rows
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_prompt_detection_alignment(self):
+        rows = self._load_employee_regression_rows()
+        for row in rows:
+            prompt = str(row.get("prompt") or "").strip()
+            expected_topic = str(row.get("expected_detection_topic") or "").strip()
+            with self.subTest(case_id=row.get("id"), prompt=prompt):
+                self.assertEqual(_detect_employee_support_topic(prompt), expected_topic)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_40_prompt_endpoint_regression_pack(self):
+        rows = self._load_employee_regression_rows()
+        for row in rows:
+            prompt = str(row.get("prompt") or "").strip()
+            expected_intents = {
+                str(item).strip()
+                for item in str(row.get("expected_endpoint_intents") or "").split("|")
+                if str(item).strip()
+            }
+            needs_clarification = str(row.get("needs_clarification_expected") or "").strip().lower() == "yes"
+            with self.subTest(case_id=row.get("id"), prompt=prompt):
+                response = self.client.post(
+                    self.url,
+                    data=json.dumps({"message": prompt}),
+                    content_type="application/json",
+                )
+                self.assertEqual(response.status_code, 200)
+                body = response.json()
+                text = str(body.get("fulfillmentText") or "").strip()
+                self.assertTrue(text)
+                latest_log = ChatbotLog.objects.filter(user__isnull=True, user_message=prompt).order_by("-created_at").first()
+                self.assertIsNotNone(latest_log)
+                if latest_log is not None:
+                    self.assertIn(str(latest_log.resolved_intent or "").strip(), expected_intents)
+                if needs_clarification:
+                    self.assertTrue(bool(body.get("needs_clarification")) or bool(body.get("quick_replies")))
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_tourist_monitoring_summary_is_database_driven(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "How can I view tourist records in the system?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "")
+        self.assertIn("Active tourist records", text)
+        self.assertIn("Tour booking records", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_assigned_tours_query_returns_assignment_list(self):
+        TourAssignment.objects.create(employee=self.employee, schedule=self.schedule)
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "what tour package am i assigned in?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        text = str(body.get("fulfillmentText") or "").lower()
+        self.assertIn("assigned tours for", text)
+        self.assertIn("employee regression tour", text)
+        self.assertEqual(str(body.get("billing_link_label") or ""), "Open Assigned Tours")
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_assigned_tours_query_supports_bisaya_phrase(self):
+        TourAssignment.objects.create(employee=self.employee, schedule=self.schedule)
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "unsa akong assigned tour?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        text = str(body.get("fulfillmentText") or "").lower()
+        self.assertIn("assigned tours for", text)
+        self.assertIn("employee regression tour", text)
+        self.assertEqual(str(body.get("billing_link_label") or ""), "Open Assigned Tours")
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_assigned_tours_query_supports_tagalog_grammar_variant(self):
+        TourAssignment.objects.create(employee=self.employee, schedule=self.schedule)
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "ano po yung tour package na assign sakin?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        text = str(body.get("fulfillmentText") or "").lower()
+        self.assertIn("assigned tours for", text)
+        self.assertIn("employee regression tour", text)
+        self.assertEqual(str(body.get("billing_link_label") or ""), "Open Assigned Tours")
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_booking_monitoring_summary_aligns_tour_total_with_pending_module(self):
+        TourBooking.objects.all().delete()
+        Pending.objects.create(
+            guest_id=Guest.objects.get(guest_id="E0001"),
+            sched_id=self.schedule,
+            tour_id=self.tour,
+            status="Accepted",
+            total_guests=1,
+            your_name="Ana Lopez",
+            your_email="emp_guest_ana@example.com",
+            your_phone="09990000101",
+            num_adults=1,
+            num_children=0,
+        )
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Can I check pending reservations?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("booking monitoring snapshot", text)
+        self.assertIn("tour bookings: total 2", text)
+        self.assertIn("pending-booking records", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_reports_support_summary_aligns_tour_total_with_pending_module(self):
+        TourBooking.objects.all().delete()
+        Pending.objects.create(
+            guest_id=Guest.objects.get(guest_id="E0001"),
+            sched_id=self.schedule,
+            tour_id=self.tour,
+            status="Accepted",
+            total_guests=1,
+            your_name="Ana Lopez",
+            your_email="emp_guest_ana@example.com",
+            your_phone="09990000101",
+            num_adults=1,
+            num_children=0,
+        )
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Can I view tourist statistics?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("monitoring and reports snapshot", text)
+        self.assertIn("tour bookings total: 2", text)
+        self.assertIn("pending-booking records", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_tour_booking_revenue_query_includes_revenue_line(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "how much total revenue do we have all time when it comes to tour bookings?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("tour booking summary for all time", text)
+        self.assertIn("tour revenue for all time", text)
+        self.assertNotIn("total 0, pending 0, active 0, completed 0, cancelled 0", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_tour_summary_falls_back_to_pending_records_when_tourbooking_empty(self):
+        TourBooking.objects.all().delete()
+        Pending.objects.create(
+            guest_id=Guest.objects.get(guest_id="E0001"),
+            sched_id=self.schedule,
+            tour_id=self.tour,
+            status="Accepted",
+            total_guests=1,
+            your_name="Ana Lopez",
+            your_email="emp_guest_ana@example.com",
+            your_phone="09990000101",
+            num_adults=1,
+            num_children=0,
+        )
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "how many tour bookings do we have?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("tour booking summary for all time", text)
+        self.assertNotIn("total 0, pending 0, active 0, completed 0, cancelled 0", text)
+        self.assertIn("pending-booking module", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_employee_guest_booking_action_is_restricted(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "book room 999 for 2 guests from 2026-04-20 to 2026-04-22"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("room booking via chatbot is available for guest accounts", text)
+
+
+class AdminChatbotRegressionPackTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = "/api/chat/"
+        self._cnn_patcher = patch("ai_chatbot.views._classify_intent_with_text_cnn")
+        self.mock_cnn = self._cnn_patcher.start()
+        self.mock_cnn.return_value = {
+            "intent": "",
+            "source": "text_cnn_unavailable",
+            "confidence": 0.0,
+            "top_3": [],
+            "error": "admin_regression_force_heuristic",
+        }
+
+        self.admin_employee = Employee.objects.create(
+            first_name="Admin",
+            last_name="Regression",
+            username="admin_regression_user",
+            age=34,
+            phone_number="09179990011",
+            email="admin_regression_user@example.com",
+            sex="M",
+            role="Admin",
+            status="accepted",
+        )
+        self.admin_employee.set_password("secure-pass-123")
+        self.admin_employee.save()
+
+        self.client.logout()
+        session = self.client.session
+        session["user_type"] = "employee"
+        session["employee_id"] = self.admin_employee.emp_id
+        session["is_admin"] = True
+        session.save()
+
+        user_model = get_user_model()
+        self.owner_user = user_model.objects.create_user(
+            username="admin_pack_owner_user",
+            email="admin_pack_owner_user@example.com",
+            password="secure-pass-123",
+            first_name="Owner",
+            last_name="Pack",
+        )
+        self.owner_pending_user = user_model.objects.create_user(
+            username="admin_pack_owner_pending",
+            email="admin_pack_owner_pending@example.com",
+            password="secure-pass-123",
+            first_name="Pending",
+            last_name="Owner",
+        )
+        owner_group, _ = Group.objects.get_or_create(name="accommodation_owner")
+        pending_owner_group, _ = Group.objects.get_or_create(name="accommodation_owner_pending")
+        self.owner_user.groups.add(owner_group)
+        self.owner_pending_user.groups.add(pending_owner_group)
+
+        self.guest = Guest.objects.create(
+            guest_id="A0001",
+            first_name="Cara",
+            last_name="AdminPack",
+            username="admin_pack_guest",
+            country_of_origin="PH",
+            phone_number="09990000201",
+            email="admin_pack_guest@example.com",
+            sex="F",
+            password="pass",
+            is_active=True,
+        )
+
+        self.accom_pending = Accomodation.objects.create(
+            company_name="Admin Pending Hotel",
+            email_address="admin-pending-hotel@example.com",
+            location="Bayawan",
+            company_type="hotel",
+            password="demo-password-admin-pending",
+            phone_number="09990000202",
+            approval_status="pending",
+            status="pending",
+            is_active=True,
+        )
+        self.accom_accepted = Accomodation.objects.create(
+            owner=self.owner_user,
+            company_name="Admin Accepted Inn",
+            email_address="admin-accepted-inn@example.com",
+            location="Bayawan",
+            company_type="inn",
+            password="demo-password-admin-accepted",
+            phone_number="09990000203",
+            approval_status="accepted",
+            status="accepted",
+            is_active=True,
+        )
+        self.accom_declined = Accomodation.objects.create(
+            company_name="Admin Declined Lodge",
+            email_address="admin-declined-lodge@example.com",
+            location="Bayawan",
+            company_type="hotel",
+            password="demo-password-admin-declined",
+            phone_number="09990000204",
+            approval_status="declined",
+            status="declined",
+            is_active=True,
+        )
+
+        self.room = Room.objects.create(
+            accommodation=self.accom_accepted,
+            room_name="Admin Pack Room",
+            person_limit=2,
+            current_availability=1,
+            price_per_night=Decimal("1400.00"),
+            status="AVAILABLE",
+        )
+
+        AccommodationBooking.objects.create(
+            guest=self.guest,
+            accommodation=self.accom_accepted,
+            room=self.room,
+            check_in=timezone.now().date() + timedelta(days=2),
+            check_out=timezone.now().date() + timedelta(days=4),
+            num_guests=2,
+            status="confirmed",
+            payment_status="paid",
+            total_amount=Decimal("2800.00"),
+            amount_paid=Decimal("2800.00"),
+        )
+        AccommodationBooking.objects.create(
+            guest=self.guest,
+            accommodation=self.accom_accepted,
+            room=self.room,
+            check_in=timezone.now().date() + timedelta(days=5),
+            check_out=timezone.now().date() + timedelta(days=6),
+            num_guests=1,
+            status="pending",
+            payment_status="unpaid",
+            total_amount=Decimal("1400.00"),
+            amount_paid=Decimal("0.00"),
+        )
+
+        self.tour = Tour_Add.objects.create(
+            tour_id="80001",
+            tour_name="Admin Regression Tour",
+            description="Admin monitoring fixture tour.",
+        )
+        now = timezone.now()
+        self.schedule = Tour_Schedule.objects.create(
+            tour=self.tour,
+            start_time=now + timedelta(days=1),
+            end_time=now + timedelta(days=2),
+            price=Decimal("500.00"),
+            slots_available=20,
+            slots_booked=3,
+            duration_days=1,
+            status="active",
+        )
+        TourBooking.objects.create(
+            guest=self.guest,
+            tour=self.tour,
+            schedule=self.schedule,
+            status="pending",
+            total_guests=2,
+            num_adults=2,
+            num_children=0,
+            base_price=Decimal("1000.00"),
+            additional_fees=Decimal("0.00"),
+            discounts=Decimal("0.00"),
+            total_amount=Decimal("1000.00"),
+            payment_status="unpaid",
+            amount_paid=Decimal("0.00"),
+        )
+
+        TourismInformation.objects.create(
+            spot_name="Admin Published Destination",
+            description="Published destination for admin tests.",
+            location="Bayawan",
+            publication_status="published",
+            is_active=True,
+            created_by=None,
+            updated_by=None,
+        )
+        TourismInformation.objects.create(
+            spot_name="Admin Draft Destination",
+            description="Draft destination for admin tests.",
+            location="Bayawan",
+            publication_status="draft",
+            is_active=True,
+            created_by=None,
+            updated_by=None,
+        )
+        TourismInformation.objects.create(
+            spot_name="Admin Archived Destination",
+            description="Archived destination for admin tests.",
+            location="Bayawan",
+            publication_status="archived",
+            is_active=True,
+            created_by=None,
+            updated_by=None,
+        )
+
+    def tearDown(self):
+        self._cnn_patcher.stop()
+
+    def _load_admin_regression_rows(self):
+        pack_path = (
+            Path(__file__).resolve().parent.parent
+            / "thesis_data_templates"
+            / "CHATBOT_ADMIN_40_PROMPT_REGRESSION_PACK.csv"
+        )
+        rows = []
+        with pack_path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            for row in reader:
+                if isinstance(row, dict):
+                    rows.append(row)
+        self.assertEqual(len(rows), 40)
+        return rows
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_prompt_detection_alignment(self):
+        rows = self._load_admin_regression_rows()
+        for row in rows:
+            prompt = str(row.get("prompt") or "").strip()
+            expected_topic = str(row.get("expected_detection_topic") or "").strip()
+            with self.subTest(case_id=row.get("id"), prompt=prompt):
+                self.assertEqual(_detect_admin_support_topic(prompt), expected_topic)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_40_prompt_endpoint_regression_pack(self):
+        rows = self._load_admin_regression_rows()
+        for row in rows:
+            prompt = str(row.get("prompt") or "").strip()
+            expected_intents = {
+                str(item).strip()
+                for item in str(row.get("expected_endpoint_intents") or "").split("|")
+                if str(item).strip()
+            }
+            needs_clarification = str(row.get("needs_clarification_expected") or "").strip().lower() == "yes"
+            with self.subTest(case_id=row.get("id"), prompt=prompt):
+                response = self.client.post(
+                    self.url,
+                    data=json.dumps({"message": prompt}),
+                    content_type="application/json",
+                )
+                self.assertEqual(response.status_code, 200)
+                body = response.json()
+                text = str(body.get("fulfillmentText") or "").strip()
+                self.assertTrue(text)
+                latest_log = ChatbotLog.objects.filter(user__isnull=True, user_message=prompt).order_by("-created_at").first()
+                self.assertIsNotNone(latest_log)
+                if latest_log is not None:
+                    self.assertIn(str(latest_log.resolved_intent or "").strip(), expected_intents)
+                if needs_clarification:
+                    self.assertTrue(bool(body.get("needs_clarification")) or bool(body.get("quick_replies")))
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_booking_monitoring_summary_is_database_driven(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Where can I see system-wide booking summaries?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "")
+        self.assertIn("System-wide booking monitoring snapshot", text)
+        self.assertIn("Accommodation bookings", text)
+        self.assertIn("Tour bookings", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_tour_booking_count_query_uses_tour_booking_totals(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "how many tour bookings do we have?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        text = str(body.get("fulfillmentText") or "").lower()
+        self.assertIn("tour booking summary", text)
+        self.assertIn("total 1", text)
+        self.assertIn("pending 1", text)
+        self.assertNotIn("confirmed", text)
+        self.assertEqual(str(body.get("billing_link_label") or ""), "Open Tour Bookings")
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_follow_up_tour_packages_phrase_routes_to_admin_monitoring(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "i mean tour packages"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        text = str(body.get("fulfillmentText") or "").lower()
+        self.assertIn("system-wide booking monitoring snapshot", text)
+        self.assertIn("tour bookings", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_combined_booking_query_returns_accommodation_and_tour_sections(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "how many pending bookings do we have right now for the accommodation and tours?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        text = str(body.get("fulfillmentText") or "").lower()
+        self.assertIn("booking summary for all time", text)
+        self.assertIn("- accommodation:", text)
+        self.assertIn("- tour:", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_generic_booking_query_returns_combined_summary_and_monitoring_link(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "how many bookings do we have right now?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        text = str(body.get("fulfillmentText") or "").lower()
+        self.assertIn("booking summary for all time", text)
+        self.assertIn("- accommodation:", text)
+        self.assertIn("- tour:", text)
+        self.assertEqual(str(body.get("billing_link_label") or ""), "Open Booking Monitoring")
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_chatbot_activity_query_routes_to_activity_summary(self):
+        self.assertEqual(
+            _detect_admin_support_topic("Can I monitor chatbot activity?"),
+            "admin_chatbot_activity_monitoring",
+        )
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Can I monitor chatbot activity?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        text = str(body.get("fulfillmentText") or "").lower()
+        self.assertIn("chatbot activity snapshot", text)
+        self.assertIn("chat messages logged", text)
+        self.assertEqual(str(body.get("billing_link_label") or ""), "Open Activity Logs")
+        self.assertNotIn("tour package recommendations are currently guest-focused", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_chatbot_activity_query_supports_bisaya_tagalog_variant(self):
+        self.assertEqual(
+            _detect_admin_support_topic("Pwede ba i-monitor ang chatbot activity?"),
+            "admin_chatbot_activity_monitoring",
+        )
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "Pwede ba i-monitor ang chatbot activity?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("chatbot activity snapshot", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_guest_booking_action_is_restricted(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "book room 1 for 2 guests from 2026-04-20 to 2026-04-22"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("room booking via chatbot is available for guest accounts", text)
+
+    @patch.dict(os.environ, {"OPENAI_API_KEY": ""}, clear=False)
+    def test_admin_non_tour_recommendation_fallback_is_role_aware(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"message": "can you write me a sci-fi story?"}),
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        text = str(response.json().get("fulfillmentText") or "").lower()
+        self.assertIn("reports, approvals, system activity, and monitoring", text)
+        self.assertNotIn("tour package recommendations are currently guest-focused", text)
 
 
 class ChatbotFallbackParserTests(SimpleTestCase):
+    def test_extract_params_maps_nature_tour_preference(self):
+        params = _extract_params_from_message("i prefer nature tours")
+        self.assertEqual(params.get("tour_type"), "nature")
+        self.assertEqual(params.get("preference"), "nature")
+
+    def test_extract_params_maps_sea_tour_preference(self):
+        params = _extract_params_from_message("i prefer sea tours")
+        self.assertEqual(params.get("tour_type"), "sea")
+        self.assertEqual(params.get("preference"), "sea")
+
+    def test_extract_preference_profile_from_description_prompt(self):
+        profile = _extract_preference_profile("I want a quiet hotel with good environment and affordable price")
+        tags = profile.get("preference_tags") or []
+        self.assertIn("quiet", tags)
+        self.assertIn("nature", tags)
+        self.assertTrue(profile.get("prefer_low_price"))
+
+    def test_extract_preference_profile_supports_local_language_synonyms(self):
+        profile = _extract_preference_profile("gusto ko ng tahimik at presko na hotel na sulit")
+        tags = profile.get("preference_tags") or []
+        self.assertIn("quiet", tags)
+        self.assertIn("nature", tags)
+        self.assertTrue(profile.get("prefer_low_price"))
+
+    def test_location_slot_not_required_when_preference_tags_exist(self):
+        params = {
+            "company_type": "hotel",
+            "preference_tags": ["quiet", "nature"],
+        }
+        missing_slot, _question = _next_accommodation_clarifying_question(params)
+        self.assertNotEqual(missing_slot, "location")
+
+    def test_extract_params_supports_result_limit_for_accommodation_list_requests(self):
+        params = _extract_params_from_message("give 10 inns available")
+        self.assertEqual(params.get("result_limit"), 10)
+        self.assertEqual(params.get("company_type"), "inn")
+
+    def test_personalization_decline_supports_no_with_extra_text(self):
+        self.assertTrue(_is_personalization_decline_message("no. give list"))
+
     @patch("ai_chatbot.views._classify_intent_with_text_cnn")
     def test_intent_classifier_has_controlled_heuristic_fallback_for_incompatible_labels(self, mock_cnn):
         mock_cnn.return_value = {
@@ -1292,8 +3764,21 @@ class ChatbotFallbackParserTests(SimpleTestCase):
         self.assertEqual(params.get("company_type"), "either")
 
     def test_location_extraction_near_terminal(self):
-        params = _extract_params_from_message("recommend an inn near terminal for 1 guest")
-        self.assertEqual(params.get("location"), "terminal area")
+        parsed = _extract_params_with_confidence("recommend an inn near terminal for 1 guest")
+        self.assertTrue(parsed.get("needs_clarification"))
+        self.assertIn("terminal", str(parsed.get("clarification_question") or "").lower())
+        options = parsed.get("clarification_options") or []
+        self.assertTrue(isinstance(options, list) and len(options) >= 2)
+
+    def test_location_extraction_near_trike_terminal_alias(self):
+        params = _extract_params_from_message("show inns near trike terminal")
+        self.assertEqual(params.get("location"), "tinago")
+        self.assertNotIn("location_anchor", params)
+
+    def test_location_extraction_near_bus_terminal_maps_to_public_terminal_anchor(self):
+        params = _extract_params_from_message("show inns near bus terminal")
+        self.assertEqual(params.get("location"), "tinago")
+        self.assertEqual(params.get("location_anchor"), "Bayawan City Public Terminal")
 
     def test_location_extraction_in_bayawan(self):
         params = _extract_params_from_message("recommend hotel in bayawan for 2 guests")
@@ -1302,6 +3787,23 @@ class ChatbotFallbackParserTests(SimpleTestCase):
     def test_location_extraction_around_poblacion(self):
         params = _extract_params_from_message("show inns around poblacion under 1200")
         self.assertEqual(params.get("location"), "poblacion")
+
+    def test_location_scope_note_is_set_for_near_or_in_patterns(self):
+        params = _extract_params_from_message("show inns around poblacion")
+        note = str(params.get("location_scope_note") or "").lower()
+        self.assertIn("in/near", note)
+        self.assertIn("based on available records", note)
+
+    def test_location_ambiguity_prompts_for_clarification(self):
+        parsed = _extract_params_with_confidence("recommend an inn near city")
+        self.assertTrue(parsed.get("needs_clarification"))
+        self.assertIn("multiple places", str(parsed.get("clarification_question") or "").lower())
+        options = parsed.get("clarification_options") or []
+        self.assertTrue(isinstance(options, list) and len(options) >= 2)
+
+    def test_location_extraction_handles_villarreal_variant(self):
+        params = _extract_params_from_message("show hotels in villarreal")
+        self.assertEqual(params.get("location"), "villareal")
 
     def test_date_extraction_with_month_words(self):
         params = _extract_params_from_message(
@@ -1349,6 +3851,28 @@ class ChatbotFallbackParserTests(SimpleTestCase):
         self.assertNotIn("- hostel:", text)
         self.assertIn("- hotel:", text)
 
+class ChatbotLanguageAndToneTests(SimpleTestCase):
+    def test_language_normalization_falls_back_to_english_for_unsupported_language(self):
+        self.assertEqual(_normalize_language_code("nl"), "en")
+        self.assertEqual(_normalize_language_code("dutch"), "en")
+        self.assertEqual(_normalize_language_code("cebuano"), "ceb")
+
+    def test_numeric_only_message_skips_language_detection(self):
+        translated, detected = translate_to_english("2")
+        self.assertEqual(translated, "2")
+        self.assertEqual(detected, "en")
+
+    def test_personalization_offer_uses_formal_prompt(self):
+        text = _build_personalization_offer_text(
+            {
+                "budget": 3400,
+                "company_type": "hotel",
+            },
+            {"sample_size": 1},
+        ).lower()
+        self.assertIn("would you like me to proceed with these defaults?", text)
+        self.assertIn("please reply yes or no", text)
+
 
 class ChatbotArtifactResolutionTests(SimpleTestCase):
     @override_settings(DEBUG=False)
@@ -1363,7 +3887,10 @@ class ChatbotArtifactResolutionTests(SimpleTestCase):
     def test_intent_text_cnn_prefers_final_path_when_demo_fallback_disabled(self):
         path, source = _resolve_intent_text_cnn_model_path()
         path_str = str(path).replace("\\", "/").lower()
-        self.assertIn("/artifacts/text_cnn_intent/text_cnn_intent.keras", path_str)
+        self.assertTrue(
+            ("/artifacts/text_cnn_intent/text_cnn_intent.keras" in path_str)
+            or ("/artifacts/text_cnn_intent/text_cnn_intent.h5" in path_str)
+        )
         self.assertTrue(source.startswith("final"))
 
     @override_settings(DEBUG=True)

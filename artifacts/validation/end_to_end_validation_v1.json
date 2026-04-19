@@ -3,56 +3,56 @@
     {
       "message": "book hotel for 2 guests tomorrow",
       "expected_intent": "book_accommodation",
-      "predicted_intent": "get_tourism_information",
-      "confidence": 0.26486897468566895,
-      "source": "text_cnn_intent",
-      "error": "",
+      "predicted_intent": "",
+      "confidence": 0.32184523344039917,
+      "source": "text_cnn_low_confidence",
+      "error": "low_confidence:0.3218<threshold:0.6000",
       "is_correct": false
     },
     {
       "message": "calculate hotel bill for 2 nights",
       "expected_intent": "calculate_accommodation_billing",
-      "predicted_intent": "get_accommodation_recommendation",
-      "confidence": 0.2498760223388672,
-      "source": "text_cnn_intent",
-      "error": "",
+      "predicted_intent": "",
+      "confidence": 0.3344504237174988,
+      "source": "text_cnn_low_confidence",
+      "error": "low_confidence:0.3345<threshold:0.6000",
       "is_correct": false
     },
     {
       "message": "calculate tour billing for 4 guests",
       "expected_intent": "calculate_billing",
-      "predicted_intent": "get_tourism_information",
-      "confidence": 0.2838016152381897,
-      "source": "text_cnn_intent",
-      "error": "",
+      "predicted_intent": "",
+      "confidence": 0.35106074810028076,
+      "source": "text_cnn_low_confidence",
+      "error": "low_confidence:0.3511<threshold:0.6000",
       "is_correct": false
     },
     {
       "message": "recommend inn in Bayawan under 2000",
       "expected_intent": "get_accommodation_recommendation",
-      "predicted_intent": "get_accommodation_recommendation",
-      "confidence": 0.2575327754020691,
-      "source": "text_cnn_intent",
-      "error": "",
-      "is_correct": true
+      "predicted_intent": "",
+      "confidence": 0.4199262857437134,
+      "source": "text_cnn_low_confidence",
+      "error": "low_confidence:0.4199<threshold:0.6000",
+      "is_correct": false
     },
     {
       "message": "recommend tourist spots for family trip",
       "expected_intent": "get_recommendation",
-      "predicted_intent": "calculate_billing",
-      "confidence": 0.24135226011276245,
-      "source": "text_cnn_intent",
-      "error": "",
+      "predicted_intent": "",
+      "confidence": 0.4080592691898346,
+      "source": "text_cnn_low_confidence",
+      "error": "low_confidence:0.4081<threshold:0.6000",
       "is_correct": false
     },
     {
       "message": "tourist spot operating hours in bayawan",
       "expected_intent": "get_tourism_information",
-      "predicted_intent": "get_tourism_information",
-      "confidence": 0.3262992203235626,
-      "source": "text_cnn_intent",
-      "error": "",
-      "is_correct": true
+      "predicted_intent": "",
+      "confidence": 0.3237367868423462,
+      "source": "text_cnn_low_confidence",
+      "error": "low_confidence:0.3237<threshold:0.6000",
+      "is_correct": false
     }
   ],
   "decision_tree_results": [
@@ -127,12 +127,12 @@
     }
   ],
   "weak_points": [
-    "Intent classifier mismatch on 4/6 end-to-end intent probes.",
+    "Intent classifier mismatch on 6/6 end-to-end intent probes.",
     "Low-confidence intent predictions observed in 6 probes (<0.60 confidence)."
   ],
   "summary": {
     "intent_probe_total": 6,
-    "intent_probe_correct": 2,
+    "intent_probe_correct": 0,
     "decision_tree_probe_total": 3
   }
 }

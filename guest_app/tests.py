@@ -1,11 +1,13 @@
 import json
+import hashlib
+import hmac
 from datetime import timedelta
 from decimal import Decimal
 
 from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 from django.utils import timezone
 
@@ -540,8 +542,107 @@ class AccommodationOwnerSignupFromGuestRegisterTests(TestCase):
         self.assertEqual(response.status_code, 200)
         payload = response.json()
         self.assertTrue(payload.get("success"))
-        self.assertEqual(payload.get("redirect_url"), reverse("main-page"))
+        self.assertEqual(payload.get("redirect_url"), reverse("admin_app:login"))
 
         user_model = get_user_model()
         owner_user = user_model.objects.get(email="owner-signup-flow@example.com")
         self.assertTrue(owner_user.groups.filter(name__iexact="accommodation_owner_pending").exists())
+
+
+class PaymentWebhookCallbackTests(TestCase):
+    def setUp(self):
+        user_model = get_user_model()
+        self.user = user_model.objects.create_user(
+            username="payment_webhook_user",
+            email="payment_webhook_user@example.com",
+            password="secure-pass-123",
+        )
+        self.accommodation = Accomodation.objects.create(
+            company_name="Webhook Hotel",
+            email_address="webhook-hotel@example.com",
+            location="Bayawan",
+            company_type="hotel",
+            password="accom-pass-webhook",
+            phone_number="09990000999",
+            approval_status="accepted",
+            status="accepted",
+        )
+        self.room = Room.objects.create(
+            accommodation=self.accommodation,
+            room_name="Webhook Room",
+            person_limit=2,
+            current_availability=2,
+            price_per_night=Decimal("1200.00"),
+            status="AVAILABLE",
+        )
+        today = timezone.localdate()
+        self.booking = AccommodationBooking.objects.create(
+            guest=self.user,
+            accommodation=self.accommodation,
+            room=self.room,
+            check_in=today + timedelta(days=2),
+            check_out=today + timedelta(days=4),
+            num_guests=2,
+            status="pending",
+            total_amount=Decimal("2400.00"),
+            payment_status="unpaid",
+            amount_paid=Decimal("0.00"),
+        )
+        self.billing = Billing.objects.create(
+            booking=self.booking,
+            booking_reference=f"AB-{self.booking.booking_id}",
+            total_amount=self.booking.total_amount,
+            payment_status="unpaid",
+            amount_paid=Decimal("0.00"),
+        )
+        self.url = reverse("payment_webhook_callback")
+
+    @override_settings(PAYMENT_WEBHOOK_SECRET="")
+    def test_payment_webhook_returns_503_when_secret_not_configured(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"booking_reference": self.billing.booking_reference, "payment_status": "paid"}),
+            content_type="application/json",
+            HTTP_X_PAYMENT_SIGNATURE="dummy",
+        )
+        self.assertEqual(response.status_code, 503)
+
+    @override_settings(PAYMENT_WEBHOOK_SECRET="unit-test-secret")
+    def test_payment_webhook_rejects_invalid_signature(self):
+        response = self.client.post(
+            self.url,
+            data=json.dumps({"booking_reference": self.billing.booking_reference, "payment_status": "paid"}),
+            content_type="application/json",
+            HTTP_X_PAYMENT_SIGNATURE="invalid",
+        )
+        self.assertEqual(response.status_code, 403)
+
+    @override_settings(PAYMENT_WEBHOOK_SECRET="unit-test-secret")
+    def test_payment_webhook_updates_billing_and_booking_status(self):
+        payload = {
+            "booking_reference": self.billing.booking_reference,
+            "payment_status": "paid",
+            "amount_paid": "2400.00",
+            "payment_method": "gcash",
+        }
+        raw = json.dumps(payload).encode("utf-8")
+        signature = hmac.new(b"unit-test-secret", raw, hashlib.sha256).hexdigest()
+
+        response = self.client.post(
+            self.url,
+            data=raw,
+            content_type="application/json",
+            HTTP_X_PAYMENT_SIGNATURE=signature,
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.json()
+        self.assertEqual(body.get("status"), "ok")
+        self.assertEqual(body.get("payment_status"), "paid")
+
+        self.booking.refresh_from_db()
+        self.billing.refresh_from_db()
+        self.assertEqual(self.booking.payment_status, "paid")
+        self.assertEqual(self.billing.payment_status, "paid")
+        self.assertEqual(self.booking.amount_paid, Decimal("2400.00"))
+        self.assertEqual(self.billing.amount_paid, Decimal("2400.00"))
+        self.assertEqual(self.billing.payment_method, "gcash")

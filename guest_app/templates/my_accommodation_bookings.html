@@ -165,8 +165,44 @@
       .booking-title { font-size: 0.98rem; }
     }
   </style>
+  <link rel="stylesheet" href="/static/css/guest_unified.css">
 </head>
-<body>
+<body class="guest-booking guest-with-topnav">
+  <nav class="guest-top-nav" aria-label="Guest navigation">
+    <div class="guest-top-nav-left">
+      <a class="guest-top-nav-brand" href="{% url 'main-page' %}">Ibayaw Tour</a>
+    </div>
+    <div class="guest-top-nav-links">
+      <a class="guest-top-nav-link" href="{% url 'main-page' %}" title="Home">
+        <span class="label">Home</span>
+      </a>
+      <div class="guest-top-nav-bell">
+        <button type="button" class="guest-top-nav-link" id="guestNotifToggle" title="Notifications">
+          <span class="label">Notifications</span>
+        </button>
+        <span class="guest-top-nav-badge" id="guestNotifBadge">0</span>
+        <div class="guest-notif-panel" id="guestNotifPanel">
+          <div class="guest-notif-head">
+            <h4>Notifications</h4>
+            <button type="button" class="guest-notif-action" id="guestNotifMarkRead">Mark all as read</button>
+          </div>
+          <div id="guestNotifList"></div>
+        </div>
+      </div>
+      <div style="position: relative;">
+        <button type="button" class="guest-top-nav-link" id="guestProfileToggle" title="Profile">
+          <span class="label">{{ request.user.first_name|default:request.user.username }}</span>
+        </button>
+        <div class="guest-profile-panel" id="guestProfilePanel">
+          <a href="{% url 'my_profile' %}">My Profile</a>
+          <a href="{% url 'my_accommodation_bookings' %}">My Bookings</a>
+          <a href="{% url 'main-page' %}#tour-packages">Tour Packages</a>
+          <a href="{% url 'main-page' %}#programs">Programs</a>
+          <a href="{% url 'logout' %}">Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
   <header>
     <div class="container">
       <h1 style="margin: 0;">My Accommodation Bookings</h1>
@@ -188,10 +224,6 @@
     {% endif %}
 
     <div class="card">
-      <div class="actions">
-        <a class="btn secondary" href="{% url 'main-page' %}">Back to Main Page</a>
-        <a class="btn" href="{% url 'accommodation_page' %}">Book Another Room</a>
-      </div>
       <div class="filter-tabs" aria-label="Booking status filters">
         <a class="filter-tab {% if selected_status == 'all' %}active{% endif %}" href="{% url 'my_accommodation_bookings' %}?status=all&payment={{ selected_payment }}">All ({{ total_count }})</a>
         <a class="filter-tab {% if selected_status == 'pending' %}active{% endif %}" href="{% url 'my_accommodation_bookings' %}?status=pending&payment={{ selected_payment }}">Pending ({{ pending_count }})</a>
@@ -303,5 +335,127 @@
       {% endif %}
     </div>
   </div>
+
+  <script>
+    (function initGuestTopNav() {
+      const notifUrl = "{% url 'guest_notifications' %}";
+      const notifToggle = document.getElementById("guestNotifToggle");
+      const notifPanel = document.getElementById("guestNotifPanel");
+      const notifList = document.getElementById("guestNotifList");
+      const notifBadge = document.getElementById("guestNotifBadge");
+      const markReadBtn = document.getElementById("guestNotifMarkRead");
+      const profileToggle = document.getElementById("guestProfileToggle");
+      const profilePanel = document.getElementById("guestProfilePanel");
+
+      function csrfToken() {
+        const m = document.cookie.match(/(?:^|;\s*)csrftoken=([^;]+)/);
+        return m ? decodeURIComponent(m[1]) : "";
+      }
+
+      function escapeHtml(text) {
+        return String(text || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;");
+      }
+
+      function renderNotifications(items) {
+        if (!Array.isArray(items) || !items.length) {
+          notifList.innerHTML = '<div class="guest-notif-item"><p class="guest-notif-item-body">No notifications yet.</p></div>';
+          return;
+        }
+        notifList.innerHTML = items.map((item) => {
+          const unreadDot = item.is_unread ? '<span class="guest-notif-dot" title="Unread"></span>' : '<span></span>';
+          const link = item.link || "#";
+          return `
+            <a class="guest-notif-item" href="${escapeHtml(link)}" data-id="${escapeHtml(item.id || "")}">
+              <p class="guest-notif-item-title">${escapeHtml(item.title || "Notification")}</p>
+              <p class="guest-notif-item-body">${escapeHtml(item.message || "")}</p>
+              <div class="guest-notif-item-meta">
+                ${unreadDot}
+                <span>${escapeHtml(item.display_date || "")}</span>
+              </div>
+            </a>
+          `;
+        }).join("");
+      }
+
+      function updateBadge(count) {
+        const total = Number(count || 0);
+        if (total > 0) {
+          notifBadge.textContent = total > 99 ? "99+" : String(total);
+          notifBadge.classList.add("show");
+        } else {
+          notifBadge.classList.remove("show");
+          notifBadge.textContent = "0";
+        }
+      }
+
+      async function loadNotifications() {
+        try {
+          const res = await fetch(notifUrl, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+          const data = await res.json();
+          if (!data || data.success !== true) return;
+          renderNotifications(data.notifications || []);
+          updateBadge(data.unread_count || 0);
+        } catch (_) {}
+      }
+
+      async function markAllRead() {
+        const visibleIds = Array.from(
+          document.querySelectorAll('#guestNotifList .guest-notif-item[data-id]')
+        )
+        .map((node) => String(node.getAttribute('data-id') || '').trim())
+        .filter(Boolean);
+        try {
+          await fetch(notifUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken(),
+              "X-Requested-With": "XMLHttpRequest",
+            },
+            body: JSON.stringify({ action: "mark_all_read", notification_ids: visibleIds }),
+          });
+          await loadNotifications();
+        } catch (_) {}
+      }
+
+      notifToggle?.addEventListener("click", async function (e) {
+        e.stopPropagation();
+        profilePanel?.classList.remove("open");
+        notifPanel?.classList.toggle("open");
+        if (notifPanel?.classList.contains("open")) {
+          await loadNotifications();
+        }
+      });
+
+      profileToggle?.addEventListener("click", function (e) {
+        e.stopPropagation();
+        notifPanel?.classList.remove("open");
+        profilePanel?.classList.toggle("open");
+      });
+
+      markReadBtn?.addEventListener("click", function (e) {
+        e.preventDefault();
+        markAllRead();
+      });
+
+      document.addEventListener("click", function () {
+        notifPanel?.classList.remove("open");
+        profilePanel?.classList.remove("open");
+      });
+
+      notifPanel?.addEventListener("click", function (e) {
+        e.stopPropagation();
+      });
+      profilePanel?.addEventListener("click", function (e) {
+        e.stopPropagation();
+      });
+
+      loadNotifications();
+    })();
+  </script>
 </body>
 </html>
+

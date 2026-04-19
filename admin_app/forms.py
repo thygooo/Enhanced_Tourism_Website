@@ -91,7 +91,11 @@ class AccommodationRegistrationForm(forms.ModelForm):
         widgets = {
             "company_type": forms.Select(
                 choices=[
+                    # Core categories aligned with thesis/original description
                     ("Hotel", "Hotel"),
+                    ("Attraction", "Attraction"),
+                    ("MICE", "MICE (Meeting, Incentives, Conferences, Exhibitions)"),
+                    # Legacy-compatible options retained to avoid breaking existing records/workflows
                     ("Inn", "Inn"),
                     ("Resort", "Resort"),
                     ("Homestay", "Homestay"),

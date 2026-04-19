@@ -419,9 +419,9 @@ SYSTEM_TRANSLATIONS = {
     },
     'chat_welcome': {
         'en': 'Hello! I\'m your Ibayaw Tour assistant. I can help you find and book hotels/inns in Bayawan City.',
-        'tl': 'Hello! Ako ang iyong Ibayaw Tour assistant. Paano kita matutulungan ngayon?',
-        'ceb': 'Hello! Ako ang imong Ibayaw Tour assistant. Unsaon tika pagtabang karon?',
-        'es': 'Hola! Soy tu asistente de Ibayaw Tour. Como puedo ayudarte hoy?'
+        'tl': 'Magandang araw! Ako ang iyong Ibayaw Tour assistant. Maaari akong tumulong sa paghahanap at pag-book ng hotel o inn sa Bayawan City.',
+        'ceb': 'Maayong adlaw! Ako ang imong Ibayaw Tour assistant. Makatabang ko sa pagpangita ug pag-book sa hotel o inn sa Bayawan City.',
+        'es': 'Buen dia. Soy tu asistente de Ibayaw Tour. Puedo ayudarte a buscar y reservar hoteles o inns en Bayawan City.'
     },
     'chat_input_placeholder': {
         'en': 'Type your message...',
@@ -430,16 +430,16 @@ SYSTEM_TRANSLATIONS = {
         'es': 'Escribe tu mensaje...'
     },
     'chat_thinking': {
-        'en': 'Thinking...',
-        'tl': 'Nag-iisip...',
-        'ceb': 'Naghunahuna...',
-        'es': 'Pensando...'
+        'en': 'Please wait while I process your request...',
+        'tl': 'Mangyaring maghintay habang pinoproseso ko ang iyong kahilingan...',
+        'ceb': 'Palihug hulat samtang giproseso nako ang imong hangyo...',
+        'es': 'Por favor espera mientras proceso tu solicitud...'
     },
     'chat_connect_error': {
-        'en': 'Sorry, I could not connect to the chatbot right now.',
-        'tl': 'Paumanhin, hindi ako makakonekta sa chatbot ngayon.',
-        'ceb': 'Pasayloa, dili ko makakonek sa chatbot karon.',
-        'es': 'Lo siento, no pude conectarme al chatbot en este momento.'
+        'en': 'We are unable to connect to the chatbot at the moment. Please try again shortly.',
+        'tl': 'Hindi makakonekta ang chatbot sa ngayon. Pakisubukang muli maya-maya.',
+        'ceb': 'Dili makakonek ang chatbot karon. Palihug sulayi pag-usab human sa pipila ka gutlo.',
+        'es': 'No podemos conectarnos al chatbot en este momento. Por favor, intenta nuevamente en breve.'
     },
     'chat_non_json_error': {
         'en': 'Chatbot returned a non-JSON response. Check server logs.',

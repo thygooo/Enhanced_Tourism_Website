@@ -18,7 +18,7 @@
     "prediction": {
       "score": 1.0,
       "predicted_label": "relevant",
-      "source": "model:final_default",
+      "source": "model:demo_fallback",
       "error": "",
       "normalized_features": {
         "requested_guests": 2,
@@ -55,7 +55,7 @@
     "prediction": {
       "score": 1.0,
       "predicted_label": "relevant",
-      "source": "model:final_default",
+      "source": "model:demo_fallback",
       "error": "",
       "normalized_features": {
         "requested_guests": 2,
@@ -90,9 +90,9 @@
       "shown_rank": ""
     },
     "prediction": {
-      "score": 0.08744247205785668,
-      "predicted_label": "not_relevant",
-      "source": "model:final_default",
+      "score": 1.0,
+      "predicted_label": "relevant",
+      "source": "model:demo_fallback",
       "error": "",
       "normalized_features": {
         "requested_guests": 1,

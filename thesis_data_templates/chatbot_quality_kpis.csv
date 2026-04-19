@@ -1,0 +1,8 @@
+kpi,value,formula
+total_chat_logs,237,count(rows)
+fallback_rate_pct,54.8523,fallback_used_count / total_logs * 100
+nlg_source_present_rate_pct,31.2236,logs_with_response_nlg_source / total_logs * 100
+nlg_success_rate_pct,4.2194,logs_with_success_nlg_source / total_logs * 100
+clarification_rate_pct,8.4388,clarification_like_logs / total_logs * 100
+accommodation_recommendation_intent_share_pct,18.1435,accommodation_recommendation_logs / total_logs * 100
+booking_intent_share_pct,4.6414,booking_logs / total_logs * 100
